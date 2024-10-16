@@ -22,4 +22,14 @@ export class AccountsComponent implements OnInit {
       (error) => console.error(error)
     )
   }
+
+  blockAccount(account: Account): void {
+    this.administrationService.blockAccount(account).subscribe(
+      _ => {
+        alert(`User ${account.username} successfuly blocked.`)
+        this.ngOnInit()
+      },
+      (error) => console.error(error)
+    )
+  }
 }
