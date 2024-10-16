@@ -1,0 +1,11 @@
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+}
+
+table {
+    min-width: 250px;
+    width: 850px;
+}
