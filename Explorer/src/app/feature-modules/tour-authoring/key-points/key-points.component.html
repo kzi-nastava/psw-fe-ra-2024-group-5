@@ -1,0 +1,48 @@
+<div class="container">
+    <table mat-table [dataSource]="keyPoints" class="mat-elevation-z8">
+      <!-- Header row -->
+      <tr mat-header-row>
+        <th mat-header-cell *matHeaderCellDef colspan="5">
+          Add Key Point
+          <button mat-icon-button (click)="openForm()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </th>
+      </tr>
+  
+      <!-- Key point form row (shown when form is opened) -->
+      <tr *ngIf="formVisible" class="form-row">
+        <td colspan="5">
+          <!-- <app-key-point-form
+            (keyPointAdded)="onKeyPointAdded($event)"
+            (formClosed)="closeForm()"
+          ></app-key-point-form> -->
+        </td>
+      </tr>
+  
+      <!-- Data rows -->
+      <ng-container matColumnDef="name">
+        <td mat-cell *matCellDef="let point">{{ point.name }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="description">
+        <td mat-cell *matCellDef="let point">{{ point.description }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="latitude">
+        <td mat-cell *matCellDef="let point">{{ point.latitude }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="longitude">
+        <td mat-cell *matCellDef="let point">{{ point.longitude }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="image">
+        <td mat-cell *matCellDef="let point">
+          <img *ngIf="point.image" [src]="point.image" alt="Image" width="100" />
+        </td>
+      </ng-container>
+  
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
