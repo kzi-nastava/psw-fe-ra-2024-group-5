@@ -1,9 +1,9 @@
 export interface Facility{
-    id: number,
+    id?: number,
     name: string,
     description: string,
-    type: string,
-    image: File,
+    type: number,
+    image?: string,
     longitude: number,
     latitude: number
 }
