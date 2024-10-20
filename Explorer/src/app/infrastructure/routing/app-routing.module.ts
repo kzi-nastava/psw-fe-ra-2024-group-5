@@ -6,12 +6,14 @@ import { EquipmentComponent } from 'src/app/feature-modules/administration/equip
 import { AuthGuard } from '../auth/auth.guard';
 import { RegistrationComponent } from '../auth/registration/registration.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
+import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard],},
+  {path: 'key-points', component: KeyPointsComponent, canActivate: [AuthGuard],},
   {path: 'facility', component: FacilityComponent}
 ];
 
