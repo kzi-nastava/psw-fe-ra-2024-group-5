@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Tag</th>
+            <th>Level</th>
+            <th>Status</th>
+            <th>Price($)</th>
+            <th>Author Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let t of tours">
+            <td>{{ t.id }}</td>
+            <td>{{ t.name }}</td>
+            <td>{{ t.description }}</td>
+            <td>{{ t.tag }}</td>
+            <td>{{ t.level }}</td>
+            <td>{{ t.status }}</td>
+            <td>{{ t.price }}</td>
+            <td>{{ t.authorId }}</td>
+        </tr>
+    </tbody>
+</table>
