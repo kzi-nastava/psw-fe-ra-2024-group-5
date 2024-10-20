@@ -1,0 +1,68 @@
+<div class="title-container">
+    <h1 mat-dialog-title>Add a new facility</h1>
+</div>
+
+<form [formGroup]="form">
+    <div mat-dialog-content class="content-container">
+        
+          <mat-form-field appearance="outline" class="custom-form-field">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Enter your name" formControlName="Name">
+              <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
+                {{ getErrorMessage('Name') }}
+              </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline">
+            <mat-label>Facility Type</mat-label>
+            <mat-select formControlName="Type">
+              <mat-option *ngFor="let type of facilityTypes; let i = index" [value]="i">
+                {{ type }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('Type')?.invalid && form.get('Type')?.touched">
+              Facility type is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="number-file-inputs">
+            <div>
+              <mat-form-field appearance="outline" class="number-input">
+                <mat-label>Lat</mat-label>
+                <input matInput type="number" placeholder="0" formControlName="Latitude"/>
+              </mat-form-field>
+            </div>
+          
+            <div>
+              <mat-form-field appearance="outline" class="number-input">
+                <mat-label>Long</mat-label>
+                <input matInput type="number" placeholder="0" formControlName="Longitude"/>
+              </mat-form-field>
+            </div>
+          
+            <div class="file-container">
+                <input type="file" id="file-input" hidden (change)="onFileSelected($event)" #fileInput/>
+                <label for="file-input">
+                  <button mat-raised-button color="primary" (click)="fileInput.click()">Upload File</button>
+                </label>
+              <span>{{fileName}}</span>
+            </div>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Enter a description" formControlName="Description">
+            </textarea>
+            <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
+              {{ getErrorMessage('Description') }}
+            </mat-error>
+          </mat-form-field>
+
+    </div>
+</form>
+
+
+<div mat-dialog-actions class="action-container">
+  <button mat-button (click)="closeDialog()">Close</button>
+  <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
+</div>
