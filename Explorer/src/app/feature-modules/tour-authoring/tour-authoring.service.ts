@@ -21,6 +21,10 @@ export class TourAuthoringService {
       console.log('Nije dobra rola');
       throw console.error('Nije dobra rola');
     }
-      
+  }
+
+  addTour(tour: Tour) : Observable<Tour>{
+    console.log(tour)
+    return this.http.post<Tour>(environment.apiHost + 'tour/', tour)
   }
 }

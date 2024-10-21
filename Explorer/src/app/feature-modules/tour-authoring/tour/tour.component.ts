@@ -4,6 +4,8 @@ import { TourAuthoringService } from '../tour-authoring.service';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TourFormComponent } from '../tour-form/tour-form.component';
 
 @Component({
   selector: 'xp-tour',
@@ -15,7 +17,7 @@ export class TourComponent implements OnInit{
   user: User | undefined;
   tours: Tour[] = [];
 
-  constructor(private service: TourAuthoringService, private authService: AuthService) { }
+  constructor(private service: TourAuthoringService, private authService: AuthService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -31,7 +33,21 @@ export class TourComponent implements OnInit{
      });
     });
   }
+  openDialog(): void{
+    if(this.user?.role !== 'author'){
+      alert("Nemate potrebnu rolu");
+      return;
+    }
+    const u = this.user
+    console.log(u)
 
-  // tours: Tour[] = [{id: 0, name: "Tura 1", description: "Opis 1", tag: "Nesto, nesto 2", level: "intermidiate", status: "ACtive", price: 1010.0, authorId: 1},
-  // {id: 1, name: "Tura 2", description: "Opis 2", tag: "Nesto 1, nesto 3", level: "Advanced", status: "Cancelled", price: 2200.0, authorId: 2}]
+    const dialogRef = this.dialog.open(TourFormComponent, {
+      width: '600px',
+      data: {u}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
+  }
 }

@@ -1,10 +1,10 @@
 export interface Tour{
-    id: number,
+    id?: number,
     name: string,
     description: string,
-    tag: string,
-    level: string,
-    status: string,
-    price: number,
-    authorId: number
+    tags: string,
+    level: number,
+    status?: number,
+    price?: number,
+    authorId?: number
 }

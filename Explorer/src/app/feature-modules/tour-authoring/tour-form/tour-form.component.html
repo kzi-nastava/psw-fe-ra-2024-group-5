@@ -1,0 +1,53 @@
+<div class="title-container">
+    <h1 mat-dialog-title>Add a new tour</h1>
+</div>
+
+<form [formGroup]="form">
+    <div mat-dialog-content class="content-container">
+        <mat-form-field appearance="outline" class="custom-form-field">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter tour name" formControlName="Name">
+            <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
+                {{ getErrorMessage('Name') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput
+                      placeholder="Write description for tour"
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="1"
+                      formControlName="Description"
+                      cdkAutosizeMaxRows="5"></textarea>
+            <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
+                {{ getErrorMessage('Description') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-form-field">
+            <mat-label>Tags</mat-label>
+            <input matInput placeholder="Add tags" formControlName="Tags">
+            <mat-error *ngIf="form.controls['Tags'].invalid && form.controls['Tags'].touched">
+                {{ getErrorMessage('Tags') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Level</mat-label>
+            <mat-select formControlName="Level">
+                <mat-option *ngFor="let level of tourLevels" [value]="level">
+                    {{ level }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('Level')?.invalid && form.get('Level')?.touched">
+                Tour level is required
+            </mat-error>
+        </mat-form-field>
+    </div>
+</form>
+
+<div mat-dialog-actions class="action-container">
+    <!-- <button mat-button (click)="closeDialog()">Close</button> -->
+    <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
+</div>
