@@ -1,4 +1,8 @@
 <div class="container">
+    <div class="map-container">
+        <app-map class="map" [isFacility]="true" [facilities]="facilities" (addItem)="addFacility($event)"></app-map>
+    </div>
+
     <button mat-raised-button color="primary" (click)="openDialog()">New facility</button>
 
     <div class="table-container">

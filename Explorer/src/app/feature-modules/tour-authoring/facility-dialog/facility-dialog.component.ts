@@ -69,11 +69,12 @@ export class FacilityDialogComponent {
         console.error('Error adding facility:', error);
       },
     });
-    this.closeDialog();
+
+    this.dialogRef.close(true);
   }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   onFileSelected(event: Event): void {

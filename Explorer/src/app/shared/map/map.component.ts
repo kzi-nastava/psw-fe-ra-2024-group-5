@@ -1,6 +1,9 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, SimpleChanges } from '@angular/core';
 import { MapService } from './map.service';
+import { Input } from '@angular/core';
 import * as L from 'leaflet';
+import { Facility } from '../model/facility';
+import { OnChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-map',
@@ -11,7 +14,10 @@ export class MapComponent implements AfterViewInit {
   private map: any; 
   private markers: L.Marker[] = [];
   private routeControl: any;
-  private isLastMarkerSet: boolean;
+  @Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
+  @Input() facilities: Facility[];
+  //@Input() keypoints
+  @Output() addItem = new EventEmitter<number[]>();
 
   constructor(private mapService: MapService) {}
 
@@ -20,9 +26,8 @@ export class MapComponent implements AfterViewInit {
       center: [45.2396, 19.8227],
       zoom: 13,
     });
-    this.isLastMarkerSet = true;
-    // this.loadMarkers([L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949), L.latLng(45.2396, 19.8227)])
-    this.registerOnClick(true); //false ako je u pitanju 'keyPpoint', true ako je 'object'
+    this.loadMarkers()
+    this.registerOnClick(); 
     // this.search()
     // this.setRoute(L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949))
     
@@ -36,7 +41,6 @@ export class MapComponent implements AfterViewInit {
       }
     );
     tiles.addTo(this.map);
-    
   }
 
   ngAfterViewInit(): void {
@@ -51,10 +55,10 @@ export class MapComponent implements AfterViewInit {
     // this.search();
   }
 
-  search(isObject: boolean, searchInput: string): void {
+  search(searchInput: string): void {
     this.mapService.search('Strazilovska 19, Novi Sad').subscribe({  //searchInput umesto ovoga
       next: (result) => {
-        if(isObject){
+        if(this.isFacility){
           this.addObjectMarker([result[0].lat, result[0].lon], 'Pozdrav iz Strazilovske 19.');
         }else{
           this.addKeyPointMarker([result[0].lat, result[0].lon], 'Pozdrav iz Strazilovske 19.');
@@ -68,7 +72,7 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  registerOnClick(isObject: boolean): void {
+  registerOnClick(): void {
     this.map.on('click', (e: any) => {
       const coord = e.latlng;
       const lat = coord.lat;
@@ -77,35 +81,24 @@ export class MapComponent implements AfterViewInit {
         //console.log(res.display_name);
         // RES se koristi da prikaze ulicu grad.. od mesta koje je selektovano
       });
-      if(isObject){
+      if(this.isFacility){
         this.addObjectMarker([lat, lng], 'New Marker')
       }else{
         this.addKeyPointMarker([lat, lng], 'New Marker');
       }
-      // alert(mp.getLatLng());
+
+      this.addItem.emit([lat,lng])
     });
   }
 
   addObjectMarker(latlng: [number, number], popupText: string): void {
-    if(!this.isLastMarkerSet && this.markers.length !== 0){
-      this.removeLastMarker();
-    }
-    const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
+    const marker = new L.Marker(latlng, {title: 'facility'}).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
-    this.isLastMarkerSet = false;
-
-        // this.setRouteToObject([45.2396, 19.8227])
-    
   }
 
   addKeyPointMarker(latlng: [number, number], popupText: string): void {
-
-    if(!this.isLastMarkerSet && this.markers.length !== 0){
-      this.removeLastMarker();
-    }
     const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
-    this.isLastMarkerSet = false;
     // Check if we have two markers
     if (this.markers.length >= 2) {
       this.setRoute(this.markers);
@@ -128,29 +121,31 @@ export class MapComponent implements AfterViewInit {
 
     this.routeControl = L.Routing.control({
       waypoints: wPoints, //L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)
-      router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', {profile: 'mapbox/walking'}) //ova 'pk' kobasica je token sa mapbox sajta za koji sam nalog napravio preko uns maila, ako ne radi vama probajte napraviti nalog ima link u 2.4 lekciji
+      //ovaj 'pk' je token sa mapbox sajta za koji sam nalog napravio preko uns maila, ako ne radi vama probajte napraviti nalog ima link u 2.4 lekciji
+      router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', {profile: 'mapbox/walking'}) 
     }).addTo(this.map);
 
     this.routeControl.on('routesfound', function(e: { routes: any; }) {
       var routes = e.routes;
       var summary = routes[0].summary;
-      //alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
     });
   }
 
-    loadMarkers(loadedMarkers: L.LatLng[]): void{
-      loadedMarkers.forEach(latlng => {
-        const m = new L.Marker(latlng).addTo(this.map).bindPopup("Smarqc");
-        this.markers.push(m);
+    loadMarkers(): void{
+      console.log(this.facilities)
+      console.log(this.isFacility)
+      if(this.facilities && this.facilities.length !== 0)
+        this.loadFacilities();
+    }
+
+    loadFacilities(): void{
+      this.facilities.forEach(facility => {
+       this.addObjectMarker([facility.latitude, facility.longitude], 'Ja sam object')
       });
     }
 
     getMarkers() : L.Marker[]{
       return this.markers;
-    }
-
-    confirmMarker(): void{
-      this.isLastMarkerSet = true;
     }
 
     getRouteControl(): any {
@@ -162,7 +157,6 @@ export class MapComponent implements AfterViewInit {
         this.map.removeLayer(marker);
       });
       this.markers = []; // Clear markers from array
-      this.isLastMarkerSet = false;
     }
 
     removeLastMarker(): void{ //ovo se poziva kada hocete da promenite lokaciju markera, ili izbrisete poslednji
@@ -174,6 +168,12 @@ export class MapComponent implements AfterViewInit {
     if (this.routeControl) {
       this.routeControl.remove();
       this.routeControl = null; // Clear the reference
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void{
+    if (changes['facilities'] && changes['facilities'].currentValue) {
+      this.loadMarkers();
     }
   }
 

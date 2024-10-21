@@ -1,21 +1,32 @@
 .container {
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
-button {
-  margin-bottom: 20px;
+.map-container {
+  width: 100%;
+}
+
+.map {
+  width: 100%;
 }
 
 .table-container {
   width: 60%;
   display: flex;
-  justify-content: center;
+  overflow-y: auto;
+  max-height: 400px;
 }
 
 table {
   width: 100%;
+}
+
+.map{
+  width: 900px;
+  height: 200px;
 }
