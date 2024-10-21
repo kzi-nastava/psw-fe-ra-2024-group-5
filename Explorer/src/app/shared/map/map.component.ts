@@ -21,7 +21,7 @@ export class MapComponent implements AfterViewInit {
       zoom: 13,
     });
     this.isLastMarkerSet = true;
-
+    this.loadMarkers([L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949), L.latLng(45.2396, 19.8227)])
     this.registerOnClick(true); //false ako je u pitanju 'keyPpoint', true ako je 'object'
     // this.search()
     // this.setRoute(L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949))
@@ -87,7 +87,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   addObjectMarker(latlng: [number, number], popupText: string): void {
-    if(this.markers.length !== 0){
+    if(!this.isLastMarkerSet && this.markers.length !== 0){
       this.removeLastMarker();
     }
     const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
@@ -135,6 +135,14 @@ export class MapComponent implements AfterViewInit {
       alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
     });
   }
+
+    loadMarkers(loadedMarkers: L.LatLng[]): void{
+      loadedMarkers.forEach(latlng => {
+        const m = new L.Marker(latlng).addTo(this.map).bindPopup("Smarqc");
+        this.markers.push(m);
+      });
+    }
+
     confirmMarker(): void{
       this.isLastMarkerSet = true;
     }
