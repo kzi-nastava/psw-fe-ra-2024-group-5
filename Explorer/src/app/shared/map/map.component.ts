@@ -21,7 +21,7 @@ export class MapComponent implements AfterViewInit {
       zoom: 13,
     });
     this.isLastMarkerSet = true;
-    this.loadMarkers([L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949), L.latLng(45.2396, 19.8227)])
+    // this.loadMarkers([L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949), L.latLng(45.2396, 19.8227)])
     this.registerOnClick(true); //false ako je u pitanju 'keyPpoint', true ako je 'object'
     // this.search()
     // this.setRoute(L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949))
@@ -92,6 +92,7 @@ export class MapComponent implements AfterViewInit {
     }
     const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
+    this.isLastMarkerSet = false;
 
         // this.setRouteToObject([45.2396, 19.8227])
     
@@ -104,6 +105,7 @@ export class MapComponent implements AfterViewInit {
     }
     const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
+    this.isLastMarkerSet = false;
     // Check if we have two markers
     if (this.markers.length >= 2) {
       this.setRoute(this.markers);
@@ -132,7 +134,7 @@ export class MapComponent implements AfterViewInit {
     this.routeControl.on('routesfound', function(e: { routes: any; }) {
       var routes = e.routes;
       var summary = routes[0].summary;
-      alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
+      //alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
     });
   }
 
@@ -141,6 +143,10 @@ export class MapComponent implements AfterViewInit {
         const m = new L.Marker(latlng).addTo(this.map).bindPopup("Smarqc");
         this.markers.push(m);
       });
+    }
+
+    getMarkers() : L.Marker[]{
+      return this.markers;
     }
 
     confirmMarker(): void{
