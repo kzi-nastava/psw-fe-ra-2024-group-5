@@ -20,9 +20,9 @@ export class MapComponent implements AfterViewInit {
       center: [45.2396, 19.8227],
       zoom: 13,
     });
-    this.isLastMarkerSet = false;
+    this.isLastMarkerSet = true;
 
-    this.registerOnClick(false); //false ako je u pitanju 'keyPpoint', true ako je 'object'
+    this.registerOnClick(true); //false ako je u pitanju 'keyPpoint', true ako je 'object'
     // this.search()
     // this.setRoute(L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949))
     
@@ -87,16 +87,14 @@ export class MapComponent implements AfterViewInit {
   }
 
   addObjectMarker(latlng: [number, number], popupText: string): void {
-    if(!this.isLastMarkerSet && this.markers.length !== 0){
+    if(this.markers.length !== 0){
       this.removeLastMarker();
-    }else{
-      if(this.markers.length !== 0){
-        this.setRouteToObject([45.2396, 19.8227])
-      }else{
-        const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
-        this.markers.push(marker);
-      }
     }
+    const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
+    this.markers.push(marker);
+
+        // this.setRouteToObject([45.2396, 19.8227])
+    
   }
 
   addKeyPointMarker(latlng: [number, number], popupText: string): void {
@@ -108,7 +106,7 @@ export class MapComponent implements AfterViewInit {
     this.markers.push(marker);
     // Check if we have two markers
     if (this.markers.length >= 2) {
-      this.setRoute();
+      this.setRoute(this.markers);
     }
   }
   
@@ -116,15 +114,15 @@ export class MapComponent implements AfterViewInit {
     
     const marker = new L.Marker(myLocation).addTo(this.map).bindPopup("Moja lokacija");
     this.markers.unshift(marker);
-    this.setRoute()
+    this.setRoute(this.markers)
   }
 
-  setRoute(): void {
+  setRoute(markPoints:  L.Marker[]): void {
     if (this.routeControl) {
       this.routeControl.remove();
     }
     
-    const wPoints = this.markers.map(marker => marker.getLatLng());
+    const wPoints = markPoints.map(marker => marker.getLatLng());
 
     this.routeControl = L.Routing.control({
       waypoints: wPoints, //L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)
