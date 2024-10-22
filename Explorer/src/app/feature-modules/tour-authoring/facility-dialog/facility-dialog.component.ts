@@ -25,8 +25,8 @@ export class FacilityDialogComponent {
       Name: ['', Validators.required],  
       Description: ['', Validators.required],
       Type: ['', Validators.required] ,
-      Longitude: [this.data.longitude,Validators.required],
-      Latitude: [this.data.latitude, Validators.required],
+      Longitude: ['',Validators.required],
+      Latitude: ['', Validators.required],
     });
   }
 
@@ -60,6 +60,15 @@ export class FacilityDialogComponent {
     }
   }
 
+  changeLongLat(latLong: number[]): void{
+    const [lat,long] = latLong;
+
+    this.form.patchValue({
+      Longitude: long,
+      Latitude: lat
+    });
+  }
+
   sendCreateFacilityRequest(facility: Facility): void{
     this.facilityService.addFacility(facility).subscribe({
       next: (response) => {
@@ -69,11 +78,12 @@ export class FacilityDialogComponent {
         console.error('Error adding facility:', error);
       },
     });
-    this.closeDialog();
+
+    this.dialogRef.close(true);
   }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   onFileSelected(event: Event): void {
