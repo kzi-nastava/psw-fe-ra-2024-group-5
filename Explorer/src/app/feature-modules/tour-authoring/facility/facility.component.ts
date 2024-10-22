@@ -41,21 +41,4 @@ export class FacilityComponent {
       this.loadFacilities();
     });
   }
-
-  addFacility(latLong: number[]): void {
-    const [latitude, longitude] = latLong;
-
-    const dialogRef = this.dialog.open(FacilityDialogComponent, {
-      width: '600px',
-      data: {latitude, longitude}
-    });
-
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      if(result)
-        this.loadFacilities();
-      else
-        this.mapComponent.removeLastMarker();
-    });
-  }
-  
 }

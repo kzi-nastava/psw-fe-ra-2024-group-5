@@ -7,14 +7,6 @@
   gap: 20px;
 }
 
-.map-container {
-  width: 100%;
-}
-
-.map {
-  width: 100%;
-}
-
 .table-container {
   width: 60%;
   display: flex;

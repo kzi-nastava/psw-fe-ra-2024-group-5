@@ -49,6 +49,10 @@
             </div>
           </div>
 
+          <div class="map-container">
+            <app-map [isFacility]="true" (addItem)="changeLongLat($event)"></app-map>
+          </div>
+
           <mat-form-field appearance="outline">
             <mat-label>Description</mat-label>
             <textarea matInput placeholder="Enter a description" formControlName="Description">

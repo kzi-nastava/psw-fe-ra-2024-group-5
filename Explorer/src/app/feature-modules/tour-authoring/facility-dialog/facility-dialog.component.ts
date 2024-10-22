@@ -25,8 +25,8 @@ export class FacilityDialogComponent {
       Name: ['', Validators.required],  
       Description: ['', Validators.required],
       Type: ['', Validators.required] ,
-      Longitude: [this.data.longitude,Validators.required],
-      Latitude: [this.data.latitude, Validators.required],
+      Longitude: ['',Validators.required],
+      Latitude: ['', Validators.required],
     });
   }
 
@@ -58,6 +58,15 @@ export class FacilityDialogComponent {
     else{
       this.sendCreateFacilityRequest(facility);
     }
+  }
+
+  changeLongLat(latLong: number[]): void{
+    const [lat,long] = latLong;
+
+    this.form.patchValue({
+      Longitude: long,
+      Latitude: lat
+    });
   }
 
   sendCreateFacilityRequest(facility: Facility): void{

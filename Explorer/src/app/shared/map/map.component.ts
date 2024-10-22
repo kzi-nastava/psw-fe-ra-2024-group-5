@@ -14,6 +14,7 @@ export class MapComponent implements AfterViewInit {
   private map: any; 
   private markers: L.Marker[] = [];
   private routeControl: any;
+  private isLastMarkerSet: boolean;
   @Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
   @Input() facilities: Facility[];
   //@Input() keypoints
@@ -26,7 +27,8 @@ export class MapComponent implements AfterViewInit {
       center: [45.2396, 19.8227],
       zoom: 13,
     });
-    this.loadMarkers()
+    this.loadMarkers();
+    this.isLastMarkerSet = false;
     this.registerOnClick(); 
     // this.search()
     // this.setRoute(L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949))
@@ -51,22 +53,16 @@ export class MapComponent implements AfterViewInit {
     L.Marker.prototype.options.icon = DefaultIcon;
 
     this.initMap();
-    //ovaj search cemo pozivati kada dodamo neki textbox za search ili tako nesto
-    // this.search();
   }
 
   search(searchInput: string): void {
-    this.mapService.search('Strazilovska 19, Novi Sad').subscribe({  //searchInput umesto ovoga
+    this.mapService.search(searchInput).subscribe({ 
       next: (result) => {
         if(this.isFacility){
-          this.addObjectMarker([result[0].lat, result[0].lon], 'Pozdrav iz Strazilovske 19.');
+          this.addObjectMarker([result[0].lat, result[0].lon], 'facility');
         }else{
-          this.addKeyPointMarker([result[0].lat, result[0].lon], 'Pozdrav iz Strazilovske 19.');
+          this.addKeyPointMarker([result[0].lat, result[0].lon], 'keypoint');
         }
-        // L.marker([result[0].lat, result[0].lon])
-        //   .addTo(this.map)
-        //   .bindPopup('Pozdrav iz Strazilovske 19.')
-        //   .openPopup();
       },
       error: () => {},
     });
@@ -92,6 +88,10 @@ export class MapComponent implements AfterViewInit {
   }
 
   addObjectMarker(latlng: [number, number], popupText: string): void {
+    if(!this.isLastMarkerSet && this.markers.length !== 0){
+      this.removeLastMarker();
+    }
+
     const marker = new L.Marker(latlng, {title: 'facility'}).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
   }
@@ -103,6 +103,10 @@ export class MapComponent implements AfterViewInit {
     if (this.markers.length >= 2) {
       this.setRoute(this.markers);
     }
+  }
+
+  confirmMarker(): void{
+    this.isLastMarkerSet = true;
   }
   
   setRouteToObject(myLocation: [number, number]){ //ovo ce biti ruta od turiste do objekta
@@ -132,15 +136,14 @@ export class MapComponent implements AfterViewInit {
   }
 
     loadMarkers(): void{
-      console.log(this.facilities)
-      console.log(this.isFacility)
       if(this.facilities && this.facilities.length !== 0)
         this.loadFacilities();
     }
 
     loadFacilities(): void{
       this.facilities.forEach(facility => {
-       this.addObjectMarker([facility.latitude, facility.longitude], 'Ja sam object')
+        const marker = new L.Marker([facility.latitude, facility.longitude], {title: 'facility'}).addTo(this.map).bindPopup('Ja sam object');
+        this.markers.push(marker);
       });
     }
 
