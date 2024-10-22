@@ -36,14 +36,15 @@
         <mat-form-field appearance="outline">
             <mat-label>Level</mat-label>
             <mat-select formControlName="Level">
-                <mat-option *ngFor="let level of tourLevels" [value]="level">
-                    {{ level }}
-                </mat-option>
+              <mat-option *ngFor="let level of tourLevels" [value]="level">
+                {{ level }}
+              </mat-option>
             </mat-select>
             <mat-error *ngIf="form.get('Level')?.invalid && form.get('Level')?.touched">
-                Tour level is required
+              Tour level is required
             </mat-error>
-        </mat-form-field>
+          </mat-form-field>
+          
     </div>
 </form>
 
