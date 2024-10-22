@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'accounts', component: AccountsComponent},
   {path: 'tour', component: TourComponent},
   {path: 'tour-creation', component: TourCreationComponent},
-  {path: 'tour-edit', component: TourEditComponent}
+  {path: 'tour-edit/:tourId', component: TourEditComponent}
 ];
 
 @NgModule({

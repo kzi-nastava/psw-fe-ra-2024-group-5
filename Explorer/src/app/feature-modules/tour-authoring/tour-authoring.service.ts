@@ -16,7 +16,7 @@ export class TourAuthoringService {
 
   getTours(user: User) : Observable<PagedResults<Tour>>{
     if(user.role === 'author')
-      return this.http.get<PagedResults<Tour>>(environment.apiHost + 'tour/' + user.id);
+      return this.http.get<PagedResults<Tour>>(environment.apiHost + 'tour/author/' + user.id);
     else{
       console.log('Nije dobra rola');
       throw console.error('Nije dobra rola');
@@ -24,7 +24,10 @@ export class TourAuthoringService {
   }
 
   addTour(tour: Tour) : Observable<Tour>{
-    console.log(tour)
     return this.http.post<Tour>(environment.apiHost + 'tour/', tour)
+  }
+
+  getTourbyId(id : number) : Observable<Tour>{
+    return this.http.get<Tour>(environment.apiHost + 'tour/' + id)
   }
 }

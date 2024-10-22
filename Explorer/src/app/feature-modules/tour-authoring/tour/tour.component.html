@@ -29,10 +29,10 @@
                     <td>{{ t.price }}</td>
                     <td>{{ t.authorId }}</td>
                     <td>
-                        <button color="accent" mat-icon-button>
+                        <button color="accent" mat-icon-button (click)="openDialog()">
                             <mat-icon>delete</mat-icon>
                         </button>
-                        <button color="primary" mat-icon-button>
+                        <button color="primary" mat-icon-button (click)="onEditTour()">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </td> 
@@ -41,12 +41,14 @@
         </table>
     </div>
     <div class="example-button-container">
-        <button mat-raised-button color="primary" (click)="openDialog()">
-          <mat-icon>add</mat-icon>
-          Add Tour
+        <button mat-raised-button color="primary" (click)="onAddTour()">
+            <mat-icon>add</mat-icon>
+            Add Tour
         </button>
       </div>
     </div>
 </div>
+
+
 
 

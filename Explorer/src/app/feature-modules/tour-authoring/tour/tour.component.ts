@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TourFormComponent } from '../tour-form/tour-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'xp-tour',
@@ -17,7 +18,7 @@ export class TourComponent implements OnInit{
   user: User | undefined;
   tours: Tour[] = [];
 
-  constructor(private service: TourAuthoringService, private authService: AuthService, public dialog: MatDialog) { }
+  constructor(private service: TourAuthoringService, private authService: AuthService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -49,5 +50,12 @@ export class TourComponent implements OnInit{
     dialogRef.afterClosed().subscribe(() => {
       this.ngOnInit();
     });
+  }
+  
+  onAddTour(): void{
+    this.router.navigate(['/tour-creation'])
+  }
+  onEditTour(): void{
+    this.router.navigate(['/tour-edit', 2])
   }
 }
