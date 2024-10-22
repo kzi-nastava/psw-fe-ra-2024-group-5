@@ -18,6 +18,10 @@ export class TourAuthoringService {
     return this.http.get<PagedResults<KeyPoint>>(`https://localhost:44333/api/tours/${tourId}/keypoints`);
   }
 
+  saveKeyPoints(keyPoints: KeyPoint[], tourId: number): Observable<KeyPoint[]> {
+    return this.http.post<KeyPoint[]>(`https://localhost:44333/api/tours/${tourId}/keypoints`, keyPoints);
+  }
+
   getTours(user: User) : Observable<PagedResults<Tour>>{
     if(user.role === 'author')
       return this.http.get<PagedResults<Tour>>(environment.apiHost + 'tour/author/' + user.id);
