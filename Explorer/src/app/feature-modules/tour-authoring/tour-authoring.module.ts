@@ -24,11 +24,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
     KeyPointsComponent,
     KeyPointFormComponent,
-    SharedModule
   ]
 })
 export class TourAuthoringModule { }
