@@ -19,7 +19,6 @@ export class TourEditComponent implements OnInit{
   form:FormGroup;
   tourLevels:string[]= ['Beginner', 'Intermediate', 'Advanced'];
   tourStatus:string[]= ['Draft', 'Active', 'Finished'];
-  author: User | undefined;
   constructor(
     private formBuilder: FormBuilder,
     private service: TourAuthoringService,
@@ -57,49 +56,50 @@ export class TourEditComponent implements OnInit{
       return;
     }
     const formValue = this.form.value;
-  const levelMapping: { [key: string]: number } = {
-    'Beginner': 0,
-    'Intermediate': 1,
-    'Advanced': 2,
-  };
-  const statusMapping: {[key: string]: number}={
-    'Draft': 0,
-    'Active': 1,
-    'Finished': 2,
-    'Canceled': -1
-  };
+    const levelMapping: { [key: string]: number } = {
+      'Beginner': 0,
+      'Intermediate': 1,
+      'Advanced': 2,
+    };
+    const statusMapping: {[key: string]: number}={
+      'Draft': 0,
+      'Active': 1,
+      'Finished': 2,
+      'Canceled': -1
+    };
   const levelValue = levelMapping[formValue.Level];
   const statusValue = statusMapping[formValue.Status];
 
   let tour: Tour = {
-    id: formValue.Id,
+    id: this.tour?.id,
     name: formValue.Name,
     description: formValue.Description,
     tags: formValue.Tags,
     level: levelValue,
     status: statusValue,
     price: formValue.Price,
-    authorId: this.author?.id
+    authorId: this.user?.id
   };
 
 
     console.log(tour)
 
-    if(this.author?.role === 'author'){
-        this.sendCreateTourRequest(tour);
+    if(this.user?.role === 'author'){
+        this.sendUpdateTourRequest(tour);
     }
     else{
       alert("You don't have permission")
     }
   }
-  sendCreateTourRequest(tour : Tour): void{
-    this.service.addTour(tour).subscribe({
+  sendUpdateTourRequest(tour : Tour): void{
+    this.service.updateTour(tour).subscribe({
       next: (response) => {
-        console.log('Tour added successfully:', response);
-        this.resetForm();
+        console.log('Tour updated successfully:', response);
+        this.tour = response;
+        this.setForm();
       },
       error: (error) => {
-        console.error('Error adding tour:', error);
+        console.error('Error updating tour:', error);
       },
     });
   }
@@ -119,22 +119,35 @@ export class TourEditComponent implements OnInit{
       Name: ['', Validators.required],
       Description: ['', Validators.required],
       Tags: ['', Validators.required],
-      Level: ['', Validators.required],
-      Status: ['', Validators.required],
-      Price: [-1, Validators.required],
-      AuthorId: this.author?.id
+      Level: [0, Validators.required],
+      Status: [0, Validators.required],
+      Price: [0, Validators.required],
+      AuthorId: this.user?.id
     });
   }
 
   setForm(): void{
+    const levelMapping: { [key: number]: string } = {
+      0 : 'Beginner',
+      1 : 'Intermediate',
+      2 : 'Advanced'
+    };
+    const statusMapping: {[key: number]: string}={
+      0 : 'Draft',
+      1 : 'Active',
+      2 : 'Finished',
+      3 : 'Canceled'
+    };
+  const levelValue = levelMapping[this.tour?.level || 0];
+  const statusValue = statusMapping[this.tour?.status || 0];
     this.form.patchValue({
       Name: this.tour?.name,
       Description: this.tour?.description,
       Tags: this.tour?.tags,
-      Level: this.tour?.level,
-      Status: this.tour?.status,
+      Level: levelValue,
+      Status: statusValue,
       Price: this.tour?.price,
-      AuthorId: this.author?.id
+      AuthorId: this.user?.id
     });
   }
 

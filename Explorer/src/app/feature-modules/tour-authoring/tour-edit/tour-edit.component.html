@@ -51,7 +51,7 @@
               
               <mat-form-field appearance="outline">
                 <mat-label>Status</mat-label>
-                <mat-select formControlName="Level">
+                <mat-select formControlName="Status">
                   <mat-option *ngFor="let status of tourStatus" [value]="status">
                     {{ status }}
                   </mat-option>
@@ -60,6 +60,7 @@
                   Tour status is required
                 </mat-error>
               </mat-form-field>
+
               <mat-form-field appearance="outline">
                 <mat-label>Price</mat-label>
                 <input matInput type="number" placeholder="Enter price" formControlName="Price" min="0" step="0.01">
