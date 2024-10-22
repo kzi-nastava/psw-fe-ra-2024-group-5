@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdministrationService } from '../administration.service';
-import { Equipment } from '../model/equipment.model';
+import { Equipment } from '../../../shared/model/equipment.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 
 
@@ -15,13 +15,13 @@ export class EquipmentComponent implements OnInit {
   selectedEquipment: Equipment;
   shouldRenderEquipmentForm: boolean = false;
   shouldEdit: boolean = false;
-  
+
   constructor(private service: AdministrationService) { }
 
   ngOnInit(): void {
     this.getEquipment();
   }
-  
+
   deleteEquipment(id: number): void {
     this.service.deleteEquipment(id).subscribe({
       next: () => {
