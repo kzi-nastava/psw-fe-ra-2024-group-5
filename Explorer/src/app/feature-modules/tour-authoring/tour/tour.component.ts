@@ -23,33 +23,22 @@ export class TourComponent implements OnInit{
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
-      this.service.getTours(this.user).subscribe({
-        next: (result: PagedResults<Tour>) => {
-          this.tours = result.results
-          console.log(result)
-        },
-        error: (err: any) => {
-          console.log(err)
-        }
-     });
+      this.loadTours();
     });
   }
-  openDialog(): void{
-    if(this.user?.role !== 'author'){
-      alert("Nemate potrebnu rolu");
+
+  loadTours(): void{
+    if(!this.user)
       return;
-    }
-    const u = this.user
-    console.log(u)
-
-    const dialogRef = this.dialog.open(TourFormComponent, {
-      width: '600px',
-      data: {u}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.ngOnInit();
-    });
+    this.service.getTours(this.user).subscribe({
+      next: (result: PagedResults<Tour>) => {
+        this.tours = result.results
+        console.log(result)
+      },
+      error: (err: any) => {
+        console.log(err)
+      }
+   });
   }
   
   onAddTour(): void{
@@ -57,5 +46,20 @@ export class TourComponent implements OnInit{
   }
   onEditTour(t: Tour): void{
     this.router.navigate(['/tour-edit', t.id])
+  }
+  onDeleteTour(t: Tour) : void{
+    if(this.user?.role === 'author' && t.id){
+      this.service.deleteTour(t.id).subscribe({
+        next: (result: Tour) =>{
+          this.loadTours();
+          console.log(result)
+        },
+        error: (err: any) => {
+          console.log(err)
+        }
+      })
+    }else{
+      alert("Nemate potrebnu rolu ili nije dobar ID ture");
+    }
   }
 }

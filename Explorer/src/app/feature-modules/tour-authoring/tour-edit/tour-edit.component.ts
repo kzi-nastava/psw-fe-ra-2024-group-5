@@ -13,12 +13,14 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 })
 export class TourEditComponent implements OnInit{
 
+  isEditable : boolean = false;
   user : User | undefined
   tour : Tour | undefined;
   tourId: number;
   form:FormGroup;
   tourLevels:string[]= ['Beginner', 'Intermediate', 'Advanced'];
-  tourStatus:string[]= ['Draft', 'Active', 'Finished'];
+  tourStatus:string[]= ['Draft', 'Active', 'Finished', 'Canceled'];
+
   constructor(
     private formBuilder: FormBuilder,
     private service: TourAuthoringService,
@@ -65,7 +67,7 @@ export class TourEditComponent implements OnInit{
       'Draft': 0,
       'Active': 1,
       'Finished': 2,
-      'Canceled': -1
+      'Canceled': 3
     };
   const levelValue = levelMapping[formValue.Level];
   const statusValue = statusMapping[formValue.Status];
@@ -153,5 +155,19 @@ export class TourEditComponent implements OnInit{
 
   back():void{
     this.router.navigate(['/tour']);
+  }
+
+  changeEditable(): void {
+    this.isEditable = !this.isEditable;
+    console.log(this.isEditable)
+    // this.toggleFormState(); // Update form state based on isEditable
+  }
+
+  private toggleFormState(): void {
+    if (this.isEditable) {
+      this.form.enable(); // Enable form if editable
+    } else {
+      this.form.disable(); // Disable form if not editable
+    }
   }
 }

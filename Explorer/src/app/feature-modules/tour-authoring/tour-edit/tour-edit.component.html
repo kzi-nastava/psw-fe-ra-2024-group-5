@@ -10,7 +10,7 @@
         <div mat-dialog-content class="content-container">
             <mat-form-field appearance="outline" class="custom-form-field">
                 <mat-label>Name</mat-label>
-                <input matInput placeholder="Enter tour name" formControlName="Name">
+                <input matInput placeholder="Enter tour name" formControlName="Name" >
                 <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
                     {{ getErrorMessage('Name') }}
                 </mat-error>
@@ -31,15 +31,15 @@
     
             <mat-form-field appearance="outline" class="custom-form-field">
                 <mat-label>Tags</mat-label>
-                <input matInput placeholder="Add tags" formControlName="Tags">
+                <input matInput placeholder="Add tags" formControlName="Tags" >
                 <mat-error *ngIf="form.controls['Tags'].invalid && form.controls['Tags'].touched">
                     {{ getErrorMessage('Tags') }}
                 </mat-error>
             </mat-form-field>
     
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" >
                 <mat-label>Level</mat-label>
-                <mat-select formControlName="Level">
+                <mat-select formControlName="Level" >
                   <mat-option *ngFor="let level of tourLevels" [value]="level">
                     {{ level }}
                   </mat-option>
@@ -51,7 +51,7 @@
               
               <mat-form-field appearance="outline">
                 <mat-label>Status</mat-label>
-                <mat-select formControlName="Status">
+                <mat-select formControlName="Status" >
                   <mat-option *ngFor="let status of tourStatus" [value]="status">
                     {{ status }}
                   </mat-option>
@@ -63,7 +63,7 @@
 
               <mat-form-field appearance="outline">
                 <mat-label>Price</mat-label>
-                <input matInput type="number" placeholder="Enter price" formControlName="Price" min="0" step="0.01">
+                <input matInput type="number" placeholder="Enter price" formControlName="Price" min="0" step="0.01" >
                 <mat-error *ngIf="form.get('Price')?.invalid && form.get('Price')?.touched">
                   {{ getErrorMessage('Price')}}
                 </mat-error>
@@ -74,6 +74,9 @@
     <div mat-dialog-actions class="action-container">
         <!-- <button mat-button (click)="closeDialog()">Close</button> -->
         <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
+        <button mat-raised-button color="primary" (click)="changeEditable()">
+          {{ isEditable ? 'Lock' : 'Edit' }}
+        </button>
     </div>
     </div>
       <div class="component component-2">Tour Equipment Place</div>

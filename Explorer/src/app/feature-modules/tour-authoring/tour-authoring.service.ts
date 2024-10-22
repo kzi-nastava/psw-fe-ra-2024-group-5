@@ -34,4 +34,8 @@ export class TourAuthoringService {
   updateTour(tour:Tour) : Observable<Tour>{
     return this.http.put<Tour>(environment.apiHost + 'tour/' + tour.id, tour)
   }
+
+  deleteTour(id : number): Observable<Tour>{
+    return this.http.delete<Tour>(environment.apiHost + 'tour/' + id)
+  }
 }
