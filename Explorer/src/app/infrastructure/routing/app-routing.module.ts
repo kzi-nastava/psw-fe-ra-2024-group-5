@@ -10,12 +10,15 @@ import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facili
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
 import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
+import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard],},
+  {path: 'facility', component: FacilityComponent},
+  {path: 'tour-map', component: TourMapComponent},
   {path: 'accounts', component: AccountsComponent},
   {path: 'tour', component: TourComponent},
   {path: 'tour-creation', component: TourCreationComponent},

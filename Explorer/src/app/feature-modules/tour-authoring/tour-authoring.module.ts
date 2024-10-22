@@ -8,6 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TourFormComponent } from './tour-form/tour-form.component';
 import { TourCreationComponent } from './tour-creation/tour-creation.component';
 import { TourEditComponent } from './tour-edit/tour-edit.component';
+import { TourMapComponent } from './tour-map/tour-map.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { TourEditComponent } from './tour-edit/tour-edit.component';
     FacilityDialogComponent,
     TourFormComponent,
     TourCreationComponent,
-    TourEditComponent
+    TourEditComponent,
+    TourMapComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,8 @@ import { TourEditComponent } from './tour-edit/tour-edit.component';
     ReactiveFormsModule,
   ],
   exports:[
-    TourComponent
+    TourComponent,
+    SharedModule
   ]
 })
 export class TourAuthoringModule { }
