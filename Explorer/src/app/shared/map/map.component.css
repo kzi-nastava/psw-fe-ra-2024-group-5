@@ -1,0 +1,12 @@
+.map-frame {
+    border: 2px solid black;
+  }
+  
+  #map {
+    height: 100% !important;  /* Fill parent height */
+    width: 100% !important;   /* Fill parent width */
+    position: absolute;       /* Ensures it fills the parent properly */
+    top: 0;
+    left: 0;
+  }
+  
