@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { KeyPoint } from '../model/key-point.model';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { TourAuthoringService } from '../tour-authoring.service';
+import { KeyPointFormComponent } from '../key-point-form/key-point-form.component';
+import { inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'xp-key-points',
@@ -12,7 +15,7 @@ export class KeyPointsComponent implements OnInit {
   keyPoints: KeyPoint[] = [];
   displayedColumns: string[] = ['name', 'description', 'image']
 
-  constructor(private tourAuthoringService: TourAuthoringService) {} // Ubrizgavanje zavisnosti
+  constructor(private tourAuthoringService: TourAuthoringService, public dialog: MatDialog) {} // Ubrizgavanje zavisnosti
 
   ngOnInit(): void {
     this.tourAuthoringService.getPaged(1).subscribe(
@@ -23,5 +26,15 @@ export class KeyPointsComponent implements OnInit {
         console.error('Greška pri učitavanju podataka:', error);
       }
     );
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(KeyPointFormComponent, {
+      width: '50%'
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
   }
 }

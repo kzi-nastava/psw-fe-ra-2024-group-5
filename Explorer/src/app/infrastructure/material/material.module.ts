@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
     MatIconModule
   ],
   exports: [

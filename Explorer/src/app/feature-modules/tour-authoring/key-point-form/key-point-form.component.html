@@ -1,1 +1,42 @@
-<p>key-point-form works!</p>
+<h2 mat-dialog-title>Add a key point</h2>
+<form [formGroup]="keyPointForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="keyPointForm.controls['name'].invalid && keyPointForm.controls['name'].touched">
+        Name is <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="keyPointForm.controls['description'].invalid && keyPointForm.controls['description'].touched">
+        <span *ngIf="keyPointForm.controls['description']?.errors?.['maxlength']">
+          Description cannot exceed <strong>256 characters</strong>.
+        </span>
+        <span *ngIf="keyPointForm.controls['description']?.errors?.['required']">
+          Description is <strong>required</strong>.
+        </span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Wrap file input in a mat-form-field for consistency -->
+    <div appearance="fill" class="example-full-width file-input-field">
+      <div class="file-input-wrapper">
+        <button mat-button type="button" class="upload-button" (click)="fileInput.click()">Upload Image</button>
+        <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" />
+        <div *ngIf="imagePreview" class="image-preview-container">
+            <img [src]="imagePreview" alt="Profile Image Preview" class="image-preview" />
+        </div>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button type="submit" [disabled]="keyPointForm.invalid" [mat-dialog-close]="true">Add</button>
+  </mat-dialog-actions>
+</form>
