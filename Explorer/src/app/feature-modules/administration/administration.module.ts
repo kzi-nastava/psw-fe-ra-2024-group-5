@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileFormComponent } from './user-profile-form/user-profile-form.component';
 import { RouterModule } from '@angular/router';
+import { AccountsComponent } from './accounts/accounts.component';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -15,18 +17,21 @@ import { RouterModule } from '@angular/router';
     EquipmentComponent,
     UserProfileComponent,
     UserProfileFormComponent
+    AccountsComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     RouterModule
+    MatTableModule,
   ],
   exports: [
     EquipmentComponent,
     EquipmentFormComponent,
     UserProfileComponent,
-    
+    AccountsComponent,
+    MatTableModule
   ]
 })
 export class AdministrationModule { }
