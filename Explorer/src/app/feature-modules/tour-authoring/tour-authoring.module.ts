@@ -6,6 +6,8 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { FacilityComponent } from './facility/facility.component';
 import { FacilityDialogComponent } from './facility-dialog/facility-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TourMapComponent } from './tour-map/tour-map.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     KeyPointsComponent,
     KeyPointFormComponent,
     FacilityComponent,
-    FacilityDialogComponent
+    FacilityDialogComponent,
+    TourMapComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     KeyPointsComponent,
-    KeyPointFormComponent
+    KeyPointFormComponent,
+    SharedModule
   ]
 })
 export class TourAuthoringModule { }
