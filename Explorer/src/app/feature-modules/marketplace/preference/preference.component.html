@@ -1,0 +1,28 @@
+<div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tourist ID</th>
+            <th>Preferred Difficulty</th>
+            <th>Walk Rating</th>
+            <th>Bike Rating</th>
+            <th>Car Rating</th>
+            <th>Boat Rating</th>
+            <th>Interest Tags</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let preference of preferences">
+            <td>{{ preference.id }}</td>
+            <td>{{ preference.touristId }}</td>
+            <td>{{ preference.preferredDifficulty }}</td>
+            <td>{{ preference.walkRating }}</td>
+            <td>{{ preference.bikeRating }}</td>
+            <td>{{ preference.carRating }}</td>
+            <td>{{ preference.boatRating }}</td>
+            <td>{{ preference.interestTags.join(', ') }}</td>
+        </tr>
+    </tbody>
+</table>
+<div>
