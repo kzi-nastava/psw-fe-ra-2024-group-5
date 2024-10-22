@@ -5,4 +5,16 @@
     object-fit: cover; /* Ensures the image is cropped to fit if needed */
     border-radius: 4px; /* Optional: adds slightly rounded corners */
   }
+
+  .container-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .info-text{
+    font-size: medium;
+    color: gray;
+    margin: 10px;
+  }
   

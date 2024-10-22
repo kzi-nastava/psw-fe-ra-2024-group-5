@@ -36,7 +36,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="cancel()" mat-dialog-close>Cancel</button>
     <button mat-raised-button type="submit" [disabled]="keyPointForm.invalid" [mat-dialog-close]="true">Add</button>
   </mat-dialog-actions>
 </form>

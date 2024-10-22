@@ -6,6 +6,8 @@ import { Validators } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { KeyPointsComponent } from '../key-points/key-points.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'xp-key-point-form',
@@ -21,15 +23,17 @@ export class KeyPointFormComponent {
   imagePreview: string | null = null;
 
   constructor(private fb: FormBuilder,
-              public dialogRef: MatDialogRef<KeyPointsComponent>
+              public dialogRef: MatDialogRef<KeyPointsComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: {latitude: number, longitude: number}
   ) {
     this.keyPointForm = this.fb.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(256)]],
       image: ['' , [Validators.required]],
+      latitude: data.latitude,
+      longitude: data.longitude
     });
 
-    
   }
 
   onFileSelected(event: Event): void {
@@ -58,13 +62,12 @@ export class KeyPointFormComponent {
     reader.readAsDataURL(file);
   }
 
-  onSubmit() : void {
-    console.log('tooo');
-    console.log(this.keyPoint.name + "---" + this.keyPointForm.controls['name'].value)
-    this.keyPoint.name = this.keyPointForm.controls['name'].value;
-    this.keyPoint.description = this.keyPointForm.controls['description'].value;
-    this.keyPoint.image = this.keyPointForm.controls['image'].value;
+  cancel(): void{
+    this.dialogRef.close(null);
+  }
 
+  onSubmit() : void {
+    this.keyPoint = this.keyPointForm.value;
     this.dialogRef.close(this.keyPoint);
   }
 }

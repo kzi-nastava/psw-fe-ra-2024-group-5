@@ -1,12 +1,13 @@
 
 <div class="container">
-    <div class="component component-1">Map-Component</div>
+    <div class="component component-1">
+      <div class="map-container">
+        <app-map (addItem)="sendCoordinates($event)"></app-map>
+      </div>
+    </div>
     <div class="row">
       
       <div class="component component-2">
-        <div class="title-container">
-          <h1 mat-dialog-title>Add a new tour</h1>
-      </div>
       
       <form [formGroup]="form">
           <div mat-dialog-content class="content-container">
@@ -59,7 +60,10 @@
           <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
       </div>
       </div>
-      <div class="component component-3"><xp-key-points [isTourBeingCreated]="true"></xp-key-points></div>
+      <div class="component component-3">
+        
+        <xp-key-points [isTourBeingCreated]="true" [coordinates]="coordinates" (cancel)="cancelKeyPoint()"></xp-key-points>
+      </div>
     </div>
     <div>
       <button mat-raised-button color="primary" (click)="back()">

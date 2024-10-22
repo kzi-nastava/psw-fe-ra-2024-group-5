@@ -3,6 +3,14 @@
     flex-direction: column;
     width: 100%;
   }
+
+  .map-container{
+    height: 300px;
+    width: 100%;
+    position: relative;
+  }
+
+  
   
   .component {
     padding: 20px;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { KeyPoint } from '../model/key-point.model';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { TourAuthoringService } from '../tour-authoring.service';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
+import { OnChanges } from '@angular/core';
 
 @Component({
   selector: 'xp-key-points',
@@ -17,7 +18,9 @@ import { MatTable } from '@angular/material/table';
 export class KeyPointsComponent implements OnInit {
   keyPoints: KeyPoint[] = [];
   displayedColumns: string[] = ['name', 'description', 'image']
+  @Input() coordinates: number[] | null = null;
   @Input() isTourBeingCreated: boolean = false;
+  @Output() cancel = new EventEmitter<any>();
   @ViewChild(MatTable) table: MatTable<KeyPoint>;
 
   constructor(private tourAuthoringService: TourAuthoringService, 
@@ -36,12 +39,26 @@ export class KeyPointsComponent implements OnInit {
     );
   }
 
+  ngOnChanges(changes: SimpleChanges){
+    if (changes['coordinates'] && changes['coordinates'].currentValue) {
+      console.log('dobio sam koordinate')
+      this.openDialog();
+    }
+  }
+
   openDialog() {
+    if(!this.coordinates)
+      return;
     const dialogRef = this.dialog.open(KeyPointFormComponent, {
-      width: '50%'
+      width: '50%',
+      data: {latitude: this.coordinates[0], longitude: this.coordinates[1]}
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(!result){
+        this.cancel.emit();
+        return;
+      }
       console.log(result);
       this.keyPoints.push(result);
       this.table.renderRows();
