@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BlogComponent } from './blog/blog.component';
+import { BlogComponent } from './blog-post/blog.component';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BlogFormComponent } from './blog-form/blog-form.component';
 
 
 @NgModule({
   declarations: [
-    BlogComponent
+    BlogComponent,
+    BlogFormComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [
-    BlogComponent
+    BlogComponent,
+    BlogFormComponent
   ]
 })
 export class BlogModule { }
