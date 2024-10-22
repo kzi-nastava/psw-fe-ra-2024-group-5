@@ -22,3 +22,36 @@
   .component-2, .component-3 {
     width: 49%; /* Each component takes half the width of the container */
   }
+  .action-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.title-container{
+    display: flex;
+    justify-content: center;
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.number-file-inputs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.number-input{
+    width: 100px;
+}
+
+.file-container{
+    display: flex;
+    flex-direction: column;
+}
