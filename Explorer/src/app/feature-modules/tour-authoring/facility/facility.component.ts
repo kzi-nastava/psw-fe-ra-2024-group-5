@@ -12,7 +12,7 @@ import { MapComponent } from 'src/app/shared/map/map.component';
 })
 export class FacilityComponent {
   facilities: Facility[];
-  displayedColumns: string[] = ['name', 'description', 'type', 'latitude', 'longitude'];
+  displayedColumns: string[] = ['name', 'description', 'type', 'latitude', 'longitude', 'update'];
   @ViewChild(MapComponent) mapComponent!: MapComponent;
 
   constructor(private facilityService: FacilityService, public dialog: MatDialog){
@@ -29,16 +29,26 @@ export class FacilityComponent {
   }
 
   openDialog(): void{
-    const latitude = 10; 
-    const longitude = 10;
-
     const dialogRef = this.dialog.open(FacilityDialogComponent, {
       width: '600px',
-      data: {latitude, longitude}
+      data: {selectedFacility : null}
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.loadFacilities();
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        this.loadFacilities();
+    });
+  }
+
+  onUpdate(facility: Facility): void {
+    const dialogRef = this.dialog.open(FacilityDialogComponent, {
+      width: '600px',
+      data: {selectedFacility : facility}
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        this.loadFacilities();
     });
   }
 }
