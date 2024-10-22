@@ -17,6 +17,7 @@ export class FacilityDialogComponent {
   selectedFile: File;
   fileName: string = '';
   mapFacilities: Facility[] = [];
+  title: string = 'Add a new facility';
   @ViewChild(MapComponent) mapComponent!: MapComponent;
 
   constructor(
@@ -37,6 +38,7 @@ export class FacilityDialogComponent {
     });
 
     if(data.selectedFacility){
+      this.title = 'Update existing facility';
       const long = data.selectedFacility.longitude;
       const lat = data.selectedFacility.latitude;
 
