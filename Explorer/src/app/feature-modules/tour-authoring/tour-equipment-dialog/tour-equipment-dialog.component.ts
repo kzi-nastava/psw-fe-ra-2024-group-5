@@ -33,7 +33,6 @@ export class TourEquipmentDialogComponent {
 		this.tourEquipmentService.getAllEquipment().subscribe(res => {
 			this.allEquipment = res.results;
 		});
-
 	}
 
 	isSelected(equipment: Equipment): boolean {
@@ -50,8 +49,9 @@ export class TourEquipmentDialogComponent {
     }
 
 	saveEquipment(): void {
-		console.log(this.selectedEquipment);
-		this.dialogRef.close();
+		this.tourEquipmentService.saveTourEquipment(this.tourId, this.selectedEquipment).subscribe(() => {
+			this.dialogRef.close();
+		});
 	}
 
 	closeDialog(): void {
