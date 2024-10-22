@@ -6,7 +6,7 @@
     width: 50%;
     margin: auto;
     margin-top: 50px;
-    background-color: #f9f9f9;
+    background-color: #c6d7ea;
 }
 
 .profile-image {
@@ -34,6 +34,9 @@
 .profile-name { 
     white-space: nowrap;  
     margin-right: auto;
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .edit-button {
@@ -45,6 +48,8 @@
     cursor: pointer; 
     position: absolute;
     right: 450px;
+    height: 34px;
+    width: 100px;
 }
 
 .edit-button:hover {
@@ -52,11 +57,12 @@
 }
 
 .profile-bio {
-    margin-top: 10px;
+    margin-top: 30px;
     font-size: 16px;
     color: #555;
     position: relative; 
     padding-left: 15px;
+    font-size: 18px;
 }
 
 .profile-bio::before {
@@ -73,6 +79,7 @@
     color: #888;
     position: relative; 
     padding-left: 15px;
+    font-size: 18px;
 }
 
 .profile-motto::before {
