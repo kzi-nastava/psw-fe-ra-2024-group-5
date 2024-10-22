@@ -8,6 +8,7 @@ import { RegistrationComponent } from '../auth/registration/registration.compone
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
+import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'facility', component: FacilityComponent},
   {path: 'tour-map', component: TourMapComponent},
   {path: 'accounts', component: AccountsComponent},
+  {path: 'clubs', component: ClubComponent}
 ];
 
 @NgModule({
