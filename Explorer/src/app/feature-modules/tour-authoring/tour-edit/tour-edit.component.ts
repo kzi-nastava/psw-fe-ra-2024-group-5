@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Tour } from '../model/tour.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'xp-tour-edit',
@@ -38,5 +39,13 @@ export class TourEditComponent implements OnInit{
     });
   }
 
-  
+  // getErrorMessage(controlName: string): string {
+  //   const control: AbstractControl | null = this.form.get(controlName);
+  //   if(control === null)
+  //     return '';
+  //   if (control.hasError('required')) {
+  //     return `${controlName} is required`;
+  //   }
+  //   return ''; 
+  // }
 }
