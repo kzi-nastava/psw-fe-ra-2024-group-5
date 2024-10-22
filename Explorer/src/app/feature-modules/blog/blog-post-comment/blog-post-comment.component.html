@@ -1,0 +1,21 @@
+<div *ngIf="blogComment.length > 0; else noData">
+  <table style="border: 1px solid black;">
+    <thead>
+      <tr>
+        <th>Comment text</th>
+        <th>Creation time</th>
+        <th>Last time of editing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let com of blogComment; let i = index">
+        <td>{{ com.commentText }}</td> 
+        <td>{{ com.creationTime | date: 'short' }}</td>
+        <td>{{ com.lastEditedTime ? (com.lastEditedTime | date: 'short') : 'Never edited' }}</td>  
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noData>
+  <p>No comments available.</p>
+</ng-template>

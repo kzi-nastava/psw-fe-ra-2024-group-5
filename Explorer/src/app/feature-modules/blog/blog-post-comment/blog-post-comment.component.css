@@ -1,0 +1,40 @@
+/* Stilizacija cele tabele */
+table {
+    width: 100%; /* Tabela zauzima celokupnu širinu */
+    border-collapse: collapse; /* Uklanja duple linije između ćelija */
+    margin: 20px 0; /* Dodaje razmak iznad i ispod tabele */
+    font-family: Arial, sans-serif; /* Izaberi lepši font */
+  }
+  
+  /* Stil za zaglavlje tabele */
+  th {
+    background-color: #4CAF50; /* Zeleno zaglavlje */
+    color: white; /* Boja teksta u zaglavlju */
+    padding: 12px; /* Unutrašnji razmak u zaglavlju */
+    text-align: left; /* Tekst poravnat na levo */
+    border-bottom: 2px solid #ddd; /* Donji okvir za zaglavlje */
+  }
+  
+  /* Stil za ćelije u telu tabele */
+  td {
+    border: 1px solid #ddd; /* Okvir oko svake ćelije */
+    padding: 10px; /* Unutrašnji razmak u ćelijama */
+    text-align: left; /* Tekst u ćelijama poravnat na levo */
+  }
+  
+  /* Zebrasti redovi u tabeli */
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Svetlo sivi redovi */
+  }
+  
+  /* Dodavanje hover efekta */
+  tbody tr:hover {
+    background-color: #ddd; /* Tamniji sivi kada se pređe mišem */
+  }
+  
+  /* Stil za ivice tabele */
+  table {
+    border-radius: 8px; /* Zaobljene ivice tabele */
+    border: 1px solid #ccc; /* Spoljni okvir tabele */
+  }
+  
