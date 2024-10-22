@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { KeyPoint } from '../model/key-point.model';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { KeyPointFormComponent } from '../key-point-form/key-point-form.component';
 import { inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'xp-key-points',
@@ -14,10 +17,15 @@ import { MatDialog } from '@angular/material/dialog';
 export class KeyPointsComponent implements OnInit {
   keyPoints: KeyPoint[] = [];
   displayedColumns: string[] = ['name', 'description', 'image']
+  @Input() isTourBeingCreated: boolean = false;
+  @ViewChild(MatTable) table: MatTable<KeyPoint>;
 
-  constructor(private tourAuthoringService: TourAuthoringService, public dialog: MatDialog) {} // Ubrizgavanje zavisnosti
+  constructor(private tourAuthoringService: TourAuthoringService, 
+              public dialog: MatDialog) {} // Ubrizgavanje zavisnosti
 
   ngOnInit(): void {
+    if(this.isTourBeingCreated)
+      return;
     this.tourAuthoringService.getPaged(1).subscribe(
       (data) => {                                      // Aktivira se ako je HTTP zahtev uspesan
         this.keyPoints = data.results;                          // Smesta entitete u entities polje TS klase, kako bi bili dostupni u HTMLu
@@ -33,8 +41,12 @@ export class KeyPointsComponent implements OnInit {
       width: '50%'
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.keyPoints.push(result);
+      this.table.renderRows();
+      console.log(this.keyPoints)
+    });
   }
 }
+ 

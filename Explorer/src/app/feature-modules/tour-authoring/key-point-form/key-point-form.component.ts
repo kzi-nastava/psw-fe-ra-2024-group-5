@@ -4,6 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { KeyPoint } from '../model/key-point.model';
 import { Validators } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { KeyPointsComponent } from '../key-points/key-points.component';
 
 @Component({
   selector: 'xp-key-point-form',
@@ -12,15 +14,15 @@ import { AbstractControl } from '@angular/forms';
 })
 export class KeyPointFormComponent {
   keyPointForm: FormGroup;
-  keyPoint: KeyPoint;
+  keyPoint: KeyPoint = {
+    name: '',
+    description: ''
+  };
   imagePreview: string | null = null;
 
-  constructor(private fb: FormBuilder) {
-    this.keyPoint = {
-      name: '',
-      description: '',
-      image: '',
-    };
+  constructor(private fb: FormBuilder,
+              public dialogRef: MatDialogRef<KeyPointsComponent>
+  ) {
     this.keyPointForm = this.fb.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(256)]],
@@ -46,7 +48,7 @@ export class KeyPointFormComponent {
       const base64String = reader.result as string;
       this.imagePreview = base64String;
       this.keyPointForm.patchValue({ image: base64String.split(',')[1] });
-      console.log('Base64 string:', base64String);
+      //console.log('Base64 string:', base64String);
     };
 
     reader.onerror = (error) => {
@@ -57,11 +59,12 @@ export class KeyPointFormComponent {
   }
 
   onSubmit() : void {
-    if (this.keyPointForm.valid) {
-      this.keyPoint = this.keyPointForm.value;
-      console.log('Form Submitted:', this.keyPoint);
-    }else{
-      console.log(this.keyPointForm.controls['image'])
-    }
+    console.log('tooo');
+    console.log(this.keyPoint.name + "---" + this.keyPointForm.controls['name'].value)
+    this.keyPoint.name = this.keyPointForm.controls['name'].value;
+    this.keyPoint.description = this.keyPointForm.controls['description'].value;
+    this.keyPoint.image = this.keyPointForm.controls['image'].value;
+
+    this.dialogRef.close(this.keyPoint);
   }
 }

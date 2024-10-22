@@ -8,6 +8,9 @@ import { RegistrationComponent } from '../auth/registration/registration.compone
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
 import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
+import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
+import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
+import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 
 const routes: Routes = [
@@ -19,6 +22,9 @@ const routes: Routes = [
   {path: 'facility', component: FacilityComponent},
   {path: 'tour-map', component: TourMapComponent},
   {path: 'accounts', component: AccountsComponent},
+  {path: 'tour', component: TourComponent},
+  {path: 'tour-creation', component: TourCreationComponent},
+  {path: 'tour-edit/:tourId', component: TourEditComponent}
 ];
 
 @NgModule({

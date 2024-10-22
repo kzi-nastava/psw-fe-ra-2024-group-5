@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .component {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .component-1 {
+    width: 100%; /* Full width for the first component */
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .component-2, .component-3 {
+    width: 49%; /* Each component takes half the width of the container */
+  }

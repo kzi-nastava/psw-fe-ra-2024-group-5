@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyPoint } from './model/key-point.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
+import { Tour } from './model/tour.model';
+import { environment } from 'src/env/environment';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +16,22 @@ export class TourAuthoringService {
 
   getPaged(tourId: number): Observable<PagedResults<KeyPoint>> {
     return this.http.get<PagedResults<KeyPoint>>(`https://localhost:44333/api/tours/${tourId}/keypoints`);
+  }
+
+  getTours(user: User) : Observable<PagedResults<Tour>>{
+    if(user.role === 'author')
+      return this.http.get<PagedResults<Tour>>(environment.apiHost + 'tour/author/' + user.id);
+    else{
+      console.log('Nije dobra rola');
+      throw console.error('Nije dobra rola');
+    }
+  }
+
+  addTour(tour: Tour) : Observable<Tour>{
+    return this.http.post<Tour>(environment.apiHost + 'tour/', tour)
+  }
+
+  getTourbyId(id : number) : Observable<Tour>{
+    return this.http.get<Tour>(environment.apiHost + 'tour/' + id)
   }
 }
