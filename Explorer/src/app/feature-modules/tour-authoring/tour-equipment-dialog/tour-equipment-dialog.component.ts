@@ -33,14 +33,18 @@ export class TourEquipmentDialogComponent {
 		this.tourEquipmentService.getAllEquipment().subscribe(res => {
 			this.allEquipment = res.results;
 		});
+
+		this.tourEquipmentService.getTourEquipment(this.tourId).subscribe(res => {
+			this.selectedEquipment = res.results;
+		});
 	}
 
 	isSelected(equipment: Equipment): boolean {
-		return this.selectedEquipment.includes(equipment);
+		return this.selectedEquipment.some(selectedEquipment => selectedEquipment.id === equipment.id);
 	}
 
 	toggleSelection(equipment: Equipment): void {
-        const index = this.selectedEquipment.indexOf(equipment);
+        const index = this.selectedEquipment.findIndex(selectedEquipment => selectedEquipment.id === equipment.id);
         if (index === -1) {
             this.selectedEquipment.push(equipment);
         } else {
@@ -49,6 +53,7 @@ export class TourEquipmentDialogComponent {
     }
 
 	saveEquipment(): void {
+		console.log(this.selectedEquipment);
 		this.tourEquipmentService.saveTourEquipment(this.tourId, this.selectedEquipment).subscribe(() => {
 			this.dialogRef.close();
 		});

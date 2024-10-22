@@ -24,4 +24,8 @@ export class TourEquipmentService {
 
     return this.http.put(environment.apiHost + `tour/equipment/${tourId}`, equipmentIds);
   }
+
+  getTourEquipment(tourId: number): Observable<PagedResults<Equipment>> {
+    return this.http.get<PagedResults<Equipment>>(environment.apiHost + `tour/equipment/${tourId}`);
+  }
 }
