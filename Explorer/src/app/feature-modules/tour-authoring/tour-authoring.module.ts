@@ -26,10 +26,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   exports:[
     TourComponent,
-    SharedModule
   ]
 })
 export class TourAuthoringModule { }
