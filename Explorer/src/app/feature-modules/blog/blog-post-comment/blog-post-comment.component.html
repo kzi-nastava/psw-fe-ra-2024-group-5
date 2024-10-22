@@ -1,4 +1,11 @@
 <div *ngIf="blogComment.length > 0; else noData">
+
+  <div *ngIf="currentUser" class="user-info">
+    <p><strong>Username:</strong> {{ currentUser.username }}</p>
+    <p><strong>Role:</strong> {{ currentUser.role }}</p>
+  </div>
+  
+
   <p>Comments</p>
   <table style="border: 1px solid black;">
     <thead>
@@ -22,10 +29,11 @@
           </button>
        </td>
       </tr>
-      <tr>
-        <button (click)="onAddClicked()" color="primary" mat-icon-button>
+      <!-- <tr> -->
+        <!-- <button (click)="onAddClicked()" color="primary" mat-icon-button>
             <mat-icon>add</mat-icon>
-        </button></tr>
+        </button> -->
+     <!-- // </tr> -->
       
     </tbody>
   </table>
@@ -33,7 +41,12 @@
  <div>
       <xp-blog-post-comment-form *ngIf="shouldRenderBlogPostCommentForm" [shouldEdit]="shouldEdit" [comment]="selectedComment" (commentUpdated)="getCommentsForUser()"></xp-blog-post-comment-form>
  </div>
-
+ <div class="add-comment-section">
+  <h1> Add comment</h1>
+  <button (click)="onAddClicked()" color="primary" mat-icon-button>
+    <mat-icon>add</mat-icon>
+</button>
+</div>
 </div>
 <ng-template #noData>
   <p>No comments available.</p>

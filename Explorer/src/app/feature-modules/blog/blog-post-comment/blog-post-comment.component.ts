@@ -17,14 +17,18 @@ export class BlogPostCommentComponent implements OnInit  {
    shouldRenderBlogPostCommentForm: boolean = false;
    shouldEdit: boolean = false;
    userId : number;
+   currentUser : User;
 
   constructor ( private service: BlogService,  private authService: AuthService) {}
 
   ngOnInit(): void {
-    //this.getComment();
 
     this.authService.user$.subscribe((user : User) => {
+      console.log('User data:', user);  // Dodaj ispis za proveru korisničkih podataka
+
       this.userId = user.id;
+      this.currentUser = user;
+
       if (this.userId) {
         this.getCommentsForUser();
       }
@@ -58,36 +62,6 @@ export class BlogPostCommentComponent implements OnInit  {
       }
     });
   }
-
-
-
-  // getComment() : void {
-  //   this.service.getComment().subscribe({
-  //     next: (result: PagedResults<BlogPostComment>) => {
-
-  //       console.log('API result:', result);  // Prikazuje kompletan rezultat
-
-  //       if (Array.isArray(result)) {
-  //         console.log('API first object:', result[0]); 
-  //       }
-  
-  //       // Proverava i mapira podatke ako su tačni
-  //       if (result && Array.isArray(result)) {
-  //         this.blogComment = result.map(com => ({
-  //           ...com,
-  //           creationTime: new Date(com.creationTime),
-  //           lastEditedTime: com.lastEditedTime ? new Date(com.lastEditedTime) : null
-  //         }));
-  //         console.log('Mapped blogComment:', this.blogComment);
-  //       } else {
-  //         console.error('API did not return expected data.');
-  //       }
-  //     },
-  //     error: (err: any) => {
-  //       console.error('Error:', err);
-  //     }
-  //   });
-  // }
 
   deleteComment(id: number): void {
     this.service.deleteComment(id).subscribe({

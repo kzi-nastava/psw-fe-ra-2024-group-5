@@ -8,22 +8,17 @@ form {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Stil za textarea */
 textarea {
     width: 100%;
 }
-
-/* Stil za polja u formi */
 .mat-form-field {
     width: 100%;
 }
 
-/* Dugmad u formi */
 button[type="submit"] {
     margin-top: 10px;
 }
 
-/* Dodatno za dugmad */
 button {
     margin: 5px;
 }
