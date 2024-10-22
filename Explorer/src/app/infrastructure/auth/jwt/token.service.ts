@@ -20,4 +20,9 @@ import { ACCESS_TOKEN , USER } from '../../../shared/constants';
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(USER);
     }
+
+    getUserId(): number | null {
+      const userId = localStorage.getItem(USER);
+      return userId ? +userId : null;
+    }
   }
