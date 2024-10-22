@@ -6,15 +6,15 @@
         <div class="title-container">
           <h1 mat-dialog-title>Add a new tour</h1>
       </div>
-      
-      <form [formGroup]="form">
+      <div class="scrollable-form-container">
+        <form [formGroup]="form">
           <div mat-dialog-content class="content-container">
               <mat-form-field appearance="outline" class="custom-form-field">
                   <mat-label>Name</mat-label>
                   <input matInput placeholder="Enter tour name" formControlName="Name">
                   <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
                       {{ getErrorMessage('Name') }}
-                  </mat-error>
+                    </mat-error>
               </mat-form-field>
       
               <mat-form-field appearance="outline">
@@ -25,7 +25,7 @@
                             cdkAutosizeMinRows="1"
                             formControlName="Description"
                             cdkAutosizeMaxRows="5"></textarea>
-                  <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
+                            <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
                       {{ getErrorMessage('Description') }}
                   </mat-error>
               </mat-form-field>
@@ -50,8 +50,9 @@
                   </mat-error>
                 </mat-form-field>
                 
+              </div>
+            </form>
           </div>
-      </form>
       
       <div mat-dialog-actions class="action-container">
           <!-- <button mat-button (click)="closeDialog()">Close</button> -->

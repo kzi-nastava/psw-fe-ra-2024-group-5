@@ -55,7 +55,7 @@ export class TourComponent implements OnInit{
   onAddTour(): void{
     this.router.navigate(['/tour-creation'])
   }
-  onEditTour(): void{
-    this.router.navigate(['/tour-edit', 2])
+  onEditTour(t: Tour): void{
+    this.router.navigate(['/tour-edit', t.id])
   }
 }
