@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Image</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -13,6 +14,53 @@
             <td>{{ item.name }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.imageDirectory }}</td>
+            <td>
+                <button (click)="selectClubForEdit(item)">Edit</button>
+                <button (click)="deleteClub(item.id || 0)">Delete</button>
+            </td>
         </tr>
     </tbody>
 </table>
+
+<!-- Form for creating a new club -->
+<h3>Create a new club</h3>
+<form (submit)="createClub()" #createForm="ngForm">   
+    <label for="name">Name:</label>
+    <input id="name" [(ngModel)]="newClub.name" name="name" required minlength="3" #name="ngModel" />
+    <div *ngIf="name.invalid && name.touched" class="error">
+        <!-- Validation error messages for the Name field -->
+        <small *ngIf="name.errors?.['required']">Name is required.</small>
+        <small *ngIf="name.errors?.['minlength']">Name must be at least 3 characters long.</small>
+    </div>
+
+    <label for="description">Description:</label>
+    <input id="description" [(ngModel)]="newClub.description" name="description" />
+    
+    <label for="imageDirectory">Image Directory:</label>
+    <input id="imageDirectory" [(ngModel)]="newClub.imageDirectory" name="imageDirectory" />
+    <br><br>
+    
+    <button type="submit" [disabled]="createForm.invalid">Create Club</button>
+</form>
+
+<!-- Form for editing an existing club -->
+<h3 *ngIf="selectedClub">Edit Club</h3>
+<form *ngIf="selectedClub" (submit)="updateClub()" #editForm="ngForm">
+    <label for="editName">Name:</label>
+    <input id="editName" [(ngModel)]="selectedClub.name" name="editName" required minlength="3" #editName="ngModel" />
+    <div *ngIf="editName.invalid && editName.touched" class="error">
+        <!-- Validation error messages for the Name field -->
+        <small *ngIf="editName.errors?.['required']">Name is required.</small>
+        <small *ngIf="editName.errors?.['minlength']">Name must be at least 3 characters long.</small>
+    </div>
+    
+    <label for="editDescription">Description:</label>
+    <input id="editDescription" [(ngModel)]="selectedClub.description" name="editDescription" />
+    
+    <label for="editImageDirectory">Image Directory:</label>
+    <input id="editImageDirectory" [(ngModel)]="selectedClub.imageDirectory" name="editImageDirectory" />
+    <br><br>
+
+    <button type="submit" [disabled]="editForm.invalid">Update Club</button>
+</form>
+

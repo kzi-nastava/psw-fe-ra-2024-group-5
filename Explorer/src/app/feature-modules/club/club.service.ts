@@ -8,11 +8,24 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
   providedIn: 'root'
 })
 export class ClubService {
-  private apiUrl = 'https://localhost:44333/api/tourist/club'; // URL ka kontroleru koji smo napravili
+  private apiUrl = 'https://localhost:44333/api/tourist/club';
 
-  constructor(private http: HttpClient) {}               // Dependency injection Angular mehanizma za pravljenje HTTP zahteva
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<PagedResults<Club>> {
-    return this.http.get<PagedResults<Club>>(this.apiUrl);              // Upotreba HTTP servisa za pravljenje GET zahteva na dati URL
+    return this.http.get<PagedResults<Club>>(this.apiUrl);
+  }
+
+  create(club: Club): Observable<Club> {
+    return this.http.post<Club>(this.apiUrl, club);
+  }
+
+  update(club: Club): Observable<Club> {
+    return this.http.put<Club>(`${this.apiUrl}/${club.id}`, club);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
+
