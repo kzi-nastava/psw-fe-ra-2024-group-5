@@ -7,6 +7,7 @@ import { FacilityDialogComponent } from './facility-dialog/facility-dialog.compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { TourFormComponent } from './tour-form/tour-form.component';
 import { TourCreationComponent } from './tour-creation/tour-creation.component';
+import { TourEditComponent } from './tour-edit/tour-edit.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TourCreationComponent } from './tour-creation/tour-creation.component';
     FacilityComponent,
     FacilityDialogComponent,
     TourFormComponent,
-    TourCreationComponent
+    TourCreationComponent,
+    TourEditComponent
   ],
   imports: [
     CommonModule,

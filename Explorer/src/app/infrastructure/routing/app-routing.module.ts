@@ -9,6 +9,7 @@ import { AccountsComponent } from 'src/app/feature-modules/administration/accoun
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
+import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard],},
   {path: 'accounts', component: AccountsComponent},
   {path: 'tour', component: TourComponent},
-  {path: 'tour-creation', component: TourCreationComponent}
+  {path: 'tour-creation', component: TourCreationComponent},
+  {path: 'tour-edit', component: TourEditComponent}
 ];
 
 @NgModule({
