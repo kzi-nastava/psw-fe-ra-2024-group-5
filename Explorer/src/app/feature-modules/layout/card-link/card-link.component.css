@@ -1,0 +1,19 @@
+.card-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 140px;
+    width: 280px;
+    color: var(--text-title);
+    font-size: 1.35rem;
+    font-weight: 500;
+    background-color: white !important;
+    border: 2px solid rgb(200, 200, 200) !important;
+    border-radius: 20px;
+}
+
+.card-icon {
+    font-size: 1.85rem !important;
+    width: auto !important;
+    height: auto !important;
+}
