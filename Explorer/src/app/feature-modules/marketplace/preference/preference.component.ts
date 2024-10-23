@@ -12,8 +12,11 @@ export class PreferenceComponent implements OnInit {
   preferences: Preference[] = [];
 
   constructor(private service: MarketplaceService) { }
-
   ngOnInit(): void {
+    this.getPreference(); 
+  }
+
+  getPreference(): void {
     this.service.getPreference().subscribe({
       next: (result: PagedResults<Preference>) => {
         this.preferences = result.results;

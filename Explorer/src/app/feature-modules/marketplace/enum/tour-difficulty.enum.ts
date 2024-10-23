@@ -1,5 +1,5 @@
 export enum TourDifficulty {
-    BEGINER = "beginner",
-    INTERMEDIATE = "intermediate",
-    ADVANCED = "advanced"
+    BEGINNER = 0,
+    INTERMEDIATE = 1,
+    ADVANCED = 2
 }

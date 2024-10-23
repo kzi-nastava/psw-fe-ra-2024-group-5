@@ -1,9 +1,8 @@
 <div>
+    <div>
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Tourist ID</th>
             <th>Preferred Difficulty</th>
             <th>Walk Rating</th>
             <th>Bike Rating</th>
@@ -14,8 +13,6 @@
     </thead>
     <tbody>
         <tr *ngFor="let preference of preferences">
-            <td>{{ preference.id }}</td>
-            <td>{{ preference.touristId }}</td>
             <td>{{ preference.preferredDifficulty }}</td>
             <td>{{ preference.walkRating }}</td>
             <td>{{ preference.bikeRating }}</td>
@@ -25,4 +22,6 @@
         </tr>
     </tbody>
 </table>
+<div>
+    <xp-preference-dialog (preferenceUpdated)="getPreference()" ></xp-preference-dialog>
 <div>
