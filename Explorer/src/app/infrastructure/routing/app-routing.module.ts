@@ -16,23 +16,24 @@ import { PreferenceComponent } from 'src/app/feature-modules/marketplace/prefere
 import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
+import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegistrationComponent},
-  {path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard],},
-  {path: 'facility', component: FacilityComponent},
-  {path: 'tour-map', component: TourMapComponent},
-  {path: 'accounts', component: AccountsComponent},
-  {path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard],},
-  {path: 'tour', component: TourComponent},
-  {path: 'tour-creation', component: TourCreationComponent},
-  {path: 'tour-edit/:tourId', component: TourEditComponent},
+  { path: '', component: LandingComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegistrationComponent },
+  { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
+  { path: 'facility', component: FacilityComponent },
+  { path: 'tour-map', component: TourMapComponent },
+  { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard],},
+  { path: 'tour', component: TourComponent},
+  { path: 'tour-creation', component: TourCreationComponent},
+  { path: 'tour-edit/:tourId', component: TourEditComponent},
   { path: 'accounts', component: AccountsComponent },
   { path: 'preferences', component: PreferenceComponent } ,
-  {path: 'blog', component:BlogComponent},
-  {path: 'addBlog', component:BlogFormComponent},
+  { path: 'blog', component:BlogComponent},
+  { path: 'addBlog', component:BlogFormComponent},
 ];
 
 @NgModule({

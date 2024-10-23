@@ -1,0 +1,88 @@
+.landing {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 50px;
+    gap: 50px;
+}
+
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.banner-content {
+    width: 80%;
+    height: auto;
+}
+
+.banner-content p {
+    color: white;
+    font-weight: bold;
+    font-size: 3rem;
+    line-height: 100%;
+}
+
+.card-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.content-card-section>div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.content-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding-top: 2em;
+}
+
+.tour-card,
+.blog-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 265px;
+    height: 300px;
+}
+
+.banner-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.banner-container>.banner {
+    width: 100%;
+}
+
+.labels-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: var(--alert-success-bg);
+    color: white;
+    font-weight: 500;
+    font-size: 1.25em;
+    border-radius: 20px;
+}

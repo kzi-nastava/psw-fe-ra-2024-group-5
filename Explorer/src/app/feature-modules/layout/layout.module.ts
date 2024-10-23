@@ -4,12 +4,19 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { LandingComponent } from './landing/landing.component';
+import { CardLinkComponent } from './card-link/card-link.component';
+import { FooterComponent } from './footer/footer.component';
 import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 
 @NgModule({
   declarations: [
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    LandingComponent,
+    CardLinkComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +26,7 @@ import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 ],
   exports: [
     NavbarComponent,
+    FooterComponent,
     HomeComponent
   ]
 })
