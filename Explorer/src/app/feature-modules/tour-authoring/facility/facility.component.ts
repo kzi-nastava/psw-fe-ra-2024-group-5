@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { Facility } from 'src/app/shared/model/facility';
 import { FacilityService } from '../facility.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FacilityDialogComponent } from '../facility-dialog/facility-dialog.component';
+import { MapComponent } from 'src/app/shared/map/map.component';
 
 @Component({
   selector: 'xp-facility',
@@ -11,7 +12,9 @@ import { FacilityDialogComponent } from '../facility-dialog/facility-dialog.comp
 })
 export class FacilityComponent {
   facilities: Facility[];
-  displayedColumns: string[] = ['name', 'description', 'type', 'latitude', 'longitude'];
+  displayedColumns: string[] = ['name', 'description', 'type', 'latitude', 'longitude', 'update'];
+  @ViewChild(MapComponent) mapComponent!: MapComponent;
+  facilityTypes: string[] = ['Wc', 'Restaurant', 'Parking', 'Other'];
 
   constructor(private facilityService: FacilityService, public dialog: MatDialog){
     this.loadFacilities()
@@ -27,16 +30,26 @@ export class FacilityComponent {
   }
 
   openDialog(): void{
-    const latitude = 10;  // First number
-    const longitude = 10;
-
     const dialogRef = this.dialog.open(FacilityDialogComponent, {
       width: '600px',
-      data: {latitude, longitude}
+      data: {selectedFacility : null}
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.loadFacilities();
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        this.loadFacilities();
+    });
+  }
+
+  onUpdate(facility: Facility): void {
+    const dialogRef = this.dialog.open(FacilityDialogComponent, {
+      width: '600px',
+      data: {selectedFacility : facility}
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        this.loadFacilities();
     });
   }
 }

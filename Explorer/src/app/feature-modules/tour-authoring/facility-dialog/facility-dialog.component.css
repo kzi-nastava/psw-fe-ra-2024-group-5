@@ -16,15 +16,20 @@
     justify-content: center;
 }
 
-.number-file-inputs {
+.location-file-inputs {
     display: flex;
     justify-content: space-between;
     width: 100%;
     align-items: center;
 }
 
-.number-input{
-    width: 100px;
+.location-input{
+    width: 350px;
+}
+
+.map-container{
+    position: relative;
+    min-height: 150px;
 }
 
 .file-container{
