@@ -38,6 +38,13 @@
                 Add Blog
             </button>
 
+            <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')"  mat-raised-button [routerLink]="['create-comment']">
+                Make comment
+            </button>
+            <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')"  mat-raised-button [routerLink]="['add-comment']">
+                Add comment
+            </button>
+
             <button mat-icon-button class="icon-button">
                 <mat-icon>person</mat-icon>
             </button>
