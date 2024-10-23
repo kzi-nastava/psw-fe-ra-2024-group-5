@@ -19,6 +19,8 @@ import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.compo
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
+import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post-comment/blog-post-comment.component';
+import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
@@ -37,7 +39,9 @@ const routes: Routes = [
   { path: 'accounts', component: AccountsComponent },
   { path: 'preferences', component: PreferenceComponent } ,
   { path: 'blog', component:BlogComponent},
-  { path: 'addBlog', component:BlogFormComponent}
+  { path: 'addBlog', component:BlogFormComponent},
+  { path: 'create-comment', component: BlogPostCommentComponent},
+  { path: 'add-comment', component: BlogPostCommentFormComponent}
 ];
 
 @NgModule({

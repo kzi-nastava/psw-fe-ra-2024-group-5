@@ -1,0 +1,102 @@
+table {
+  width: 50%;
+  border-collapse: collapse;
+  margin: 0 auto 20px auto; 
+  font-family: Arial, sans-serif;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+/* Stil za zaglavlje */
+th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px; 
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Stil za ćelije u telu */
+td {
+  border: 1px solid #ddd;
+  padding: 6px; 
+  text-align: left;
+}
+
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+tbody tr:hover {
+  background-color: #ddd;
+}
+
+/* Ograničavanje visine tabele i smanjenje veličine redova */
+tbody {
+  display: block;
+  max-height: 250px; /* Prilagođeno da se prikaže više redova (5 komentara) */
+  overflow-y: scroll;
+  scrollbar-width: thin; 
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 10px;
+}
+
+/* Naslov "Comments" iznad tabele */
+p {
+  font-weight: bold;
+  text-align: left;
+  margin-left: 25%; 
+}
+
+/* Stil za prikaz korisničkih informacija */
+.user-info {
+  width: 50%; 
+  margin: 0 auto 10px auto; 
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  background-color: #f9f9f9; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: left; 
+}
+
+.user-info p {
+  margin: 5px 0; 
+  font-weight: bold;
+  color: #333; 
+}
+
+/* Stil za deo sa naslovom "Add comment" i dugmetom */
+.add-comment-section {
+  display: flex;
+    align-items: center;
+  width: 50%; 
+  margin: 20px auto 0 auto; /* Centrirano ispod tabele */
+  padding: 10px;
+
+}
+
+.add-comment-section h1 {
+  margin: 0; /* Uklanja defaultni razmak naslova */
+  font-size: 18px; 
+}
+
+.add-comment-section button {
+  margin-left: 10px; 
+}
+
+

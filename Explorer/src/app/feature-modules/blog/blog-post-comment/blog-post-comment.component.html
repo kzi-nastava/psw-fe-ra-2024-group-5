@@ -1,0 +1,53 @@
+<div *ngIf="blogComment.length > 0; else noData">
+
+  <div *ngIf="currentUser" class="user-info">
+    <p><strong>Username:</strong> {{ currentUser.username }}</p>
+    <p><strong>Role:</strong> {{ currentUser.role }}</p>
+  </div>
+  
+
+  <p>Comments</p>
+  <table style="border: 1px solid black;">
+    <thead>
+      <tr>
+        <th>Comment text</th>
+        <th>Creation time</th>
+        <th>Last time of editing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let com of blogComment; let i = index">
+        <td>{{ com.commentText }}</td> 
+        <td>{{ com.creationTime | date: 'short' }}</td>
+        <td>{{ com.lastEditedTime ? (com.lastEditedTime | date: 'short') : 'Never edited' }}</td>  
+        <td>
+          <button (click)="deleteComment(com.id|| 0)" color="accent" mat-icon-button>
+              <mat-icon>delete</mat-icon>
+          </button>
+          <button (click)="onEditClicked(com)" color="primary" mat-icon-button>
+              <mat-icon>edit</mat-icon>
+          </button>
+       </td>
+      </tr>
+      <!-- <tr> -->
+        <!-- <button (click)="onAddClicked()" color="primary" mat-icon-button>
+            <mat-icon>add</mat-icon>
+        </button> -->
+     <!-- // </tr> -->
+      
+    </tbody>
+  </table>
+  
+ <div>
+      <xp-blog-post-comment-form *ngIf="shouldRenderBlogPostCommentForm" [shouldEdit]="shouldEdit" [comment]="selectedComment" (commentUpdated)="getCommentsForUser()"></xp-blog-post-comment-form>
+ </div>
+ <div class="add-comment-section">
+  <h1> Add comment</h1>
+  <button (click)="onAddClicked()" color="primary" mat-icon-button>
+    <mat-icon>add</mat-icon>
+</button>
+</div>
+</div>
+<ng-template #noData>
+  <p>No comments available.</p>
+</ng-template>
