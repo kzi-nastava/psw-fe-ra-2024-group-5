@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LandingComponent } from './landing/landing.component';
 import { CardLinkComponent } from './card-link/card-link.component';
 import { FooterComponent } from './footer/footer.component';
+import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 
 @NgModule({
   declarations: [
@@ -21,8 +22,8 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     MaterialModule,
     RouterModule,
-    MatIconModule
-  ],
+    TourAuthoringModule
+],
   exports: [
     NavbarComponent,
     FooterComponent,

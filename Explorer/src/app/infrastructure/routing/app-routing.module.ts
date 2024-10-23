@@ -7,12 +7,16 @@ import { AuthGuard } from '../auth/auth.guard';
 import { RegistrationComponent } from '../auth/registration/registration.component';
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
+import { EquipmentManagementComponent } from 'src/app/feature-modules/tour-execution/equipment-management/equipment-management.component';
+import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
+import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
+import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
+import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
 import { PreferenceComponent } from 'src/app/feature-modules/marketplace/preference/preference.component';
 import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
-
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
@@ -22,8 +26,12 @@ const routes: Routes = [
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
   { path: 'tour-map', component: TourMapComponent },
+  { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard],},
+  { path: 'tour', component: TourComponent},
+  { path: 'tour-creation', component: TourCreationComponent},
+  { path: 'tour-edit/:tourId', component: TourEditComponent},
   { path: 'accounts', component: AccountsComponent },
-  { path: 'preferences', component: PreferenceComponent },
+  { path: 'preferences', component: PreferenceComponent } ,
   { path: 'blog', component:BlogComponent},
   { path: 'addBlog', component:BlogFormComponent},
 ];
