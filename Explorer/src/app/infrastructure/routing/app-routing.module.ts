@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'profile', component: UserProfileComponent},
-  { path: 'profile/profile-form', component: UserProfileFormComponent}
+  { path: 'profile/profile-form', component: UserProfileFormComponent},
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
   { path: 'tour-map', component: TourMapComponent },

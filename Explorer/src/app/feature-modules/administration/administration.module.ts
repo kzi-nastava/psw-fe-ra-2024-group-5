@@ -16,15 +16,15 @@ import { MatTableModule } from '@angular/material/table';
     EquipmentFormComponent,
     EquipmentComponent,
     UserProfileComponent,
-    UserProfileFormComponent
+    UserProfileFormComponent,
     AccountsComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    RouterModule
-    MatTableModule,
+    RouterModule,
+    MatTableModule
   ],
   exports: [
     EquipmentComponent,
