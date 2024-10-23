@@ -8,8 +8,10 @@ import { RegistrationComponent } from '../auth/registration/registration.compone
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
+import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
 
 const routes: Routes = [
+  {path: '', component: LandingComponent},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
