@@ -38,4 +38,12 @@ export class TourAuthoringService {
   getTourbyId(id : number) : Observable<Tour>{
     return this.http.get<Tour>(environment.apiHost + 'tour/' + id)
   }
+
+  updateTour(tour:Tour) : Observable<Tour>{
+    return this.http.put<Tour>(environment.apiHost + 'tour/' + tour.id, tour)
+  }
+
+  deleteTour(id : number): Observable<Tour>{
+    return this.http.delete<Tour>(environment.apiHost + 'tour/' + id)
+  }
 }

@@ -18,7 +18,9 @@ export class KeyPointFormComponent {
   keyPointForm: FormGroup;
   keyPoint: KeyPoint = {
     name: '',
-    description: ''
+    description: '',
+    latitude: 0,
+    longitude: 0
   };
   imagePreview: string | null = null;
 

@@ -2,53 +2,45 @@
     <p>Tours</p>
     <hr>
     <div id="container-details">
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Tags</th>
-                    <th>Level</th>
-                    <th>Status</th>
-                    <th>Price($)</th>
-                    <th>Author Id</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let t of tours">
-                    <td>{{ t.id }}</td>
-                    <td>{{ t.name }}</td>
-                    <td>{{ t.description }}</td>
-                    <td>{{ t.tags }}</td>
-                    <td>{{ t.level }}</td>
-                    <td>{{ t.status }}</td>
-                    <td>{{ t.price }}</td>
-                    <td>{{ t.authorId }}</td>
-                    <td>
-                        <button color="accent" mat-icon-button (click)="openDialog()">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                        <button color="primary" mat-icon-button (click)="onEditTour()">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </td> 
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="example-button-container">
-        <button mat-raised-button color="primary" (click)="onAddTour()">
-            <mat-icon>add</mat-icon>
-            Add Tour
-        </button>
-      </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Tags</th>
+                        <th>Level</th>
+                        <th>Status</th>
+                        <th>Price($)</th>
+                        <th>Author Id</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let t of tours" (click)="onEditTour(t)">
+                        <td>{{ t.id }}</td>
+                        <td>{{ t.name }}</td>
+                        <td>{{ t.description }}</td>
+                        <td>{{ t.tags }}</td>
+                        <td>{{ t.level }}</td>
+                        <td>{{ t.status }}</td>
+                        <td>{{ t.price }}</td>
+                        <td>{{ t.authorId }}</td>
+                        <td>
+                            <button color="accent" mat-icon-button (click)="onDeleteTour(t); $event.stopPropagation();">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="example-button-container">
+            <button mat-raised-button color="primary" (click)="onAddTour()">
+                <mat-icon>add</mat-icon>
+                Add Tour
+            </button>
+        </div>
     </div>
 </div>
-
-
-
-

@@ -19,21 +19,23 @@ export class KeyPointsComponent implements OnInit {
   keyPoints: KeyPoint[] = [];
   displayedColumns: string[] = ['name', 'description', 'image']
   @Input() coordinates: number[] | null = null;
-  @Input() isTourBeingCreated: boolean = false;
+  @Input() tourId: number | null = null;
   @Output() cancel = new EventEmitter<any>();
+  @Output() displayKeyPoints = new EventEmitter<KeyPoint[]>();
   @ViewChild(MatTable) table: MatTable<KeyPoint>;
 
   constructor(private tourAuthoringService: TourAuthoringService, 
               public dialog: MatDialog) {} // Ubrizgavanje zavisnosti
 
   ngOnInit(): void {
-    if(this.isTourBeingCreated)
+    if(this.tourId == null)
       return;
-    this.tourAuthoringService.getPaged(12).subscribe(
-      (data) => {                                      // Aktivira se ako je HTTP zahtev uspesan
-        this.keyPoints = data.results;                          // Smesta entitete u entities polje TS klase, kako bi bili dostupni u HTMLu
+    this.tourAuthoringService.getPaged(this.tourId).subscribe(
+      (data) => {                                     
+        this.keyPoints = data.results;         
+        this.displayKeyPoints.emit(this.keyPoints);
       },
-      (error) => {                                      // Aktivira se ako je doslo do greske
+      (error) => {                                      
         console.error('Greška pri učitavanju podataka:', error);
       }
     );

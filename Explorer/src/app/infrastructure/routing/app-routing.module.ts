@@ -22,7 +22,6 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard],},
-  {path: 'key-points', component: KeyPointsComponent, canActivate: [AuthGuard],},
   {path: 'facility', component: FacilityComponent},
   {path: 'tour-map', component: TourMapComponent},
   {path: 'accounts', component: AccountsComponent},

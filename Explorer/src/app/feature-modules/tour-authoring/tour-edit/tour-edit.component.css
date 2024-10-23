@@ -18,4 +18,50 @@
     justify-content: space-between;
     width: 100%;
   }
-  
+
+  .action-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.title-container{
+    display: flex;
+    justify-content: center;
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.number-file-inputs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.number-input{
+    width: 100px;
+}
+
+.file-container{
+    display: flex;
+    flex-direction: column;
+}
+.scrollable-form-container {
+  max-height: 400px; /* Adjust height */
+  overflow-y: auto; /* Enable scrolling */
+  border: 1px solid #ccc; /* Optional */
+  padding: 16px; /* Optional */
+}
+
+.map-container{
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
