@@ -27,7 +27,6 @@ export class MapComponent implements AfterViewInit {
       center: [45.2396, 19.8227],
       zoom: 13,
     });
-    this.loadMarkers();
     this.isLastMarkerSet = false;
     this.registerOnClick(); 
     // this.search()
@@ -43,6 +42,7 @@ export class MapComponent implements AfterViewInit {
       }
     );
     tiles.addTo(this.map);
+    this.loadMarkers();
   }
 
   ngAfterViewInit(): void {
@@ -136,6 +136,8 @@ export class MapComponent implements AfterViewInit {
   }
 
     loadMarkers(): void{
+      if(!this.map)
+        return;
       if(this.facilities && this.facilities.length !== 0)
         this.loadFacilities();
     }
