@@ -18,5 +18,13 @@ export class FacilityService {
   addFacility(facility: Facility): Observable<Facility> {
     return this.http.post<Facility>(environment.apiHost + 'facility', facility);
   }
+
+  updateFacility(facility: Facility): Observable<Facility>{
+    return this.http.put<Facility>(environment.apiHost + 'facility', facility);
+  }
+
+  getFacility(id: number): Observable<Facility>{
+    return this.http.get<Facility>(environment.apiHost + 'facility' + `/${id}`);
+  }
   
 }

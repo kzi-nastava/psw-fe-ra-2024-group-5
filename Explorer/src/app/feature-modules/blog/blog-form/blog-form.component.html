@@ -1,0 +1,41 @@
+<div class="blog-form-container">
+    <h2>Create New Blog</h2>
+  
+    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" formControlName="title" class="form-control" placeholder="Enter blog title">
+        <div *ngIf="blogForm.controls['title'].invalid && blogForm.controls['title'].touched" class="error">
+          Title is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control" placeholder="Enter blog description"></textarea>
+        <div *ngIf="blogForm.controls['description'].invalid && blogForm.controls['description'].touched" class="error">
+          Description is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onImageSelected($event)">
+
+        <div class="image-preview-container" *ngIf="selectedImages.length > 0">
+          <div *ngFor="let img of selectedImages; let i = index" class="image-preview">
+            <img [src]="'data:' + img.contentType + ';base64,' + img.base64Data"
+             [alt]="'Image ' + i" style="max-width: 100%; height: auto;">
+            <button type="button" class="remove-image-btn" (click)="removeImage(i)">X</button>
+          </div>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Submitting...' : 'Create Blog' }}
+      </button>
+    </form>
+  </div>
+  

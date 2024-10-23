@@ -11,7 +11,11 @@ import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-p
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
 import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
+import { PreferenceComponent } from 'src/app/feature-modules/marketplace/preference/preference.component';
+import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
+import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
+
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -24,7 +28,11 @@ const routes: Routes = [
   {path: 'accounts', component: AccountsComponent},
   {path: 'tour', component: TourComponent},
   {path: 'tour-creation', component: TourCreationComponent},
-  {path: 'tour-edit/:tourId', component: TourEditComponent}
+  {path: 'tour-edit/:tourId', component: TourEditComponent},
+  { path: 'accounts', component: AccountsComponent },
+  { path: 'preferences', component: PreferenceComponent } ,
+  {path: 'blog', component:BlogComponent},
+  {path: 'addBlog', component:BlogFormComponent},
 ];
 
 @NgModule({
