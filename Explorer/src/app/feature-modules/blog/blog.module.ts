@@ -7,12 +7,17 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { BlogComponent } from './blog-post/blog.component';
+import { MaterialModule } from 'src/app/infrastructure/material/material.module';
+import { BlogFormComponent } from './blog-form/blog-form.component';
 
 
 @NgModule({
   declarations: [
     BlogPostCommentComponent,
-    BlogPostCommentFormComponent
+    BlogPostCommentFormComponent,
+    BlogComponent,
+    BlogFormComponent
   ],
   imports: [
     CommonModule,
@@ -20,13 +25,14 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatButtonModule
-
+    MatButtonModule,
+    MaterialModule,
   ], 
   exports: [
-    BlogPostCommentComponent
+    BlogPostCommentComponent,
+    BlogComponent,
+    BlogFormComponent
   ]
-   
   
 })
 export class BlogModule { }

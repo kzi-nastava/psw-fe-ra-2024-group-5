@@ -1,12 +1,53 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="navigation-bar">
     <div>
-        <p>Explorer</p>
+        <a [routerLink]="['/']" class="navbar-title">Explorer</a>
         <div id="buttons">
-            <button *ngIf="user && user.username === ''" color="accent" mat-raised-button [routerLink]="['login']">Login</button>
-            <button *ngIf="user && user.username !== ''" color="accent" mat-raised-button (click)="onLogout()">Logout</button>
-            <button color="primary" mat-raised-button [routerLink]="['home']">Home</button>
-            <button *ngIf="user && user.role === 'administrator'"color="primary" mat-raised-button [routerLink]="['equipment']">Manage equipment</button>
-            <button *ngIf="user && (user.role=='tourist' || user.role=='author') "color="primary" mat-raised-button [routerLink]="['create-comment']">Make comment</button>
+            <button class="primary" *ngIf="user && user.username === ''" [routerLink]="['login']" mat-button>
+                Login
+            </button>
+
+            <button class="primary" *ngIf="user && user.username !== ''" mat-button (click)="onLogout()">
+                Logout
+            </button>
+
+            <button [routerLink]="['home']" class="secondary" mat-button>
+                Home
+            </button>
+            
+            <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
+                [routerLink]="['tour']">
+                Tours
+            </button>
+
+            <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button
+                [routerLink]="['equipment']">
+                Manage equipment
+            </button>
+
+            <!-- Some of these links are to be put in dropdown menus -->
+            <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
+                (click)="openTourEquipmentDialog()">
+                Add equipment
+            </button>
+
+            <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['blog']">
+                Blogs
+            </button>
+
+            <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['addBlog']">
+                Add Blog
+            </button>
+
+            <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')"  mat-raised-button [routerLink]="['create-comment']">
+                Make comment
+            </button>
+            <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')"  mat-raised-button [routerLink]="['add-comment']">
+                Add comment
+            </button>
+
+            <button mat-icon-button class="icon-button">
+                <mat-icon>person</mat-icon>
+            </button>
         </div>
     </div>
 </mat-toolbar>

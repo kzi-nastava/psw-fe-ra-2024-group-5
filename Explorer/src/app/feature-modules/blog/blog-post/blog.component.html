@@ -1,0 +1,39 @@
+<div *ngIf="isLoading">
+    Loading blogs...
+  </div>
+  
+  <div *ngIf="error">
+    {{ error }}
+  </div>
+  
+  <div class="blog-container">
+    <div *ngFor="let blog of blogs" class="blog-card">
+      <h2>{{ blog.title }}</h2>
+  
+      <div style="display: flex; justify-content: space-between;">
+        <p>Status: 
+          {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : 'Unknown' }} 
+        </p>
+        
+        <p>Created at: {{ blog.createdDate | date }}</p>
+      </div>
+  
+      <div [innerHTML]="blog.description"></div>
+  
+      <div *ngIf="blog.imageData && blog.imageData.length > 0">
+        <img [src]="'data:' + blog.imageData[currentImageIndex[blog.id]].contentType + ';base64,' + blog.imageData[currentImageIndex[blog.id]].base64Data"
+             alt="{{ blog.title }}">
+
+        <div class="image-navigation" *ngIf="blog.imageData.length > 1">
+          <button (click)="previousImage(blog.id)" class="btn btn-secondary">Previous</button>
+          <button (click)="nextImage(blog.id, blog.imageData.length)" class="btn btn-secondary">Next</button>
+        </div>     
+      </div>
+
+      <div style="margin-top: 10px;">
+        <button *ngIf="blog.status === 0" (click)="updateBlogStatus(blog.id, 1)" class="btn btn-primary">Publish</button>
+        <button *ngIf="blog.status !== 2" (click)="updateBlogStatus(blog.id, 2)" class="btn btn-danger">Close</button>
+      </div>
+    </div>
+  </div>
+  

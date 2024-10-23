@@ -1,0 +1,105 @@
+/* Centralizovanje tabele */
+.equipment-table-container {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%; 
+  }
+  
+  .equipment-table {
+    width: 60%; 
+    border-collapse: collapse;
+    border: 1px solid #ddd; 
+    background-color: white;
+  }
+
+  .left-column {
+    width: 30%; 
+  }
+
+    .right-column {
+        width: 10%; 
+  }
+
+  .equipment-table tr:nth-child(odd) {
+    background-color:lemonchiffon; 
+  }
+
+  .equipment-table tr:nth-child(even) {
+    background-color:bisque; 
+  }
+
+  
+  /* Stilizacija zaglavlja */
+  .equipment-table th {
+    background-color: #87eba5; 
+    color: black;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    border: 2px solid black;
+  }
+  
+  /* Stilizacija ćelija */
+  .equipment-table td {
+    border: 2px solid black;
+    padding: 12px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  /* Za razmak između redova */
+  .equipment-table tr:not(:first-child) td {
+    border-top: 1px solid #ddd;
+  }
+  
+  /* Dugme pozicionirano ispod tabele */
+  .save-button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #4CAF50;
+    color: black;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    bottom: -60px;
+    right: 0;
+    margin-right: 380px;
+  }
+  
+  /* Hover efekat za dugme */
+  .save-button:hover {
+    background-color: #45a049  
+  }
+  
+  /* Stilizacija checkboxa */
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  input[type="checkbox"]:checked {
+    background-color:greenyellow;/* Plava mint boja */
+    border-color: black;
+  }
+  
+  input[type="checkbox"]:checked::before {
+    content: '\2713'; /* Check znak */
+    color: black;
+    font-size: 30px;
+    position: absolute;
+    left: 6px;
+    top: -1px;
+  }
