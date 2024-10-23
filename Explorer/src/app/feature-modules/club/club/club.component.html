@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Image</th>
+            <th>Owner ID</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -14,6 +15,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.imageDirectory }}</td>
+            <td>{{ item.ownerId }}</td>
             <td>
                 <button (click)="selectClubForEdit(item)">Edit</button>
                 <button (click)="deleteClub(item.id || 0)">Delete</button>

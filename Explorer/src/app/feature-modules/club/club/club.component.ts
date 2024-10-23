@@ -11,7 +11,7 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 })
 export class ClubComponent {
   entities: Club[] = [];
-  newClub: Club = { id: 0, name: '', description: '', imageDirectory: '' }; // for creating a new club
+  newClub: Club = { id: 0, name: '', description: '', imageDirectory: '', ownerId: 0}; // for creating a new club
   selectedClub: Club | null = null; // for editing an existing club
 
   constructor(private clubService: ClubService) {}
@@ -76,7 +76,7 @@ export class ClubComponent {
   }
 
   resetNewClub(): void {
-    this.newClub = { id: 0, name: '', description: '', imageDirectory: '' };
+    this.newClub = { id: 0, name: '', description: '', imageDirectory: '', ownerId: 0 };
   }
 }
 
