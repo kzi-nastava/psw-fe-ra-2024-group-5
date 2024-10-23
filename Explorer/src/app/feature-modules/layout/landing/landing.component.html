@@ -1,5 +1,8 @@
 <div class="landing">
-    <div class="banner">
+    <div class="banner raised" style="background:
+    radial-gradient(transparent, rgba(0, 0, 0, 0.2)),
+    url('/assets/images/pexels-te-lensfix-380994-1371360.jpg');background-size: cover;
+    background-position: center;">
         <div class="banner-content">
             <p>Create Tours,<br>Experience Tours.</p>
             <button mat-button class="secondary" [routerLink]="['register']">Start Your Journey</button>
@@ -13,11 +16,39 @@
         <xp-card-link icon="group">Clubs</xp-card-link>
     </div>
 
-    <div class="rec-tours">
-        <h1>Recommended Tours</h1>
+    <div class="rec-tours content-card-container">
+        <div>
+            <h1>Recommended Tours</h1>
+            <button [routerLink]="['tours']" class="secondary" mat-flat-button>View more</button>
+        </div>
+        <div class="content-cards"></div>
     </div>
 
-    <div class="rec-blogs">
-        <h1>Recommended Blogs</h1>
+    <div class="rec-blogs content-card-container">
+        <div>
+            <h1>Recommended Blogs</h1>
+            <button [routerLink]="['blogs']" class="secondary" mat-flat-button>View more</button>
+        </div>
+        <div class="content-cards"></div>
     </div>
+
+    <div class="banner-container">
+        <div class="banner raised" style="background:
+        radial-gradient(transparent, rgba(0, 0, 0, 0.75)),
+        url('/assets/images/pexels-plann-2999237-4549408.jpg'); background-size: cover;
+    background-position: center;">
+            <div class="banner-content">
+                <p>Become an author.<br>Tell your story.</p>
+                <button mat-button class="secondary" [routerLink]="['register']">Register</button>
+            </div>
+        </div>
+
+        <div class="banner raised">
+            <div class="banner-content">
+                <p>Create Tours,<br>Experience Tours.</p>
+                <button mat-button class="secondary" [routerLink]="['register']">Start Your Journey</button>
+            </div>
+        </div>
+    </div>
+
 </div>

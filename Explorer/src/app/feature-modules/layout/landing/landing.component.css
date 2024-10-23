@@ -12,11 +12,6 @@
     min-height: 500px;
     border-radius: 20px;
     overflow: hidden;
-    background:
-        radial-gradient(transparent, rgba(0, 0, 0, 0.2)),
-        url("/assets/images/pexels-te-lensfix-380994-1371360.jpg");
-    background-size: cover;
-    background-position: center;
 }
 
 .banner-content {
@@ -36,4 +31,22 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+.content-card-container>div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.banner-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.banner-container>.banner {
+    width: 100%;
 }
