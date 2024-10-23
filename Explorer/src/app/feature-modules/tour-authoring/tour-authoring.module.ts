@@ -13,14 +13,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     FacilityComponent,
     FacilityDialogComponent,
-    TourEquipmentDialogComponent
+    TourEquipmentDialogComponent,
     TourMapComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
     SharedModule
   ]
 })
