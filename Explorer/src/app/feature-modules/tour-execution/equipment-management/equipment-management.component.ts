@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EquipmentManagementService } from '../equipment-management.service';
-import { Equipment } from '../../administration/model/equipment.model';
 import { AdministrationService } from '../../administration/administration.service';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Equipment } from 'src/app/shared/model/equipment.model';
 
 @Component({
   selector: 'xp-equipment-management',
