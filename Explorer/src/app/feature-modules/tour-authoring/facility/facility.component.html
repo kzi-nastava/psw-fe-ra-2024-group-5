@@ -15,7 +15,7 @@
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef> Type </th>
-                <td mat-cell *matCellDef="let facility"> {{facility.type}} </td>
+                <td mat-cell *matCellDef="let facility"> {{facilityTypes[facility.type]}} </td>
             </ng-container>
 
             <ng-container matColumnDef="latitude">
@@ -27,6 +27,15 @@
                 <th mat-header-cell *matHeaderCellDef> Longitude </th>
                 <td mat-cell *matCellDef="let facility"> {{facility.longitude}} </td>
             </ng-container>
+
+            <ng-container matColumnDef="update">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let facility">
+                  <button mat-raised-button color="primary" (click)="onUpdate(facility)">
+                    Update
+                  </button>
+                </td>
+              </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

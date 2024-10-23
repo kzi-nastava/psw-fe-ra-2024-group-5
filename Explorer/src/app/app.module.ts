@@ -22,7 +22,6 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule,
     BrowserAnimationsModule,
     MaterialModule,
     AdministrationModule,
@@ -31,7 +30,8 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
     TourAuthoringModule,
     TourExecutionModule,
     AuthModule,
-    HttpClientModule
+    HttpClientModule,
+    LayoutModule
   ],
   providers: [
     {

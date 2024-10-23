@@ -1,0 +1,12 @@
+.custom-button {
+    background-color: #e91e63; /* Pink color */
+    color: white;
+    font-size: 18px; /* Larger font size */
+    padding: 12px 24px; /* Increase padding for a larger button */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .custom-button:hover {
+    background-color: #d81b60; /* Slightly darker pink on hover */
+  }
+  
