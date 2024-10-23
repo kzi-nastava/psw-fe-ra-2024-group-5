@@ -4,7 +4,7 @@
     /* Background Colors */
     --background-color: #ECEFF4;
     /* General background */
-    --background-color-alt: #eceff4;
+    --background-color-alt: #ffffff;
     /* Lighter background for sections */
 
     /* Text Colors */
@@ -173,9 +173,10 @@ textarea:focus {
 
 /* Footer */
 footer {
+    width: 100%;
+    min-height: 300px;
     background-color: var(--background-color-alt);
     color: var(--text-paragraph);
-    padding: 20px;
     text-align: center;
 }
 

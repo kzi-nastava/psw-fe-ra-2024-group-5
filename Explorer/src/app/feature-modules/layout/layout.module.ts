@@ -7,13 +7,15 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LandingComponent } from './landing/landing.component';
 import { CardLinkComponent } from './card-link/card-link.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     NavbarComponent,
     LandingComponent,
-    CardLinkComponent
+    CardLinkComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +25,7 @@ import { CardLinkComponent } from './card-link/card-link.component';
   ],
   exports: [
     NavbarComponent,
+    FooterComponent,
     HomeComponent
   ]
 })
