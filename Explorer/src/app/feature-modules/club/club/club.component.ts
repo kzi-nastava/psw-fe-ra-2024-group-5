@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ClubService } from '../club.service';
 import { Club } from '../model/club.model';
+import { ClubMembership } from '../model/membership.model'
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 
 @Component({
