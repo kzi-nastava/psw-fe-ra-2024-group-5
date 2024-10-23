@@ -34,6 +34,7 @@ export class EquipmentComponent implements OnInit {
     this.service.getEquipment().subscribe({
       next: (result: PagedResults<Equipment>) => {
         this.equipment = result.results;
+        console.log(result)
       },
       error: () => {
       }

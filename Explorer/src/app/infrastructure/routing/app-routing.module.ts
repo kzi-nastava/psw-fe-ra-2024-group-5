@@ -7,7 +7,10 @@ import { AuthGuard } from '../auth/auth.guard';
 import { RegistrationComponent } from '../auth/registration/registration.component';
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
+import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
+import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
+
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -15,6 +18,8 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard],},
   {path: 'facility', component: FacilityComponent},
+  {path: 'blog', component:BlogComponent},
+  {path: 'addBlog', component:BlogFormComponent},
   {path: 'tour-map', component: TourMapComponent},
   {path: 'accounts', component: AccountsComponent},
 ];

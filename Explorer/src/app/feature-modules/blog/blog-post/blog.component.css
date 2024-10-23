@@ -1,0 +1,71 @@
+/* Flex container for blogs */
+.blog-container {
+  display: flex;
+  flex-wrap: wrap;             /* Ensures that items wrap to the next line when there's no space */
+  gap: 15px;                   /* Slightly increased gap for better spacing */
+  justify-content: flex-start;  /* Align blogs to the start */
+  padding: 20px;               /* Add some padding around the entire container */
+}
+
+/* Individual blog cards */
+.blog-card {
+  flex: 0 1 calc(33.3% - 15px);  /* Take 33.3% of the width minus the gap */
+  box-sizing: border-box;
+  padding: 20px;                /* Padding inside the card */
+  border: 1px solid #e0e0e0;    /* Subtle border */
+  border-radius: 10px;          /* Rounded corners */
+  background-color: #ffffff;    /* White background for contrast */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card effect */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
+}
+
+/* Hover effect for blog cards */
+.blog-card:hover {
+  transform: translateY(-5px); /* Slight upward movement on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+}
+
+/* Ensure the image fits within the blog card and is uniform in size */
+.blog-card img {
+  width: 100%;                 /* Ensure all images are the same width */
+  height: 200px;               /* Fix image height to create uniformity */
+  object-fit: cover;           /* Ensure images cover the area without distortion */
+  border-radius: 5px;          /* Round the image corners to match the card */
+  margin-bottom: 10px;         /* Space between image and content */
+  border: 1px solid #ddd;
+}
+
+/* Flex container for the buttons (Previous/Next) */
+.image-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Button styling */
+button {
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #007bff;    /* Blue background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;    /* Darker blue on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .blog-card {
+      flex: 0 1 calc(50% - 15px);  /* Two cards per row on medium screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .blog-card {
+      flex: 0 1 100%;  /* One card per row on small/mobile screens */
+  }
+}
