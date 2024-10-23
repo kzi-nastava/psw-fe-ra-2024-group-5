@@ -7,6 +7,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { RegistrationComponent } from '../auth/registration/registration.component';
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
+import { EquipmentManagementComponent } from 'src/app/feature-modules/tour-execution/equipment-management/equipment-management.component';
 import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
@@ -16,7 +17,6 @@ import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.compo
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
 import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 
-
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
@@ -25,6 +25,7 @@ const routes: Routes = [
   {path: 'facility', component: FacilityComponent},
   {path: 'tour-map', component: TourMapComponent},
   {path: 'accounts', component: AccountsComponent},
+  {path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard],},
   {path: 'tour', component: TourComponent},
   {path: 'tour-creation', component: TourCreationComponent},
   {path: 'tour-edit/:tourId', component: TourEditComponent},
