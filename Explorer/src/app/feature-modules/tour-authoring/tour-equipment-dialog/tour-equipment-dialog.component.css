@@ -1,0 +1,12 @@
+.content-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.action-container {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+}
