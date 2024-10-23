@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'facility', component: FacilityComponent },
   { path: 'tour-map', component: TourMapComponent },
   { path: 'accounts', component: AccountsComponent },
-  { path: 'preferences', component: PreferenceComponent } 
+  { path: 'preferences', component: PreferenceComponent } ,
   {path: 'blog', component:BlogComponent},
   {path: 'addBlog', component:BlogFormComponent},
 ];
