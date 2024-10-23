@@ -33,10 +33,28 @@
     gap: 20px;
 }
 
-.content-card-container>div {
+.content-card-section>div {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.content-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding-top: 2em;
+}
+
+.tour-card,
+.blog-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 265px;
+    height: 300px;
 }
 
 .banner-container {

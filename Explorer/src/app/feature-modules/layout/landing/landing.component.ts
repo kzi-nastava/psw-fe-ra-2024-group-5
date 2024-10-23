@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+//import { Blog } from '../../blog/model/blog.model';
 
 @Component({
   selector: 'xp-landing',
@@ -6,6 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent {
-  recommendedTours: Object[] = [{}];
-  recommendedBlogs: Object[] = [{}];
+  //recommendedTours: Object[] = [{}];
+  //recommendedBlogs: Blog[] = [];
 }
