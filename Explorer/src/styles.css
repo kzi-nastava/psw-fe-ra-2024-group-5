@@ -1,4 +1,184 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+    /* Background Colors */
+    --background-color: #ECEFF4;
+    /* General background */
+    --background-color-alt: #eceff4;
+    /* Lighter background for sections */
+
+    /* Text Colors */
+    --text-title: #2e3440;
+    /* Main titles */
+    --text-subtitle: #3b4252;
+    /* Subtitles and secondary headings */
+    --text-paragraph: #3b4252;
+    /* Paragraphs and body text */
+    --text-muted: #4c566a;
+    /* Muted or less important text */
+
+    /* Primary Buttons */
+    --button-primary-bg: #2e3440;
+    /* Main button background */
+    --button-primary-text: #ECEFF4;
+    /* Main button text color */
+
+    --button-secondary-bg: #bf616a;
+    /* Cancel/secondary button background */
+    --button-secondary-text: #ECEFF4;
+    /* Cancel/secondary button text */
+
+    --button-ternary-bg: #4c566a;
+    /* Ternary button background */
+    --button-ternary-text: #ECEFF4;
+    /* Ternary button text */
+
+    /* Alert Colors */
+    --alert-danger-bg: #bf616a;
+    /* Error/danger messages */
+    --alert-warning-bg: #D08770;
+    /* Warning messages */
+    --alert-success-bg: #a3be8c;
+    /* Success messages */
+
+    /* Borders and Accents */
+    --border-color: #4C566A;
+    /* General border */
+    --accent-color: #81A1C1;
+    /* Highlight color */
+
+    /* Form Elements */
+    --input-bg: #ECEFF4;
+    /* Input background */
+    --input-text: #2e3440;
+    /* Input text */
+    --input-border: #4C566A;
+    /* Input border */
+
+    /* Spacing and Typography */
+    --font-family-base: GT Eesti, sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* Global resets and base styles */
+body {
+    background-color: var(--background-color);
+    color: var(--text-paragraph);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    margin: 0;
+    padding: 0;
+}
+
+/* Headings */
+h1 {
+    color: var(--text-title) !important;
+    font-size: 2.25em !important;
+    font-weight: bold !important;
+    line-height: 1.8rem !important;
+    margin: 0 !important;
+}
+
+h2 {
+    color: var(--text-subtitle);
+    font-size: 2em;
+    font-weight: 150;
+    line-height: 2rem;
+}
+
+/* Paragraphs */
+p {
+    color: var(--text-paragraph);
+    margin-bottom: 1em;
+}
+
+button {
+    padding: 10px 20px !important;
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+/* Buttons */
+button.primary {
+    background-color: var(--button-primary-bg) !important;
+    color: var(--button-primary-text) !important;
+    transition: background-color 0.3s ease;
+}
+
+button.primary:hover {
+    background-color: var(--alert-success-bg) !important;
+}
+
+button.primary:disabled {
+    background-color: var(--button-secondary-bg-bg) !important;
+    cursor: not-allowed !important;
+}
+
+button.icon-button {
+    color: var(--button-primary-bg) !important;
+    border-radius: 100px !important;
+    padding: 0 !important;
+}
+
+/* Secondary button */
+button.secondary {
+    background-color: var(--button-secondary-bg) !important;
+    color: var(--button-secondary-text) !important;
+    cursor: pointer;
+}
+
+/* Alerts */
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+    color: var(--text-title);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.alert-warning {
+    background-color: var(--alert-warning-bg);
+    color: var(--text-title);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: var(--alert-success-bg);
+    color: var(--text-title);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Form Inputs */
+input,
+textarea {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--background-color-alt);
+    color: var(--text-paragraph);
+    padding: 20px;
+    text-align: center;
+}
+
+.raised {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25) !important;
+}
