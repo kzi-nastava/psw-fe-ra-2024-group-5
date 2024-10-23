@@ -8,8 +8,8 @@ import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
 
 @NgModule({
   declarations: [],
@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
     MatIconModule
   ],
   exports: [
@@ -35,6 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDialogModule,
     MatInputModule,
     MatSelectModule,
+    MatPaginatorModule,
     MatTooltipModule
   ]
 })

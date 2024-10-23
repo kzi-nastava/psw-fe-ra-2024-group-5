@@ -17,6 +17,7 @@ export class MapComponent implements AfterViewInit {
   private isLastMarkerSet: boolean;
   @Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
   @Input() facilities: Facility[];
+  @Input() isViewOnly: boolean = false;
   //@Input() keypoints
   @Output() addItem = new EventEmitter<number[]>();
 
@@ -69,6 +70,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   registerOnClick(): void {
+    if(this.isViewOnly)
+      return;
     this.map.on('click', (e: any) => {
       const coord = e.latlng;
       const lat = coord.lat;
@@ -97,7 +100,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   addKeyPointMarker(latlng: [number, number], popupText: string): void {
-    const marker = new L.Marker(latlng).addTo(this.map).bindPopup(popupText);
+    const marker = new L.Marker(latlng).setZIndexOffset(1000).bindPopup(popupText).addTo(this.map);
     this.markers.push(marker);
     // Check if we have two markers
     if (this.markers.length >= 2) {
