@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Equipment } from '../model/equipment.model';
+import { Equipment } from '../../../shared/model/equipment.model';
 import { AdministrationService } from '../administration.service';
 
 @Component({

@@ -2,7 +2,6 @@
     <div>
         <a [routerLink]="['/']" class="navbar-title">Explorer</a>
         <div id="buttons">
-
             <button class="primary" *ngIf="user && user.username === ''" [routerLink]="['login']" mat-button>
                 Login
             </button>
@@ -21,6 +20,11 @@
             </button>
 
             <!-- Some of these links are to be put in dropdown menus -->
+            <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
+                (click)="openTourEquipmentDialog()">
+                Add equipment
+            </button>
+
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['blog']">
                 Blogs
             </button>

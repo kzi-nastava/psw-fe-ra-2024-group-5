@@ -8,6 +8,7 @@ import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatDialogModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }
