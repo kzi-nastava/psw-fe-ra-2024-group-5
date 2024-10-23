@@ -1,5 +1,5 @@
 <div class="title-container">
-    <h1 mat-dialog-title>Add a new facility</h1>
+    <h1 mat-dialog-title>{{title}}</h1>
 </div>
 
 <form [formGroup]="form">
@@ -25,8 +25,8 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="number-file-inputs">
-            <div>
+          <div class="location-file-inputs">
+            <!-- <div>
               <mat-form-field appearance="outline" class="number-input">
                 <mat-label>Lat</mat-label>
                 <input matInput type="number" [disabled]="true" placeholder="0" formControlName="Latitude"/>
@@ -38,7 +38,18 @@
                 <mat-label>Long</mat-label>
                 <input matInput type="number" [disabled]="true" placeholder="0" formControlName="Longitude"/>
               </mat-form-field>
+            </div> -->
+            <div>
+              <mat-form-field appearance="outline" class="location-input">
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="City, Address" formControlName="Location">
+                <mat-error *ngIf="form.controls['Location'].invalid && form.controls['Location'].touched">
+                  {{ getErrorMessage('Location') }}
+                </mat-error>
+              </mat-form-field>
             </div>
+
+            <button mat-raised-button color="primary"  matTooltip="Use only to submit location with textbox(inaccurate)"  (click)="saveLocation()">Save</button>
           
             <div class="file-container">
                 <input type="file" id="file-input" hidden (change)="onFileSelected($event)" #fileInput/>
@@ -50,7 +61,7 @@
           </div>
 
           <div class="map-container">
-            <app-map [isFacility]="true" (addItem)="changeLongLat($event)"></app-map>
+            <app-map [isFacility]="true" (addItem)="changeLongLat($event)" [facilities]="mapFacilities"></app-map>
           </div>
 
           <mat-form-field appearance="outline">
@@ -67,6 +78,6 @@
 
 
 <div mat-dialog-actions class="action-container">
-  <button mat-button (click)="closeDialog()">Close</button>
+  <button mat-button (click)="closeDialog()" matTooltip="Lose all your progress ?">Close</button>
   <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
 </div>
