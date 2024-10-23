@@ -15,7 +15,7 @@
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef> Type </th>
-                <td mat-cell *matCellDef="let facility"> {{facility.type}} </td>
+                <td mat-cell *matCellDef="let facility"> {{facilityTypes[facility.type]}} </td>
             </ng-container>
 
             <ng-container matColumnDef="latitude">

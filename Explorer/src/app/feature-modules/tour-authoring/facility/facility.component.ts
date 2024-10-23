@@ -14,6 +14,7 @@ export class FacilityComponent {
   facilities: Facility[];
   displayedColumns: string[] = ['name', 'description', 'type', 'latitude', 'longitude', 'update'];
   @ViewChild(MapComponent) mapComponent!: MapComponent;
+  facilityTypes: string[] = ['Wc', 'Restaurant', 'Parking', 'Other'];
 
   constructor(private facilityService: FacilityService, public dialog: MatDialog){
     this.loadFacilities()
