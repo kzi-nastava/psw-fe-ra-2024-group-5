@@ -21,6 +21,7 @@ import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-ma
 import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
 import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post-comment/blog-post-comment.component';
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
+import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'blog', component:BlogComponent},
   { path: 'addBlog', component:BlogFormComponent},
   { path: 'create-comment', component: BlogPostCommentComponent},
-  { path: 'add-comment', component: BlogPostCommentFormComponent}
+  { path: 'add-comment', component: BlogPostCommentFormComponent},
+  {path: 'clubs', component: ClubComponent}
 ];
 
 @NgModule({
