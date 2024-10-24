@@ -29,17 +29,21 @@ export class ClubService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
   
-  //temp function name,this should sent invitation to another tourist to join the club
-  createMembership(clubMembership: ClubMembership): Observable<ClubMembership>
-  {
-    return this.http.post<ClubMembership>(this.membershipApiUrl,clubMembership);
+  getAllMemberships(): Observable<ClubMembership[]> {
+    return this.http.get<ClubMembership[]>(this.membershipApiUrl);
   }
+   
+  //temp function name,this should sent invitation to another tourist to join the club
+  createMembership(clubId: number, userId: number): Observable<ClubMembership> {
+    const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;
+    return this.http.post<ClubMembership>(url, {});
+  }
+  
   //this function needs to be refactored in fe and be
-  deleteMembership(id: number):Observable<boolean>
-  {
-    return this.http.delete<boolean>(`${this.membershipApiUrl}`);
+  deleteMembership(clubId: number, userId: number): Observable<boolean> {
+    const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;
+    return this.http.delete<boolean>(url);
   }
 }
 
