@@ -96,14 +96,13 @@ export class ClubComponent implements OnInit {
   }
   
 
-  deleteClub(id: number): void {
+  deleteClub(club: Club): void {
     const currentUserId = this.authService.user$.value.id;
-  
     // Check if the club exists and if the current user is the owner
-    if (this.selectedClub?.ownerId === currentUserId) {
-      this.clubService.delete(id).subscribe({
+    if (club.ownerId === currentUserId) {
+      this.clubService.delete(club.id!).subscribe({
         next: () => {
-          this.entities = this.entities.filter(c => c.id !== id);
+          this.entities = this.entities.filter(c => c.id !== club.id);
         },
         error: (err: any) => {
           console.log(err);

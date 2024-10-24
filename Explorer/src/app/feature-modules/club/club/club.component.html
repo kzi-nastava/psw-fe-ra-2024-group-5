@@ -18,7 +18,7 @@
             <td>{{ item.ownerId }}</td>
             <td>
                 <button *ngIf="item.ownerId === currentUser?.id" (click)="selectClubForEdit(item)">Edit</button>
-                <button *ngIf="item.ownerId === currentUser?.id" (click)="deleteClub(item.id || 0)">Delete</button>
+                <button *ngIf="item.ownerId === currentUser?.id" (click)="deleteClub(item || 0)">Delete</button>
             </td>
         </tr>
     </tbody>
