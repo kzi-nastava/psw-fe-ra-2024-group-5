@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './infrastructure/routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './feature-modules/layout/layout.module';
@@ -23,7 +22,6 @@ import { ClubModule } from './feature-modules/club/club.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule,
     BrowserAnimationsModule,
     MaterialModule,
     AdministrationModule,
@@ -33,7 +31,8 @@ import { ClubModule } from './feature-modules/club/club.module';
     TourExecutionModule,
     AuthModule,
     HttpClientModule,
-    ClubModule
+    ClubModule,
+    LayoutModule
   ],
   providers: [
     {

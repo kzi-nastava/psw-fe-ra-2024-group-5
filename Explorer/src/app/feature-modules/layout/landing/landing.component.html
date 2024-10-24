@@ -1,0 +1,71 @@
+<div class="landing">
+    <div class="banner raised" style="background:
+    radial-gradient(transparent, rgba(0, 0, 0, 0.2)),
+    url('/assets/images/pexels-te-lensfix-380994-1371360.jpg');background-size: cover;
+    background-position: center;">
+        <div class="banner-content">
+            <p>Create Tours,<br>Experience Tours.</p>
+            <button mat-button class="secondary" [routerLink]="['register']">Start Your Journey</button>
+        </div>
+    </div>
+
+    <div class="card-links">
+        <!-- Card links can use [routerLink] -->
+        <xp-card-link icon="language">Tours</xp-card-link>
+        <xp-card-link icon="ballot">Blogs</xp-card-link>
+        <xp-card-link icon="group">Clubs</xp-card-link>
+    </div>
+
+    <div class="rec-tours content-card-section">
+        <div>
+            <h1>Recommended Tours</h1>
+            <button [routerLink]="['tours']" class="secondary" mat-flat-button>View more</button>
+        </div>
+        <div class="content-cards">
+            <div class="tour-card rounded raised">TOUR CARD</div>
+            <div class="tour-card rounded raised">TOUR CARD</div>
+            <div class="tour-card rounded raised">TOUR CARD</div>
+            <div class="tour-card rounded raised">TOUR CARD</div>
+        </div>
+    </div>
+
+    <div class="rec-blogs content-card-section">
+        <div>
+            <h1>Recommended Blogs</h1>
+            <button [routerLink]="['blogs']" class="secondary" mat-flat-button>View more</button>
+        </div>
+        <div class="content-cards">
+            <div class="blog-card rounded raised">BLOG CARD</div>
+            <div class="blog-card rounded raised">BLOG CARD</div>
+            <div class="blog-card rounded raised">BLOG CARD</div>
+            <div class="blog-card rounded raised">BLOG CARD</div>
+        </div>
+    </div>
+
+    <div class="banner-container">
+        <div class="banner raised" style="background:
+        radial-gradient(transparent, rgba(0, 0, 0, 0.5)),
+        url('/assets/images/pexels-plann-2999237-4549408.jpg'); background-size: cover;
+    background-position: center;">
+            <div class="banner-content">
+                <p>Become an author.<br>Tell your story.</p>
+                <button mat-button class="secondary" [routerLink]="['register']">Register</button>
+            </div>
+        </div>
+
+        <div class="banner raised" style="background:
+        radial-gradient(transparent, rgba(0, 0, 0, 0.5)),
+        url('/assets/images/pexels-florencia-potter-82066-351283.jpg'); background-size: cover;
+    background-position: center;">
+            <div class="banner-content">
+                <p>Explore places you'll love with us.</p>
+                <div class="labels-container">
+                    <div class="check-label"><mat-icon>check_circle</mat-icon>Expert Guides</div>
+                    <div class="check-label"><mat-icon>check_circle</mat-icon>Tours Everywhere</div>
+                    <div class="check-label"><mat-icon>check_circle</mat-icon>Diverse Experiences</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

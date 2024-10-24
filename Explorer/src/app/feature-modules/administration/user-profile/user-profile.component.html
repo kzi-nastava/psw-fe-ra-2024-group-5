@@ -1,0 +1,19 @@
+<div class="profile-container" *ngIf="userProfile">
+    <div class="profile-image">
+    </div>
+    <div class="profile-image">
+        <img [src]="userProfile.profilePictureUrl" alt="Profile Picture" />
+    </div>
+    <div class="profile-info">
+        <div class="profile-header">
+            <div class="profile-name">{{userProfile.name}} {{userProfile.surname}}</div>
+            <button class="edit-button" [routerLink]="['profile-form']">Edit Profile</button>
+        </div>
+        <div class="profile-bio">
+            Biography: {{userProfile.biography}}
+        </div>
+        <div class="profile-motto">
+            Motto: {{userProfile.motto}}
+        </div>
+    </div>
+</div>

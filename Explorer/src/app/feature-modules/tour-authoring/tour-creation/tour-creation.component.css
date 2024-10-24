@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .map-container{
+    height: 300px;
+    width: 100%;
+    position: relative;
+  }
+
+  
+  
+  .component {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .component-1 {
+    width: 100%; /* Full width for the first component */
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .component-2, .component-3 {
+    width: 49%; /* Each component takes half the width of the container */
+  }
+  .action-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.title-container{
+    display: flex;
+    justify-content: center;
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.number-file-inputs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.number-input{
+    width: 100px;
+}
+
+.file-container{
+    display: flex;
+    flex-direction: column;
+}
