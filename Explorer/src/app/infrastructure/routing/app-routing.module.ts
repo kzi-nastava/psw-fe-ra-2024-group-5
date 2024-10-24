@@ -7,6 +7,8 @@ import { AuthGuard } from '../auth/auth.guard';
 import { RegistrationComponent } from '../auth/registration/registration.component';
 import { AccountsComponent } from 'src/app/feature-modules/administration/accounts/accounts.component';
 import { FacilityComponent } from 'src/app/feature-modules/tour-authoring/facility/facility.component';
+import { UserProfileComponent } from 'src/app/feature-modules/administration/user-profile/user-profile.component';
+import { UserProfileFormComponent } from 'src/app/feature-modules/administration/user-profile-form/user-profile-form.component';
 import { EquipmentManagementComponent } from 'src/app/feature-modules/tour-execution/equipment-management/equipment-management.component';
 import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
@@ -29,6 +31,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
+  { path: 'profile', component: UserProfileComponent},
+  { path: 'profile/profile-form', component: UserProfileFormComponent},
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
   { path: 'tour-map', component: TourMapComponent },
