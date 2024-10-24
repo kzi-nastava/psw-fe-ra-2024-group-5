@@ -1,0 +1,24 @@
+.container {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.table-container {
+  width: 60%;
+  display: flex;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+table {
+  width: 100%;
+}
+
+.map{
+  width: 900px;
+  height: 200px;
+}

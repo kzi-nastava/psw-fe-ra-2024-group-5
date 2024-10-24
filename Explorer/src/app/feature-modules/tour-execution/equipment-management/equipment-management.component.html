@@ -1,0 +1,27 @@
+<div class="equipment-table-container">
+  <table class="equipment-table">
+    <thead>
+      <tr>
+        <th class="left-column">Equipment name</th>
+        <th class="right-column">Choose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let equipment of equipmentList">
+        <td>{{ equipment.name }}</td>
+        <td>
+          <label *ngIf="equipment.id !== undefined">
+            <input 
+              type="checkbox" 
+              [value]="equipment.id" 
+              [checked]="selectedEquipmentIds.includes(equipment.id)" 
+              (change)="onEquipmentSelectionChange(equipment.id, $event)">
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <button class="save-button" (click)="saveTouristEquipment()">Save equipment</button>
+  
+</div>

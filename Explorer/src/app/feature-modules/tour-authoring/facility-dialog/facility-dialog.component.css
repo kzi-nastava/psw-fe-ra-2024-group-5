@@ -1,0 +1,38 @@
+.action-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.title-container{
+    display: flex;
+    justify-content: center;
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.location-file-inputs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.location-input{
+    width: 350px;
+}
+
+.map-container{
+    position: relative;
+    min-height: 150px;
+}
+
+.file-container{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,24 @@
+form {
+    margin: 0 auto; /* Centrirana forma ispod tabele */
+    width: 50%; /* Ista širina kao tabela */
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+}
+.mat-form-field {
+    width: 100%;
+}
+
+button[type="submit"] {
+    margin-top: 10px;
+}
+
+button {
+    margin: 5px;
+}
