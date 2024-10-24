@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Login } from '../model/login.model';
+import { USER } from '../../../shared/constants';
+import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service'; 
+
 
 @Component({
   selector: 'xp-login',
@@ -13,7 +16,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private tokenStorage: TokenStorage
   ) {}
 
   loginForm = new FormGroup({
@@ -29,7 +33,10 @@ export class LoginComponent {
 
     if (this.loginForm.valid) {
       this.authService.login(login).subscribe({
-        next: () => {
+        next: (response) => {
+          const userId = response.id;
+          this.tokenStorage.saveAccessToken(response.accessToken);  
+          localStorage.setItem(USER, userId.toString());
           this.router.navigate(['/']);
         },
       });
