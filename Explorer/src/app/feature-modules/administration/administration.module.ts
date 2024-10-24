@@ -6,13 +6,15 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountsComponent } from './accounts/accounts.component';
 import { MatTableModule } from '@angular/material/table';
+import { AppRatingComponent } from './app-rating/app-rating.component';
 
 
 @NgModule({
   declarations: [
     EquipmentFormComponent,
     EquipmentComponent,
-    AccountsComponent
+    AccountsComponent,
+    AppRatingComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { MatTableModule } from '@angular/material/table';
     EquipmentComponent,
     EquipmentFormComponent,
     AccountsComponent,
-    MatTableModule
+    MatTableModule,
+    AppRatingComponent
   ]
 })
 export class AdministrationModule { }

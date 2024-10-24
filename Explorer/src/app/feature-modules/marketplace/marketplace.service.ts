@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AppRating } from './model/app-rating.model';
+import { Equipment } from '../administration/model/equipment.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Preference } from './model/preference.model';
 import { environment } from 'src/env/environment';
@@ -18,5 +20,11 @@ export class MarketplaceService {
 
   addPreference(preference: Preference): Observable<Preference> {
     return this.http.post<Preference>(environment.apiHost + 'tourist/preference', preference);
-}
+  }
+
+  addAppRating(appRating: AppRating): Observable<AppRating> {
+    return this.http.post<AppRating>(environment.apiHost + 'tourist/appRating', appRating);
+  }
+
+    
 }

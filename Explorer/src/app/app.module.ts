@@ -12,6 +12,7 @@ import { TourAuthoringModule } from './feature-modules/tour-authoring/tour-autho
 import { TourExecutionModule } from './feature-modules/tour-execution/tour-execution.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthService } from './infrastructure/auth/auth.service'; 
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 
 @NgModule({
@@ -38,6 +39,8 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
       useClass: JwtInterceptor,
       multi: true,
     },
+    AuthService
+
   ],
   bootstrap: [AppComponent]
 })

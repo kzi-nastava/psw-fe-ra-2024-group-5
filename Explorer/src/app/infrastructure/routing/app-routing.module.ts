@@ -19,6 +19,10 @@ import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-ma
 import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
 import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post-comment/blog-post-comment.component';
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
+import { AppRatingFormComponent } from 'src/app/feature-modules/marketplace/app-rating-form/app-rating-form.component';
+import { AppRatingComponent } from 'src/app/feature-modules/administration/app-rating/app-rating.component';
+
+
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
@@ -37,7 +41,9 @@ const routes: Routes = [
   { path: 'blog', component:BlogComponent},
   { path: 'addBlog', component:BlogFormComponent},
   { path: 'create-comment', component: BlogPostCommentComponent},
-  { path: 'add-comment', component: BlogPostCommentFormComponent}
+  { path: 'add-comment', component: BlogPostCommentFormComponent },
+  { path: 'appRating', component: AppRatingComponent },
+  { path: 'appRatingForm', component: AppRatingFormComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,306 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\infrastructure\\auth\\auth.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\infrastructure\\auth\\auth.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\model\\equipment.model.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\administration\\model\\equipment.model.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\administration.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\administration\\administration.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\administration.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\administration\\administration.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\model\\app-rating.model.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\marketplace\\model\\app-rating.model.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\app.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\app.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\infrastructure\\routing\\app-routing.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\infrastructure\\routing\\app-routing.module.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\package-lock.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Explorer\\package-lock.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "auth.service.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\infrastructure\\auth\\auth.service.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\infrastructure\\auth\\auth.service.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\infrastructure\\auth\\auth.service.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\infrastructure\\auth\\auth.service.ts",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAgwD4AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-24T00:09:38.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "app-rating.component.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.ts",
+              "ViewState": "AgIAACsAAAAAAAAAAAAgwC0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:33:35.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "app-rating-form.component.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:45:04.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "marketplace.service.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.ts",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAewBwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:23:16.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "app-rating.component.html",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.html",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.html",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.html",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-23T23:31:52.578Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "app-rating-form.component.html",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.html",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.html",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.html",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form\\app-rating-form.component.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-24T00:06:39.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "administration.module.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\administration.module.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\administration\\administration.module.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\administration.module.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\administration\\administration.module.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:38:53.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "administration.service.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\administration.service.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\administration\\administration.service.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\administration.service.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\administration\\administration.service.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:40:10.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "equipment.model.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\model\\equipment.model.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\administration\\model\\equipment.model.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\model\\equipment.model.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\administration\\model\\equipment.model.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:26:03.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "app-rating.model.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\model\\app-rating.model.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\marketplace\\model\\app-rating.model.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\model\\app-rating.model.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\marketplace\\model\\app-rating.model.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:25:57.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "marketplace.module.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.module.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.module.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.module.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.module.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:19:37.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "app.module.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\app.module.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\app.module.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\app.module.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\app.module.ts",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-24T00:03:19.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "app-routing.module.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\infrastructure\\routing\\app-routing.module.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\infrastructure\\routing\\app-routing.module.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\infrastructure\\routing\\app-routing.module.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\infrastructure\\routing\\app-routing.module.ts",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAC0AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:25:14.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "app-rating.component.css",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.css",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.css",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.css",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\administration\\app-rating\\app-rating.component.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-10-23T23:29:13.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "marketplace.service.spec.ts",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.spec.ts",
+              "RelativeDocumentMoniker": "Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.spec.ts",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.spec.ts",
+              "RelativeToolTip": "Explorer\\src\\app\\feature-modules\\marketplace\\marketplace.service.spec.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2024-10-23T23:23:04.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "package-lock.json",
+              "DocumentMoniker": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\package-lock.json",
+              "RelativeDocumentMoniker": "Explorer\\package-lock.json",
+              "ToolTip": "C:\\PSWRATING\\psw-fe-ra-2024-group-5\\Explorer\\package-lock.json",
+              "RelativeToolTip": "Explorer\\package-lock.json",
+              "ViewState": "AgIAAMxTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-23T23:16:41.164Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 400,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

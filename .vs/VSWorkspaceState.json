@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Explorer",
+    "\\Explorer\\src",
+    "\\Explorer\\src\\app",
+    "\\Explorer\\src\\app\\feature-modules",
+    "\\Explorer\\src\\app\\feature-modules\\administration",
+    "\\Explorer\\src\\app\\feature-modules\\administration\\app-rating",
+    "\\Explorer\\src\\app\\feature-modules\\marketplace",
+    "\\Explorer\\src\\app\\feature-modules\\marketplace\\app-rating-form",
+    "\\Explorer\\src\\app\\infrastructure",
+    "\\Explorer\\src\\app\\infrastructure\\auth"
+  ],
+  "PreviewInSolutionExplorer": false
+}
