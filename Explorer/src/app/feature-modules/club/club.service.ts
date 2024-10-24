@@ -10,7 +10,7 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 })
 export class ClubService {
   private apiUrl = 'https://localhost:44333/api/tourist/club';
-  private membershipApiUrl = 'https://localhost:44333/api/tourist/membership'
+  // private membershipApiUrl = 'https://localhost:44333/api/tourist/membership'
 
   constructor(private http: HttpClient) {}
 
@@ -30,20 +30,20 @@ export class ClubService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
   
-  getAllMemberships(): Observable<ClubMembership[]> {
-    return this.http.get<ClubMembership[]>(this.membershipApiUrl);
-  }
+  // getAllMemberships(): Observable<ClubMembership[]> {
+  //   return this.http.get<ClubMembership[]>(this.membershipApiUrl);
+  // }
    
   //temp function name,this should sent invitation to another tourist to join the club
-  createMembership(clubId: number, userId: number): Observable<ClubMembership> {
-    const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;
-    return this.http.post<ClubMembership>(url, {});
-  }
+  // createMembership(clubId: number, userId: number): Observable<ClubMembership> {
+  //   const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;
+  //   return this.http.post<ClubMembership>(url, {});
+  // }
   
-  //this function needs to be refactored in fe and be
-  deleteMembership(clubId: number, userId: number): Observable<boolean> {
-    const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;
-    return this.http.delete<boolean>(url);
-  }
+  // //this function needs to be refactored in fe and be
+  // deleteMembership(clubId: number, userId: number): Observable<boolean> {
+  //   const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;
+  //   return this.http.delete<boolean>(url);
+  // }
 }
 

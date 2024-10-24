@@ -25,7 +25,7 @@ export class ClubComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser(); // Get the current logged-in user
     this.getClubs();
-    this.getMemberships(); 
+    //this.getMemberships(); 
   }
 
   getClubs(): void {
@@ -39,16 +39,16 @@ export class ClubComponent implements OnInit {
     });
   }
 
-  getMemberships(): void {
-    this.clubService.getAllMemberships().subscribe({
-      next: (memberships: ClubMembership[]) => {
-        this.membershipEntities = memberships;
-      },
-      error: (err: any) => {
-        console.error('Error fetching memberships:', err);
-      }
-    });
-  }
+  // getMemberships(): void {
+  //   this.clubService.getAllMemberships().subscribe({
+  //     next: (memberships: ClubMembership[]) => {
+  //       this.membershipEntities = memberships;
+  //     },
+  //     error: (err: any) => {
+  //       console.error('Error fetching memberships:', err);
+  //     }
+  //   });
+  // }
 
   createClub(): void {
     const currentUser = this.authService.user$.value;
@@ -114,43 +114,43 @@ export class ClubComponent implements OnInit {
   }
   
   //unimplemented
-  createMembership(clubId: number, userId: number): void {
-    const currentUserId = this.authService.user$.value.id; 
-    // Check if the current user is the owner of the club
-    if (this.selectedClub && this.selectedClub.ownerId === currentUserId) {
-      this.clubService.createMembership(clubId, userId).subscribe({
-        next: (membership: ClubMembership) => {
-          this.membershipEntities.push(membership);
-          console.log('Membership created successfully');
-        },
-        error: (err: any) => {
-          console.error('Error creating membership:', err);
-        }
-      });
-    } else {
-      console.log('You do not have permission to create a membership for this club.');
-    }
-  }
+  // createMembership(clubId: number, userId: number): void {
+  //   const currentUserId = this.authService.user$.value.id; 
+  //   // Check if the current user is the owner of the club
+  //   if (this.selectedClub && this.selectedClub.ownerId === currentUserId) {
+  //     this.clubService.createMembership(clubId, userId).subscribe({
+  //       next: (membership: ClubMembership) => {
+  //         this.membershipEntities.push(membership);
+  //         console.log('Membership created successfully');
+  //       },
+  //       error: (err: any) => {
+  //         console.error('Error creating membership:', err);
+  //       }
+  //     });
+  //   } else {
+  //     console.log('You do not have permission to create a membership for this club.');
+  //   }
+  // }
   
   //unimplemented
-  deleteMembership(clubId: number, userId: number): void {
-    const currentUserId = this.authService.user$.value.id;
+  // deleteMembership(clubId: number, userId: number): void {
+  //   const currentUserId = this.authService.user$.value.id;
   
-    // Check if the current user is the owner of the club
-    if (this.selectedClub && this.selectedClub.ownerId === currentUserId) {
-      this.clubService.deleteMembership(clubId, userId).subscribe({
-        next: () => {
-          this.membershipEntities = this.membershipEntities.filter(m => m.clubId !== clubId || m.userId !== userId);
-          console.log(`Membership deleted successfully for Club ID ${clubId} and User ID ${userId}`);
-        },
-        error: (err: any) => {
-          console.error('Error deleting membership:', err);
-        }
-      });
-    } else {
-      console.log('You do not have permission to delete a membership for this club.');
-    }
-  }
+  //   // Check if the current user is the owner of the club
+  //   if (this.selectedClub && this.selectedClub.ownerId === currentUserId) {
+  //     this.clubService.deleteMembership(clubId, userId).subscribe({
+  //       next: () => {
+  //         this.membershipEntities = this.membershipEntities.filter(m => m.clubId !== clubId || m.userId !== userId);
+  //         console.log(`Membership deleted successfully for Club ID ${clubId} and User ID ${userId}`);
+  //       },
+  //       error: (err: any) => {
+  //         console.error('Error deleting membership:', err);
+  //       }
+  //     });
+  //   } else {
+  //     console.log('You do not have permission to delete a membership for this club.');
+  //   }
+  // }
   
 
   selectClubForEdit(club: Club): void {
