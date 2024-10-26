@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, SimpleChanges } from '@angular/core';
 import { MapService } from './map.service';
 import { Input } from '@angular/core';
-import * as L from 'leaflet';
 import { Facility } from '../model/facility';
 import { OnChanges, Output, EventEmitter } from '@angular/core';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -15,10 +15,14 @@ export class MapComponent implements AfterViewInit {
   private markers: L.Marker[] = [];
   private routeControl: any;
   private isLastMarkerSet: boolean;
-  @Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
+  private userLocationMarker: L.Marker;
+
+  //@Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
   @Input() facilities: Facility[];
   @Input() isViewOnly: boolean = false;
   //@Input() keypoints
+  @Input() mapMode: string = 'keypoint';
+
   @Output() addItem = new EventEmitter<number[]>();
 
   constructor(private mapService: MapService) {}
@@ -59,11 +63,7 @@ export class MapComponent implements AfterViewInit {
   search(searchInput: string): void {
     this.mapService.search(searchInput).subscribe({ 
       next: (result) => {
-        if(this.isFacility){
-          this.addObjectMarker([result[0].lat, result[0].lon], 'facility');
-        }else{
-          this.addKeyPointMarker([result[0].lat, result[0].lon], 'keypoint');
-        }
+        this.addMarker([result[0].lat, result[0].lon]);
       },
       error: () => {},
     });
@@ -72,22 +72,35 @@ export class MapComponent implements AfterViewInit {
   registerOnClick(): void {
     if(this.isViewOnly)
       return;
+
     this.map.on('click', (e: any) => {
       const coord = e.latlng;
       const lat = coord.lat;
       const lng = coord.lng;
+
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
         //console.log(res.display_name);
         // RES se koristi da prikaze ulicu grad.. od mesta koje je selektovano
       });
-      if(this.isFacility){
-        this.addObjectMarker([lat, lng], 'New Marker')
-      }else{
-        this.addKeyPointMarker([lat, lng], 'New Marker');
-      }
 
+      this.addMarker([lat, lng], 'New Marker');
       this.addItem.emit([lat,lng])
     });
+  }
+
+  addMarker(latlng: [number, number], popupText?: string): void {
+    switch (this.mapMode) {
+      case 'facility':
+        this.addObjectMarker(latlng, popupText ?? 'facility');
+        break;
+      case 'keypoint':
+        this.addKeyPointMarker(latlng, popupText ?? 'keypoint');
+        break;
+      case 'simulator':
+        break;
+      default:
+        break;
+    }
   }
 
   addObjectMarker(latlng: [number, number], popupText: string): void {
