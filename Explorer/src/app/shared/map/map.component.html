@@ -1,3 +1,8 @@
 <div class="map-frame">
-  <div id="map"></div>
+  <div class="overlay-buttons-container">
+    <mat-checkbox class="simulator-toggle rounded" *ngIf="simulatorEnabled" [checked]="simulator"
+      (change)="this.simulator = !this.simulator">Simulator Mode</mat-checkbox>
+  </div>
+  <div id="map">
+  </div>
 </div>

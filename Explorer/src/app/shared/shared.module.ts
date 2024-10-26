@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MapComponent } from './map/map.component';
-
+import { MaterialModule } from 'src/app/infrastructure/material/material.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -9,7 +10,9 @@ import { MapComponent } from './map/map.component';
     MapComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    MatCheckboxModule
   ],
   exports: [MapComponent]
 })

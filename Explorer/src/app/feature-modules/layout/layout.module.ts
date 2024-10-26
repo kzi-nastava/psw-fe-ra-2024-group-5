@@ -9,6 +9,7 @@ import { LandingComponent } from './landing/landing.component';
 import { CardLinkComponent } from './card-link/card-link.component';
 import { FooterComponent } from './footer/footer.component';
 import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
     CommonModule,
     MaterialModule,
     RouterModule,
-    TourAuthoringModule
+    TourAuthoringModule,
+    SharedModule
 ],
   exports: [
     NavbarComponent,
