@@ -26,6 +26,7 @@ export class MapComponent implements AfterViewInit {
   @Input() simulatorEnabled: boolean = false;
 
   @Output() addItem = new EventEmitter<number[]>();
+  @Output() userLocationChange = new EventEmitter<[number, number]>();
 
   constructor(private mapService: MapService) { }
 
@@ -103,6 +104,9 @@ export class MapComponent implements AfterViewInit {
     const marker = new L.Marker(latlng, { title: popupText }).bindPopup(popupText);
     this.userLocationMarker = marker;
     this.userLocationMarker.addTo(this.map);
+
+    // Emit the userLocationMarker data
+    this.userLocationChange.emit(latlng);
   }
 
   addMarker(latlng: [number, number], popupText?: string): void {
