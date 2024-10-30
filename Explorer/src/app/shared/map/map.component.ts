@@ -3,6 +3,7 @@ import { MapService } from './map.service';
 import { Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Facility } from '../model/facility';
 import * as L from 'leaflet';
+import { UserLocationService } from '../user-location/user-location.service';
 
 @Component({
   selector: 'app-map',
@@ -28,7 +29,7 @@ export class MapComponent implements AfterViewInit {
   @Output() addItem = new EventEmitter<number[]>();
   @Output() userLocationChange = new EventEmitter<[number, number]>();
 
-  constructor(private mapService: MapService) { }
+  constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -105,7 +106,7 @@ export class MapComponent implements AfterViewInit {
     this.userLocationMarker = marker;
     this.userLocationMarker.addTo(this.map);
 
-    // Emit the userLocationMarker data
+    this.userLocationService.setCurrentUserPosition(latlng);
     this.userLocationChange.emit(latlng);
   }
 
