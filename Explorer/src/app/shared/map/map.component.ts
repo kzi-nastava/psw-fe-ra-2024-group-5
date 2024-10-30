@@ -37,7 +37,8 @@ export class MapComponent implements AfterViewInit {
       zoom: 13,
     });
     this.isLastMarkerSet = false;
-    this.registerOnClick();
+    this.map.on('click', this.registerOnClick.bind(this));
+    //this.registerOnClick();
     // this.search()
     // this.setRoute(L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949))
 
@@ -73,29 +74,22 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  registerOnClick(): void {
-    if (this.isViewOnly)
-      return;
+  registerOnClick(e: L.LeafletMouseEvent): void {
+    const coord = e.latlng;
+    const lat = coord.lat;
+    const lng = coord.lng;
 
-    this.map.on('click', (e: any) => {
-      const coord = e.latlng;
-      const lat = coord.lat;
-      const lng = coord.lng;
-
-      this.mapService.reverseSearch(lat, lng).subscribe((res) => {
-        //console.log(res.display_name);
-        // RES se koristi da prikaze ulicu grad.. od mesta koje je selektovano
-      });
-
-      if (this.simulator) {
-        this.setUserLocationMarker([lat, lng]);
-      }
-      else {
-        this.addMarker([lat, lng], 'New Marker');
-      }
-
-      this.addItem.emit([lat, lng])
+    this.mapService.reverseSearch(lat, lng).subscribe((res) => {
+      //console.log(res.display_name);
+      // RES se koristi da prikaze ulicu grad.. od mesta koje je selektovano
     });
+
+    if (this.simulator)
+      this.setUserLocationMarker([lat, lng]);
+    else if (!this.isViewOnly)
+      this.addMarker([lat, lng], 'New Marker');
+
+    this.addItem.emit([lat, lng])
   }
 
   setUserLocationMarker(latlng: [number, number], popupText: string = 'User Location') {
