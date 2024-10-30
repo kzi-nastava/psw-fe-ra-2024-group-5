@@ -1,32 +1,32 @@
 <div class="title-container">
-    <h1 mat-dialog-title>{{title}}</h1>
+  <h1 mat-dialog-title>{{title}}</h1>
 </div>
 
 <form [formGroup]="form">
-    <div mat-dialog-content class="content-container">
-        
-          <mat-form-field appearance="outline" class="custom-form-field">
-              <mat-label>Name</mat-label>
-              <input matInput placeholder="Enter your name" formControlName="Name">
-              <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
-                {{ getErrorMessage('Name') }}
-              </mat-error>
-          </mat-form-field>
-    
-          <mat-form-field appearance="outline">
-            <mat-label>Facility Type</mat-label>
-            <mat-select formControlName="Type">
-              <mat-option *ngFor="let type of facilityTypes; let i = index" [value]="i">
-                {{ type }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.get('Type')?.invalid && form.get('Type')?.touched">
-              Facility type is required
-            </mat-error>
-          </mat-form-field>
+  <div mat-dialog-content class="content-container">
 
-          <div class="location-file-inputs">
-            <!-- <div>
+    <mat-form-field appearance="outline" class="custom-form-field">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter your name" formControlName="Name">
+      <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
+        {{ getErrorMessage('Name') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Facility Type</mat-label>
+      <mat-select formControlName="Type">
+        <mat-option *ngFor="let type of facilityTypes; let i = index" [value]="i">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('Type')?.invalid && form.get('Type')?.touched">
+        Facility type is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="location-file-inputs">
+      <!-- <div>
               <mat-form-field appearance="outline" class="number-input">
                 <mat-label>Lat</mat-label>
                 <input matInput type="number" [disabled]="true" placeholder="0" formControlName="Latitude"/>
@@ -39,41 +39,42 @@
                 <input matInput type="number" [disabled]="true" placeholder="0" formControlName="Longitude"/>
               </mat-form-field>
             </div> -->
-            <div>
-              <mat-form-field appearance="outline" class="location-input">
-                <mat-label>Location</mat-label>
-                <input matInput placeholder="City, Address" formControlName="Location">
-                <mat-error *ngIf="form.controls['Location'].invalid && form.controls['Location'].touched">
-                  {{ getErrorMessage('Location') }}
-                </mat-error>
-              </mat-form-field>
-            </div>
+      <div>
+        <mat-form-field appearance="outline" class="location-input">
+          <mat-label>Location</mat-label>
+          <input matInput placeholder="City, Address" formControlName="Location">
+          <mat-error *ngIf="form.controls['Location'].invalid && form.controls['Location'].touched">
+            {{ getErrorMessage('Location') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-            <button mat-raised-button color="primary"  matTooltip="Use only to submit location with textbox(inaccurate)"  (click)="saveLocation()">Save</button>
-          
-            <div class="file-container">
-                <input type="file" id="file-input" hidden (change)="onFileSelected($event)" #fileInput/>
-                <label for="file-input">
-                  <button mat-raised-button color="primary" (click)="fileInput.click()">Upload File</button>
-                </label>
-              <span>{{fileName}}</span>
-            </div>
-          </div>
+      <button mat-raised-button color="primary" matTooltip="Use only to submit location with textbox(inaccurate)"
+        (click)="saveLocation()">Save</button>
 
-          <div class="map-container">
-            <app-map [isFacility]="true" (addItem)="changeLongLat($event)" [facilities]="mapFacilities"></app-map>
-          </div>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Enter a description" formControlName="Description">
-            </textarea>
-            <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
-              {{ getErrorMessage('Description') }}
-            </mat-error>
-          </mat-form-field>
-
+      <div class="file-container">
+        <input type="file" id="file-input" hidden (change)="onFileSelected($event)" #fileInput />
+        <label for="file-input">
+          <button mat-raised-button color="primary" (click)="fileInput.click()">Upload File</button>
+        </label>
+        <span>{{fileName}}</span>
+      </div>
     </div>
+
+    <div class="map-container">
+      <app-map mapMode="facility" (addItem)="changeLongLat($event)" [facilities]="mapFacilities"></app-map>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Enter a description" formControlName="Description">
+            </textarea>
+      <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
+        {{ getErrorMessage('Description') }}
+      </mat-error>
+    </mat-form-field>
+
+  </div>
 </form>
 
 
