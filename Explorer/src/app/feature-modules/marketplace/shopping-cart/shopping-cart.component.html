@@ -7,6 +7,7 @@
     <li *ngFor="let item of shoppingCart.items">
       <p>Name: {{ item.tourName }}</p>
       <p>Price: {{ item.price.amount }} {{ Currency[item.price.currency] }}</p>
+      <button (click)="removeItem(item)">Remove</button> <!-- Dugme za uklanjanje -->
       <hr />
     </li>
   </ul>
