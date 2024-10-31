@@ -5,5 +5,5 @@ export interface ShoppingCart {
     id?: number;
     totalPrice : Money;
     touristId: number;
-    Items:OrderItem[];
+    items:OrderItem[];
 }

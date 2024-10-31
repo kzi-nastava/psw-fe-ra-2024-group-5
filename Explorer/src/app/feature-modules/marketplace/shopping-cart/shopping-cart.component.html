@@ -1,9 +1,21 @@
 <h1>Your Shopping Cart</h1>
 
 <div *ngIf="shoppingCart; else emptyCart">
+  <h2>Total Price: {{ shoppingCart.totalPrice.amount }} {{ shoppingCart.totalPrice.currency }}</h2>
   
+  <ul *ngIf="shoppingCart?.items?.length; else noItems">
+    <li *ngFor="let item of shoppingCart.items">
+      <p>Name: {{ item.tourName }}</p>
+      <p>Price: {{ item.price.amount }} {{ Currency[item.price.currency] }}</p>
+      <hr />
+    </li>
+  </ul>
 </div>
 
 <ng-template #emptyCart>
   <p>Your cart is empty.</p>
 </ng-template>
+
+<ng-template #noItems>
+    <p>Your cart is empty.</p>
+  </ng-template>
