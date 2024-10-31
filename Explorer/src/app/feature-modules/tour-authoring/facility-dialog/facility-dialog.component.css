@@ -29,7 +29,7 @@
 
 .map-container{
     position: relative;
-    min-height: 150px;
+    height: 150px;
 }
 
 .file-container{
