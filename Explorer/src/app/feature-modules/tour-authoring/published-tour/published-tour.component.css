@@ -1,0 +1,211 @@
+:root {
+    /* Background Colors */
+    --background-color: #ECEFF4; /* General background */
+    --background-color-alt: #eceff4; /* Lighter background for sections */
+  
+    /* Text Colors */
+    --text-title: #2e3440; /* Main titles */
+    --text-subtitle: #3b4252; /* Subtitles and secondary headings */
+    --text-paragraph: #3b4252; /* Paragraphs and body text */
+    --text-muted: #4c566a; /* Muted or less important text */
+  
+    /* Primary Buttons */
+    --button-primary-bg: #2e3440; /* Main button background */
+    --button-primary-text: #ECEFF4; /* Main button text color */
+    
+    --button-secondary-bg: #bf616a; /* Cancel/secondary button background */
+    --button-secondary-text: #ECEFF4; /* Cancel/secondary button text */
+    
+    --button-ternary-bg: #4c566a; /* Ternary button background */
+    --button-ternary-text: #ECEFF4; /* Ternary button text */
+  
+    /* Alert Colors */
+    --alert-danger-bg: #bf616a; /* Error/danger messages */
+    --alert-warning-bg: #D08770; /* Warning messages */
+    --alert-success-bg: #a3be8c; /* Success messages */
+  
+    /* Borders and Accents */
+    --border-color: #4C566A; /* General border */
+    --accent-color: #81A1C1; /* Highlight color */
+  
+    /* Form Elements */
+    --input-bg: #ECEFF4; /* Input background */
+    --input-text: #2e3440; /* Input text */
+    --input-border: #4C566A; /* Input border */
+  
+    /* Spacing and Typography */
+    --font-family-base: 'GT Eesti', sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+}
+
+/* Global resets and base styles */
+body {
+    background-color: var(--background-color);
+    color: var(--text-paragraph);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    margin: 0;
+    padding: 0;
+}
+
+/* Headings */
+h1 {
+    color: var(--text-title);
+    font-size: 2.75em;
+    font-weight: 200;
+    line-height: 2rem;
+    margin-bottom: 0.5em;
+}
+
+h2 {
+    color: var(--text-subtitle);
+    font-size: 2em;
+    font-weight: 150;
+    line-height: 2rem;
+    margin-bottom: 0.5em;
+}
+
+h3, h4 {
+    color: var(--text-title);
+    margin: 0.5em 0;
+}
+
+/* Paragraphs */
+p {
+    color: var(--text-paragraph);
+    margin-bottom: 1em;
+}
+
+/* Tour Container */
+.tour-container {
+    padding: 20px;
+    background-color: var(--background-color-alt);
+    border-radius: 5px;
+}
+
+/* Single Tour */
+.tour {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.tour h2 {
+    font-size: 1.75em;
+    font-weight: 500;
+    color: var(--text-title);
+    margin-bottom: 10px;
+}
+
+.tour p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 0.5em 0;
+}
+
+/* Key Points */
+.key-point {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+}
+
+.key-point h4 {
+    font-size: 1.25em;
+    font-weight: 500;
+    color: var(--text-subtitle);
+}
+
+.key-point p {
+    color: var(--text-muted);
+}
+
+/* Key Point Image */
+.key-point-image {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+/* Buttons */
+button.primary {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button.primary:hover {
+    background-color: var(--alert-success-bg);
+}
+
+button.primary:disabled {
+    background-color: var(--button-secondary-bg);
+    cursor: not-allowed;
+}
+
+button.secondary {
+    background-color: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Alerts */
+.alert-danger, .alert-warning, .alert-success {
+    padding: 10px;
+    border-radius: 4px;
+    color: var(--text-title);
+}
+
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+}
+
+.alert-warning {
+    background-color: var(--alert-warning-bg);
+}
+
+.alert-success {
+    background-color: var(--alert-success-bg);
+}
+
+/* Form Inputs */
+input, textarea {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    padding: 10px;
+    border-radius: 4px;
+    font-size: var(--font-size-base);
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--background-color-alt);
+    color: var(--text-paragraph);
+    padding: 20px;
+    text-align: center;
+}

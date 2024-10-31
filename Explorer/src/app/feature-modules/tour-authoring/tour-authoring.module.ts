@@ -14,6 +14,7 @@ import { TourEditComponent } from './tour-edit/tour-edit.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TourMapComponent } from './tour-map/tour-map.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PublishedTourComponent } from './published-tour/published-tour.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     TourCreationComponent,
     TourEditComponent,
     TourEquipmentDialogComponent,
-    TourMapComponent
+    TourMapComponent,
+    PublishedTourComponent
   ],
   imports: [
     CommonModule,
