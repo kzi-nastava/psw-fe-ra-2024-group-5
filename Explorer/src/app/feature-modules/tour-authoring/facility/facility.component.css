@@ -8,7 +8,7 @@
 }
 
 .table-container {
-  width: 60%;
+  width: 80%;
   display: flex;
   overflow-y: auto;
   max-height: 400px;
