@@ -4,6 +4,7 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { UserProfile } from './model/userProfile.model';
 import { Following } from './model/following.model';
+import { PagedResults } from 'src/app/shared/model/paged-results.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,17 @@ export class UserProfileService {
 
   isFollowing(userId: number, followedUserId: number): Observable<boolean> {
     return this.http.get<boolean>(`${environment.apiHost}administration/followers/isFollowing/${userId}/${followedUserId}`);
+  }
+
+  getAllFollowers(userId: number, page: number, pageSize: number): Observable<PagedResults<UserProfile>> {
+    return this.http.get<PagedResults<UserProfile>>(
+      `${environment.apiHost}administration/followers/${userId}`,
+      {
+        params: {
+          page: page.toString(),
+          pageSize: pageSize.toString()
+        }
+      }
+    );
   }
 }

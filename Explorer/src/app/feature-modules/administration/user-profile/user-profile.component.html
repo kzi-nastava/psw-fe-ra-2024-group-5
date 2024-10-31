@@ -15,11 +15,15 @@
                 {{ isFollowing ? 'Unfollow' : 'Follow' }}
             </button>
         </div>
+        <div class="followers-info" *ngIf="isOwnProfile" [routerLink]="['/followers', userProfile.id]">
+            <div class="followers-count">{{followersCount}}</div>
+            <div class="followers">Followers</div>
+        </div>
         <div class="profile-bio">
-            Biography: {{userProfile.biography}}
+            <span class="bio-label">Biography:</span> {{userProfile.biography}}
         </div>
         <div class="profile-motto">
-            Motto: {{userProfile.motto}}
+            <span class="motto-label">Motto:</span> {{userProfile.motto}}
         </div>
     </div>
 </div>

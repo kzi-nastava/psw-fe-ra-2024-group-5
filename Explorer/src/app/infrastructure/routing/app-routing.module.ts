@@ -23,6 +23,7 @@ import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
 import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
 import { ExecuteTourComponent } from 'src/app/feature-modules/tour-execution/execute-tour/execute-tour.component';
+import { FollowersListComponent } from 'src/app/feature-modules/administration/followers-list/followers-list.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -46,7 +47,8 @@ const routes: Routes = [
   { path: 'create-comment', component: BlogPostCommentComponent },
   { path: 'add-comment', component: BlogPostCommentFormComponent },
   { path: 'clubs', component: ClubComponent },
-  { path: 'tour-execution/:tourId', component: ExecuteTourComponent }
+  { path: 'tour-execution/:tourId', component: ExecuteTourComponent },
+  { path: 'followers/:id', component: FollowersListComponent}
 ];
 
 @NgModule({
