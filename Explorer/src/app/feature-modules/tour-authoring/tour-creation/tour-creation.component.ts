@@ -39,53 +39,53 @@ export class TourCreationComponent{
     this.map.removeLastMarker();
   }
 
-  submitForm(): void {
-    if (!this.form.valid) {
-      this.form.markAllAsTouched()
-      return;
-    }
-    this.authService.user$.subscribe(user => {
-      this.author = user;
-    });
-    const formValue = this.form.value;
-  let levelValue: number | undefined;
+  // submitForm(): void {
+  //   if (!this.form.valid) {
+  //     this.form.markAllAsTouched()
+  //     return;
+  //   }
+  //   this.authService.user$.subscribe(user => {
+  //     this.author = user;
+  //   });
+  //   const formValue = this.form.value;
+  // let levelValue: number | undefined;
 
-  switch (formValue.Level) {
-    case 'Beginner': 
-      levelValue = 0; 
-      break;
+  // switch (formValue.Level) {
+  //   case 'Beginner': 
+  //     levelValue = 0; 
+  //     break;
       
-    case 'Intermediate': 
-      levelValue = 1; 
-      break;
+  //   case 'Intermediate': 
+  //     levelValue = 1; 
+  //     break;
       
-    case 'Advanced': 
-      levelValue = 2; 
-      break;
+  //   case 'Advanced': 
+  //     levelValue = 2; 
+  //     break;
 
-    default:
-      console.error('Invalid level selected');
-      return; // Early exit on invalid level
-  }
+  //   default:
+  //     console.error('Invalid level selected');
+  //     return; // Early exit on invalid level
+  // }
 
-  let tour: Tour = {
-    name: formValue.Name,
-    description: formValue.Description,
-    tags: formValue.Tags,
-    level: levelValue,
-    authorId: this.author?.id
-  };
+  // let tour: Tour = {
+  //   name: formValue.Name,
+  //   description: formValue.Description,
+  //   tags: formValue.Tags,
+  //   level: levelValue,
+  //   authorId: this.author?.id
+  // };
 
 
-    console.log(tour)
+  //   console.log(tour)
 
-    if(this.author?.role === 'author'){
-        this.sendCreateTourRequest(tour);
-    }
-    else{
-      alert("You don't have permission")
-    }
-  }
+  //   if(this.author?.role === 'author'){
+  //       this.sendCreateTourRequest(tour);
+  //   }
+  //   else{
+  //     alert("You don't have permission")
+  //   }
+  // }
   sendCreateTourRequest(tour : Tour): void{
     this.tourAuthorinService.addTour(tour).subscribe({
       next: (response) => {

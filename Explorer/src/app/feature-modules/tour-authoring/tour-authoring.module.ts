@@ -10,10 +10,10 @@ import { TourEquipmentDialogComponent } from './tour-equipment-dialog/tour-equip
 import { ReactiveFormsModule } from '@angular/forms';
 import { TourFormComponent } from './tour-form/tour-form.component';
 import { TourCreationComponent } from './tour-creation/tour-creation.component';
-import { TourEditComponent } from './tour-edit/tour-edit.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TourMapComponent } from './tour-map/tour-map.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TourViewComponent } from './tour-view/tour-view.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FacilityDialogComponent,
     TourFormComponent,
     TourCreationComponent,
-    TourEditComponent,
+    TourViewComponent,
     TourEquipmentDialogComponent,
     TourMapComponent
   ],

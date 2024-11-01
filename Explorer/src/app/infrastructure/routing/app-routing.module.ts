@@ -13,7 +13,7 @@ import { EquipmentManagementComponent } from 'src/app/feature-modules/tour-execu
 import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
-import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
+import { TourViewComponent } from 'src/app/feature-modules/tour-authoring/tour-view/tour-view.component';
 import { PreferenceComponent } from 'src/app/feature-modules/marketplace/preference/preference.component';
 import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
@@ -35,9 +35,9 @@ const routes: Routes = [
   { path: 'facility', component: FacilityComponent },
   { path: 'tour-map', component: TourMapComponent },
   { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard], },
-  { path: 'tour', component: TourComponent },
+  { path: 'tours', component: TourComponent },
   { path: 'tour-creation', component: TourCreationComponent },
-  { path: 'tour-edit/:tourId', component: TourEditComponent },
+  { path: 'tour-view/:tourId', component: TourViewComponent },
   { path: 'accounts', component: AccountsComponent },
   { path: 'preferences', component: PreferenceComponent },
   { path: 'blog', component: BlogComponent },

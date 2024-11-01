@@ -1,0 +1,105 @@
+@import 'src/styles.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.component {
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color); /* Use border color from styles.css */
+  border-radius: 5px; /* Rounded corners */
+  background-color: var(--background-color-alt); /* Background color */
+}
+
+.outlined {
+  border: 2px solid var(--accent-color); /* Outline color */
+  padding: 10px;
+  border-radius: 4px;
+  margin: 5px 0; /* Space between fields */
+}
+
+.transport-duration {
+  border: 1px dashed var(--accent-color); /* Dashed border for transport durations */
+  padding: 8px;
+  margin: 5px 0;
+  background-color: var(--input-bg); /* Background color for contrast */
+}
+.component-1 {
+  width: 49%; /* Full width for the first component */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.action-container{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.title-container{
+  display: flex;
+  justify-content: center;
+}
+
+.content-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.number-file-inputs {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.number-input{
+  width: 100px;
+}
+
+.file-container{
+  display: flex;
+  flex-direction: column;
+}
+.scrollable-form-container {
+max-height: 400px; /* Adjust height */
+overflow-y: auto; /* Enable scrolling */
+border: 1px solid #ccc; /* Optional */
+padding: 16px; /* Optional */
+}
+
+.map-container{
+height: 300px;
+width: 100%;
+position: relative;
+}
+
+/* Existing button styles */
+button {
+  padding: 10px 20px !important;
+  border-radius: 20px !important;
+  border: none !important;
+}
+/* Close button styles */
+button.close {
+  background-color: var(--button-secondary-bg); /* Use the secondary button background */
+  color: var(--button-secondary-text); /* Use the secondary button text color */
+  padding: 10px 20px;
+  border-radius: 20px; /* Rounded corners */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.close:hover {
+  background-color: var(--alert-warning-bg); /* Darker shade on hover */
+}
