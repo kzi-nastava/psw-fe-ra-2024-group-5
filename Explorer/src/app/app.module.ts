@@ -14,6 +14,8 @@ import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 import { ClubModule } from './feature-modules/club/club.module';
+import { AuthService } from './infrastructure/auth/auth.service'; 
+
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { ClubModule } from './feature-modules/club/club.module';
       useClass: JwtInterceptor,
       multi: true,
     },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
