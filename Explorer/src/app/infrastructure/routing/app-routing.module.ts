@@ -22,28 +22,30 @@ import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing
 import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post-comment/blog-post-comment.component';
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
 import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
+import { ExecuteTourComponent } from 'src/app/feature-modules/tour-execution/execute-tour/execute-tour.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent},
+  { path: '', component: LandingComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'profile', component: UserProfileComponent},
-  { path: 'profile/profile-form', component: UserProfileFormComponent},
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'profile/profile-form', component: UserProfileFormComponent },
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
   { path: 'tour-map', component: TourMapComponent },
-  { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard],},
-  { path: 'tour', component: TourComponent},
-  { path: 'tour-creation', component: TourCreationComponent},
-  { path: 'tour-edit/:tourId', component: TourEditComponent},
+  { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard], },
+  { path: 'tour', component: TourComponent },
+  { path: 'tour-creation', component: TourCreationComponent },
+  { path: 'tour-edit/:tourId', component: TourEditComponent },
   { path: 'accounts', component: AccountsComponent },
-  { path: 'preferences', component: PreferenceComponent } ,
-  { path: 'blog', component:BlogComponent},
-  { path: 'addBlog', component:BlogFormComponent},
-  { path: 'create-comment', component: BlogPostCommentComponent},
-  { path: 'add-comment', component: BlogPostCommentFormComponent},
-  {path: 'clubs', component: ClubComponent}
+  { path: 'preferences', component: PreferenceComponent },
+  { path: 'blog', component: BlogComponent },
+  { path: 'addBlog', component: BlogFormComponent },
+  { path: 'create-comment', component: BlogPostCommentComponent },
+  { path: 'add-comment', component: BlogPostCommentFormComponent },
+  { path: 'clubs', component: ClubComponent },
+  { path: 'tour-execution/:tourId', component: ExecuteTourComponent }
 ];
 
 @NgModule({
