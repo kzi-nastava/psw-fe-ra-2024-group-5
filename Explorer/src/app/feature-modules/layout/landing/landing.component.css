@@ -47,7 +47,6 @@
     padding-top: 2em;
 }
 
-.tour-card,
 .blog-card {
     display: flex;
     justify-content: center;
@@ -55,6 +54,15 @@
     background-color: white;
     width: 265px;
     height: 300px;
+}
+
+.tour-card{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 350px; 
 }
 
 .banner-container {
