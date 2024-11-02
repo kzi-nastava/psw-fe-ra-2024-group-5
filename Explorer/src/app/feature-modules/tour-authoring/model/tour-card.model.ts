@@ -1,5 +1,5 @@
 import { Money } from "src/app/shared/model/money";
-import { KeyPoint } from "../../tour-authoring/model/key-point.model";
+import { KeyPoint } from "./key-point.model";
 
 export interface TourCard{
     id: number,

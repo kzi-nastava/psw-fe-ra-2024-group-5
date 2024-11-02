@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { KeyPoint } from './model/key-point.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Tour } from './model/tour.model';
+import { TourCard } from './model/tour-card.model';
 import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 
@@ -29,6 +30,10 @@ export class TourAuthoringService {
       console.log('Nije dobra rola');
       throw console.error('Nije dobra rola');
     }
+  }
+
+  getPublishedTourCards(page: number, pageSize: number): Observable<TourCard[]> {
+    return this.http.get<TourCard[]>(environment.apiHost + `tour/published/${page}/${pageSize}`)
   }
 
   addTour(tour: Tour) : Observable<Tour>{

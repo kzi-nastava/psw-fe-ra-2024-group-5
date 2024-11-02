@@ -1,0 +1,61 @@
+<div class="title-container">
+    <h1 mat-dialog-title>{{ isEditable ? 'Edit Tour' : 'View Tour' }}</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="component component-1">
+            <div class="content-container">
+                <div class="outlined">
+                    <p><strong>Name:</strong> {{ tour?.name }}</p>
+                </div>
+                <div class="outlined">
+                    <p><strong>Description:</strong> {{ tour?.description }}</p>
+                </div>
+                <div class="outlined">
+                    <p><strong>Tags:</strong> {{ tour?.tags }}</p>
+                </div>
+                <div class="outlined">
+                    <p><strong>Level:</strong> {{ getTourLevel(tour?.level) }}</p>
+                </div>
+                <div class="outlined">
+                    <p><strong>Status:</strong> {{ getTourStatus(tour?.status) }}</p>
+                </div>
+                <div class="outlined">
+                    <p><strong>Price:</strong> {{ tour?.price?.amount }} {{ getCurrency(tour?.price?.currency) }}</p>
+                </div>
+
+                <h4>Transport Durations:</h4>
+                <ul>
+                    <li *ngFor="let transport of tour?.transportDurationDtos" class="transport-duration">
+                        <strong>Duration:</strong> {{ transport.duration }} minutes,
+                        <strong>Transport Type:</strong> {{ getTransport(transport.transport) }}
+                    </li>
+                </ul>
+
+                <div class="outlined">
+                    <p><strong>Published Time:</strong> {{ tour?.publishedTime | date }}</p>
+                </div>
+                <div class="outlined">
+                    <p><strong>Archived Time:</strong> {{ tour?.archivedTime | date }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="component component-2">
+            <h3>Tour Equipment Place</h3>
+            <p>Details about the equipment related to this tour would go here.</p>
+        </div>
+    </div>
+
+    <button mat-raised-button class="close" (click)="back()">
+        <mat-icon>back</mat-icon>
+        Close
+    </button>
+    
+
+    <div class="map-container">
+        <app-map [isViewOnly]="true"></app-map>
+    </div>
+    <div>
+        <xp-key-points [tourId]="tourId" (displayKeyPoints)="displayKeyPoints()"></xp-key-points>
+    </div>
+</div>
