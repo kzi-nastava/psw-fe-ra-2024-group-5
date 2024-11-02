@@ -3,14 +3,13 @@ import { TourCard } from '../model/tour-card.model';
 import { TourCardService } from '../tour-card.service';
 
 @Component({
-  selector: 'xp-tour-view',
-  templateUrl: './tour-view.component.html',
-  styleUrls: ['./tour-view.component.css']
+  selector: 'xp-tours-page',
+  templateUrl: './tours-page.component.html',
+  styleUrls: ['./tours-page.component.css']
 })
-export class TourViewComponent {
+export class ToursPageComponent {
   tours: TourCard[] = [];
   currentPage = 1;
-  cards = Array(8).fill(0);
   showSearch: boolean = false;
 
   constructor(private tourCardService: TourCardService){
@@ -25,12 +24,6 @@ export class TourViewComponent {
       },
       error: () => {}
     });
-  }
-
-  getColor(index: number): string {
-    // Assign colors based on index
-    const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FF8333', '#33FFC4', '#A633FF', '#FFD133'];
-    return colors[index % colors.length];
   }
 
   nextPage(): void {

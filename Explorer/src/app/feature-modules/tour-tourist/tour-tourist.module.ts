@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TourCardComponent } from './tour-card/tour-card.component';
-import { TourViewComponent } from './tour-view/tour-view.component';
+import { ToursPageComponent } from './tours-page/tours-page.component';
 
 
 @NgModule({
   declarations: [
     TourCardComponent,
-    TourViewComponent
+    ToursPageComponent
   ],
   imports: [
     CommonModule
