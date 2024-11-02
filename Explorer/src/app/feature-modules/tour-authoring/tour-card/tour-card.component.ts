@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { TourCard } from '../model/tour-card.model';
+import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { MapService } from 'src/app/shared/map/map.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';

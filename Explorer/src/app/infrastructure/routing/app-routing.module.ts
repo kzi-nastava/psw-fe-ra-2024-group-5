@@ -13,17 +13,16 @@ import { EquipmentManagementComponent } from 'src/app/feature-modules/tour-execu
 import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
-import { TourAuthorViewComponent } from 'src/app/feature-modules/tour-authoring/tour-view/tour-view.component';
+import { TourDetailedViewComponent } from 'src/app/feature-modules/tour-authoring/tour-view/tour-view.component';
 import { PreferenceComponent } from 'src/app/feature-modules/marketplace/preference/preference.component';
 import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
-import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
 import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post-comment/blog-post-comment.component';
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
 import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
 import { ExecuteTourComponent } from 'src/app/feature-modules/tour-execution/execute-tour/execute-tour.component';
-import { ToursPageComponent } from 'src/app/feature-modules/tour-tourist/tours-page/tours-page.component';
+import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours-page/tours-page.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -34,11 +33,10 @@ const routes: Routes = [
   { path: 'profile/profile-form', component: UserProfileFormComponent },
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
-  { path: 'tour-map', component: TourMapComponent },
   { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard], },
   { path: 'tours', component: TourComponent },
   { path: 'tour-creation', component: TourCreationComponent },
-  { path: 'tour-author-view/:tourId', component: TourAuthorViewComponent },
+  { path: 'tour-detailed-view/:tourId', component: TourDetailedViewComponent },
   { path: 'accounts', component: AccountsComponent },
   { path: 'preferences', component: PreferenceComponent },
   { path: 'blog', component: BlogComponent },

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TourCard } from '../model/tour-card.model';
-import { TourCardService } from '../tour-card.service';
+import { TourCard } from '../../tour-authoring/model/tour-card.model';
+import { TourAuthoringService } from '../tour-authoring.service';
 
 @Component({
   selector: 'xp-tours-page',
@@ -12,12 +12,12 @@ export class ToursPageComponent {
   currentPage = 1;
   showSearch: boolean = false;
 
-  constructor(private tourCardService: TourCardService){
+  constructor(private tourService: TourAuthoringService){
     this.loadTours();
   }
 
   loadTours(): void{
-    this.tourCardService.getTourCards(this.currentPage,8).subscribe({
+    this.tourService.getPublishedTourCards(this.currentPage,8).subscribe({
       next: (result: TourCard[]) => {
         this.tours = result
         console.log(this.tours)
