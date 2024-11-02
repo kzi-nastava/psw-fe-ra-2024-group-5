@@ -59,8 +59,7 @@ export class TourDetailedViewComponent implements OnInit {
             console.log(err);
         }
     });
-}
-
+  }
 
 
   displayKeyPoints(): void {
@@ -70,29 +69,26 @@ export class TourDetailedViewComponent implements OnInit {
   }
 
   back(): void {
-    this.router.navigate(['/tours']);
+    this.router.navigate(['/']);
   }
 
   getTourLevel(level: number | undefined): string {
     if (level === undefined) return 'N/A';
     return TourLevel[level] !== undefined ? TourLevel[level] : 'N/A';
-}
+  }
 
-getTourStatus(status: number | undefined): string {
-    if (status === undefined) return 'N/A';
-    return TourStatus[status] !== undefined ? TourStatus[status] : 'N/A';
-}
+  getTourStatus(status: number | undefined): string {
+      if (status === undefined) return 'N/A';
+      return TourStatus[status] !== undefined ? TourStatus[status] : 'N/A';
+  }
 
-getCurrency(currency: number | undefined): string {
-    if (currency === undefined) return 'N/A';
-    return Currency[currency] !== undefined ? Currency[currency] : 'N/A';
-}
+  getCurrency(currency: number | undefined): string {
+      if (currency === undefined) return 'N/A';
+      return Currency[currency] !== undefined ? Currency[currency] : 'N/A';
+  }
 
-getTransport(transport: number | undefined): string {
-    if (transport === undefined) return 'N/A';
-    return TourTransport[transport] !== undefined ? TourTransport[transport] : 'N/A';
-}
-
-
-
+  getTransport(transport: number | undefined): string {
+      if (transport === undefined) return 'N/A';
+      return TourTransport[transport] !== undefined ? TourTransport[transport] : 'N/A';
+  }
 }

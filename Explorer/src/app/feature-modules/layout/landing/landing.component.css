@@ -63,6 +63,12 @@
     justify-content: center;
     width: 300px;
     height: 350px; 
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.tour-card:hover {
+    background-color: antiquewhite;
 }
 
 .banner-container {

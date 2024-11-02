@@ -22,7 +22,7 @@
             <button [routerLink]="['tours-page']" class="secondary" mat-flat-button>View more</button>
         </div>
         <div class="content-cards">
-            <xp-tour-card class="tour-card rounded raised" *ngFor="let tour of recommendedTours" [tourCard]="tour"></xp-tour-card>
+            <xp-tour-card class="tour-card rounded raised" *ngFor="let tour of recommendedTours" [tourCard]="tour" (click)="detailedTour(tour)"></xp-tour-card>
         </div>
     </div>
 

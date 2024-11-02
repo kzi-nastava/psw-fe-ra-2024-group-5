@@ -10,9 +10,9 @@
     
     <div class="card-container">
         <xp-tour-card class="tour-card rounded raised" 
-            *ngFor="let tour of tours" [tourCard]="tour">
+            *ngFor="let tour of tours" [tourCard]="tour" (click)="detailedTour(tour)">
         </xp-tour-card>
-      </div>
+    </div>
   </div>
 
   <div class="bottom-nav">

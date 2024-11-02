@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { TourAuthoringService } from '../../tour-authoring/tour-authoring.service';
+import { Router } from '@angular/router';
 //import { Blog } from '../../blog/model/blog.model';
 
 @Component({
@@ -12,7 +13,7 @@ export class LandingComponent {
   recommendedTours: TourCard[] = [];
   //recommendedBlogs: Blog[] = [];
 
-  constructor(private tourService: TourAuthoringService){
+  constructor(private tourService: TourAuthoringService, private router: Router){
     this.loadTours();
   }
 
@@ -26,4 +27,7 @@ export class LandingComponent {
     });
   }
 
+  detailedTour(tour: TourCard): void{
+    this.router.navigate(['/tour-detailed-view', tour.id]);
+  }
 }

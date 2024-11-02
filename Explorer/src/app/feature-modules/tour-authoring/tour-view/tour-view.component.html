@@ -1,61 +1,61 @@
 <div class="title-container">
-    <h1 mat-dialog-title>{{ isEditable ? 'Edit Tour' : 'View Tour' }}</h1>
+    <h1 mat-dialog-title>{{tour?.name}}</h1>
 </div>
-<div class="container">
+<div class="tour-container">
     <div class="row">
-        <div class="component component-1">
-            <div class="content-container">
-                <div class="outlined">
-                    <p><strong>Name:</strong> {{ tour?.name }}</p>
-                </div>
-                <div class="outlined">
-                    <p><strong>Description:</strong> {{ tour?.description }}</p>
-                </div>
-                <div class="outlined">
-                    <p><strong>Tags:</strong> {{ tour?.tags }}</p>
-                </div>
-                <div class="outlined">
-                    <p><strong>Level:</strong> {{ getTourLevel(tour?.level) }}</p>
-                </div>
-                <div class="outlined">
-                    <p><strong>Status:</strong> {{ getTourStatus(tour?.status) }}</p>
-                </div>
-                <div class="outlined">
-                    <p><strong>Price:</strong> {{ tour?.price?.amount }} {{ getCurrency(tour?.price?.currency) }}</p>
-                </div>
+        <div class="map-container">
+            <app-map [isViewOnly]="true"></app-map>
+        </div>
+        <div class="keypoints-container">
+            <xp-key-points [tourId]="tourId" (displayKeyPoints)="displayKeyPoints()"></xp-key-points>
+        </div>
+    </div>
 
-                <h4>Transport Durations:</h4>
-                <ul>
-                    <li *ngFor="let transport of tour?.transportDurationDtos" class="transport-duration">
-                        <strong>Duration:</strong> {{ transport.duration }} minutes,
-                        <strong>Transport Type:</strong> {{ getTransport(transport.transport) }}
-                    </li>
-                </ul>
-
-                <div class="outlined">
-                    <p><strong>Published Time:</strong> {{ tour?.publishedTime | date }}</p>
+    <div class="row">
+        <div class="tour-details">
+            <div class="description outlined-desc">
+                {{tour?.description}}sd fdsa fdsa fdsafdsafsdadsaffdsafdsadsafdsfdsafdsds
+            </div>
+            <div class="info-transport-container">
+                <div class="info">
+                    <h3>{{ getTourLevel(tour?.level) }} <span *ngIf="user?.role === 'author'">- {{ getTourStatus(tour?.status) }}</span></h3>
+                    <h3 *ngIf="tour?.status === 1">Published: {{ tour?.publishedTime | date }}</h3>
+                    <h3 *ngIf="tour?.status === 2">Archived: {{ tour?.archivedTime | date }}</h3>
+                    <h3>Tags: {{ tour?.tags }}</h3>
                 </div>
-                <div class="outlined">
-                    <p><strong>Archived Time:</strong> {{ tour?.archivedTime | date }}</p>
+                <div class="transport">
+                    <h3>Transport Durations</h3>
+                    <ul>
+                        <li *ngFor="let transport of tour?.transportDurationDtos" class="transport-duration">
+                            <strong>{{ transport.duration }} min</strong> -
+                            <strong>{{ getTransport(transport.transport) }}</strong> 
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="component component-2">
-            <h3>Tour Equipment Place</h3>
-            <p>Details about the equipment related to this tour would go here.</p>
+        <div class="button-container">
+            <div class="price-row">
+                <h2>{{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</h2>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist'">Buy now</button>
+            </div>
+            <div class="actions-row">
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'">Archive</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===0 && user?.role === 'author'">Publish</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist'">Activate</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist'">Add review</button>
+            </div>
         </div>
     </div>
 
-    <button mat-raised-button class="close" (click)="back()">
-        <mat-icon>back</mat-icon>
-        Close
-    </button>
-    
-
-    <div class="map-container">
-        <app-map [isViewOnly]="true"></app-map>
+    <div class="row">
+        comment-section
     </div>
-    <div>
-        <xp-key-points [tourId]="tourId" (displayKeyPoints)="displayKeyPoints()"></xp-key-points>
+
+    <div class="row">
+        <button mat-raised-button class="close" (click)="back()">
+            <mat-icon>back</mat-icon>
+            Home
+        </button>
     </div>
 </div>
