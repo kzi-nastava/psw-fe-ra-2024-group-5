@@ -10,6 +10,7 @@ import { CardLinkComponent } from './card-link/card-link.component';
 import { FooterComponent } from './footer/footer.component';
 import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TourTouristModule } from '../tour-tourist/tour-tourist.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MaterialModule,
     RouterModule,
     TourAuthoringModule,
-    SharedModule
+    SharedModule,
+    TourTouristModule
 ],
   exports: [
     NavbarComponent,
