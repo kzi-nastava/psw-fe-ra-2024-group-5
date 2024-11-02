@@ -11,11 +11,11 @@ import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.en
 
 
 @Component({
-  selector: 'xp-tour-view',
+  selector: 'xp-tour-author-view',
   templateUrl: './tour-view.component.html',
   styleUrls: ['./tour-view.component.css']
 })
-export class TourViewComponent implements OnInit {
+export class TourAuthorViewComponent implements OnInit {
   isEditable: boolean = false;
   user: User | undefined;
   tour: Tour | undefined;
