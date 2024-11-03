@@ -38,3 +38,10 @@ export interface Tour {
     publishedTime: Date; // Required
     archivedTime: Date; // Required
 }
+
+export interface TourTourist {
+    tour: Tour;
+    canBeActivated: boolean;
+    canBeBought: boolean;
+    canBeReviewed: boolean;
+}

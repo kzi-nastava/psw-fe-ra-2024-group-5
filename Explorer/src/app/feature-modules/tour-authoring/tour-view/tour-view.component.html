@@ -37,19 +37,75 @@
         <div class="button-container">
             <div class="price-row">
                 <h2>{{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</h2>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist'">Buy now</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought">Buy now</button>
             </div>
             <div class="actions-row">
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'">Archive</button>
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===0 && user?.role === 'author'">Publish</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist'">Activate</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist'">Add review</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated">Activate</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed">Add review</button>
+                <button mat-button class="secondary button-mg" *ngIf="user?.role === 'author'">Edit</button>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        comment-section
+    <div class="title-container">
+        <h1 mat-dialog-title *ngIf="tour && tour.reviews && tour.reviews.length > 0; else noReviews">Reviews</h1>
+
+        <ng-template #noReviews>
+            <h1 mat-dialog-title>No Reviews Available</h1>
+        </ng-template>
+    </div>
+    <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
+        <div class="review-card" *ngFor="let review of tour?.reviews">
+            <div class="image-container">
+                <img [src]="'data:image/jpeg;base64,' + review.image"  alt="review-picture">
+            </div>
+            <div class="review-info">
+                <p class="review-comment">{{review.comment}}</p>
+                <div class="review-footer">
+                    <div class="review-dates">
+                        <div class="review-date">Visit: {{review.visitDate}}</div>
+                        <div class="review-date">Review: {{review.reviewDate}}</div>
+                    </div>
+                    <div class="star-rating">
+                        <span class="star" *ngIf="review.rating >= 1">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 2">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 3">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 4">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 5">&#9733;</span>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <!-- Example of review card
+        <div class="review-card">
+            <div class="image-container">
+                <img class="review-picture" src="assets/images/pexels-florencia-potter-82066-351283.jpg"
+                  alt="review-picture">
+            </div>
+            <div class="review-info">
+                <p class="review-comment">
+                    This is a long comment about the experience. 
+                    The service was excellent and I would highly recommend it to others!
+                </p>
+                <div class="review-footer">
+                    <div class="review-dates">
+                        <div class="review-date">Visit: November 3, 2024</div>
+                        <div class="review-date">Review: November 2, 2024</div>
+                    </div>
+                    <div class="star-rating">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
+                </div>
+            </div> 
+        </div> -->
+
     </div>
 
     <div class="row">

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Tour } from '../model/tour.model';
+import { Tour, TourTourist } from '../model/tour.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { KeyPoint } from '../model/key-point.model';
@@ -21,6 +21,9 @@ export class TourDetailedViewComponent implements OnInit {
   tour: Tour | undefined;
   tourId: number;
   @ViewChild(MapComponent) map: MapComponent;
+  canBeBought: boolean = false;
+  canBeActivated: boolean = false;
+  canBeReviewed: boolean = false;
 
   constructor(
     private service: TourAuthoringService,
@@ -30,14 +33,18 @@ export class TourDetailedViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('tourId');
       this.tourId = Number(id);
-      this.loadTourDetails(this.tourId);
-    });
 
-    this.authService.user$.subscribe(user => {
-      this.user = user;
+      if (this.user?.role === 'author')
+        this.loadTourDetails(this.tourId);
+      if (this.user?.role === 'tourist')
+        this.loadTourTouristDetails(this.tourId, this.user.id);
     });
   }
 
@@ -54,6 +61,30 @@ export class TourDetailedViewComponent implements OnInit {
                 }
             };
             console.log('Loaded Tour:', this.tour);
+        },
+        error: (err: any) => {
+            console.log(err);
+        }
+    });
+  }
+
+  private loadTourTouristDetails(tourId: number, touristId : number): void {
+    this.service.getTourForTouristById(tourId, touristId).subscribe({
+        next: (result: TourTourist) => {
+            this.tour = {
+                ...result.tour,
+                level: result.tour.level as TourLevel, // Ensure it's cast to enum
+                status: result.tour.status as TourStatus, // Ensure it's cast to enum
+                price: {
+                    ...result.tour.price,
+                    currency: result.tour.price.currency as Currency // Ensure it's cast to enum
+                }
+            };
+            this.canBeActivated = result.canBeActivated
+            this.canBeBought = result.canBeBought
+            this.canBeReviewed = result.canBeReviewed
+
+            console.log('Loaded Tour for tourist:', result);
         },
         error: (err: any) => {
             console.log(err);
