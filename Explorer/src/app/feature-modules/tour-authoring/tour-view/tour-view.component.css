@@ -1,86 +1,115 @@
 @import 'src/styles.css';
 
-.container {
+.tour-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
-
-.component {
-  padding: 20px;
-  box-sizing: border-box;
-  border: 1px solid var(--border-color); /* Use border color from styles.css */
-  border-radius: 5px; /* Rounded corners */
-  background-color: var(--background-color-alt); /* Background color */
-}
-
-.outlined {
-  border: 2px solid var(--accent-color); /* Outline color */
-  padding: 10px;
-  border-radius: 4px;
-  margin: 5px 0; /* Space between fields */
-}
-
-.transport-duration {
-  border: 1px dashed var(--accent-color); /* Dashed border for transport durations */
-  padding: 8px;
-  margin: 5px 0;
-  background-color: var(--input-bg); /* Background color for contrast */
-}
-.component-1 {
-  width: 49%; /* Full width for the first component */
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.action-container{
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .title-container{
   display: flex;
   justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-.content-container{
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.map-container {
+  width: 800px;
+  height: 400px; 
+  border: 1px solid var(--border-color);
+  border-radius: 20px; 
+  background-color: var(--background-color-alt); 
+}
+
+.keypoints-container{
+  width: 800px;
+  height: 400px; 
+  overflow-y: auto;
+}
+
+.tour-details {
+  width: 800px;
+  height: 220px;  
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: start;
+  background-color: antiquewhite;
+  border: 1px solid var(--border-color);
+  border-radius: 20px; 
+  background-color: var(--background-color-alt); 
+}
+
+.outlined {
+  border: 2px solid var(--accent-color);
+  border-radius: 20px; 
+}
+
+.description {
+  height: 80px; 
+  text-align: center;
+  padding: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+  line-clamp: 2;
+  white-space: normal;
+  text-overflow: ellipsis;
+  line-height: 25px;
+}
+.outlined-desc {
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+}
+
+.info-transport-container{
+  display: flex;
+}
+
+.info{
+  width: 500px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.transport{
+  width: 300px;
+  padding: 10px;
+}
+
+.button-container{
+  width: 800px;
+  height: 200px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.price-row{
+  height: 80px;
+  display: flex;
+  align-items: start;
   justify-content: center;
 }
 
-.number-file-inputs {
+.actions-row{
+  height: 100%;
   display: flex;
-  justify-content: space-between;
-  width: 100%;
   align-items: center;
+  justify-content: center;
 }
 
-.number-input{
-  width: 100px;
-}
-
-.file-container{
-  display: flex;
-  flex-direction: column;
-}
-.scrollable-form-container {
-max-height: 400px; /* Adjust height */
-overflow-y: auto; /* Enable scrolling */
-border: 1px solid #ccc; /* Optional */
-padding: 16px; /* Optional */
-}
-
-.map-container{
-height: 300px;
-width: 100%;
-position: relative;
+.button-mg{
+  margin-left: 20px;
+  height: 50px;
+  width: 120px;
 }
 
 /* Existing button styles */
@@ -102,4 +131,86 @@ button.close {
 
 button.close:hover {
   background-color: var(--alert-warning-bg); /* Darker shade on hover */
+}
+
+.review-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  max-height: 1000px; /* Adjust the max-height as needed */
+  overflow-y: auto;
+  gap: 20px;
+  border: 1px solid #ccc; /* Optional border to visually separate */
+  padding: 10px;
+}
+
+.review-card {
+  width: 800px;
+  height: 250px;
+  background-color: #f0f0f0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: start;
+  padding: 10px;
+  box-sizing: border-box;
+  gap: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+}
+
+.image-container{
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-picture {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.review-info {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.review-comment {
+  font-size: 16px;
+  margin-bottom: 8px;
+  flex-grow: 1;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-dates {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  font-size: 45px;
+  color: gold;
+  margin-right: 2px;
 }

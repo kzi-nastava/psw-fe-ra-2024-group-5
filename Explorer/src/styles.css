@@ -93,6 +93,13 @@ h2 {
     line-height: 2rem;
 }
 
+h3 {
+    color: var(--text-subtitle);
+    font-size: 1.5em;
+    font-weight: 125;
+    line-height: 1.5rem;
+}
+
 /* Paragraphs */
 p {
     color: var(--text-paragraph);

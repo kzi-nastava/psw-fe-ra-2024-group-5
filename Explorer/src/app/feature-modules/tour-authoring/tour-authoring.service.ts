@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyPoint } from './model/key-point.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
-import { Tour } from './model/tour.model';
+import { Tour, TourTourist } from './model/tour.model';
 import { TourCard } from './model/tour-card.model';
 import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
@@ -42,6 +42,10 @@ export class TourAuthoringService {
 
   getTourbyId(id : number) : Observable<Tour>{
     return this.http.get<Tour>(environment.apiHost + 'tour/' + id)
+  }
+
+  getTourForTouristById(id : number, touristId: number) : Observable<TourTourist>{
+    return this.http.get<TourTourist>(environment.apiHost + 'tour/tourist/' + id + '/' + touristId)
   }
 
   updateTour(tour:Tour) : Observable<Tour>{
