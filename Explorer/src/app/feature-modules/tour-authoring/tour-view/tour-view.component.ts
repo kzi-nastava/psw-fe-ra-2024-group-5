@@ -7,8 +7,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { KeyPoint } from '../model/key-point.model';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.enums'; // Import the enums
-
-
+import { TourExecutionService } from '../../tour-execution/tour-execution.service';
 
 @Component({
   selector: 'xp-tour-detailed-view',
@@ -27,6 +26,7 @@ export class TourDetailedViewComponent implements OnInit {
 
   constructor(
     private service: TourAuthoringService,
+    private tourExecutionService: TourExecutionService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
@@ -80,7 +80,7 @@ export class TourDetailedViewComponent implements OnInit {
                     currency: result.tour.price.currency as Currency // Ensure it's cast to enum
                 }
             };
-            this.canBeActivated = true
+            this.canBeActivated = true // THIS IS TEMPORARY, SHOULD BE CHANGED BACK
             this.canBeBought = result.canBeBought
             this.canBeReviewed = result.canBeReviewed
 
@@ -121,5 +121,22 @@ export class TourDetailedViewComponent implements OnInit {
   getTransport(transport: number | undefined): string {
       if (transport === undefined) return 'N/A';
       return TourTransport[transport] !== undefined ? TourTransport[transport] : 'N/A';
+  }
+
+  startTour(): void {
+    const userId = this.user?.id;
+    const tourId = this.tour?.id;
+
+    if (userId == undefined || tourId == undefined)
+      return;
+
+    this.tourExecutionService.startTour(userId, tourId).subscribe({
+      next: execution => {
+        this.router.navigate(['/tour-execution']);
+      },
+      error: error => {
+        console.log('Error starting tour:', error);
+      }
+    });
   }
 }
