@@ -80,7 +80,7 @@ export class TourDetailedViewComponent implements OnInit {
                     currency: result.tour.price.currency as Currency // Ensure it's cast to enum
                 }
             };
-            this.canBeActivated = result.canBeActivated
+            this.canBeActivated = true
             this.canBeBought = result.canBeBought
             this.canBeReviewed = result.canBeReviewed
 
