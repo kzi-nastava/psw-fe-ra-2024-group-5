@@ -1,6 +1,10 @@
 <div class="execute-tour container">
     <div class="map-container" *ngIf="!noActiveTours">
-        <app-map [simulatorEnabled]="true" [isViewOnly]="true" [keyPoints]="tour.keyPoints"></app-map>
+        <app-map
+            [simulatorEnabled]="true"
+            [isViewOnly]="true"
+            (userLocationChange)="onUserLocationChange($event)"
+            [keyPoints]="tour.keyPoints"/>
     </div>
     <div class="no-active-tours" *ngIf="noActiveTours">
         <h1>No active tour...</h1>

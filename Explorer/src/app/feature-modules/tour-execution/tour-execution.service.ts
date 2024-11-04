@@ -4,6 +4,7 @@ import { environment } from 'src/env/environment';
 import { TourExecution } from './model/tour-execution.model';
 import { Observable } from 'rxjs';
 import { TourExecutionStart } from './model/tour-execution-start.model';
+import { Position } from './model/position.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,9 @@ export class TourExecutionService {
     };
 
     return this.http.post<TourExecution>(environment.apiHost + `tour/execution`, start);
+  }
+
+  progressTour(position: Position, tourExecutionId: number): Observable<any> {
+    return this.http.patch(environment.apiHost + `tour/execution/${tourExecutionId}`, position);
   }
 }

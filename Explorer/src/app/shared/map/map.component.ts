@@ -4,6 +4,8 @@ import { Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Facility } from '../model/facility';
 import * as L from 'leaflet';
 import { UserLocationService } from '../user-location/user-location.service';
+import { UserPosition } from '../model/userPosition.model';
+import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point.model';
 
 @Component({
   selector: 'app-map',
@@ -22,7 +24,7 @@ export class MapComponent implements AfterViewInit {
   //@Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
   @Input() facilities: Facility[];
   @Input() isViewOnly: boolean = false;
-  //@Input() keypoints
+  @Input() keyPoints: KeyPoint[];
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
 
@@ -93,10 +95,16 @@ export class MapComponent implements AfterViewInit {
   }
 
   setUserLocationMarker(latlng: [number, number], popupText: string = 'User Location') {
+    const userIcon = L.icon({
+      iconUrl: 'https://maps.google.com/mapfiles/kml/shapes/man.png',
+      iconSize: [40, 40],
+      iconAnchor: [16, 32],
+    });
+
     if (this.userLocationMarker)
       this.map.removeLayer(this.userLocationMarker);
 
-    const marker = new L.Marker(latlng, { title: popupText }).bindPopup(popupText);
+    const marker = new L.Marker(latlng, { title: popupText, icon: userIcon }).bindPopup(popupText);
     this.userLocationMarker = marker;
     this.userLocationMarker.addTo(this.map);
 
@@ -169,6 +177,10 @@ export class MapComponent implements AfterViewInit {
       return;
     if (this.facilities && this.facilities.length !== 0)
       this.loadFacilities();
+    if (this.keyPoints && this.keyPoints.length !== 0)
+      this.loadKeyPoints();
+
+    this.loadUserLocation();
   }
 
   loadFacilities(): void {
@@ -176,6 +188,26 @@ export class MapComponent implements AfterViewInit {
       const marker = new L.Marker([facility.latitude, facility.longitude], { title: 'facility' }).addTo(this.map).bindPopup('Ja sam object');
       this.markers.push(marker);
     });
+  }
+
+  loadKeyPoints(): void {
+    this.keyPoints.forEach(keypoint => {
+      const keypointIcon = L.icon({
+        iconUrl: 'https://maps.google.com/mapfiles/kml/paddle/K.png',
+        iconSize: [40, 40],
+        iconAnchor: [16, 32],
+      });
+
+      const marker = new L.Marker([keypoint.latitude, keypoint.longitude], { icon: keypointIcon }).setZIndexOffset(1000).bindPopup('Ja sam keypoint').addTo(this.map);
+      this.markers.push(marker);
+    });
+  }
+
+  loadUserLocation(): void {
+    const userPosition = this.userLocationService.getUserPosition();
+    if (userPosition) {
+      this.setUserLocationMarker([userPosition.latitude, userPosition.longitude]);
+    }
   }
 
   getMarkers(): L.Marker[] {

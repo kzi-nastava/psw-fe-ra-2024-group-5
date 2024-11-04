@@ -4,6 +4,7 @@ import { TourExecutionService } from '../tour-execution.service';
 import { TourExecution } from '../model/tour-execution.model';
 import { Tour } from 'src/app/feature-modules/tour-authoring/model/tour.model';
 import { TourAuthoringService } from '../../tour-authoring/tour-authoring.service';
+import { Position } from '../model/position.model';
 
 @Component({
   selector: 'xp-execute-tour',
@@ -29,11 +30,8 @@ export class ExecuteTourComponent {
       next: tourExecution => {
         this.tourExecution = tourExecution;
         this.noActiveTours = false;
-        const tourId = this.tourExecution.tourId;
-        if (!tourId)
-          return;
 
-        this.tourService.getTourForTouristById(tourId, userId).subscribe({
+        this.tourService.getTourForTouristById(this.tourExecution.tourId, userId).subscribe({
           next: tour => {
             this.tour = tour.tour;
           },
@@ -45,6 +43,22 @@ export class ExecuteTourComponent {
       error: error => {
         this.noActiveTours = true;
         console.log('Error fetching active tour:', error.status);
+      }
+    });
+  }
+
+  onUserLocationChange(location: [number, number]): void {
+    const position: Position = {
+      latitude: location[0],
+      longitude: location[1]
+    };
+
+    this.service.progressTour(position, this.tourExecution.id).subscribe({
+      next: () => {
+        console.log('Position updated');
+      },
+      error: error => {
+        console.log('Error updating position:', error.status);
       }
     });
   }

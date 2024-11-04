@@ -1,4 +1,4 @@
 export interface TourExecution {
-	id?: number;
-	tourId?: number;
+	id: number;
+	tourId: number;
 }
