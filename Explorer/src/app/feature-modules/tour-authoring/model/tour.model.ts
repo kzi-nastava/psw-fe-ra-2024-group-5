@@ -45,3 +45,14 @@ export interface TourTourist {
     canBeBought: boolean;
     canBeReviewed: boolean;
 }
+
+export interface TourCreation {
+    name: string;
+    description: string;
+    tags: string;
+    level?: TourLevel; // Use enum here
+    authorId?: number; // Optional
+    keyPoints: KeyPoint[]; // Required
+    length?: number; // Optional
+    transportDurationDtos: TransportDuration[]; // Required
+}

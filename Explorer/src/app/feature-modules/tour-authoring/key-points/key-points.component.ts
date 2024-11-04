@@ -17,7 +17,7 @@ import { OnChanges } from '@angular/core';
 })
 export class KeyPointsComponent implements OnInit {
   keyPoints: KeyPoint[] = [];
-  displayedColumns: string[] = ['name', 'description', 'image']
+  displayedColumns: string[] = ['name', 'description', 'image', 'deleteButton']
   @Input() coordinates: number[] | null = null;
   @Input() tourId: number | null = null;
   @Output() cancel = new EventEmitter<any>();
@@ -83,6 +83,17 @@ export class KeyPointsComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  cancelKeyPoint() {
+    console.log(this.keyPoints)
+    this.keyPoints.pop()
+    console.log(this.keyPoints)
+    this.cancel.emit();
+  }
+
+  getKeyPoints(){
+    return this.keyPoints;
   }
 }
  

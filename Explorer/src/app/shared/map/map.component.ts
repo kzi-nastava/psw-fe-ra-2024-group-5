@@ -212,4 +212,20 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  getRouteLengthInKm(): number {
+    if (this.routeControl && typeof this.routeControl.getRoutes === 'function') {
+      const routes = this.routeControl.getRoutes();
+      if (routes.length > 0) {
+        // Get the first route
+        const route = routes[0];
+        // Length in meters, convert to kilometers
+        const lengthInKm = route.getSummary().totalDistance / 1000; 
+        return lengthInKm;
+      }
+    }
+    return 0; // Return 0 if there is no route
+  }
+  
+  
+
 }
