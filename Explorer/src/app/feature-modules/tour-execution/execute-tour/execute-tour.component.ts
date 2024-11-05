@@ -62,4 +62,12 @@ export class ExecuteTourComponent {
       }
     });
   }
+
+  abandonTour(): void {
+    this.service.abandonTour(this.tourExecution.id).subscribe({
+      next: () => {
+        window.location.reload();
+      }
+    });
+  }
 }

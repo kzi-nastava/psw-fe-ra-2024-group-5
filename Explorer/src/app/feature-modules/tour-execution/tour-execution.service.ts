@@ -29,4 +29,8 @@ export class TourExecutionService {
   progressTour(position: Position, tourExecutionId: number): Observable<any> {
     return this.http.patch(environment.apiHost + `tour/execution/${tourExecutionId}`, position);
   }
+
+  abandonTour(tourExecutionId: number): Observable<any> {
+    return this.http.patch(environment.apiHost + `tour/execution/abandon/${tourExecutionId}`, null);
+  }
 }
