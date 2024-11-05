@@ -26,7 +26,9 @@ export class MapComponent implements AfterViewInit {
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
 
-  @Output() addItem = new EventEmitter<number[]>();
+  @Output() addFacility = new EventEmitter<number[]>();
+  @Output() addKeyPoint = new EventEmitter<number[]>();
+  @Output() setaRouteLength = new EventEmitter<number>();
   @Output() userLocationChange = new EventEmitter<[number, number]>();
 
   constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
@@ -88,8 +90,17 @@ export class MapComponent implements AfterViewInit {
       this.setUserLocationMarker([lat, lng]);
     else if (!this.isViewOnly)
       this.addMarker([lat, lng], 'New Marker');
-
-    this.addItem.emit([lat, lng])
+    
+    switch (this.markerAddMode) {
+      case 'facility':
+        this.addFacility.emit([lat, lng])
+        break;
+        case 'keypoint':
+        this.addKeyPoint.emit([lat, lng])
+        break;
+      default:
+        break;
+    }
   }
 
   setUserLocationMarker(latlng: [number, number], popupText: string = 'User Location') {
@@ -145,7 +156,7 @@ export class MapComponent implements AfterViewInit {
     this.setRoute(this.markers)
   }
 
-  setRoute(markPoints: L.Marker[]): void {
+  setRoute(markPoints: L.Marker[]): void{
     if (this.routeControl) {
       this.routeControl.remove();
     }
@@ -158,11 +169,24 @@ export class MapComponent implements AfterViewInit {
       router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: 'mapbox/walking' })
     }).addTo(this.map);
 
-    this.routeControl.on('routesfound', function (e: { routes: any; }) {
-      var routes = e.routes;
-      var summary = routes[0].summary;
-    });
-  }
+    // Listen for the 'routesfound' event when routes are calculated
+  this.routeControl.on('routesfound', (e: any) => {
+    const routes = e.routes;  // Accessing the routes array directly
+    if (routes.length > 0) {
+      const summary = routes[0].summary;  // Get the summary from the first route
+      if (summary) {
+        // Ensure summary has the expected properties
+        const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
+        const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+        console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+        this.setaRouteLength.emit(distanceInKm)
+      } else {
+        console.error('No summary available for the route.');
+      }
+    }
+  });
+  
+}
 
   loadMarkers(): void {
     if (!this.map)
@@ -222,10 +246,19 @@ export class MapComponent implements AfterViewInit {
         const lengthInKm = route.getSummary().totalDistance / 1000; 
         return lengthInKm;
       }
+      
     }
     return 0; // Return 0 if there is no route
   }
   
-  
+  getRouteLength() : number{
+      const routes = this.routeControl.routes;
+      const summary = routes[0].summary;
+      const length = summary.totalDistance / 1000
+      alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
+      console.log(length)
+      return length
+   
+  }
 
 }

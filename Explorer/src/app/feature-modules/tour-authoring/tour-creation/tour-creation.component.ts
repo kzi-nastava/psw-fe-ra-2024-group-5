@@ -16,7 +16,9 @@ import { TourLevel, Currency, TourTransport } from '../model/tour.enums'; // Imp
 })
 export class TourCreationComponent {
   form: FormGroup;
-  tourLevels: string[] = ['Beginner', 'Intermediate', 'Advanced'];tourTransports: string[] = ['On Foot', 'Bicycle', 'Car']; // Only the string representations
+  tourLevels: string[] = ['Beginner', 'Intermediate', 'Advanced'];
+  tourTransports: string[] = ['On Foot', 'Bicycle', 'Car']; // Only the string representations
+  tourLength: number | 0;
   author: User | undefined;
   coordinates: number[] | null = null;
   @ViewChild(KeyPointsComponent) keyPointsListComponent!: KeyPointsComponent;
@@ -32,9 +34,15 @@ export class TourCreationComponent {
     this.resetForm();
   }
 
-  sendCoordinates(latLng: number[]) {
-    this.coordinates = latLng;
+  sendCordinates(latlng: number[]) {
+    this.coordinates = latlng
     console.log('Coordinates received in main component');
+    console.log(this.coordinates);
+  }
+
+  setTourLength(length: number){
+    this.tourLength = length
+    console.log(this.tourLength)
   }
 
   cancelKeyPoint() {
@@ -93,7 +101,7 @@ export class TourCreationComponent {
       tags: formValue.Tags,
       level: levelValue,
       authorId: this.author?.id,
-      length: this.map.getRouteLengthInKm(),
+      length: this.tourLength,
       keyPoints: this.keyPointsListComponent.getKeyPoints(), // This should be populated based on key points
       transportDurationDtos: [{ duration: formValue.TransportDuration, transport: transportValue }], // Use selected transport
       

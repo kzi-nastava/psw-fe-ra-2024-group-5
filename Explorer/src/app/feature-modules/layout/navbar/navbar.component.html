@@ -15,8 +15,8 @@
             </button>
             
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
-                [routerLink]="['tour']">
-                Tours
+                [routerLink]="['tour-creation']">
+                Add Tour
             </button>
 
             <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button

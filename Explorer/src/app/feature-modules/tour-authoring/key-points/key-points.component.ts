@@ -59,6 +59,7 @@ export class KeyPointsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(!result){
         this.cancel.emit();
+        this.table.renderRows();
         return;
       }
       console.log(result);
@@ -68,28 +69,30 @@ export class KeyPointsComponent implements OnInit {
     });
   }
 
-  saveKeyPoints(tourId: number){
-    console.log(tourId);
-    this.keyPoints.forEach(element => {
-      element.tourId = tourId;
-    });
-    this.tourAuthoringService.saveKeyPoints(this.keyPoints, tourId).subscribe(
-      (data) => {
-        console.log(data);
-        this.keyPoints =[];
-        this.table.renderRows();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  // saveKeyPoints(tourId: number){
+  //   console.log(tourId);
+  //   this.keyPoints.forEach(element => {
+  //     element.tourId = tourId;
+  //   });
+  //   this.tourAuthoringService.saveKeyPoints(this.keyPoints, tourId).subscribe(
+  //     (data) => {
+  //       console.log(data);
+  //       this.keyPoints =[];
+  //       this.table.renderRows();
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   cancelKeyPoint() {
+    //NE radi kako treba radi samo pop poslednjeg
     console.log(this.keyPoints)
     this.keyPoints.pop()
     console.log(this.keyPoints)
     this.cancel.emit();
+    this.table.renderRows()
   }
 
   getKeyPoints(){

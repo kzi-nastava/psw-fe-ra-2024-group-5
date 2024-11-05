@@ -1,7 +1,7 @@
 <div class="container">
   <div class="component component-1">
       <div class="map-container">
-          <app-map (addItem)="sendCoordinates($event)"></app-map>
+          <app-map (addKeyPoint)="sendCordinates($event)"  (setaRouteLength)='setTourLength($event)'></app-map>
       </div>
       <div class="scrollable-form-container">
           <form [formGroup]="form">
