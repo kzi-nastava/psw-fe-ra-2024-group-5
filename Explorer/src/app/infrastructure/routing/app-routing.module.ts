@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: 'create-comment', component: BlogPostCommentComponent },
   { path: 'add-comment', component: BlogPostCommentFormComponent },
   { path: 'clubs', component: ClubComponent },
-  { path: 'tour-execution/:tourId', component: ExecuteTourComponent },
+  { path: 'tour-execution', component: ExecuteTourComponent },
   { path: 'followers/:id', component: FollowersListComponent },
   { path: 'tours-page', component: ToursPageComponent }
 ];

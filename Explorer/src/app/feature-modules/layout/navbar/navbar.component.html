@@ -13,7 +13,7 @@
             <button [routerLink]="['home']" class="secondary" mat-button>
                 Home
             </button>
-            
+
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
                 [routerLink]="['tour']">
                 Tours
@@ -28,6 +28,10 @@
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
                 (click)="openTourEquipmentDialog()">
                 Add equipment
+            </button>
+
+            <button class="secondary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['tour-execution']">
+                Active tour
             </button>
 
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['blog']">
