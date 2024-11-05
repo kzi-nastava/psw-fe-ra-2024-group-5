@@ -1,0 +1,8 @@
+<div *ngIf="profiles" class="followers-container">
+    <h3>Followers List</h3>
+    <div class="follower-card" *ngFor="let follower of profiles">  
+        <div class="follower-info">
+            <div class="follower-name">{{ follower.name }} {{ follower.surname }}</div>
+        </div>
+    </div>
+</div>
