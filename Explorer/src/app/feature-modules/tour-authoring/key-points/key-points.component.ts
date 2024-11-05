@@ -20,7 +20,7 @@ export class KeyPointsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'image', 'deleteButton']
   @Input() coordinates: number[] | null = null;
   @Input() tourId: number | null = null;
-  @Output() cancel = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<number[]>();
   @Output() displayKeyPoints = new EventEmitter<KeyPoint[]>();
   @ViewChild(MatTable) table: MatTable<KeyPoint>;
 
@@ -58,7 +58,7 @@ export class KeyPointsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(!result){
-        this.cancel.emit();
+        this.cancel.emit([]);
         this.table.renderRows();
         return;
       }
@@ -69,31 +69,35 @@ export class KeyPointsComponent implements OnInit {
     });
   }
 
-  // saveKeyPoints(tourId: number){
-  //   console.log(tourId);
-  //   this.keyPoints.forEach(element => {
-  //     element.tourId = tourId;
-  //   });
-  //   this.tourAuthoringService.saveKeyPoints(this.keyPoints, tourId).subscribe(
-  //     (data) => {
-  //       console.log(data);
-  //       this.keyPoints =[];
-  //       this.table.renderRows();
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+  resetkeyPoints(){
 
-  cancelKeyPoint() {
-    //NE radi kako treba radi samo pop poslednjeg
-    console.log(this.keyPoints)
-    this.keyPoints.pop()
-    console.log(this.keyPoints)
-    this.cancel.emit();
-    this.table.renderRows()
+        this.keyPoints =[];
+        this.table.renderRows();
+  
   }
+
+  deleteKeyPoint(kp: KeyPoint): void {
+    // Log the keyPoints array before removal for debugging
+    console.log('Before removal:', this.keyPoints);
+  
+    // Find the index of the keyPoint in the keyPoints array
+    const index = this.keyPoints.findIndex(k => k === kp);
+  
+    // If the keyPoint exists in the array (index >= 0), remove it
+    if (index !== -1) {
+      this.keyPoints.splice(index, 1); // Remove 1 element at the found index
+    }
+  
+    // Log the updated keyPoints array for debugging
+    console.log('After removal:', this.keyPoints);
+  
+    // Emit cancel event (if necessary)
+    this.cancel.emit([kp.latitude, kp.longitude]);
+  
+    // Re-render table (if using Angular Material Table, for example)
+    this.table.renderRows();
+  }
+  
 
   getKeyPoints(){
     return this.keyPoints;

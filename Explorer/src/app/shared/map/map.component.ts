@@ -255,6 +255,18 @@ export class MapComponent implements AfterViewInit {
       this.map.removeLayer(lastMarker)
   }
 
+  removeExactMarker(latlng: number[]){
+    const index = this.markers.findIndex(m => m.getLatLng().lat == latlng[0] && m.getLatLng().lng == latlng[1]);
+  
+    // If the keyPoint exists in the array (index >= 0), remove it
+    if (index !== -1) {
+      const kp = this.markers[index]
+      console.log(kp)
+      this.map.removeLayer(kp)
+      this.markers.splice(index, 1); // Remove 1 element at the found index
+    }
+  }
+
   removeRoute(): void {
     if (this.routeControl) {
       this.routeControl.remove();

@@ -45,8 +45,12 @@ export class TourCreationComponent {
     console.log(this.tourLength)
   }
 
-  cancelKeyPoint() {
-    this.map.removeLastMarker();
+  cancelKeyPoint(latlng: number[]) {
+    if(!latlng){
+      this.map.removeLastMarker();
+    }else{
+      this.map.removeExactMarker(latlng);
+    }
   }
 
   submitForm(): void {
@@ -121,7 +125,7 @@ export class TourCreationComponent {
       next: (response) => {
         console.log('Tour added successfully:', response);
         if (response.id) {
-          // this.keyPointsListComponent.saveKeyPoints(response.id);
+          this.keyPointsListComponent.resetkeyPoints();
           this.map.removeMarkers();
           this.map.removeRoute();
         }
