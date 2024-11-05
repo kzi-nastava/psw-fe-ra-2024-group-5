@@ -22,6 +22,7 @@ import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
 import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
 import { ExecuteTourComponent } from 'src/app/feature-modules/tour-execution/execute-tour/execute-tour.component';
+import { FollowersListComponent } from 'src/app/feature-modules/administration/followers-list/followers-list.component';
 import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours-page/tours-page.component';
 
 const routes: Routes = [
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'profile', component: UserProfileComponent },
-  { path: 'profile/profile-form', component: UserProfileFormComponent },
+  { path: 'profile/:id', component: UserProfileComponent },
+  { path: 'profile/profile-form/:id', component: UserProfileFormComponent },
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
   { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard], },
@@ -45,7 +47,8 @@ const routes: Routes = [
   { path: 'add-comment', component: BlogPostCommentFormComponent },
   { path: 'clubs', component: ClubComponent },
   { path: 'tour-execution/:tourId', component: ExecuteTourComponent },
-  { path: 'tours-page', component: ToursPageComponent}
+  { path: 'followers/:id', component: FollowersListComponent },
+  { path: 'tours-page', component: ToursPageComponent }
 ];
 
 @NgModule({
