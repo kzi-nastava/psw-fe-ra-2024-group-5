@@ -42,7 +42,7 @@ export class BlogComponent implements OnInit {
 
   initializeImageIndex(): void {
     this.blogs.forEach(blog => {
-      if (blog.imageData && blog.imageData.length > 0) {
+      if (blog.images && blog.images.length > 0) {
         this.currentImageIndex[blog.id] = 0; 
       }
     });
@@ -60,7 +60,7 @@ export class BlogComponent implements OnInit {
     if (this.currentImageIndex[blogId] > 0) {
       this.currentImageIndex[blogId]--;
     } else {
-      const imageCount = this.blogs.find(blog => blog.id === blogId)?.imageData?.length || 0;
+      const imageCount = this.blogs.find(blog => blog.id === blogId)?.images?.length || 0;
       this.currentImageIndex[blogId] = imageCount - 1;
     }
   }

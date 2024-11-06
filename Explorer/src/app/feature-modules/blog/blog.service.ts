@@ -40,7 +40,7 @@ export class BlogService {
   }
 
   getBlog(): Observable<PagedResults<Blog>> {
-    return this.http.get<PagedResults<Blog>>(environment.apiHost + 'author/blog')
+    return this.http.get<PagedResults<Blog>>(environment.apiHost + 'author/blog/all')
   }
 
   updateBlogStatus(blogId: number, newStatus: number, userId: number): Observable<Blog> {
