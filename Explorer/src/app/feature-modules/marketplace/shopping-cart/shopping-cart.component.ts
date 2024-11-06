@@ -3,6 +3,7 @@ import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCart } from '../model/shopping-cart.model';
 import { Currency } from '../model/money.model';
 import { OrderItem } from '../model/order-item.model';
+import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 
 @Component({
   selector: 'xp-shopping-cart',
@@ -11,12 +12,13 @@ import { OrderItem } from '../model/order-item.model';
 })
 export class ShoppingCartComponent implements OnInit {
   shoppingCart: ShoppingCart | null = null;
-  touristId: number = 1; // popraviti
+  touristId: number ; 
   Currency = Currency;
 
-  constructor(private shoppingCartService: ShoppingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService,private tokenStorage: TokenStorage) {}
 
   ngOnInit(): void {
+    this.touristId = this.tokenStorage.getUserId() ?? 0;
     this.getCartItems();
   
 }
@@ -82,6 +84,7 @@ checkout(): void {
     }
   );
 }
+
 
 
 }
