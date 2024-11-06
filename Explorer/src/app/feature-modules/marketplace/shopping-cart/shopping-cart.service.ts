@@ -27,4 +27,8 @@ export class ShoppingCartService {
     {
       return this.http.get<ShoppingCart>(environment.apiHost + `shopping-cart/tourist/${touristId}`);
     }
+    checkout(touristId: number): Observable<any> {
+      return this.http.post<any>(environment.apiHost + `shopping-cart/checkout/${touristId}`, {});
+    }
+    
 }

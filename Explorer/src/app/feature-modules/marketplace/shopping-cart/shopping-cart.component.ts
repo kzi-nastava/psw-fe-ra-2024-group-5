@@ -29,12 +29,18 @@ getCartItems(): void {
   );
 }
 removeItem(item: OrderItem): void {
+  const confirmation = window.confirm('Are you sure you want to remove this item?');
+  if (!confirmation) {
+    return; 
+  }
   if (this.shoppingCart) {
     const index = this.shoppingCart.items.indexOf(item);
     if (index > -1) {
       this.shoppingCart.items.splice(index, 1); 
     }
   }
+  // Ažurirajte total price na osnovu novih stavki
+  this.updateTotalPrice(); 
 
   this.shoppingCartService.removeItemFromCart(item, this.touristId).subscribe(
     response => {
@@ -48,5 +54,34 @@ removeItem(item: OrderItem): void {
     }
   );
 }
+
+
+updateTotalPrice(): void {
+  if (this.shoppingCart) {
+    let totalAmount = 0;
+    this.shoppingCart.items.forEach(item => {
+      totalAmount += item.price.amount; 
+    });
+    this.shoppingCart.totalPrice.amount = totalAmount; 
+  }
+}
+
+checkout(): void {
+  const confirmation = window.confirm('Are you sure you want to complete the purchase?');
+  if (!confirmation) {
+    return;
+  }
+  this.shoppingCartService.checkout(this.touristId).subscribe(
+    response => {
+      console.log('Purchase completed successfully', response);
+      this.shoppingCart = null; 
+      this.getCartItems(); 
+    },
+    error => {
+      console.error('Error during checkout', error);
+    }
+  );
+}
+
 
 }
