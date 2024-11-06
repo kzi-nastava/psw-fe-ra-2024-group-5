@@ -1,0 +1,81 @@
+.myClubs {
+    color: var(--accent-color);
+    margin: 20px auto;  
+    padding: 20px;
+    background-color: var(--background-color-alt);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;  
+    width: 90%;  
+    transition: all 0.3s ease-in-out;
+    text-align: center;  
+}
+
+.myClubs:hover {
+    transform: scale(1.02);
+}
+
+.filter-buttons {
+    display: flex;  
+    justify-content: center;  
+    gap: 20px;  
+    margin-top: 40px;  
+    margin-bottom: 20px;  
+}
+
+
+.no-clubs-message {
+    color: var(--text-muted);
+    font-size: 1.1em;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--alert-warning-bg);
+    margin-bottom: 20px;  
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.club-link {
+    color: var(--text-paragraph);
+    font-size: 1.2em;
+    line-height: 1.5em;
+    font-family: var(--font-family-base);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    padding: 5px 0;
+    transition: color 0.3s, border-color 0.3s;
+    display: inline-block;  
+}
+
+.club-link:hover {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.loading-spinner {
+    font-size: 1.5em;
+    color: var(--accent-color);
+    text-align: center;
+    padding: 20px;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-spinner::before {
+    content: '';
+    display: inline-block;
+    border: 4px solid var(--accent-color);
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: rotate 1s linear infinite;
+}

@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Club } from './model/club.model';
 import { ClubMembership } from './model/membership.model'
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClubService {
   private apiUrl = 'https://localhost:44333/api/tourist/club';
-  // private membershipApiUrl = 'https://localhost:44333/api/tourist/membership'
+  private membershipApiUrl = 'https://localhost:44333/api/tourist/membership'
 
   constructor(private http: HttpClient) {}
 
@@ -29,10 +30,42 @@ export class ClubService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getUserClubs(userId: number): Observable<Club[]> {
+    return this.getAllMemberships().pipe(
+      mergeMap((memberships) => {
+        const userMemberships = memberships.filter(membership => membership.userId === userId);
+        const clubIds = userMemberships.map(membership => membership.clubId);
   
-  // getAllMemberships(): Observable<ClubMembership[]> {
-  //   return this.http.get<ClubMembership[]>(this.membershipApiUrl);
-  // }
+        return this.getAll().pipe(
+          map((pagedResults) => {
+            if (!pagedResults || !pagedResults.results) {
+              throw new Error('Paged results undefined.');
+            }
+  
+            const userClubs = pagedResults.results.filter(club => 
+              club.id != null && 
+              (clubIds.includes(club.id) || club.ownerId === userId)
+            );
+            return userClubs;
+          })
+        );
+      })
+    );
+  }
+  
+  getAllMemberships(): Observable<ClubMembership[]> {
+    return this.http.get<ClubMembership[]>(this.membershipApiUrl); 
+  }  
+  
+  getById(clubId: number): Observable<Club | null> {
+    return this.getAll().pipe(
+      map((pagedResults) => {
+        return pagedResults.results.find(club => club.id === clubId) || null;
+      })
+    );
+  }
+  
    
   //temp function name,this should sent invitation to another tourist to join the club
   // createMembership(clubId: number, userId: number): Observable<ClubMembership> {
