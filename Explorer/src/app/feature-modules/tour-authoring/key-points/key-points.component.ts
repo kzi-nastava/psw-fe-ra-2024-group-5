@@ -58,7 +58,7 @@ export class KeyPointsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(!result){
-        this.cancel.emit([]);
+        this.cancel.emit();
         this.table.renderRows();
         return;
       }

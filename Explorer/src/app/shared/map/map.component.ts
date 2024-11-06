@@ -15,7 +15,7 @@ import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point
 export class MapComponent implements AfterViewInit {
   private map: L.Map;
   private markers: L.Marker[] = [];
-  private routeControl: any;
+  private routeControl: any = null;
   private isLastMarkerSet: boolean;
   private userLocationMarker: L.Marker;
 
@@ -31,6 +31,7 @@ export class MapComponent implements AfterViewInit {
   @Output() addFacility = new EventEmitter<number[]>();
   @Output() addKeyPoint = new EventEmitter<number[]>();
   @Output() setaRouteLength = new EventEmitter<number>();
+  @Output() addTransportDuration = new EventEmitter<any>();
   @Output() userLocationChange = new EventEmitter<[number, number]>();
 
   constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
@@ -164,37 +165,120 @@ export class MapComponent implements AfterViewInit {
     this.setRoute(this.markers)
   }
 
-  setRoute(markPoints: L.Marker[]): void{
+  async setRoute(markPoints: L.Marker[]): Promise<void>{
+    
     if (this.routeControl) {
       this.routeControl.remove();
     }
-
+    
     const wPoints = markPoints.map(marker => marker.getLatLng());
-
-    this.routeControl = L.Routing.control({
-      waypoints: wPoints, //L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)
-      //ovaj 'pk' je token sa mapbox sajta za koji sam nalog napravio preko uns maila, ako ne radi vama probajte napraviti nalog ima link u 2.4 lekciji
-      router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: 'mapbox/walking' })
-    }).addTo(this.map);
-
-    // Listen for the 'routesfound' event when routes are calculated
-  this.routeControl.on('routesfound', (e: any) => {
-    const routes = e.routes;  // Accessing the routes array directly
-    if (routes.length > 0) {
-      const summary = routes[0].summary;  // Get the summary from the first route
-      if (summary) {
-        // Ensure summary has the expected properties
-        const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
-        const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
-        console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
-        this.setaRouteLength.emit(distanceInKm)
-      } else {
-        console.error('No summary available for the route.');
-      }
+    try {
+      
+      // After both profiles, create the walking route
+      this.routeControl = L.Routing.control({
+        waypoints: wPoints,
+        router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: 'mapbox/walking' })
+      }).addTo(this.map);
+  
+      // Listen for the 'routesfound' event when routes are calculated for walking
+      this.routeControl.on('routesfound', (e: any) => {
+        const routes = e.routes;
+        if (routes.length > 0) {
+          const summary = routes[0].summary;
+          if (summary) {
+            const distanceInKm = summary.totalDistance / 1000; // Convert meters to kilometers
+            const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+            console.log(`Walking Route - Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+  
+            this.setaRouteLength.emit(distanceInKm);
+            this.addTransportDuration.emit({ profile: 'walking', time: timeInMinutes });
+          } else {
+            console.error('No summary available for walking route.');
+          }
+        }
+      });
+      
+      // First, calculate the 'cycling' route profile
+      await this.changeRoutingProfile(wPoints, 'cycling');
+  
+      // Then, calculate the 'driving' route profile
+      await this.changeRoutingProfile(wPoints, 'driving');
+  
+    } catch (error) {
+      console.error('Error in processing routes:', error);
     }
-  });
+  
+  // const profiles = ['mapbox/walking', 'mapbox/cycling', 'mapbox/driving'];
+  
+  //   // Remove previous routes (if any)
+  //   if (this.routeControl) {
+  //     this.routeControl.remove();
+  //   }
+     
+  //   // Fetch and display each route for each profile
+  //   profiles.forEach(prof => {
+
+      
+  //     if(prof === 'mapbox/walking'){
+  //       this.routeControl = L.Routing.control({
+  //         waypoints: wPoints,
+  //         router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: prof })
+  //       }).addTo(this.map);
+  //     }else{
+  //       this.routeControl = L.Routing.control({
+  //         waypoints: wPoints,
+  //         router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: prof })
+  //       })
+  //     }
+
+  //     // Handle the routesfound event for each profile's route
+  //     this.routeControl.on('routesfound', (e: any) => {
+  //       const routes = e.routes; // There should be one route per profile
+  //       if (routes.length > 0) {
+  //         const summary = routes[0].summary;
+  //         if (summary) {
+  //           const distanceInKm = summary.totalDistance / 1000; // Convert meters to kilometers
+  //           const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+  //           console.log(`${prof} Route - Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+            
+  //           this.addTransportDuration.emit({ profile: prof, time: timeInMinutes });
+  //           if(prof === 'mapbox/walking'){
+  //             this.setaRouteLength.emit(distanceInKm);
+  //             this.routeControl.remove()
+  //           }
+  //         } else {
+  //           console.error('No summary available for the route.');
+  //         }
+  //       }
+  //     });
+
+  //   });
   
 }
+  changeRoutingProfile(wPoints : L.LatLng[], profile : string){
+    this.routeControl = L.Routing.control({
+      waypoints: wPoints,
+      router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: 'mapbox/'+profile })
+    }).addTo(this.map);
+    
+    this.routeControl.on('routesfound', (e: any) => {
+      const routes = e.routes;  // Accessing the routes array directly
+      console.log('TEST!!!!')
+      if (routes.length > 0) {
+        const summary = routes[0].summary;  // Get the summary from the first route
+        if (summary) {
+          // Ensure summary has the expected properties
+          const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
+          const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+          console.log(`u metodi!!! Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+          this.addTransportDuration.emit({profile, time: timeInMinutes})
+          
+        } else {
+          console.error('No summary available for the route.');
+        }
+      }
+    });
+  }
 
   loadMarkers(): void {
     if (!this.map)
@@ -251,8 +335,10 @@ export class MapComponent implements AfterViewInit {
 
   removeLastMarker(): void { //ovo se poziva kada hocete da promenite lokaciju markera, ili izbrisete poslednji
     const lastMarker = this.markers.pop()
-    if (lastMarker)
+    if (lastMarker){
       this.map.removeLayer(lastMarker)
+      this.setRoute(this.markers)
+    }
   }
 
   removeExactMarker(latlng: number[]){
@@ -261,9 +347,9 @@ export class MapComponent implements AfterViewInit {
     // If the keyPoint exists in the array (index >= 0), remove it
     if (index !== -1) {
       const kp = this.markers[index]
-      console.log(kp)
       this.map.removeLayer(kp)
       this.markers.splice(index, 1); // Remove 1 element at the found index
+      this.setRoute(this.markers)
     }
   }
 

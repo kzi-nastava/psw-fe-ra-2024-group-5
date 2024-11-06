@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Tour, TourCreation } from '../model/tour.model';
+import { Tour, TourCreation, TransportDuration } from '../model/tour.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { KeyPointsComponent } from '../key-points/key-points.component';
@@ -19,6 +19,7 @@ export class TourCreationComponent {
   tourLevels: string[] = ['Beginner', 'Intermediate', 'Advanced'];
   tourTransports: string[] = ['On Foot', 'Bicycle', 'Car']; // Only the string representations
   tourLength: number | 0;
+  tourTransportDurations : TransportDuration[] = [];
   author: User | undefined;
   coordinates: number[] | null = null;
   @ViewChild(KeyPointsComponent) keyPointsListComponent!: KeyPointsComponent;
@@ -43,6 +44,26 @@ export class TourCreationComponent {
   setTourLength(length: number){
     this.tourLength = length
     console.log(this.tourLength)
+  }
+
+  setTransportDuration(data: { profile: string; time: number; }){
+
+    switch(data.profile){
+      case 'walking':
+        var td : TransportDuration = {duration: data.time, transport: TourTransport.OnFoot}
+        this.tourTransportDurations.push(td)
+        break;
+      case 'cycling':
+        var td : TransportDuration = {duration: data.time, transport: TourTransport.Bicycle}
+        this.tourTransportDurations.push(td)
+        break;
+      case 'driving':
+        var td : TransportDuration = {duration: data.time, transport: TourTransport.Car}
+        this.tourTransportDurations.push(td)
+        break;
+      default:
+        return;
+    }
   }
 
   cancelKeyPoint(latlng: number[]) {
@@ -107,7 +128,7 @@ export class TourCreationComponent {
       authorId: this.author?.id,
       length: this.tourLength,
       keyPoints: this.keyPointsListComponent.getKeyPoints(), // This should be populated based on key points
-      transportDurationDtos: [{ duration: formValue.TransportDuration, transport: transportValue }], // Use selected transport
+      transportDurationDtos: this.tourTransportDurations, // Use selected transport
       
     };
 

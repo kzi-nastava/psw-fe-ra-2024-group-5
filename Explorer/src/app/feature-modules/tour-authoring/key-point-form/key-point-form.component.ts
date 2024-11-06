@@ -65,7 +65,6 @@ export class KeyPointFormComponent {
   }
 
   cancel(): void{
-    //this.map.removeLastMarker() nekako pozvati
     this.dialogRef.close(null);
   }
 
