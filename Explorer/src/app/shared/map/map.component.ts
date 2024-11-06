@@ -282,29 +282,5 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
-  getRouteLengthInKm(): number {
-    if (this.routeControl && typeof this.routeControl.getRoutes === 'function') {
-      const routes = this.routeControl.getRoutes();
-      if (routes.length > 0) {
-        // Get the first route
-        const route = routes[0];
-        // Length in meters, convert to kilometers
-        const lengthInKm = route.getSummary().totalDistance / 1000; 
-        return lengthInKm;
-      }
-      
-    }
-    return 0; // Return 0 if there is no route
-  }
-  
-  getRouteLength() : number{
-      const routes = this.routeControl.routes;
-      const summary = routes[0].summary;
-      const length = summary.totalDistance / 1000
-      alert('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
-      console.log(length)
-      return length
-   
-  }
 
 }
