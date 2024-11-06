@@ -23,7 +23,7 @@
       </ng-container>
 
       <!-- Delete Button Column -->
-      <ng-container matColumnDef="deleteButton">
+      <ng-container *ngIf="isTourCreation" matColumnDef="deleteButton">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
           <button mat-raised-button color="warn" (click)="deleteKeyPoint(element)">

@@ -17,7 +17,8 @@ import { OnChanges } from '@angular/core';
 })
 export class KeyPointsComponent implements OnInit {
   keyPoints: KeyPoint[] = [];
-  displayedColumns: string[] = ['name', 'description', 'image', 'deleteButton']
+  displayedColumns: string[] = ['name', 'description', 'image']
+  isTourCreation: boolean = false;
   @Input() coordinates: number[] | null = null;
   @Input() tourId: number | null = null;
   @Output() cancel = new EventEmitter<number[]>();
@@ -28,8 +29,11 @@ export class KeyPointsComponent implements OnInit {
               public dialog: MatDialog) {} // Ubrizgavanje zavisnosti
 
   ngOnInit(): void {
-    if(this.tourId == null)
+    if(this.tourId == null){
+      this.displayedColumns=['name', 'description', 'image', 'deleteButton']
+      this.isTourCreation = true;
       return;
+    }
     this.tourAuthoringService.getPaged(this.tourId).subscribe(
       (data) => {                                     
         this.keyPoints = data.results;         
