@@ -15,6 +15,8 @@ export class BlogPostCommentFormComponent implements OnChanges{
   @Output() commentUpdated = new EventEmitter<null>();
   @Input() comment: BlogPostComment;
   @Input() shouldEdit: boolean = false;
+  @Input() blogId: number;
+
 
   userId: number;
 
@@ -49,7 +51,8 @@ export class BlogPostCommentFormComponent implements OnChanges{
       commentText: this.blogCommentForm.value.commentText || "",
       creationTime: new Date(),  
       lastEditedTime:  null,
-      userId: this.userId
+      userId: this.userId,
+      blogPostId: this.blogId
     };
 
     this.service.addComment(comment as BlogPostComment).subscribe({
@@ -68,7 +71,9 @@ export class BlogPostCommentFormComponent implements OnChanges{
       commentText: this.blogCommentForm.value.commentText || "",
       creationTime: this.comment.creationTime,  
       lastEditedTime: new Date(),
-      userId: this.userId
+      userId: this.userId,
+      blogPostId: this.blogId 
+
     };
     comment.id= this.comment.id;
     this.service.updateComment(comment).subscribe({

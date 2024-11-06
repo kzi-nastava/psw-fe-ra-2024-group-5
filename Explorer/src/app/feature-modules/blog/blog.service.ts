@@ -30,6 +30,11 @@ export class BlogService {
     return this.http.put<BlogPostComment>(environment.apiHost + 'blog/comments/' + comment.id, comment);
   }
 
+  getCommentsForBlog(blogId: number): Observable<PagedResults<BlogPostComment>> {
+    return this.http.get<PagedResults<BlogPostComment>>(`${environment.apiHost}blog/comments/blog/${blogId}`);
+}
+
+
 
   // getCommentsForUser(userId: number): Observable<PagedResults<BlogPostComment>> {
   //   return this.http.get<PagedResults<BlogPostComment>>('https://localhost:44333/api/blog/comments/user/${userId}');
