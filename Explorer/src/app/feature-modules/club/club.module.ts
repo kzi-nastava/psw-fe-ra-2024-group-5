@@ -4,11 +4,13 @@ import { ClubComponent } from './club/club.component';
 import { FormsModule } from '@angular/forms';
 import { MyClubsComponent } from './my-clubs/my-clubs.component'; // Import FormsModule
 import { RouterModule } from '@angular/router';
+import { ClubPageComponent } from './club-page/club-page.component';
 
 @NgModule({
   declarations: [
     ClubComponent,
-    MyClubsComponent
+    MyClubsComponent,
+    ClubPageComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     ClubComponent,
-    MyClubsComponent
+    MyClubsComponent,
+    ClubPageComponent
   ]
 })
 export class ClubModule { }

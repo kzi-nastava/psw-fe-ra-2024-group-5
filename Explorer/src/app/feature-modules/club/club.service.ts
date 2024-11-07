@@ -5,6 +5,7 @@ import { Club } from './model/club.model';
 import { ClubMembership } from './model/membership.model'
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { map, mergeMap } from 'rxjs/operators';
+import { ClubMessage } from './model/clubMessage.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,8 +66,40 @@ export class ClubService {
       })
     );
   }
-  
-   
+
+  // ***************** Club Messages *****************
+  addMessageToClub(clubId: number, messageDto: ClubMessage, userId: number): Observable<ClubMessage> {
+    const url = `${this.apiUrl}/messages?clubId=${clubId}&userId=${userId}`;
+    return this.http.post<ClubMessage>(url, messageDto);
+  }
+
+  updateMessageInClub(clubId: number, messageId: number, userId: number, newContent: string): Observable<ClubMessage> {
+    const url = `${this.apiUrl}/messages?clubId=${clubId}&messageId=${messageId}&userId=${userId}`;
+    
+    return this.http.put<ClubMessage>(url, newContent, {
+      headers: {
+        'Content-Type': 'application/json'  
+      }
+    });
+  }
+
+  removeMessageFromClub(clubId: number, messageId: number, userId: number): Observable<any> {
+    const url = `${this.apiUrl}/messages?clubId=${clubId}&messageId=${messageId}&userId=${userId}`;
+    
+    return this.http.delete<ClubMessage>(url);
+  }
+       
+  getPagedMessagesByClubId(clubId: number, page: number, pageSize: number): Observable<any> {
+    const url = `${this.apiUrl}/messages`;   
+    return this.http.get<any>(url, {
+      params: {
+        clubId: clubId.toString(),
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    });
+  }
+ 
   //temp function name,this should sent invitation to another tourist to join the club
   // createMembership(clubId: number, userId: number): Observable<ClubMembership> {
   //   const url = `${this.membershipApiUrl}?clubId=${clubId}&userId=${userId}`;

@@ -25,6 +25,7 @@ import { ExecuteTourComponent } from 'src/app/feature-modules/tour-execution/exe
 import { FollowersListComponent } from 'src/app/feature-modules/administration/followers-list/followers-list.component';
 import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours-page/tours-page.component';
 import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component'; 
+import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component'; 
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -50,7 +51,8 @@ const routes: Routes = [
   { path: 'tour-execution', component: ExecuteTourComponent },
   { path: 'followers/:id', component: FollowersListComponent },
   { path: 'tours-page', component: ToursPageComponent },
-  { path: 'my-clubs', component: MyClubsComponent}
+  { path: 'my-clubs', component: MyClubsComponent},
+  { path: 'my-clubs/:id', component: ClubPageComponent}
 ];
 
 @NgModule({

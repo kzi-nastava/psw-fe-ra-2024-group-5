@@ -31,7 +31,7 @@
     <ul *ngIf="!loading && userClubs.length > 0">
       <li *ngFor="let club of userClubs">
         <p>
-          <a [routerLink]="['/clubs', club.id]" class="club-link">{{ club.name }}</a>
+          <a [routerLink]="['/my-clubs', club.id]" class="club-link">{{ club.name }}</a>
         </p>
       </li>
     </ul>
