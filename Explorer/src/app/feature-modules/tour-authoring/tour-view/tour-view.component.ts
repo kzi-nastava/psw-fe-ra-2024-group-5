@@ -8,6 +8,8 @@ import { KeyPoint } from '../model/key-point.model';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.enums'; // Import the enums
 import { TourExecutionService } from '../../tour-execution/tour-execution.service';
+import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
+import { OrderItem } from '../../marketplace/model/order-item.model';
 
 @Component({
   selector: 'xp-tour-detailed-view',
@@ -29,7 +31,8 @@ export class TourDetailedViewComponent implements OnInit {
     private tourExecutionService: TourExecutionService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private shoppingCartService: ShoppingCartService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +40,10 @@ export class TourDetailedViewComponent implements OnInit {
       this.user = user;
     });
 
+    this.initializeTour();
+  }
+
+  private initializeTour(): void{
     this.route.paramMap.subscribe(params => {
       const id = params.get('tourId');
       this.tourId = Number(id);
@@ -61,6 +68,7 @@ export class TourDetailedViewComponent implements OnInit {
                 }
             };
             console.log('Loaded Tour:', this.tour);
+            this.displayKeyPoints()
         },
         error: (err: any) => {
             console.log(err);
@@ -80,11 +88,10 @@ export class TourDetailedViewComponent implements OnInit {
                     currency: result.tour.price.currency as Currency // Ensure it's cast to enum
                 }
             };
-            this.canBeActivated = true // THIS IS TEMPORARY, SHOULD BE CHANGED BACK
+            this.canBeActivated = result.canBeActivated
             this.canBeBought = result.canBeBought
             this.canBeReviewed = result.canBeReviewed
-
-            console.log('Loaded Tour for tourist:', result);
+            this.displayKeyPoints()
         },
         error: (err: any) => {
             console.log(err);
@@ -138,5 +145,26 @@ export class TourDetailedViewComponent implements OnInit {
         console.log('Error starting tour:', error);
       }
     });
+  }
+
+  addToCart(): void{
+    if(!this.tour || !this.tour.id || !this.user)
+      return;
+
+    const orderItem :OrderItem = {
+      tourId : this.tour.id,
+      tourName : this.tour.name,
+      price: this.tour.price
+    }
+
+    this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
+      next: () => {
+        this.initializeTour();
+      },
+      error: (err: any) => {
+          console.log(err);
+      }
+  });
+
   }
 }
