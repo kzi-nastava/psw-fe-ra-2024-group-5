@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCart } from '../model/shopping-cart.model';
-import { Currency } from '../model/money.model';
 import { OrderItem } from '../model/order-item.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 
@@ -13,7 +12,7 @@ import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 export class ShoppingCartComponent implements OnInit {
   shoppingCart: ShoppingCart | null = null;
   touristId: number ; 
-  Currency = Currency;
+  priceCurrencies: string[] = ['Rsd', 'Eur', 'Dol']
 
   constructor(private shoppingCartService: ShoppingCartService,private tokenStorage: TokenStorage) {}
 

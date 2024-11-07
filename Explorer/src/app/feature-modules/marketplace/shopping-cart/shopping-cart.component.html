@@ -1,12 +1,12 @@
 <h1 class="cart-title">Your Shopping Cart</h1>
 
 <div *ngIf="shoppingCart; else emptyCart" class="cart-container">
-  <h2 class="cart-total"> Total Price: {{ shoppingCart.totalPrice.amount }} {{ shoppingCart.totalPrice.currency }}</h2>
+  <h2 class="cart-total"> Total Price: {{ shoppingCart.totalPrice.amount }} {{ priceCurrencies[shoppingCart.totalPrice.currency] }}</h2>
   
   <ul *ngIf="shoppingCart?.items?.length; else noItems" class="cart-items">
     <li *ngFor="let item of shoppingCart.items" class="cart-item">
       <p class="cart-item-name">Name: <strong>{{ item.tourName }}</strong></p>
-      <p class="cart-item-price">Price: <strong>{{ item.price.amount }} {{ Currency[item.price.currency] }}</strong></p>
+      <p class="cart-item-price">Price: <strong>{{ item.price.amount }} {{ priceCurrencies[item.price.currency] }}</strong></p>
       <button class="primary" (click)="removeItem(item)">Remove</button>
     </li>
   </ul>
