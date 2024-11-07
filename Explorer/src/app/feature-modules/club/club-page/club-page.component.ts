@@ -6,6 +6,7 @@ import { Club } from '../model/club.model';
 import { ClubMessage } from '../model/clubMessage.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { UserProfile } from '../../administration/model/userProfile.model';
+import { ResourceType } from '../enum/resource-type.enum';
 
 @Component({
   selector: 'xp-club-page',
@@ -28,6 +29,8 @@ export class ClubPageComponent implements OnInit {
   editingMessageId: number | null = null;
   editedMessageContent: string = '';
   isEditedMessageTooLong: boolean = false;
+  attachmentLink: string = '';
+  resourceType: ResourceType = ResourceType.TOUR_RESOURCE;
 
   constructor(private route: ActivatedRoute,
     private clubService: ClubService,
@@ -74,27 +77,44 @@ export class ClubPageComponent implements OnInit {
 
   addMessage(): void {
     if (!this.newMessage || !this.clubId || this.userId == null || this.newMessage.length > 280)
-       return;
-
-    const messageDto = {
+      return;
+  
+    let attachmentData = null;
+  
+    if (this.attachmentLink) {
+      const resourceData = this.parseAttachmentLink(this.attachmentLink);
+      if (resourceData) {
+        // Korišćenje ispravnog objekta za attachment
+        attachmentData = {
+          resourceId: resourceData.resourceId,
+          resourceType: resourceData.resourceType
+        };
+      }
+    }
+  
+    const messageDto: ClubMessage = {
       senderId: this.userId,   
       clubId: this.clubId,
       sentAt: new Date().toISOString(),
       content: this.newMessage,
-      isRead: false ,
-      attachment: null  
+      isRead: false,
+      attachment: attachmentData || null   
     };
 
+    console.log(JSON.stringify(messageDto));
+  
     this.clubService.addMessageToClub(this.clubId, messageDto, this.userId).subscribe(
       (response) => { 
         this.loadMessages();
-        this.newMessage = '';   
+        this.newMessage = ''; 
+        this.attachmentLink = '';  
       },
       (error) => {
         console.error('Error adding message', error);
       }
     );
-}
+  }
+  
 
 changePage(page: number): void {
   this.currentPage = page;
@@ -185,5 +205,20 @@ onMessageChange(event: any): void {
       });
     }
   }
+
+  parseAttachmentLink(link: string) {
+    const regex = /http:\/\/localhost:4200\/tour-detailed-view\/(\d+)/;
+    const match = link.match(regex);
+  
+    if (match && match[1]) {
+      return {
+        resourceType: ResourceType.TOUR_RESOURCE,
+        resourceId: Number(match[1])  
+      };
+    }
+  
+    return null;
+  }
+  
   
 }

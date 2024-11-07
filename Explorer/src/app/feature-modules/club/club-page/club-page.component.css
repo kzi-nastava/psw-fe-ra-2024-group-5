@@ -246,3 +246,7 @@
 .delete-message-btn:hover {
   transform: scale(1.1);
 }
+
+.attachment-input {
+  margin-top: 10px;
+}
