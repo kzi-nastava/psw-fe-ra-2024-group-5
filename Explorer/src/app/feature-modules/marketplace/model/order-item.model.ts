@@ -1,4 +1,4 @@
-import { Money } from "./money.model";
+import { Money } from "src/app/shared/model/money";
 
 export interface OrderItem {
     id?: number;
