@@ -1,0 +1,22 @@
+<div class="content">
+    <div class="header">
+        <h1>Experience tours.</h1>
+        <button mat-button class="secondary" (click)="showSearch = !showSearch">Show Search</button>
+    </div>
+
+    <div class="map-container" *ngIf="showSearch">
+        deksone ovde ce da bude mapa
+    </div>
+    
+    <div class="card-container">
+        <xp-tour-card class="tour-card rounded raised" 
+            *ngFor="let tour of tours" [tourCard]="tour" (click)="detailedTour(tour)">
+        </xp-tour-card>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button mat-button class="secondary button-size" (click)="previousPage()">Previous</button>
+    <h1>Page {{ currentPage }}</h1>
+    <button mat-button class="secondary button-size" (click)="nextPage()">Next</button>
+  </div>

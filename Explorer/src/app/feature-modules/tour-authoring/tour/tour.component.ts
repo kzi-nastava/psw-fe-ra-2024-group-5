@@ -45,7 +45,7 @@ export class TourComponent implements OnInit{
     this.router.navigate(['/tour-creation'])
   }
   onEditTour(t: Tour): void{
-    this.router.navigate(['/tour-edit', t.id])
+    this.router.navigate(['/tour-view', t.id])
   }
   onDeleteTour(t: Tour) : void{
     if(this.user?.role === 'author' && t.id){
