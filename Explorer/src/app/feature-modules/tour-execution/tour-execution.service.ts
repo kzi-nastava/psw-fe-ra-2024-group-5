@@ -33,4 +33,8 @@ export class TourExecutionService {
   abandonTour(tourExecutionId: number): Observable<any> {
     return this.http.patch(environment.apiHost + `tour/execution/abandon/${tourExecutionId}`, null);
   }
+
+  checkIfCompleted(tourExecutionId: number): Observable<any> {
+    return this.http.get(environment.apiHost + `tour/execution/completion/${tourExecutionId}`);
+  }
 }
