@@ -139,4 +139,36 @@ export class TourDetailedViewComponent implements OnInit {
       }
     });
   }
+
+  publishTour(): void {
+    if (this.tour?.id) {
+      this.service.publishTour(this.tour.id).subscribe({
+        next: () => {
+          if (this.tour) {
+            this.tour.status = TourStatus.Published;
+          }
+          console.log('Tour published');
+        },
+        error: (error) => {
+          console.error('Error publishing tour:', error);
+        }
+      });
+    }
+  }
+
+  archiveTour(): void {
+    if (this.tour?.id) {
+      this.service.archiveTour(this.tour.id).subscribe({
+        next: () => {
+          if (this.tour) {
+            this.tour.status = TourStatus.Archived;
+          }
+          console.log('Tour archived');
+        },
+        error: (error) => {
+          console.error('Error archiving tour:', error);
+        }
+      });
+    }
+  }
 }
