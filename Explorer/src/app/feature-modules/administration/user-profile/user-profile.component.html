@@ -1,7 +1,5 @@
 <div class="profile-container" *ngIf="userProfile">
     <div class="profile-image">
-    </div>
-    <div class="profile-image">
         <img *ngIf="userProfile.profilePictureUrl; else defaultImage" [src]="userProfile.profilePictureUrl" alt="Profile Picture" />
         <ng-template #defaultImage>
             <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
