@@ -26,22 +26,23 @@ export class BlogPostCommentComponent implements OnInit  {
 
   ngOnInit(): void {
 
-    if ( this.blogId) {
-      // this.getCommentsForUser();
-       this.loadCommentsForBlog();
+    // if ( this.blogId) {
+    //   // this.getCommentsForUser();
+    //    this.loadCommentsForBlog();
  
-     }
-    // this.authService.user$.subscribe((user : User) => {
-    //   console.log('User data:', user);  // Dodaj ispis za proveru korisničkih podataka
+    //  }
 
-    //   this.userId = user.id;
-    //   this.currentUser = user;
+    this.authService.user$.subscribe((user : User) => {
+      console.log('User data:', user);  // Dodaj ispis za proveru korisničkih podataka
 
-    //   if (this.userId && this.blogId) {
-    //    // this.getCommentsForUser();
-    //     this.loadCommentsForBlog();
-    //   }
-    // });
+      this.userId = user.id;
+      this.currentUser = user;
+
+      if (this.userId && this.blogId) {
+       // this.getCommentsForUser();
+        this.loadCommentsForBlog();
+      }
+    });
   }
   
   loadCommentsForBlog(): void {
@@ -97,7 +98,7 @@ export class BlogPostCommentComponent implements OnInit  {
   }
 
   deleteComment(id: number): void {
-    this.service.deleteComment(id).subscribe({
+    this.service.deleteComment(this.blogId, id,this.userId).subscribe({
       next: () => {
         this. loadCommentsForBlog();
         this.cdr.detectChanges();

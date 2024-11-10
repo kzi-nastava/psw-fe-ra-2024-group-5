@@ -55,7 +55,7 @@ export class BlogPostCommentFormComponent implements OnChanges{
       blogPostId: this.blogId
     };
 
-    this.service.addComment(comment as BlogPostComment).subscribe({
+    this.service.addComment(this.blogId, comment).subscribe({
       next: (_) => {
         this.commentUpdated.emit()
         console.log("Comment added succesdfully");
@@ -76,7 +76,7 @@ export class BlogPostCommentFormComponent implements OnChanges{
 
     };
     comment.id= this.comment.id;
-    this.service.updateComment(comment).subscribe({
+    this.service.updateComment(this.blogId, this.comment.id!, comment).subscribe({
       next: (_) => {
         this.commentUpdated.emit()
         console.log("Comment updated succesdfully");
