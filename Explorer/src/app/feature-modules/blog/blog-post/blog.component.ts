@@ -4,6 +4,9 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Blog } from '../model/blog.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Vote } from '../model/vote.model';
+import { BlogPostComment } from '../model/blog-post-comment'; 
+
+
 
 @Component({
   selector: 'xp-blog',
@@ -19,6 +22,7 @@ export class BlogComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
 
+  filteredComments: { [blogId: number]: BlogPostComment[] } = {};
   currentImageIndex: { [blogId: number]: number } = {};
 
   constructor(private service : BlogService, private authService : AuthService){}
@@ -51,6 +55,8 @@ export class BlogComponent implements OnInit {
       }
     })
   }
+
+
 
   initializeImageIndex(): void {
     this.blogs.forEach(blog => {
