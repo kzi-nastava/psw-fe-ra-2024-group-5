@@ -31,7 +31,8 @@ import { BlogFormComponent } from './blog-form/blog-form.component';
   exports: [
     BlogPostCommentComponent,
     BlogComponent,
-    BlogFormComponent
+    BlogFormComponent,
+    BlogPostCommentFormComponent
   ]
   
 })

@@ -34,6 +34,10 @@
         <button *ngIf="blog.status === 0" (click)="updateBlogStatus(blog.id, 1)" class="btn btn-primary">Publish</button>
         <button *ngIf="blog.status !== 2" (click)="updateBlogStatus(blog.id, 2)" class="btn btn-danger">Close</button>
       </div>
+
+      <h3>Komentari</h3>
+        <xp-blog-post-comment [blogId]="blog.id"></xp-blog-post-comment>
+      
     </div>
   </div>
   
