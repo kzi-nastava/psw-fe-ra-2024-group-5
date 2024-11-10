@@ -1,0 +1,18 @@
+.notification-popup {
+    position: absolute;
+    top: 50px; /* Poželjno je pozicionirati ovo u odnosu na ekran */
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-card {
+    border-radius: 8px;
+  }
+  

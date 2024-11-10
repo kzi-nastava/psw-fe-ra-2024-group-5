@@ -52,6 +52,11 @@
                 <mat-icon>shopping_cart</mat-icon>
             </button>
 
+            <button mat-icon-button class="icon-button" (click)="toggleNotifications()">
+                <mat-icon>notifications</mat-icon>
+            </button>
+            <xp-notification *ngIf="showNotifications"></xp-notification>
+
             <button mat-icon-button class="icon-button" [routerLink]="['profile']">
                 <mat-icon>person</mat-icon>
             </button>

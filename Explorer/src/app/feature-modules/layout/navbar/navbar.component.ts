@@ -33,4 +33,10 @@ export class NavbarComponent implements OnInit {
   onLogout(): void {
     this.authService.logout();
   }
+
+  showNotifications = false;
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
+  }
+  
 }
