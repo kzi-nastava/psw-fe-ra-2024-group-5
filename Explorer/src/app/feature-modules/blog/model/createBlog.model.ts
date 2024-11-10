@@ -4,5 +4,5 @@ export interface createBlog {
     userId: number,
     title: string,
     description: string,
-    imageData?: imageData[];
+    images?: imageData[];
 }

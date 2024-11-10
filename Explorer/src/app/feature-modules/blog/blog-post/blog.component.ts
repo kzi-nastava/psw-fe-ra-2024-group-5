@@ -3,6 +3,7 @@ import { BlogService } from '../blog.service';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Blog } from '../model/blog.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Vote } from '../model/vote.model';
 
 @Component({
   selector: 'xp-blog',
@@ -12,6 +13,9 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 export class BlogComponent implements OnInit {
 
   blogs: Blog[] = [];
+  upvotes: { [key: number]: number } = {}; 
+  downvotes: { [key: number]: number } = {};
+  userVotes: { [blogId: number]: number | null } = {};
   isLoading = true;
   error: string | null = null;
 
@@ -29,6 +33,14 @@ export class BlogComponent implements OnInit {
         this.blogs = result.results;
         this.isLoading = false;
         console.log(result);
+
+        this.blogs.forEach(blog => {
+          this.service.getUpvotes(blog.id).subscribe(upvoteCount => this.upvotes[blog.id] = upvoteCount);
+          this.service.getDownvotes(blog.id).subscribe(downvoteCount => this.downvotes[blog.id] = downvoteCount);
+
+          this.userVotes[blog.id] = null;
+        });
+
         this.initializeImageIndex();
         
       },
@@ -67,12 +79,11 @@ export class BlogComponent implements OnInit {
 
   updateBlogStatus(blogId: number, newStatus: number): void {
     this.authService.user$.subscribe(user => {
-      if (user && user.id){
+      if (user) {
         const userId = user.id;
-
+  
         this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
           next: (updatedBlog) => {
-            this.blogs = this.blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog);
             this.getBlog()
           },
           error: (err) => {
@@ -80,10 +91,67 @@ export class BlogComponent implements OnInit {
           }
         });
       } else {
-        console.error('User is not loged in.')
+        console.error('User is not logged in.');
       }
-    })
-    
+    });
   }
+
+    vote(blogId: number, voteType: number): void {
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          // Check if user has already voted the same way
+          if (this.userVotes[blogId] === voteType) {
+            // User clicked the same vote type, remove vote
+            this.removeVote(blogId, user.id);
+          } else {
+            // New vote or different vote type, add or update vote
+            this.addVote(blogId, voteType, user.id);
+          }
+        } else {
+          console.error('User is not logged in.');
+        }
+      });
+    }
+  
+    addVote(blogId: number, voteType: number, userId: number): void {
+      const voteData: Vote = {
+        userId: userId,
+        type: voteType,
+        voteTime: new Date().toISOString(),
+      };
+  
+      this.service.vote(blogId, voteData).subscribe({
+        next: () => {
+          // Update vote counts
+          this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
+          this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
+  
+          // Update user's current vote type for this blog
+          this.userVotes[blogId] = voteType;
+          console.log('Vote successfully submitted');
+        },
+        error: (err: any) => {
+          console.error('Failed to submit vote:', err);
+        }
+      });
+    }
+  
+    removeVote(blogId: number, userId: number): void {
+      this.service.removeVote(blogId, userId).subscribe({
+        next: () => {
+          // Update vote counts
+          this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
+          this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
+  
+          // Reset user's current vote type for this blog (no vote)
+          this.userVotes[blogId] = null;
+          console.log('Vote successfully removed');
+        },
+        error: (err: any) => {
+          console.error('Failed to remove vote:', err);
+        }
+      });
+    }
+
 
 }

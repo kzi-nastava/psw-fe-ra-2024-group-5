@@ -6,6 +6,7 @@ import { BlogPostComment } from './model/blog-post-comment';
 import { environment } from 'src/env/environment';
 import { Blog } from './model/blog.model';
 import { createBlog } from './model/createBlog.model';
+import { Vote } from './model/vote.model';
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +45,27 @@ export class BlogService {
   }
 
   updateBlogStatus(blogId: number, newStatus: number, userId: number): Observable<Blog> {
-    return this.http.put<Blog>(environment.apiHost + `author/blog/${blogId}/status/${userId}`, newStatus);
+    return this.http.put<Blog>(environment.apiHost + `author/blog/${blogId}/status?userId=${userId}`, newStatus);
   }
 
   createBlog(blog: createBlog): Observable<createBlog>{
-    return this.http.post<createBlog>(environment.apiHost + 'author/blog', blog);
+    return this.http.post<createBlog>(environment.apiHost + 'author/blog/create', blog);
+  }
+
+  vote(blogId: number, voteData: Vote): Observable<void> {
+    return this.http.post<void>(environment.apiHost + `author/blog/${blogId}/vote`, voteData);
+  }
+
+  removeVote(blogId: number, userId: number): Observable<number>{
+    return this.http.delete<number>(environment.apiHost + `author/blog/${blogId}/vote?userId=${userId}`);
+  }
+  
+  getUpvotes(blogId: number): Observable<number> {
+    return this.http.get<number>(environment.apiHost + `author/blog/${blogId}/upvotes`);
+  }
+  
+  getDownvotes(blogId: number): Observable<number> {
+    return this.http.get<number>(environment.apiHost + `author/blog/${blogId}/downvotes`);
   }
   
 }
