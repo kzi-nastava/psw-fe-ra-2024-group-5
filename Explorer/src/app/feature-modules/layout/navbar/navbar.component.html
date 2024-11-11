@@ -13,7 +13,7 @@
             <button [routerLink]="['home']" class="secondary" mat-button>
                 Home
             </button>
-            
+
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
                 [routerLink]="['tour']">
                 Tours
@@ -30,6 +30,10 @@
                 Add equipment
             </button>
 
+            <button class="secondary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['tour-execution']">
+                Active tour
+            </button>
+
             <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['blog']">
                 Blogs
             </button>
@@ -44,8 +48,11 @@
             <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')"  mat-raised-button [routerLink]="['add-comment']">
                 Add comment
             </button>
+            <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button class="icon-button">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
 
-            <button mat-icon-button class="icon-button">
+            <button mat-icon-button class="icon-button" [routerLink]="['profile']">
                 <mat-icon>person</mat-icon>
             </button>
         </div>

@@ -2,18 +2,28 @@
     <div class="profile-image">
     </div>
     <div class="profile-image">
-        <img [src]="userProfile.profilePictureUrl" alt="Profile Picture" />
+        <img *ngIf="userProfile.profilePictureUrl; else defaultImage" [src]="userProfile.profilePictureUrl" alt="Profile Picture" />
+        <ng-template #defaultImage>
+            <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
+        </ng-template>
     </div>
     <div class="profile-info">
         <div class="profile-header">
             <div class="profile-name">{{userProfile.name}} {{userProfile.surname}}</div>
-            <button class="edit-button" [routerLink]="['profile-form']">Edit Profile</button>
+            <button class="edit-button" *ngIf="isOwnProfile" [routerLink]="['profile-form', userProfile.id]">Edit Profile</button>
+            <button class="follow-button" *ngIf="!isOwnProfile" (click)="followOrUnfollow()">
+                {{ isFollowing ? 'Unfollow' : 'Follow' }}
+            </button>
+        </div>
+        <div class="followers-info" *ngIf="isOwnProfile" [routerLink]="['/followers', userProfile.id]">
+            <div class="followers-count">{{followersCount}}</div>
+            <div class="followers">Followers</div>
         </div>
         <div class="profile-bio">
-            Biography: {{userProfile.biography}}
+            <span class="bio-label">Biography:</span> {{userProfile.biography}}
         </div>
         <div class="profile-motto">
-            Motto: {{userProfile.motto}}
+            <span class="motto-label">Motto:</span> {{userProfile.motto}}
         </div>
     </div>
 </div>

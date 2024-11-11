@@ -7,12 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 
 @NgModule({
   declarations: [
     PreferenceComponent,
-    PreferenceDialogComponent
+    PreferenceDialogComponent,
+    ShoppingCartComponent
   ],
   imports: [
     CommonModule,

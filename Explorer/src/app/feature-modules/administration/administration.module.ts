@@ -9,6 +9,7 @@ import { UserProfileFormComponent } from './user-profile-form/user-profile-form.
 import { RouterModule } from '@angular/router';
 import { AccountsComponent } from './accounts/accounts.component';
 import { MatTableModule } from '@angular/material/table';
+import { FollowersListComponent } from './followers-list/followers-list.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MatTableModule } from '@angular/material/table';
     EquipmentComponent,
     UserProfileComponent,
     UserProfileFormComponent,
-    AccountsComponent
+    AccountsComponent,
+    FollowersListComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { MatTableModule } from '@angular/material/table';
     EquipmentFormComponent,
     UserProfileComponent,
     AccountsComponent,
-    MatTableModule
+    MatTableModule,
+    FollowersListComponent
   ]
 })
 export class AdministrationModule { }

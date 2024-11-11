@@ -14,7 +14,7 @@ import { Registration } from './model/registration.model';
   providedIn: 'root'
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User>({username: "", id: 0, role: "" });
+  user$ = new BehaviorSubject<User>({ username: "", id: 0, role: "" });
 
   constructor(private http: HttpClient,
     private tokenStorage: TokenStorage,
@@ -33,20 +33,21 @@ export class AuthService {
 
   register(registration: Registration): Observable<AuthenticationResponse> {
     return this.http
-    .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
-    .pipe(
-      tap((authenticationResponse) => {
-        this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-        this.setUser();
-      })
-    );
+      .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
+      .pipe(
+        tap((authenticationResponse) => {
+          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+          this.setUser();
+        })
+      );
   }
 
   logout(): void {
     this.router.navigate(['/home']).then(_ => {
       this.tokenStorage.clear();
-      this.user$.next({username: "", id: 0, role: "" });
-      }
+      localStorage.clear();
+      this.user$.next({ username: "", id: 0, role: "" });
+    }
     );
   }
 
