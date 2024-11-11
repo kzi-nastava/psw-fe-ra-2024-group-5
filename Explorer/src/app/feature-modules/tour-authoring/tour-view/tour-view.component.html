@@ -41,8 +41,8 @@
                 (click)="addToCart()">Buy now</button>
             </div>
             <div class="actions-row">
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'">Archive</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===0 && user?.role === 'author'">Publish</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'" (click)="archiveTour()">Archive</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===0 && user?.role === 'author'" (click)="publishTour()">Publish</button>
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated" (click)="startTour()">Activate</button>
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed">Add review</button>
                 <button mat-button class="secondary button-mg" *ngIf="user?.role === 'author'">Edit</button>
