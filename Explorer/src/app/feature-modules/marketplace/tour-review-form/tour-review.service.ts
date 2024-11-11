@@ -15,4 +15,8 @@ export class ReviewService {
   createReview(review: TourReview): Observable<TourReview> {
     return this.http.post<TourReview>(this.apiUrl, review);
   }
+
+  getReviewUrl(): string {
+    return this.apiUrl; 
+  }
 }
