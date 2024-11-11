@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';  
 import { MatIconModule } from '@angular/material/icon';  
 import { RouterModule } from '@angular/router';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     MatListModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    MatCheckboxModule,
+    FormsModule
   ],
   exports: [
     NotificationComponent

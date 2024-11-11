@@ -13,15 +13,34 @@
   color: var(--text-paragraph);
 }
 
+mat-card-title {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+mat-checkbox {
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-left: 100px;
+}
+
+mat-checkbox.mat-checked {
+  color: var(--accent-color);
+}
+
+mat-checkbox:hover {
+  color: var(--hover-color);
+}
+
 mat-list-item {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;  
+  align-items: flex-start;
   padding: 15px;
   border-bottom: 1px solid #eceff4;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  min-height: 150px;  
+  min-height: 150px;
 }
 
 mat-list-item:last-child {
@@ -34,23 +53,23 @@ mat-list-item:last-child {
 }
 
 .notification-icon {
-  width: 12px;   
-  height: 12px;   
-  margin-right: 400px;  
-  border-radius: 50%;  
-  background-color: rgb(185, 107, 107);  
-  color: rgb(199, 143, 143);  
-  font-size: 16px;  
+  width: 12px;
+  height: 12px;
+  margin-right: 400px;
+  border-radius: 50%;
+  background-color: rgb(185, 107, 107);
+  color: rgb(199, 143, 143);
+  font-size: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .notification-icon2 {
-  width: 25px;   
-  height: 25px;   
-  margin-right: 400px;  
-  color: rgb(199, 143, 143);  
+  width: 25px;
+  height: 25px;
+  margin-right: 400px;
+  color: rgb(199, 143, 143);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,9 +87,9 @@ mat-list-item:last-child {
   font-size: 15px;
   color: var(--text-paragraph);
   word-wrap: break-word;
-  overflow-wrap: break-word;  
+  overflow-wrap: break-word;
   white-space: normal;
-  flex-grow: 1;  
+  flex-grow: 1;
 }
 
 .notification-list mat-list-item:hover {
