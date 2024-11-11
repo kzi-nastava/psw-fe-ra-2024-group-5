@@ -83,47 +83,14 @@ export class BlogComponent implements OnInit {
     }
   }
 
-  updateBlogStatus(blogId: number, newStatus: number): void {
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        const userId = user.id;
-  
-        this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
-          next: (updatedBlog) => {
-            this.getBlog()
-          },
-          error: (err) => {
-            console.error('Failed to update blog status', err);
-          }
-        });
-      } else {
-        console.error('User is not logged in.');
-      }
-    });
-  }
-
-
   // updateBlogStatus(blogId: number, newStatus: number): void {
   //   this.authService.user$.subscribe(user => {
   //     if (user) {
   //       const userId = user.id;
   
   //       this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
-  //         next: () => {
-  //           // Trigger status recalculation based on votes and comments
-  //           if (newStatus === 1) { // Check if the status is set to "Published"
-  //             this.service.updateBlogStatusBasedOnVotesAndComments(blogId).subscribe({
-  //               next: () => {
-  //                 // Refresh the blog list or the specific blog to show the updated status
-  //                 this.getBlog(); // Refresh blog list
-  //               },
-  //               error: (err) => {
-  //                 console.error('Failed to update blog status based on votes and comments', err);
-  //               }
-  //             });
-  //           } else {
-  //             this.getBlog(); // Refresh blog list for non-published status changes
-  //           }
+  //         next: (updatedBlog) => {
+  //           this.getBlog()
   //         },
   //         error: (err) => {
   //           console.error('Failed to update blog status', err);
@@ -134,7 +101,42 @@ export class BlogComponent implements OnInit {
   //     }
   //   });
   // }
+
+
   
+  updateBlogStatus(blogId: number, newStatus: number): void {
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        const userId = user.id;
+
+        this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
+          next: (updatedBlog) => {
+            // Ako je blog sada u statusu "Published", pozovi ažuriranje statusa na osnovu glasova i komentara
+            if (newStatus === 1) { // Proveri da li je status "Published"
+              this.service.updateBlogStatusBasedOnVotesAndComments(blogId, userId).subscribe({
+                next: () => {
+                  // Osvježi listu blogova kako bi prikazao ažurirani status
+                  this.getBlog();
+                },
+                error: (err) => {
+                  console.error('Neuspešno ažuriranje statusa na osnovu glasova i komentara:', err);
+                }
+              });
+            } else {
+              // Osvježi listu blogova za bilo koje drugo ažuriranje statusa
+              this.getBlog();
+            }
+          },
+          error: (err) => {
+            console.error('Neuspešno ažuriranje statusa bloga', err);
+          }
+        });
+      } else {
+        console.error('Korisnik nije ulogovan.');
+      }
+    });
+  }
+
 
 
 
@@ -162,6 +164,7 @@ export class BlogComponent implements OnInit {
         voteTime: new Date().toISOString(),
       };
   
+      console.log("Sending vote data:", voteData);
       this.service.vote(blogId, voteData).subscribe({
         next: () => {
           // Update vote counts

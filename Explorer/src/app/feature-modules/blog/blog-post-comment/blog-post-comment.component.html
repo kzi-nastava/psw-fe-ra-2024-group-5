@@ -39,7 +39,10 @@
     [shouldEdit]="shouldEdit" 
     [comment]="selectedComment" 
     [blogId]="blogId" 
-    (commentUpdated)="loadCommentsForBlog()">
+    (commentUpdated)="loadCommentsForBlog()"
+    (commentUpdated)="onCommentAction()"
+    >
+    
   </xp-blog-post-comment-form>
 </div>
 

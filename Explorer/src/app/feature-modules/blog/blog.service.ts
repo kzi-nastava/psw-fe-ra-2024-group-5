@@ -53,10 +53,14 @@ export class BlogService {
   //   );
   // }
 
-  updateBlogStatusBasedOnVotesAndComments(blogId: number): Observable<string> {
-    return this.http.post(`${environment.apiHost}author/blog/${blogId}/update-status`, {}, { responseType: 'text' });
-  }
+  // updateBlogStatusBasedOnVotesAndComments(blogId: number): Observable<string> {
+  //   return this.http.post(`${environment.apiHost}author/blog/${blogId}/update-status`, {}, { responseType: 'text' });
+  // }
   
+  updateBlogStatusBasedOnVotesAndComments(blogId: number, userId: number): Observable<Blog> {
+    return this.http.put<Blog>(`${environment.apiHost}author/blog/${blogId}/update-status?userId=${userId}`, {} );
+}
+
   
 
   createBlog(blog: createBlog): Observable<createBlog>{
