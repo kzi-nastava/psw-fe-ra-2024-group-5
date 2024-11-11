@@ -20,10 +20,10 @@
         <td>{{ com.creationTime | date: 'short' }}</td>
         <td>{{ com.lastEditedTime ? (com.lastEditedTime | date: 'short') : 'Never edited' }}</td>  
         <td>
-          <button (click)="deleteComment(com.id || 0)" color="accent" mat-icon-button>
+          <button *ngIf="!isReadOnly" (click)="deleteComment(com.id || 0)" color="accent" mat-icon-button>
               <mat-icon>delete</mat-icon>
           </button>
-          <button (click)="onEditClicked(com)" color="primary" mat-icon-button>
+          <button *ngIf="!isReadOnly" (click)="onEditClicked(com)" color="primary" mat-icon-button>
               <mat-icon>edit</mat-icon>
           </button>
        </td>
@@ -32,7 +32,7 @@
   </table>
 </div>
 
-<div>
+<div *ngIf="!isReadOnly">
   <!-- Prosleđivanje blogId forme za komentare -->
   <xp-blog-post-comment-form 
     *ngIf="shouldRenderBlogPostCommentForm" 

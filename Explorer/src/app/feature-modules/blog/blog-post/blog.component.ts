@@ -102,6 +102,42 @@ export class BlogComponent implements OnInit {
     });
   }
 
+
+  // updateBlogStatus(blogId: number, newStatus: number): void {
+  //   this.authService.user$.subscribe(user => {
+  //     if (user) {
+  //       const userId = user.id;
+  
+  //       this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
+  //         next: () => {
+  //           // Trigger status recalculation based on votes and comments
+  //           if (newStatus === 1) { // Check if the status is set to "Published"
+  //             this.service.updateBlogStatusBasedOnVotesAndComments(blogId).subscribe({
+  //               next: () => {
+  //                 // Refresh the blog list or the specific blog to show the updated status
+  //                 this.getBlog(); // Refresh blog list
+  //               },
+  //               error: (err) => {
+  //                 console.error('Failed to update blog status based on votes and comments', err);
+  //               }
+  //             });
+  //           } else {
+  //             this.getBlog(); // Refresh blog list for non-published status changes
+  //           }
+  //         },
+  //         error: (err) => {
+  //           console.error('Failed to update blog status', err);
+  //         }
+  //       });
+  //     } else {
+  //       console.error('User is not logged in.');
+  //     }
+  //   });
+  // }
+  
+
+
+
     vote(blogId: number, voteType: number): void {
       this.authService.user$.subscribe(user => {
         if (user) {
@@ -131,7 +167,8 @@ export class BlogComponent implements OnInit {
           // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-  
+
+
           // Update user's current vote type for this blog
           this.userVotes[blogId] = voteType;
           console.log('Vote successfully submitted');
@@ -148,7 +185,8 @@ export class BlogComponent implements OnInit {
           // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-  
+
+
           // Reset user's current vote type for this blog (no vote)
           this.userVotes[blogId] = null;
           console.log('Vote successfully removed');

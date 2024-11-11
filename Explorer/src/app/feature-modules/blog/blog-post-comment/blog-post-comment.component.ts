@@ -21,16 +21,13 @@ export class BlogPostCommentComponent implements OnInit  {
    userId : number;
    currentUser : User;
    @Input() blogId: number;
+   @Input() isReadOnly: boolean = false;
+
 
   constructor ( private service: BlogService,  private authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
 
-    // if ( this.blogId) {
-    //   // this.getCommentsForUser();
-    //    this.loadCommentsForBlog();
- 
-    //  }
 
     this.authService.user$.subscribe((user : User) => {
       console.log('User data:', user);  // Dodaj ispis za proveru korisničkih podataka
