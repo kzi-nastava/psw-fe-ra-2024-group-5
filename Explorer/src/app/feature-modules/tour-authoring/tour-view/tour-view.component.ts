@@ -10,6 +10,8 @@ import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.en
 import { TourExecutionService } from '../../tour-execution/tour-execution.service';
 import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
 import { OrderItem } from '../../marketplace/model/order-item.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
 
 @Component({
   selector: 'xp-tour-detailed-view',
@@ -32,7 +34,8 @@ export class TourDetailedViewComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private shoppingCartService: ShoppingCartService
+    private shoppingCartService: ShoppingCartService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -143,6 +146,29 @@ export class TourDetailedViewComponent implements OnInit {
       },
       error: error => {
         console.log('Error starting tour:', error);
+      }
+    });
+  }
+
+  openReviewDialog(): void {
+    const dialogRef = this.dialog.open(TourReviewFormComponent, {
+      width: '600px',
+      data: {
+        tourId: this.tour?.id,
+        touristId: this.user?.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        // Možeš dodati neku notifikaciju o uspjehu
+        //this.showSuccessAlert();
+        console.log('Review successfully submitted');
+        // Ovdje možeš osvježiti podatke o turi ako želiš
+      } else if (result === false) {
+        // Možeš dodati neku notifikaciju o grešci
+        console.log('Error submitting review');
+        //this.showErrorAlert();
       }
     });
   }

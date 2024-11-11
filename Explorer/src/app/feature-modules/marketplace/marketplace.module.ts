@@ -8,13 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-review-form.component';
 
 @NgModule({
   declarations: [
     PreferenceComponent,
     PreferenceDialogComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    TourReviewFormComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     MatSelectModule,
     MatOptionModule,
     ReactiveFormsModule,
-    
+    MatDialogModule,
   ],
   exports: [
     PreferenceComponent
