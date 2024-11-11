@@ -99,6 +99,18 @@ export class ClubService {
       }
     });
   }
+
+  getUserIdsByClubId(clubId: number): Observable<number[]> {
+    return this.getAllMemberships().pipe(
+      map((memberships) => {
+        return memberships
+          .filter(membership => membership.clubId === clubId)  
+          .map(membership => membership.userId);  
+      })
+    );
+  }
+  
+  
  
   //temp function name,this should sent invitation to another tourist to join the club
   // createMembership(clubId: number, userId: number): Observable<ClubMembership> {

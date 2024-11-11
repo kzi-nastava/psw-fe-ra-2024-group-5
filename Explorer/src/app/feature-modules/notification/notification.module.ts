@@ -4,6 +4,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';  
 import { MatIconModule } from '@angular/material/icon';  
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     MatCardModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   exports: [
     NotificationComponent

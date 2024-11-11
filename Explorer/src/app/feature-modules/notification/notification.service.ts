@@ -16,15 +16,15 @@ export class NotificationService {
     return this.http.get<PagedResults<Notification>>(`${this.apiUrl}/${userId}/paged?page=${page}&pageSize=${pageSize}`);
   }
 
-  markNotificationAsRead(notificationId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${notificationId}/read`, {});
+  markNotificationAsRead(notificationId: number, userId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${notificationId}/read?userId=${userId}`, {});
   }
 
   markAllNotificationsAsRead(userId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${userId}/mark-all-read`, {});
   }
 
-  sendNotification(userId: number, notification: Notification): Observable<Notification> {
-    return this.http.post<Notification>(`${this.apiUrl}/${userId}/send`, notification);
+  sendNotification(notificationDto: Notification): Observable<Notification> {
+    return this.http.post<Notification>(`${this.apiUrl}/send`, notificationDto);
   }
 }
