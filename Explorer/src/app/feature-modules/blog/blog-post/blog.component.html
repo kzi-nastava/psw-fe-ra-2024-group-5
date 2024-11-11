@@ -12,7 +12,7 @@
   
       <div style="display: flex; justify-content: space-between;">
         <p>Status: 
-          {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : 'Unknown' }} 
+          {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : blog.status === 3 ? 'Active': blog.status === 4 ? 'Famous': 'Unknown' }} 
         </p>
         
         <p>Created at: {{ blog.createdDate | date }}</p>
@@ -20,13 +20,13 @@
   
       <div [innerHTML]="blog.description"></div>
   
-      <div *ngIf="blog.imageData && blog.imageData.length > 0">
-        <img [src]="'data:' + blog.imageData[currentImageIndex[blog.id]].contentType + ';base64,' + blog.imageData[currentImageIndex[blog.id]].base64Data"
+      <div *ngIf="blog.images && blog.images.length > 0">
+        <img [src]="'data:' + blog.images[currentImageIndex[blog.id]].contentType + ';base64,' + blog.images[currentImageIndex[blog.id]].base64Data"
              alt="{{ blog.title }}">
 
-        <div class="image-navigation" *ngIf="blog.imageData.length > 1">
+        <div class="image-navigation" *ngIf="blog.images.length > 1">
           <button (click)="previousImage(blog.id)" class="btn btn-secondary">Previous</button>
-          <button (click)="nextImage(blog.id, blog.imageData.length)" class="btn btn-secondary">Next</button>
+          <button (click)="nextImage(blog.id, blog.images.length)" class="btn btn-secondary">Next</button>
         </div>     
       </div>
 
@@ -35,9 +35,17 @@
         <button *ngIf="blog.status !== 2" (click)="updateBlogStatus(blog.id, 2)" class="btn btn-danger">Close</button>
       </div>
 
+
+      <div style="margin-top: 10px;" *ngIf="blog.status !== 0 && blog.status !== 2">
+        <button (click)="vote(blog.id, 0)" class="btn btn-primary">Upvote ({{ upvotes[blog.id] || 0 }})</button>
+        <button (click)="vote(blog.id, 1)" class="btn btn-primary">Downvote ({{ downvotes[blog.id] || 0 }})</button>
+      </div>
+
+
       <h3>Komentari</h3>
         <xp-blog-post-comment [blogId]="blog.id"></xp-blog-post-comment>
       
+
     </div>
   </div>
   

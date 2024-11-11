@@ -7,7 +7,6 @@ export interface Blog {
     description: string,
     status: number,
     createdDate: string,
-    imageData?: imageData[]; 
+    images?: imageData[]; 
     comments?: BlogPostComment[]; 
-
 }
