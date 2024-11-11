@@ -37,7 +37,8 @@
         <div class="button-container">
             <div class="price-row">
                 <h2>{{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</h2>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought">Buy now</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought"
+                (click)="addToCart()">Buy now</button>
             </div>
             <div class="actions-row">
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'" (click)="archiveTour()">Archive</button>

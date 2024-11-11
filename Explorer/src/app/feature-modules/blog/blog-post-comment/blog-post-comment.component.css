@@ -1,46 +1,40 @@
 table {
-  width: 50%;
+  width: 90%; /* Smanjite širinu kako bi tabela bila bliža širini bloga */
   border-collapse: collapse;
-  margin: 0 auto 20px auto; 
+  margin: 10px auto; /* Smanjena margina */
   font-family: Arial, sans-serif;
   border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Stil za zaglavlje */
 th {
   background-color: #4CAF50;
   color: white;
-  padding: 6px; 
+  padding: 4px; /* Smanjena padding za kompaktniji izgled */
   text-align: left;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Stil za ćelije u telu */
 td {
   border: 1px solid #ddd;
-  padding: 6px; 
+  padding: 4px; /* Smanjena padding */
   text-align: left;
 }
-
 
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-
 tbody tr:hover {
   background-color: #ddd;
 }
 
-/* Ograničavanje visine tabele i smanjenje veličine redova */
 tbody {
   display: block;
-  max-height: 250px; /* Prilagođeno da se prikaže više redova (5 komentara) */
-  overflow-y: scroll;
-  scrollbar-width: thin; 
+  max-height: 150px; /* Smanjena visina za manji prostor */
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 thead, tbody tr {
@@ -49,54 +43,37 @@ thead, tbody tr {
   table-layout: fixed;
 }
 
-tbody::-webkit-scrollbar-thumb {
-  background-color: #888; 
-  border-radius: 10px;
-}
-
-/* Naslov "Comments" iznad tabele */
-p {
-  font-weight: bold;
-  text-align: left;
-  margin-left: 25%; 
-}
-
-/* Stil za prikaz korisničkih informacija */
 .user-info {
-  width: 50%; 
-  margin: 0 auto 10px auto; 
+  width: 90%; /* Smanjena širina u skladu sa tabelom */
+  margin: 5px auto; /* Smanjena margina */
   font-family: Arial, sans-serif;
-  padding: 10px;
-  background-color: #f9f9f9; 
+  padding: 8px; /* Manje padding za kompaktniji izgled */
+  background-color: #f9f9f9;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  text-align: left; 
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 
 .user-info p {
-  margin: 5px 0; 
+  margin: 3px 0; /* Smanjena margina */
   font-weight: bold;
-  color: #333; 
+  color: #333;
 }
 
-/* Stil za deo sa naslovom "Add comment" i dugmetom */
 .add-comment-section {
   display: flex;
-    align-items: center;
-  width: 50%; 
-  margin: 20px auto 0 auto; /* Centrirano ispod tabele */
-  padding: 10px;
-
+  align-items: center;
+  width: 90%; /* Smanjena širina za sklad sa blogom */
+  margin: 10px auto; /* Smanjena margina */
+  padding: 8px;
 }
 
 .add-comment-section h1 {
-  margin: 0; /* Uklanja defaultni razmak naslova */
-  font-size: 18px; 
+  margin: 0;
+  font-size: 16px; /* Smanjen font za kompaktniji izgled */
 }
 
 .add-comment-section button {
-  margin-left: 10px; 
+  margin-left: 8px;
 }
-
-
