@@ -48,6 +48,9 @@
             <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')"  mat-raised-button [routerLink]="['add-comment']">
                 Add comment
             </button>
+            <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button class="icon-button">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>
 
             <button mat-icon-button class="icon-button" [routerLink]="['profile']">
                 <mat-icon>person</mat-icon>

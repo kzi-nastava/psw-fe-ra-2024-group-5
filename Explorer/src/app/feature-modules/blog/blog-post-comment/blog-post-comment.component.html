@@ -4,7 +4,6 @@
     <p><strong>Username:</strong> {{ currentUser.username }}</p>
     <p><strong>Role:</strong> {{ currentUser.role }}</p>
   </div>
-  
 
   <p>Comments</p>
   <table style="border: 1px solid black;">
@@ -21,7 +20,7 @@
         <td>{{ com.creationTime | date: 'short' }}</td>
         <td>{{ com.lastEditedTime ? (com.lastEditedTime | date: 'short') : 'Never edited' }}</td>  
         <td>
-          <button (click)="deleteComment(com.id|| 0)" color="accent" mat-icon-button>
+          <button (click)="deleteComment(com.id || 0)" color="accent" mat-icon-button>
               <mat-icon>delete</mat-icon>
           </button>
           <button (click)="onEditClicked(com)" color="primary" mat-icon-button>
@@ -29,25 +28,28 @@
           </button>
        </td>
       </tr>
-      <!-- <tr> -->
-        <!-- <button (click)="onAddClicked()" color="primary" mat-icon-button>
-            <mat-icon>add</mat-icon>
-        </button> -->
-     <!-- // </tr> -->
-      
     </tbody>
   </table>
-  
- <div>
-      <xp-blog-post-comment-form *ngIf="shouldRenderBlogPostCommentForm" [shouldEdit]="shouldEdit" [comment]="selectedComment" (commentUpdated)="getCommentsForUser()"></xp-blog-post-comment-form>
- </div>
- <div class="add-comment-section">
-  <h1> Add comment</h1>
+</div>
+
+<div>
+  <!-- Prosleđivanje blogId forme za komentare -->
+  <xp-blog-post-comment-form 
+    *ngIf="shouldRenderBlogPostCommentForm" 
+    [shouldEdit]="shouldEdit" 
+    [comment]="selectedComment" 
+    [blogId]="blogId" 
+    (commentUpdated)="loadCommentsForBlog()">
+  </xp-blog-post-comment-form>
+</div>
+
+<div class="add-comment-section">
+  <h1>Add comment</h1>
   <button (click)="onAddClicked()" color="primary" mat-icon-button>
     <mat-icon>add</mat-icon>
-</button>
+  </button>
 </div>
-</div>
+
 <ng-template #noData>
   <p>No comments available.</p>
 </ng-template>

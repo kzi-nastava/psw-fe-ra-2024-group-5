@@ -15,6 +15,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 import { ClubModule } from './feature-modules/club/club.module';
 
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -33,6 +35,7 @@ import { ClubModule } from './feature-modules/club/club.module';
     HttpClientModule,
     ClubModule,
     LayoutModule
+    
   ],
   providers: [
     {

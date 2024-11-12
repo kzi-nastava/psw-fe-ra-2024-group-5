@@ -55,4 +55,14 @@ export class TourAuthoringService {
   deleteTour(id : number): Observable<Tour>{
     return this.http.delete<Tour>(environment.apiHost + 'tour/' + id)
   }
+
+  publishTour(id: number): Observable<any> {
+    return this.http.post(`${environment.apiHost}tour/publish/${id}`, {});
+  }
+  
+  archiveTour(id: number): Observable<any> {
+    return this.http.post(`${environment.apiHost}tour/archive/${id}`, {});
+  }
+  
+
 }

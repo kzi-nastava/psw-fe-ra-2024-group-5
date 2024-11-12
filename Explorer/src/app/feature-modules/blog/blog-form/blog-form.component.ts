@@ -60,14 +60,16 @@ export class BlogFormComponent {
     const fromValues = this.blogForm.value;
 
     this.authService.user$.subscribe(user => {
-      if (user && user.id){
+      console.log(user)
+      console.log(user.id)
+      if (user){
         const userId = user.id;
 
         const newBlog: createBlog = {
           userId: userId,
           title: fromValues.title,
           description: fromValues.description,
-          imageData: this.selectedImages.map(img => ({
+          images: this.selectedImages.map(img => ({
             base64Data: img.base64Data,
             contentType: img.contentType
           }))
