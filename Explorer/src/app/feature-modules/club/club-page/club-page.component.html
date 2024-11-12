@@ -1,0 +1,91 @@
+<div *ngIf="loading" class="loading-spinner">
+  Loading club details...
+</div>
+
+<div *ngIf="!loading && club" class="club-detail">
+  <h2>{{ club.name }}</h2>
+  <p>{{ club.description }}</p>
+
+  <!-- Input za pisanje poruke -->
+  <div class="message-input-container">
+      <textarea [(ngModel)]="newMessage"
+                placeholder="Write your message here..."
+                rows="4"
+                class="message-input"
+                (input)="onMessageChange($event)"
+                [ngClass]="{'error-input': isMessageTooLong}"></textarea>
+      
+      <div *ngIf="isMessageTooLong" class="error-message">
+          Message content cannot exceed 280 characters.
+      </div>
+
+      <input [(ngModel)]="attachmentLink" 
+           type="text" 
+           placeholder="Optional: Attach a link to a resource (Tour or Blog Post)" 
+           class="attachment-input">
+      
+      <button class="send-message-btn"
+              (click)="addMessage()"
+              [disabled]="isMessageTooLong">Send Message</button>
+  </div>
+
+  <div class="messages">
+      <!-- Sve poruke -->
+      <div *ngIf="clubMessages.length === 0" class="no-club-message">
+          No messages yet.
+      </div>
+      <ul *ngIf="clubMessages.length > 0">
+          <li *ngFor="let message of clubMessages">
+              <div class="message">
+                <div class="message-actions">
+                    <button class="edit-message-btn" *ngIf="message.senderId === userId" (click)="editMessage(message)">
+                      <img src="assets/images/edit-icon.png" alt="Edit" class="edit-icon" />
+                    </button>
+                    <button class="delete-message-btn" *ngIf="club && club.ownerId === userId" (click)="deleteMessage(message)">
+                      <img src="assets/images/delete-icon.png" alt="Delete" class="delete-icon" />
+                    </button>
+                  </div>
+                  <div class="message-header">
+                      <p class="message-sender">{{ users[message.senderId] || 'Loading...' }}</p>
+                      <p class="message-date">{{ message.sentAt | date: 'dd.MM.yyyy HH:mm' }}</p>
+                  </div>
+                  <p>{{ message.content }}</p> 
+                  <div *ngIf="message.attachment">
+                    <a *ngIf="message.attachment.resourceType === 0"
+                    [routerLink]="['/tour-detailed-view', message.attachment.resourceId]">
+                    View Tour
+                    </a>
+                  </div>
+              </div>
+          </li>
+      </ul>
+  </div>
+
+  <!-- Paginacija -->
+  <div class="pagination">
+      <button class="previous-next" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }}</span>
+      <button class="previous-next" (click)="changePage(currentPage + 1)">Next</button>
+  </div>
+</div>
+
+<!-- Modal za editovanje poruke -->
+<div *ngIf="editingMessageId !== null" class="modal-overlay">
+  <div class="modal">
+      <h3>Edit Message</h3>
+      <textarea [(ngModel)]="editedMessageContent" rows="4" class="message-input"
+      (input)="onEditedMessageChange($event)"></textarea>
+      <div *ngIf="isEditedMessageTooLong" class="error-message">
+        Message content cannot exceed 280 characters.
+      </div>
+      <div class="modal-buttons">
+          <button class="send-message-btn" [disabled]="isEditedMessageTooLong"
+           (click)="saveEditedMessage()">Save Changes</button>
+          <button class="send-message-btn" (click)="editingMessageId = null">Cancel</button>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && !club" class="no-club-message">
+  Club not found.
+</div>

@@ -15,7 +15,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 import { ClubModule } from './feature-modules/club/club.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     ClubModule,
     LayoutModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FormsModule
   ],
   providers: [
     {
