@@ -13,6 +13,7 @@ export class ToursPageComponent {
   tours: TourCard[] = [];
   currentPage = 1;
   showSearch: boolean = false;
+
   startLatitude: number = 0;
   endLatitude: number = 0;
   startLongitude: number = 0;
@@ -37,17 +38,33 @@ export class ToursPageComponent {
     });
   }
 
-  
+  changeSearch(): void{
+    if(this.showSearch){
+      this.loadTours()
+      this.centerLatitude.next(null);
+      this.centerLongitude.next(null);
+      this.radius.next(0);
+    }
+
+    this.showSearch = !this.showSearch
+  }
 
   nextPage(): void {
     this.currentPage++;
-    this.loadTours();
+    if(!this.showSearch)
+      this.loadTours();
+    else
+      this.searchTours();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.loadTours();
+
+      if(!this.showSearch)
+        this.loadTours();
+      else
+        this.searchTours();
     }
   }
 
@@ -87,7 +104,7 @@ searchTours(): void {
   const endLong = centerLong + deltaLong;
 
   const searchParams = { 
-      page: 1, 
+      page: this.currentPage, 
       pageSize: 8, 
       startLat, 
       endLat, 
