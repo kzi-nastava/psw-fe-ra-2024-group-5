@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Preference } from './model/preference.model';
 import { environment } from 'src/env/environment';
+import { AppRating } from './model/app-rating.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +20,10 @@ export class MarketplaceService {
 
   addPreference(preference: Preference): Observable<Preference> {
     return this.http.post<Preference>(environment.apiHost + 'tourist/preference', preference);
-}
+  }
+
+  addAppRating(appRating: AppRating): Observable<AppRating> {
+    return this.http.post<AppRating>(environment.apiHost + 'tourist/appRating', appRating);
+  }
+
 }
