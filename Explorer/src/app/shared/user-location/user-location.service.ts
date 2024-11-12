@@ -28,8 +28,12 @@ export class UserLocationService {
     }
   }
 
-  getUserPosition(userId: number): UserPosition | null {
-    const userPosition: UserPosition = JSON.parse(localStorage.getItem('userPosition')!);
-    return userPosition.userId == userId ? userPosition : null;
+  getUserPosition(): UserPosition | null {
+    const userPositionString = localStorage.getItem('userPosition');
+    if (!userPositionString)
+      return null;
+
+    const userPosition: UserPosition = JSON.parse(userPositionString);
+    return userPosition;
   }
 }

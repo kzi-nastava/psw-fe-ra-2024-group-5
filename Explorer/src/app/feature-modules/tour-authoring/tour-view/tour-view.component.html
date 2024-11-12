@@ -1,0 +1,118 @@
+<div class="title-container">
+    <h1 mat-dialog-title>{{tour?.name}}</h1>
+</div>
+<div class="tour-container">
+    <div class="row">
+        <div class="map-container">
+            <app-map [isViewOnly]="true"></app-map>
+        </div>
+        <div class="keypoints-container">
+            <xp-key-points [tourId]="tourId" (displayKeyPoints)="displayKeyPoints()"></xp-key-points>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="tour-details">
+            <div class="description outlined-desc">
+                {{tour?.description}}sd fdsa fdsa fdsafdsafsdadsaffdsafdsadsafdsfdsafdsds
+            </div>
+            <div class="info-transport-container">
+                <div class="info">
+                    <h3>{{ getTourLevel(tour?.level) }} <span *ngIf="user?.role === 'author'">- {{ getTourStatus(tour?.status) }}</span></h3>
+                    <h3 *ngIf="tour?.status === 1">Published: {{ tour?.publishedTime | date }}</h3>
+                    <h3 *ngIf="tour?.status === 2">Archived: {{ tour?.archivedTime | date }}</h3>
+                    <h3>Tags: {{ tour?.tags }}</h3>
+                </div>
+                <div class="transport">
+                    <h3>Transport Durations</h3>
+                    <ul>
+                        <li *ngFor="let transport of tour?.transportDurationDtos" class="transport-duration">
+                            <strong>{{ transport.duration }} min</strong> -
+                            <strong>{{ getTransport(transport.transport) }}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <div class="price-row">
+                <h2>{{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</h2>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought"
+                (click)="addToCart()">Buy now</button>
+            </div>
+            <div class="actions-row">
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'" (click)="archiveTour()">Archive</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===0 && user?.role === 'author'" (click)="publishTour()">Publish</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated" (click)="startTour()">Activate</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed" (click)="openReviewDialog()">Add review</button>
+                <button mat-button class="secondary button-mg" *ngIf="user?.role === 'author'">Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="title-container">
+        <h1 mat-dialog-title *ngIf="tour && tour.reviews && tour.reviews.length > 0; else noReviews">Reviews</h1>
+
+        <ng-template #noReviews>
+            <h1 mat-dialog-title>No Reviews Available</h1>
+        </ng-template>
+    </div>
+    <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
+        <div class="review-card" *ngFor="let review of tour?.reviews">
+            <div class="image-container">
+                <img [src]="'data:image/jpeg;base64,' + review.image"  alt="review-picture">
+            </div>
+            <div class="review-info">
+                <p class="review-comment">{{review.comment}}</p>
+                <div class="review-footer">
+                    <div class="review-dates">
+                        <div class="review-date">Visit: {{review.visitDate}}</div>
+                        <div class="review-date">Review: {{review.reviewDate}}</div>
+                    </div>
+                    <div class="star-rating">
+                        <span class="star" *ngIf="review.rating >= 1">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 2">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 3">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 4">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 5">&#9733;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example of review card
+        <div class="review-card">
+            <div class="image-container">
+                <img class="review-picture" src="assets/images/pexels-florencia-potter-82066-351283.jpg"
+                  alt="review-picture">
+            </div>
+            <div class="review-info">
+                <p class="review-comment">
+                    This is a long comment about the experience.
+                    The service was excellent and I would highly recommend it to others!
+                </p>
+                <div class="review-footer">
+                    <div class="review-dates">
+                        <div class="review-date">Visit: November 3, 2024</div>
+                        <div class="review-date">Review: November 2, 2024</div>
+                    </div>
+                    <div class="star-rating">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+
+    <div class="row">
+        <button mat-raised-button class="close" (click)="back()">
+            <mat-icon>back</mat-icon>
+            Home
+        </button>
+    </div>
+</div>

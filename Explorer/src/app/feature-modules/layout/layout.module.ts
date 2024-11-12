@@ -24,7 +24,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MaterialModule,
     RouterModule,
     TourAuthoringModule,
-    SharedModule
+    SharedModule,
 ],
   exports: [
     NavbarComponent,

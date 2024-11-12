@@ -11,12 +11,17 @@ import { AppRatingFormComponent } from './app-rating-form/app-rating-form.compon
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 
 
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-review-form.component';
 
 @NgModule({
   declarations: [
     PreferenceComponent,
     PreferenceDialogComponent,
-    AppRatingFormComponent
+    AppRatingFormComponent,
+    ShoppingCartComponent,
+    TourReviewFormComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +32,7 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
     MatOptionModule,
     ReactiveFormsModule,
     MaterialModule,
-    
+    MatDialogModule,
   ],
   exports: [
     PreferenceComponent,

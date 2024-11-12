@@ -22,7 +22,7 @@
   
       <div class="form-group">
         <label for="image">Upload Image</label>
-        <input type="file" (change)="onImageSelected($event)">
+        <input type="file" (change)="onImageSelected($event)" multiple accept="image/png, image/jpeg">
 
         <div class="image-preview-container" *ngIf="selectedImages.length > 0">
           <div *ngFor="let img of selectedImages; let i = index" class="image-preview">

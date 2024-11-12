@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { AccountsComponent } from './accounts/accounts.component';
 import { MatTableModule } from '@angular/material/table';
 import { AppRatingComponent } from './app-rating/app-rating.component';
+import { FollowersListComponent } from './followers-list/followers-list.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AppRatingComponent } from './app-rating/app-rating.component';
     AppRatingComponent,
     UserProfileComponent,
     UserProfileFormComponent,
-    AccountsComponent
+    AccountsComponent,
+    FollowersListComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { AppRatingComponent } from './app-rating/app-rating.component';
     UserProfileComponent,
     AccountsComponent,
     MatTableModule,
-    AppRatingComponent
+    AppRatingComponent,
+    FollowersListComponent
   ]
 })
 export class AdministrationModule { }

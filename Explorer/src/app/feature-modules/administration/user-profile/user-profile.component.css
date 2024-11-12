@@ -18,6 +18,7 @@
     width: 150px;
     height: 150px;
     object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .profile-info {
@@ -35,8 +36,41 @@
     white-space: nowrap;  
     margin-right: auto;
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
+}
+
+.followers-info {
+    margin-top: 25px;  
+    text-align: center;  
+    transition: color 0.3s;  
+}
+
+
+
+.followers-info .followers-count,
+.followers-info .followers {
+    transition: color 0.3s;  
+}
+
+.followers-info:hover .followers-count,
+.followers-info:hover .followers {
+    color: #133c65 !important;  
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.followers-count{
+    font-size: 25px;
+    color: #555;  
+    margin-bottom: 5px;
+}
+
+.followers {
+    color: black;
+    font-weight: bold;
+    color: #555;
+    font-size: 20px;
 }
 
 .edit-button {
@@ -49,43 +83,61 @@
     position: absolute;
     right: 450px;
     height: 34px;
-    width: 100px;
+    width: 150px;
 }
 
 .edit-button:hover {
     background-color: #0056b3;  
 }
 
-.profile-bio {
-    margin-top: 30px;
-    font-size: 16px;
-    color: #555;
-    position: relative; 
-    padding-left: 15px;
-    font-size: 18px;
+.follow-button {
+    background-color: #007bff;  
+    color: white;  
+    border: none;  
+    padding: 5px 10px;  
+    border-radius: 5px;  
+    cursor: pointer; 
+    position: absolute;
+    right: 450px;
+    width: 100px;
 }
 
-.profile-bio::before {
-    content: '•'; 
-    position: absolute;
-    left: 0; 
-    color: black; 
-    font-size: 24px;
+.follow-button:hover {
+    background-color: #0056b3;  
+}
+
+.profile-bio {
+    margin-top: 30px;
+    color: #555;
+    position: relative; 
+    padding: 20px;
+    font-size: 20px;
+    max-width: 100%;  
+    word-wrap: break-word;  
+    overflow-wrap: break-word;
+    background-color: #fff;  
+    border: 1px solid #ddd;  
+    border-radius: 5px;  
 }
 
 .profile-motto {
-    margin-top: 10px;
+    margin-top: 20px;
     font-style: italic;
-    color: #888;
+    color: #555;
     position: relative; 
     padding-left: 15px;
-    font-size: 18px;
+    font-size: 20px;
+    max-width: 100%;  
+    word-wrap: break-word;  
+    overflow-wrap: break-word;
 }
 
-.profile-motto::before {
-    content: '•'; 
-    position: absolute;
-    left: 0; 
-    color: black; 
-    font-size: 24px;
+.bio-label {
+    font-weight: bold; 
+    font-size: 20px; 
+}
+
+.motto-label {
+    font-weight: bold;
+    font-size: 20px;
 }
