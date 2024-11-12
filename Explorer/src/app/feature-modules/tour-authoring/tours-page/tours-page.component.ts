@@ -56,18 +56,18 @@ export class ToursPageComponent {
     const [lat, long] = latLong;
     this.centerLatitude.next(lat);
     this.centerLongitude.next(long);
-    console.log("Coordinates set to:", lat, long); // Confirm the values are updated
+    console.log("Coordinates set to:", lat, long); 
 }
 
 onRadiusChange(): void {
-  this.radius.next(this.radiusInput); // Update the radius subject with the input value
-  console.log("Radius set to:", this.radius.getValue()); // Confirm the radius value
+  this.radius.next(this.radiusInput); 
+  console.log("Radius set to:", this.radius.getValue()); 
 }
 
 
   
 searchTours(): void {
-  // Retrieve values from BehaviorSubjects
+ 
   const centerLat = this.centerLatitude.getValue();
   const centerLong = this.centerLongitude.getValue();
   const radiusKm = this.radius.getValue();
@@ -77,7 +77,7 @@ searchTours(): void {
       return;
   }
 
-  // Calculate the boundaries based on the radius
+ 
   const deltaLat = radiusKm / 111;
   const startLat = centerLat - deltaLat;
   const endLat = centerLat + deltaLat;
@@ -95,9 +95,9 @@ searchTours(): void {
       endLong 
   };
 
-  console.log("Search boundaries:", searchParams); // Log the search parameters
+  console.log("Search boundaries:", searchParams); 
 
-  // Fetch tours within the boundaries
+ 
   this.tourService.getPublishedTourCardsFiltered(searchParams).subscribe({
       next: (result) => {
           this.tours = result;

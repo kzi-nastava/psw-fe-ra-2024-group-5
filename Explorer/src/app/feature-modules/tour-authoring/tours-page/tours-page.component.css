@@ -56,40 +56,40 @@
 
   .map-container {
     display: flex;
-    flex-direction: column; /* Center everything in one column */
-    align-items: center; /* Align items (map and search fields) in the center */
+    flex-direction: column; 
+    align-items: center;
     height: 400px;
     background-color: #eceff4;
     gap: 20px;
-    max-width: 1200px; /* Optional: limit width of the container */
-    margin: 0 auto; /* Center the container itself horizontally */
+    max-width: 1200px; 
+    margin: 0 auto; 
   }
   
   .map-container app-map {
-    width: 100%; /* Take up the full width within the container */
-    max-width: 1200px; /* Optional: limit the map's width */
-    height: 100%; /* Ensure the map fills the set height */
+    width: 100%; 
+    max-width: 1200px; 
+    height: 100%; 
   }
   
   .search-fields {
     display: flex;
-    flex-direction: row; /* Arrange fields and button horizontally */
-    gap: 10px; /* Space between the fields and the button */
+    flex-direction: row; 
+    gap: 10px; 
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: auto; /* Allow the width to adjust based on content */
-    justify-content: flex-start; /* Align the content to the left */
+    width: auto; 
+    justify-content: flex-start; 
   }
   
   .search-fields input {
-    width: 120px; /* Adjust input width */
+    width: 120px; 
   }
   
   .search-button {
-    align-self: center; /* Center the button vertically in the flex container */
-    margin-top: 0; /* Remove extra margin above the button */
-    padding: 5px 10px; /* Add padding for button */
+    align-self: center; 
+    margin-top: 0; 
+    padding: 5px 10px; 
   }
   
