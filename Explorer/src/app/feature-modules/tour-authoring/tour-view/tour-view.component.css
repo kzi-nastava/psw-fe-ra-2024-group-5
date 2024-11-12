@@ -214,3 +214,19 @@ button.close:hover {
   color: gold;
   margin-right: 2px;
 }
+.custom-snackbar {
+  position: fixed; 
+  top: 20px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  z-index: 1000; 
+}
+.alert-success {
+  background-color: #a3be8c; 
+  color: #2e3440; 
+}
+
+.alert-danger {
+  background-color: #bf616a; 
+  color: #2e3440; 
+}

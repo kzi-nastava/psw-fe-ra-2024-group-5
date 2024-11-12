@@ -20,6 +20,7 @@ export interface TourReview {
     image?: string; // Optional
     tourId?: number;
     touristId?: number;
+    completionPercentage: number;
 }
 
 export interface Tour {

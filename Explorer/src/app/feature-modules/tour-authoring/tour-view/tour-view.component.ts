@@ -10,7 +10,10 @@ import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.en
 import { TourExecutionService } from '../../tour-execution/tour-execution.service';
 import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
 import { OrderItem } from '../../marketplace/model/order-item.model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
+import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -26,13 +29,17 @@ export class TourDetailedViewComponent implements OnInit {
   canBeActivated: boolean = false;
   canBeReviewed: boolean = false;
 
+
   constructor(
     private service: TourAuthoringService,
     private tourExecutionService: TourExecutionService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private shoppingCartService: ShoppingCartService
+    private reviewService: ReviewService,
+    private shoppingCartService: ShoppingCartService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -147,6 +154,45 @@ export class TourDetailedViewComponent implements OnInit {
     });
   }
 
+  openReviewDialog(): void {
+    const dialogRef = this.dialog.open(TourReviewFormComponent, {
+      width: '600px',
+      data: {
+        tourId: this.tour?.id,
+        touristId: this.user?.id
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.showSuccessAlert('Review successfully submitted!');
+        console.log('Review successfully submitted');
+  
+        const reviewUrl = this.reviewService.getReviewUrl();
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([`${reviewUrl}/${this.tour?.id}`]); 
+        });
+      } else if (result === false) {
+        this.showErrorAlert('Error submitting review. Please try again.');
+        console.log('Error submitting review');
+      }
+    });
+  }
+  
+  private showSuccessAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-success', 'custom-snackbar']
+    });
+  }
+  
+  private showErrorAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-danger', 'custom-snackbar']
+    });
+  }
+
   publishTour(): void {
     if (this.tour?.id) {
       this.service.publishTour(this.tour.id).subscribe({
@@ -178,6 +224,7 @@ export class TourDetailedViewComponent implements OnInit {
       });
     }
   }
+
   addToCart(): void{
     if(!this.tour || !this.tour.id || !this.user)
       return;
