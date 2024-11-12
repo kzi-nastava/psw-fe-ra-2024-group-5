@@ -55,8 +55,33 @@
   }
 
 
-  .map-container{
-    height: 300px;
+  .map-container {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    height: 400px;
     background-color: antiquewhite;
-  }
-  
+    gap: 20px;
+}
+
+.map-container app-map {
+    flex: 1; /* Takes up remaining space in the row */
+    height: 100%; /* Ensures the map uses full container height */
+}
+
+.search-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px; /* Fixed width for search fields */
+}
+
+
+.search-button {
+    align-self: start;
+    margin-top: 10px;
+}

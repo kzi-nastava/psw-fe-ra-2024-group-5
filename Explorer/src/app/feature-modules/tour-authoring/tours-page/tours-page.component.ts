@@ -12,16 +12,20 @@ export class ToursPageComponent {
   tours: TourCard[] = [];
   currentPage = 1;
   showSearch: boolean = false;
+  startLatitude: number = 0;
+  endLatitude: number = 0;
+  startLongitude: number = 0;
+  endLongitude: number = 0;
 
   constructor(private tourService: TourAuthoringService, private router: Router){
     this.loadTours();
   }
 
-  loadTours(): void{
-    this.tourService.getPublishedTourCards(this.currentPage,8).subscribe({
+  loadTours(): void {
+    this.tourService.getPublishedTourCards(this.currentPage, 8).subscribe({
       next: (result: TourCard[]) => {
-        this.tours = result
-        console.log(this.tours)
+        this.tours = result;
+        console.log(this.tours);
       },
       error: () => {}
     });
@@ -39,7 +43,35 @@ export class ToursPageComponent {
     }
   }
 
-  detailedTour(tour: TourCard): void{
+  changeLongLat(latLong: number[]): void{
+    const [lat,long] = latLong;
+
+    console.log(lat,long)
+  }
+
+  searchTours(): void {
+    const searchParams = {
+      page: this.currentPage,
+      pageSize: 8,
+      startLat: this.startLatitude,
+      endLat: this.endLatitude,
+      startLong: this.startLongitude,
+      endLong: this.endLongitude
+    };
+  
+    this.tourService.getPublishedTourCardsFiltered(searchParams).subscribe({
+      next: (result: TourCard[]) => {
+        this.tours = result;
+        console.log('Filtered tours:', this.tours);
+      },
+      error: (error) => {
+        console.error('Error fetching filtered tours:', error);
+      }
+    });
+  }
+  
+
+  detailedTour(tour: TourCard): void {
     this.router.navigate(['/tour-detailed-view', tour.id]);
   }
 }

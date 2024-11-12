@@ -5,7 +5,14 @@
     </div>
 
     <div class="map-container" *ngIf="showSearch">
-        deksone ovde ce da bude mapa
+        <app-map [markerAddMode]="'facility'" (addItem)="changeLongLat($event)"></app-map>
+        <div class="search-fields">
+            <label>Start Latitude: <input [(ngModel)]="startLatitude" type="number"></label>
+            <label>End Latitude: <input [(ngModel)]="endLatitude" type="number"></label>
+            <label>Start Longitude: <input [(ngModel)]="startLongitude" type="number"></label>
+            <label>End Longitude: <input [(ngModel)]="endLongitude" type="number"></label>
+            <button mat-button class="search-button" (click)="searchTours()">Search</button>
+        </div>
     </div>
     
     <div class="card-container">
@@ -13,10 +20,10 @@
             *ngFor="let tour of tours" [tourCard]="tour" (click)="detailedTour(tour)">
         </xp-tour-card>
     </div>
-  </div>
+</div>
 
-  <div class="bottom-nav">
+<div class="bottom-nav">
     <button mat-button class="secondary button-size" (click)="previousPage()">Previous</button>
     <h1>Page {{ currentPage }}</h1>
     <button mat-button class="secondary button-size" (click)="nextPage()">Next</button>
-  </div>
+</div>
