@@ -245,3 +245,6 @@ export class MapComponent implements AfterViewInit {
   }
 
 }
+
+// ako si dosao dovde moje saucesce
+//ko prezivi pricace: 11.12.2024.
