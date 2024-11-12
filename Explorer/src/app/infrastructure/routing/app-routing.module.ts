@@ -33,7 +33,7 @@ import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-p
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'profile', component: UserProfileComponent },
