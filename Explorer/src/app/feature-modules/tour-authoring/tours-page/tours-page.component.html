@@ -7,13 +7,12 @@
     <div class="map-container" *ngIf="showSearch">
         <app-map [markerAddMode]="'facility'" (addItem)="changeLongLat($event)"></app-map>
         <div class="search-fields">
-            <label>Start Latitude: <input [(ngModel)]="startLatitude" type="number"></label>
-            <label>End Latitude: <input [(ngModel)]="endLatitude" type="number"></label>
-            <label>Start Longitude: <input [(ngModel)]="startLongitude" type="number"></label>
-            <label>End Longitude: <input [(ngModel)]="endLongitude" type="number"></label>
-            <button mat-button class="search-button" (click)="searchTours()">Search</button>
+       
+          <label>Radius (km): <input [(ngModel)]="radiusInput" type="number" (change)="onRadiusChange()" /></label>
+
+          <button mat-button class="search-button" (click)="searchTours()">Search</button>
         </div>
-    </div>
+      </div>
     
     <div class="card-container">
         <xp-tour-card class="tour-card rounded raised" 
