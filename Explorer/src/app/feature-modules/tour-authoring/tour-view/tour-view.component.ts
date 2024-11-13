@@ -8,7 +8,12 @@ import { KeyPoint } from '../model/key-point.model';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.enums'; // Import the enums
 import { TourExecutionService } from '../../tour-execution/tour-execution.service';
-
+import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
+import { OrderItem } from '../../marketplace/model/order-item.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
+import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -24,12 +29,17 @@ export class TourDetailedViewComponent implements OnInit {
   canBeActivated: boolean = false;
   canBeReviewed: boolean = false;
 
+
   constructor(
     private service: TourAuthoringService,
     private tourExecutionService: TourExecutionService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private reviewService: ReviewService,
+    private shoppingCartService: ShoppingCartService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +47,10 @@ export class TourDetailedViewComponent implements OnInit {
       this.user = user;
     });
 
+    this.initializeTour();
+  }
+
+  private initializeTour(): void{
     this.route.paramMap.subscribe(params => {
       const id = params.get('tourId');
       this.tourId = Number(id);
@@ -61,6 +75,7 @@ export class TourDetailedViewComponent implements OnInit {
                 }
             };
             console.log('Loaded Tour:', this.tour);
+            this.displayKeyPoints()
         },
         error: (err: any) => {
             console.log(err);
@@ -80,11 +95,10 @@ export class TourDetailedViewComponent implements OnInit {
                     currency: result.tour.price.currency as Currency // Ensure it's cast to enum
                 }
             };
-            this.canBeActivated = true // THIS IS TEMPORARY, SHOULD BE CHANGED BACK
+            this.canBeActivated = result.canBeActivated
             this.canBeBought = result.canBeBought
             this.canBeReviewed = result.canBeReviewed
-
-            console.log('Loaded Tour for tourist:', result);
+            this.displayKeyPoints()
         },
         error: (err: any) => {
             console.log(err);
@@ -138,5 +152,97 @@ export class TourDetailedViewComponent implements OnInit {
         console.log('Error starting tour:', error);
       }
     });
+  }
+
+  openReviewDialog(): void {
+    const dialogRef = this.dialog.open(TourReviewFormComponent, {
+      width: '600px',
+      data: {
+        tourId: this.tour?.id,
+        touristId: this.user?.id
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.showSuccessAlert('Review successfully submitted!');
+        console.log('Review successfully submitted');
+  
+        const reviewUrl = this.reviewService.getReviewUrl();
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([`${reviewUrl}/${this.tour?.id}`]); 
+        });
+      } else if (result === false) {
+        this.showErrorAlert('Error submitting review. Please try again.');
+        console.log('Error submitting review');
+      }
+    });
+  }
+  
+  private showSuccessAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-success', 'custom-snackbar']
+    });
+  }
+  
+  private showErrorAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-danger', 'custom-snackbar']
+    });
+  }
+
+  publishTour(): void {
+    if (this.tour?.id) {
+      this.service.publishTour(this.tour.id).subscribe({
+        next: () => {
+          if (this.tour) {
+            this.tour.status = TourStatus.Published;
+          }
+          console.log('Tour published');
+        },
+        error: (error) => {
+          console.error('Error publishing tour:', error);
+        }
+      });
+    }
+  }
+
+  archiveTour(): void {
+    if (this.tour?.id) {
+      this.service.archiveTour(this.tour.id).subscribe({
+        next: () => {
+          if (this.tour) {
+            this.tour.status = TourStatus.Archived;
+          }
+          console.log('Tour archived');
+        },
+        error: (error) => {
+          console.error('Error archiving tour:', error);
+        }
+      });
+    }
+  }
+
+  addToCart(): void{
+    if(!this.tour || !this.tour.id || !this.user)
+      return;
+
+    const orderItem :OrderItem = {
+      tourId : this.tour.id,
+      tourName : this.tour.name,
+      price: this.tour.price
+    }
+
+    this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
+      next: () => {
+        this.initializeTour();
+      },
+      error: (err: any) => {
+          console.log(err);
+      }
+  });
+
   }
 }

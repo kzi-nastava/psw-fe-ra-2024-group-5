@@ -1,0 +1,78 @@
+.tour-review-form-container {
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    color: var(--text-title);
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    color: var(--text-subtitle);
+    margin-bottom: 8px;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    font-family: var(--font-family-base);
+  }
+  
+  .star-rating {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .star {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .star.filled {
+    color: var(--accent-color);
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-family-base);
+  }
+  
+  button[type="submit"] {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+  }
+  
+  button.secondary {
+    background-color: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+  }
+  
+  .error-message {
+    color: var(--alert-danger-bg);
+    font-size: 14px;
+    margin-top: 5px;
+  }

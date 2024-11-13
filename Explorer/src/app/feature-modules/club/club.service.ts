@@ -110,7 +110,6 @@ export class ClubService {
     );
   }
   
-  
  
   //temp function name,this should sent invitation to another tourist to join the club
   // createMembership(clubId: number, userId: number): Observable<ClubMembership> {

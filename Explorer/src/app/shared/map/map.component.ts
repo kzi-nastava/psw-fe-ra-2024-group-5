@@ -28,7 +28,9 @@ export class MapComponent implements AfterViewInit {
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
 
-  @Output() addItem = new EventEmitter<number[]>();
+  @Output() addFacility = new EventEmitter<number[]>();
+  @Output() addKeyPoint = new EventEmitter<number[]>();
+  @Output() setaRouteLength = new EventEmitter<number>();
   @Output() userLocationChange = new EventEmitter<[number, number]>();
 
   constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
@@ -90,8 +92,17 @@ export class MapComponent implements AfterViewInit {
       this.setUserLocationMarker([lat, lng]);
     else if (!this.isViewOnly)
       this.addMarker([lat, lng], 'New Marker');
-
-    this.addItem.emit([lat, lng])
+    
+    switch (this.markerAddMode) {
+      case 'facility':
+        this.addFacility.emit([lat, lng])
+        break;
+        case 'keypoint':
+        this.addKeyPoint.emit([lat, lng])
+        break;
+      default:
+        break;
+    }
   }
 
   setUserLocationMarker(latlng: [number, number], popupText: string = 'User Location') {
@@ -153,7 +164,7 @@ export class MapComponent implements AfterViewInit {
     this.setRoute(this.markers)
   }
 
-  setRoute(markPoints: L.Marker[]): void {
+  setRoute(markPoints: L.Marker[]): void{
     if (this.routeControl) {
       this.routeControl.remove();
     }
@@ -161,16 +172,29 @@ export class MapComponent implements AfterViewInit {
     const wPoints = markPoints.map(marker => marker.getLatLng());
 
     this.routeControl = L.Routing.control({
-      waypoints: wPoints, //L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)
+      waypoints: wPoints, //primer: 1. L.latLng(57.74, 11.94) 2. L.latLng(57.6792, 11.949)
       //ovaj 'pk' je token sa mapbox sajta za koji sam nalog napravio preko uns maila, ako ne radi vama probajte napraviti nalog ima link u 2.4 lekciji
       router: L.routing.mapbox('pk.eyJ1IjoiaGFrdGFrIiwiYSI6ImNtMmk0MnZ5NDAwOWcybHNnN2N4dHRubnAifQ.kOERM4mimLJzQay3IqWDpw', { profile: 'mapbox/walking' })
     }).addTo(this.map);
 
-    this.routeControl.on('routesfound', function (e: { routes: any; }) {
-      var routes = e.routes;
-      var summary = routes[0].summary;
-    });
-  }
+    // Listen for the 'routesfound' event when routes are calculated
+  this.routeControl.on('routesfound', (e: any) => {
+    const routes = e.routes;  // Accessing the routes array directly
+    if (routes.length > 0) {
+      const summary = routes[0].summary;  // Get the summary from the first route
+      if (summary) {
+        // Ensure summary has the expected properties
+        const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
+        const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+        console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+        this.setaRouteLength.emit(distanceInKm) //valjda ovo ne pravi problem ako je u slucaju dodavanja objekata
+      } else {
+        console.error('No summary available for the route.');
+      }
+    }
+  });
+  
+}
 
   loadMarkers(): void {
     if (!this.map)
@@ -227,8 +251,22 @@ export class MapComponent implements AfterViewInit {
 
   removeLastMarker(): void { //ovo se poziva kada hocete da promenite lokaciju markera, ili izbrisete poslednji
     const lastMarker = this.markers.pop()
-    if (lastMarker)
+    if (lastMarker){
       this.map.removeLayer(lastMarker)
+      this.setRoute(this.markers)
+    }
+  }
+
+  removeExactMarker(latlng: number[]){
+    const index = this.markers.findIndex(m => m.getLatLng().lat == latlng[0] && m.getLatLng().lng == latlng[1]);
+  
+    // If the keyPoint exists in the array (index >= 0), remove it
+    if (index !== -1) {
+      const kp = this.markers[index]
+      this.map.removeLayer(kp)
+      this.markers.splice(index, 1); // Remove 1 element at the found index
+      this.setRoute(this.markers)
+    }
   }
 
   removeRoute(): void {
@@ -244,4 +282,8 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+
 }
+
+// ako si dosao dovde moje saucesce
+//ko prezivi pricace: 11.12.2024.

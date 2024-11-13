@@ -62,7 +62,7 @@
     </div>
 
     <div class="map-container">
-      <app-map [markerAddMode]="'facility'" (addItem)="changeLongLat($event)" [facilities]="mapFacilities"></app-map>
+      <app-map [markerAddMode]="'facility'" (addFacility)="changeLongLat($event)" [facilities]="mapFacilities"></app-map>
     </div>
 
     <mat-form-field appearance="outline">

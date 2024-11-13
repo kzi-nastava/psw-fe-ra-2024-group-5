@@ -12,7 +12,7 @@ export class ShoppingCartService {
 
   constructor(private http: HttpClient) { }
 
-  addItemToCart(orderItem: OrderItem,touristId: number) : Observable<ShoppingCart>
+    addItemToCart(orderItem: OrderItem,touristId: number) : Observable<ShoppingCart>
     {
       return this.http.post<ShoppingCart>(environment.apiHost + `shopping-cart/addItem/${touristId}`, orderItem);
     }
@@ -27,8 +27,8 @@ export class ShoppingCartService {
     {
       return this.http.get<ShoppingCart>(environment.apiHost + `shopping-cart/tourist/${touristId}`);
     }
+
     checkout(touristId: number): Observable<any> {
       return this.http.post<any>(environment.apiHost + `shopping-cart/checkout/${touristId}`, {});
     }
-    
 }

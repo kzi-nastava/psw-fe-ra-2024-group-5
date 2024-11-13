@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TourDetailedViewComponent } from './tour-view/tour-view.component';
 import { ToursPageComponent } from './tours-page/tours-page.component';
 import { TourCardComponent } from './tour-card/tour-card.component';
+import { FormsModule } from '@angular/forms'; 
 
 @NgModule({
   declarations: [
@@ -29,13 +30,15 @@ import { TourCardComponent } from './tour-card/tour-card.component';
     TourEquipmentDialogComponent,
     ToursPageComponent,
     TourCardComponent
+    
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   exports: [
     KeyPointsComponent,
