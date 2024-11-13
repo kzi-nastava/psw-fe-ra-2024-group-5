@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyPoint } from './model/key-point.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
-import { Tour, TourTourist } from './model/tour.model';
+import { Tour, TourCreation, TourTourist } from './model/tour.model';
 import { TourCard } from './model/tour-card.model';
 import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
@@ -50,7 +50,7 @@ export class TourAuthoringService {
     return this.http.get<TourCard[]>(environment.apiHost + `tour/published/${page}/${pageSize}`)
   }
 
-  addTour(tour: Tour) : Observable<Tour>{
+  addTour(tour: TourCreation) : Observable<Tour>{
     return this.http.post<Tour>(environment.apiHost + 'tour/', tour)
   }
 
