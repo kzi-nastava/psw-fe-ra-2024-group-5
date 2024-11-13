@@ -39,6 +39,10 @@
         Add Blog
       </button>
 
+      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['facility']">
+        Facilities
+      </button>
+
       <button class="secondary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['appRatingForm']">
         Rate our App
       </button>
