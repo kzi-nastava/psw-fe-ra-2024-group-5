@@ -4,7 +4,7 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Blog } from '../model/blog.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Vote } from '../model/vote.model';
-import { BlogPostComment } from '../model/blog-post-comment'; 
+import { BlogPostComment } from '../model/blog-post-comment';
 
 
 
@@ -16,7 +16,9 @@ import { BlogPostComment } from '../model/blog-post-comment';
 export class BlogComponent implements OnInit {
 
   blogs: Blog[] = [];
-  upvotes: { [key: number]: number } = {}; 
+  loadedBlogs: Blog[] = [];
+  selectedFilter = 0;
+  upvotes: { [key: number]: number } = {};
   downvotes: { [key: number]: number } = {};
   userVotes: { [blogId: number]: number | null } = {};
   isLoading = true;
@@ -36,7 +38,6 @@ export class BlogComponent implements OnInit {
       next: (result: PagedResults<Blog>) => {
         this.blogs = result.results;
         this.isLoading = false;
-        console.log(result);
 
         this.blogs.forEach(blog => {
           this.service.getUpvotes(blog.id).subscribe(upvoteCount => this.upvotes[blog.id] = upvoteCount);
@@ -45,8 +46,10 @@ export class BlogComponent implements OnInit {
           this.userVotes[blog.id] = null;
         });
 
+        this.loadedBlogs = this.blogs;
+
         this.initializeImageIndex();
-        
+
       },
       error: (err: any) => {
         this.error = 'Failed to load blogs';
@@ -61,7 +64,7 @@ export class BlogComponent implements OnInit {
   initializeImageIndex(): void {
     this.blogs.forEach(blog => {
       if (blog.images && blog.images.length > 0) {
-        this.currentImageIndex[blog.id] = 0; 
+        this.currentImageIndex[blog.id] = 0;
       }
     });
   }
@@ -70,7 +73,7 @@ export class BlogComponent implements OnInit {
     if (this.currentImageIndex[blogId] < imageCount - 1) {
       this.currentImageIndex[blogId]++;
     } else {
-      this.currentImageIndex[blogId] = 0; 
+      this.currentImageIndex[blogId] = 0;
     }
   }
 
@@ -87,7 +90,7 @@ export class BlogComponent implements OnInit {
     this.authService.user$.subscribe(user => {
       if (user) {
         const userId = user.id;
-  
+
         this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
           next: (updatedBlog) => {
             this.getBlog()
@@ -118,20 +121,20 @@ export class BlogComponent implements OnInit {
         }
       });
     }
-  
+
     addVote(blogId: number, voteType: number, userId: number): void {
       const voteData: Vote = {
         userId: userId,
         type: voteType,
         voteTime: new Date().toISOString(),
       };
-  
+
       this.service.vote(blogId, voteData).subscribe({
         next: () => {
           // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-  
+
           // Update user's current vote type for this blog
           this.userVotes[blogId] = voteType;
           console.log('Vote successfully submitted');
@@ -141,14 +144,14 @@ export class BlogComponent implements OnInit {
         }
       });
     }
-  
+
     removeVote(blogId: number, userId: number): void {
       this.service.removeVote(blogId, userId).subscribe({
         next: () => {
           // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-  
+
           // Reset user's current vote type for this blog (no vote)
           this.userVotes[blogId] = null;
           console.log('Vote successfully removed');
@@ -159,5 +162,13 @@ export class BlogComponent implements OnInit {
       });
     }
 
+    applyFilter(): void {
+      if (this.selectedFilter === -1) {
+        this.blogs = this.loadedBlogs;
+        return;
+      }
+
+      this.blogs = this.loadedBlogs.filter(blog => blog.status === this.selectedFilter);
+    }
 
 }
