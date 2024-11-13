@@ -23,8 +23,4 @@ export class NotificationService {
   markAllNotificationsAsRead(userId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${userId}/mark-all-read`, {});
   }
-
-  sendNotification(notificationDto: Notification): Observable<Notification> {
-    return this.http.post<Notification>(`${this.apiUrl}/send`, notificationDto);
-  }
 }

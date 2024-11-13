@@ -57,7 +57,7 @@ export class NotificationComponent implements OnInit {
       }
     });
 
-    if(notification.clubMessageId && notification.clubId)
+    if(notification.clubId)
     {
       this.router.navigate(['/my-clubs', notification.clubId]);
     }
@@ -86,5 +86,11 @@ export class NotificationComponent implements OnInit {
         }
       });
     }
+  }
+
+  getUnreadNotificationsCount(): number {
+    return this.notifications.filter(notification => 
+      this.isNotificationUnread(notification)
+    ).length;
   }
 }

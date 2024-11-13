@@ -111,7 +111,6 @@ export class ClubPageComponent implements OnInit {
         this.loadMessages();
         this.newMessage = ''; 
         this.attachmentLink = '';  
-        this.sendNotificationForAddingMessage(messageDto);
       },
       (error) => {
         console.error('Error adding message', error);
@@ -203,7 +202,6 @@ onMessageChange(event: any): void {
       this.clubService.removeMessageFromClub(this.clubId!, message.id, this.userId!).subscribe({
         next: () => {
           this.loadMessages();
-          this.sendNotificationForDeletingMessage(this.messageForDeleting);
         },
         error: (err) => {
           console.error('Error deleting message', err);
@@ -225,84 +223,4 @@ onMessageChange(event: any): void {
   
     return null;
   }
-  
-  sendNotificationForAddingMessage(messageDto: ClubMessage): void {
-    this.clubService.getUserIdsByClubId(this.clubId!).subscribe({
-      next: (userIds) => {
-        let filteredUserIds = userIds.filter(userId => userId !== messageDto.senderId);
-  
-        if (this.club && this.club.ownerId && this.club.ownerId !== messageDto.senderId) {
-          filteredUserIds = [...filteredUserIds, this.club.ownerId];
-        }
-  
-        const newNotification: Notification = {
-          userIds: filteredUserIds,
-          content: "A new message was posted in the club!",
-          createdAt: new Date().toISOString(),
-          type: NotificationType.CLUB_MESSAGE,
-          senderId: messageDto.senderId,
-          clubId: messageDto.clubId,
-          message: messageDto.content,
-          profileMessageId: 0,
-          clubMessageId: messageDto.clubId,
-          attachment: messageDto.attachment || null,
-          userReadStatuses: filteredUserIds.map(userId => ({
-            userId: userId,
-            NotificationId: 0,
-            isRead: false
-          }))
-        };
-  
-        this.notificationService.sendNotification(newNotification).subscribe(
-          (response) => {
-            console.log('Notification sent successfully:', response);
-          },
-          (error) => {
-            console.error('Error sending notification:', error);
-          }
-        );
-      },
-      error: (err) => {
-        console.error('Error fetching user IDs for notification:', err);
-      }
-    });
-  }
-
-  public sendNotificationForDeletingMessage(messageForDeleting: ClubMessage) 
-  {
-    this.clubService.getUserIdsByClubId(this.clubId!).subscribe({
-      next: (userIds) => {
-        const newNotification: Notification = {
-          userIds: [messageForDeleting.senderId],
-          content: "Your message was deleted from club!",
-          createdAt: new Date().toISOString(),
-          type: NotificationType.CLUB_ACTIVITY,
-          senderId: 0,
-          clubId: messageForDeleting.clubId,
-          message: messageForDeleting.content,
-          profileMessageId: 0,
-          clubMessageId: messageForDeleting.id,
-          attachment: messageForDeleting.attachment || null,
-          userReadStatuses: userIds.map(userId => ({
-            userId: userId,
-            NotificationId: 0,
-            isRead: false
-          }))
-        };
-  
-        this.notificationService.sendNotification(newNotification).subscribe(
-          (response) => {
-            console.log('Notification sent successfully:', response);
-          },
-          (error) => {
-            console.error('Error sending notification:', error);
-          }
-        );
-      },
-      error: (err) => {
-        console.error('Error fetching user IDs for notification:', err);
-      }
-    });
-  }
-  
 }

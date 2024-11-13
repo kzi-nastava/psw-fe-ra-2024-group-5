@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TourEquipmentDialogComponent } from '../../tour-authoring/tour-equipment-dialog/tour-equipment-dialog.component';
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NotificationComponent } from '../../notification/notification/notification.component';
 
 @Component({
   selector: 'xp-navbar',
@@ -59,4 +60,10 @@ export class NavbarComponent implements OnInit {
     }
   }
   
+  @ViewChild(NotificationComponent) notificationComponent: NotificationComponent;
+
+  getUnreadCount(): number {
+    return this.notificationComponent ? this.notificationComponent.getUnreadNotificationsCount() : 0;
+  }
+
 }

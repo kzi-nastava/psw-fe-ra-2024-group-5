@@ -54,6 +54,7 @@
 
             <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button" (click)="toggleNotifications()">
                 <mat-icon>notifications</mat-icon>
+                <span *ngIf="getUnreadCount() > 0" class="unread-count">{{ getUnreadCount() }}</span>
             </button>
             <xp-notification *ngIf="showNotifications"></xp-notification>
 

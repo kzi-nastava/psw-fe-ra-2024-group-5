@@ -17,13 +17,13 @@
             </div>
             <div mat-line class="notification-content">{{ notification.content }}</div>
             <div mat-line class="notification-content">
-              " {{ notification.message && notification.message.length > 185 ? (notification.message.slice(0, 185) + ' ...') : notification.message }}
+              " {{ notification.message && notification.message.length > 185 ? (notification.message.slice(0, 185) + ' ...') : notification.message }} "
             </div>
             <div *ngIf="notification.type === 1 && notification.attachment" mat-line class="notification-content">
               <a *ngIf="notification.attachment.resourceType === 0"
                     [routerLink]="['/tour-detailed-view', notification.attachment.resourceId]">
                     View Tour
-              </a> "
+              </a> 
             </div>
           </mat-list-item>
         </mat-list>
