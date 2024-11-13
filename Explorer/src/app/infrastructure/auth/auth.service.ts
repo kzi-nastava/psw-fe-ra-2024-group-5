@@ -38,6 +38,8 @@ export class AuthService {
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
           this.setUser();
+          this.createCart(this.user$.value.id).subscribe();
+          this.logout();
         })
       );
   }
@@ -59,6 +61,10 @@ export class AuthService {
     this.setUser();
   }
 
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${environment.apiHost}users/${userId}`);
+  }
+
   private setUser(): void {
     const jwtHelperService = new JwtHelperService();
     const accessToken = this.tokenStorage.getAccessToken() || "";
@@ -70,5 +76,9 @@ export class AuthService {
       ],
     };
     this.user$.next(user);
+  }
+
+  createCart(touristId: number): Observable<any> {
+    return this.http.get<any>(environment.apiHost + `shopping-cart/create/${touristId}`);
   }
 }

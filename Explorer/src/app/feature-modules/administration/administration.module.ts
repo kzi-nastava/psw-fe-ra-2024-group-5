@@ -9,6 +9,7 @@ import { UserProfileFormComponent } from './user-profile-form/user-profile-form.
 import { RouterModule } from '@angular/router';
 import { AccountsComponent } from './accounts/accounts.component';
 import { MatTableModule } from '@angular/material/table';
+import { AppRatingComponent } from './app-rating/app-rating.component';
 import { FollowersListComponent } from './followers-list/followers-list.component';
 
 
@@ -16,6 +17,7 @@ import { FollowersListComponent } from './followers-list/followers-list.componen
   declarations: [
     EquipmentFormComponent,
     EquipmentComponent,
+    AppRatingComponent,
     UserProfileComponent,
     UserProfileFormComponent,
     AccountsComponent,
@@ -34,6 +36,7 @@ import { FollowersListComponent } from './followers-list/followers-list.componen
     UserProfileComponent,
     AccountsComponent,
     MatTableModule,
+    AppRatingComponent,
     FollowersListComponent
   ]
 })

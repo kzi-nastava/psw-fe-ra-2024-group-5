@@ -1,6 +1,6 @@
 export interface BlogPostComment {
         id?: number;
-        //blogId?: number;
+        blogPostId?: number;
         userId: number;
         commentText: string;  
         creationTime: Date; 
