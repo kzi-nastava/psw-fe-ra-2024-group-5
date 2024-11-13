@@ -1,0 +1,34 @@
+<form class="send-message-dialog" (ngSubmit)="sendMessage()">
+    <h2>Send Message</h2>
+    <mat-form-field class="example-full-width">
+        <mat-label>Message</mat-label>
+        <textarea name="message" matInput required [(ngModel)]="message.content"></textarea>
+    </mat-form-field>
+    <div class="attachment-fields" *ngIf="attachmentActive">
+        <mat-form-field class="example-full-width">
+            <mat-label>ID</mat-label>
+            <input name="resourceId" type="number" matInput [(ngModel)]="message.attachment!.resourceId">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="message.attachment!.resourceType">
+                <mat-option [value]="RESOURCE_TYPES.blog">Blog</mat-option>
+                <mat-option [value]="RESOURCE_TYPES.tour">Tour</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="actions">
+        <button *ngIf="!attachmentActive" class="secondary" mat-button (click)="addAttachment()">
+            <mat-icon>attach_file</mat-icon>
+            Add Attachment
+        </button>
+        <button *ngIf="attachmentActive" class="secondary" mat-button (click)="removeAttachment()">
+            <mat-icon>attach_file</mat-icon>
+            Remove Attachment
+        </button>
+        <button class="primary" mat-button type="submit">
+            <mat-icon>send</mat-icon>
+            Send
+        </button>
+    </div>
+</form>
