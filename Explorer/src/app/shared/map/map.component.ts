@@ -21,7 +21,6 @@ export class MapComponent implements AfterViewInit {
 
   simulator: boolean = false;
 
-  //@Input() isFacility: boolean; //false ako je u pitanju 'keyPoint', true ako je 'object' (flag za dodavanje)
   @Input() facilities: Facility[];
   @Input() isViewOnly: boolean = false;
   @Input() keyPoints: KeyPoint[];
@@ -209,7 +208,13 @@ export class MapComponent implements AfterViewInit {
 
   loadFacilities(): void {
     this.facilities.forEach(facility => {
-      const marker = new L.Marker([facility.latitude, facility.longitude], { title: 'facility' }).addTo(this.map).bindPopup('Ja sam object');
+      const facilityIcon = L.icon({
+        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png', 
+        iconSize: [40, 40], 
+        iconAnchor: [16, 32],
+      });
+
+      const marker = new L.Marker([facility.latitude, facility.longitude], { title: 'facility', icon: facilityIcon }).addTo(this.map).bindPopup(facility.name);
       this.markers.push(marker);
     });
   }

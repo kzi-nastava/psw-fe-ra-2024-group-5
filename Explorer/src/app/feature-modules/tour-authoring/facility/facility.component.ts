@@ -15,6 +15,8 @@ export class FacilityComponent {
   displayedColumns: string[] = ['name', 'description', 'type', 'latitude', 'longitude', 'update'];
   @ViewChild(MapComponent) mapComponent!: MapComponent;
   facilityTypes: string[] = ['Wc', 'Restaurant', 'Parking', 'Other'];
+  
+  showOnMap: boolean = false;
 
   constructor(private facilityService: FacilityService, public dialog: MatDialog){
     this.loadFacilities()
@@ -30,6 +32,8 @@ export class FacilityComponent {
   }
 
   openDialog(): void{
+    this.showOnMap = false;
+
     const dialogRef = this.dialog.open(FacilityDialogComponent, {
       width: '600px',
       data: {selectedFacility : null}
@@ -42,6 +46,8 @@ export class FacilityComponent {
   }
 
   onUpdate(facility: Facility): void {
+    this.showOnMap = false;
+
     const dialogRef = this.dialog.open(FacilityDialogComponent, {
       width: '600px',
       data: {selectedFacility : facility}
