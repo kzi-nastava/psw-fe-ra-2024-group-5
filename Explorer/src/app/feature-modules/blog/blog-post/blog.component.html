@@ -1,25 +1,36 @@
 <div *ngIf="isLoading">
     Loading blogs...
   </div>
-  
+
   <div *ngIf="error">
     {{ error }}
   </div>
-  
+
+  <div class="filter-container" style="text-align: center; margin: 10px 0;">
+    <mat-form-field appearance="fill">
+      <mat-label>Filter Blogs</mat-label>
+      <mat-select [(value)]="selectedFilter" (selectionChange)="applyFilter()">
+        <mat-option [value]="-1">All</mat-option>
+        <mat-option [value]="3">Active</mat-option>
+        <mat-option [value]="4">Famous</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="blog-container">
     <div *ngFor="let blog of blogs" class="blog-card">
       <h2>{{ blog.title }}</h2>
-  
+
       <div style="display: flex; justify-content: space-between;">
-        <p>Status: 
-          {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : blog.status === 3 ? 'Active': blog.status === 4 ? 'Famous': 'Unknown' }} 
+        <p>Status:
+          {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : blog.status === 3 ? 'Active': blog.status === 4 ? 'Famous': 'Unknown' }}
         </p>
-        
+
         <p>Created at: {{ blog.createdDate | date }}</p>
       </div>
-  
+
       <div [innerHTML]="blog.description"></div>
-  
+
       <div *ngIf="blog.images && blog.images.length > 0">
         <img [src]="'data:' + blog.images[currentImageIndex[blog.id]].contentType + ';base64,' + blog.images[currentImageIndex[blog.id]].base64Data"
              alt="{{ blog.title }}">
@@ -27,7 +38,7 @@
         <div class="image-navigation" *ngIf="blog.images.length > 1">
           <button (click)="previousImage(blog.id)" class="btn btn-secondary">Previous</button>
           <button (click)="nextImage(blog.id, blog.images.length)" class="btn btn-secondary">Next</button>
-        </div>     
+        </div>
       </div>
 
       <div style="margin-top: 10px;">
@@ -44,8 +55,7 @@
 
       <h3>Komentari</h3>
         <xp-blog-post-comment [blogId]="blog.id"></xp-blog-post-comment>
-      
+
 
     </div>
   </div>
-  
