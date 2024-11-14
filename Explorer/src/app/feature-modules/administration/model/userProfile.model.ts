@@ -6,4 +6,5 @@ export interface UserProfile {
     profilePictureUrl?: string,
     biography?: string,
     motto?: string
+    // messages?: ProfileMessage[]; dodati kad se napravi ProfileMessage
 }

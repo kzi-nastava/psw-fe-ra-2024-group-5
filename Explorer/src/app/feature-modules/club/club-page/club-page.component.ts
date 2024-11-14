@@ -7,6 +7,10 @@ import { ClubMessage } from '../model/clubMessage.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { UserProfile } from '../../administration/model/userProfile.model';
 import { ResourceType } from '../enum/resource-type.enum';
+import { Notification } from '../../notification/model/notification.model';
+import { NotificationService } from '../../notification/notification.service';
+import { NotificationReadStatus } from '../../notification/model/notification-read-status.model';
+import { NotificationType } from '../../notification/enum/notification-type.enum';
 
 @Component({
   selector: 'xp-club-page',
@@ -31,11 +35,13 @@ export class ClubPageComponent implements OnInit {
   isEditedMessageTooLong: boolean = false;
   attachmentLink: string = '';
   resourceType: ResourceType = ResourceType.TOUR_RESOURCE;
+  messageForDeleting: ClubMessage;
 
   constructor(private route: ActivatedRoute,
     private clubService: ClubService,
     private userProfileService: UserProfileService,
-    private tokenStorage: TokenStorage,) {}
+    private tokenStorage: TokenStorage,
+    private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.clubId = +this.route.snapshot.paramMap.get('id')!;
@@ -84,7 +90,6 @@ export class ClubPageComponent implements OnInit {
     if (this.attachmentLink) {
       const resourceData = this.parseAttachmentLink(this.attachmentLink);
       if (resourceData) {
-        // Korišćenje ispravnog objekta za attachment
         attachmentData = {
           resourceId: resourceData.resourceId,
           resourceType: resourceData.resourceType
@@ -100,8 +105,6 @@ export class ClubPageComponent implements OnInit {
       isRead: false,
       attachment: attachmentData || null   
     };
-
-    console.log(JSON.stringify(messageDto));
   
     this.clubService.addMessageToClub(this.clubId, messageDto, this.userId).subscribe(
       (response) => { 
@@ -192,6 +195,7 @@ onMessageChange(event: any): void {
   }
 
   deleteMessage(message: ClubMessage): void {
+    this.messageForDeleting = message;
     const confirmation = window.confirm('Are you sure you want to delete this message?');
   
     if (confirmation && message.id) {
@@ -219,6 +223,4 @@ onMessageChange(event: any): void {
   
     return null;
   }
-  
-  
 }

@@ -10,6 +10,7 @@ import { CardLinkComponent } from './card-link/card-link.component';
 import { FooterComponent } from './footer/footer.component';
 import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RouterModule,
     TourAuthoringModule,
     SharedModule,
+    NotificationModule
 ],
   exports: [
     NavbarComponent,

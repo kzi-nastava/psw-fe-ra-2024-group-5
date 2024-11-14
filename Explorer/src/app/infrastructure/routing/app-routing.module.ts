@@ -27,9 +27,8 @@ import { AppRatingComponent } from 'src/app/feature-modules/administration/app-r
 import { ShoppingCartComponent } from 'src/app/feature-modules/marketplace/shopping-cart/shopping-cart.component';
 import { FollowersListComponent } from 'src/app/feature-modules/administration/followers-list/followers-list.component';
 import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours-page/tours-page.component';
-import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component';
-import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component';
-
+import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component'; 
+import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component'; 
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
