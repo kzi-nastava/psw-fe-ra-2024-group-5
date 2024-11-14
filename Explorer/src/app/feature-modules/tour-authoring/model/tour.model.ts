@@ -35,7 +35,7 @@ export interface Tour {
     keyPoints: KeyPoint[]; // Required
     reviews: TourReview[]; // Required
     length?: number; // Optional
-    transportDurationDtos: TransportDuration[]; // Required
+    transportDurations: TransportDuration[]; // Required
     publishedTime: Date; // Required
     archivedTime: Date; // Required
 }
@@ -55,5 +55,5 @@ export interface TourCreation {
     authorId?: number; // Optional
     keyPoints: KeyPoint[]; // Required
     length?: number; // Optional
-    transportDurationDtos: TransportDuration[]; // Required
+    transportDurations: TransportDuration[]; // Required
 }

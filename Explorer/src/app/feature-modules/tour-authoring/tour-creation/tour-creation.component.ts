@@ -156,7 +156,7 @@ export class TourCreationComponent {
       authorId: this.author?.id,
       length: this.tourLength,
       keyPoints: this.keyPointsListComponent.getKeyPoints(), // This should be populated based on key points
-      transportDurationDtos: this.tourDurationTransports, // Use selected transport
+      transportDurations: this.tourDurationTransports, // Use selected transport
       
     };
 
