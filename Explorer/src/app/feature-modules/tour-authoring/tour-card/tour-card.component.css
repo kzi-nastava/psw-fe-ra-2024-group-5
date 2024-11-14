@@ -7,8 +7,6 @@
     font-family: 'Arial', sans-serif;
     box-sizing: border-box;
     padding: 15px; /* Dodati padding za prostor oko sadržaja */
-    border-radius: 10px;
-    border: 1px solid #ddd; /* Blagi okvir za bolji izgled */
 }
 
 .image-container {

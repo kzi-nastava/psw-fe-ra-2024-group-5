@@ -65,6 +65,8 @@
     height: 350px; 
     transition: background-color 0.3s ease;
     cursor: pointer;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .tour-card:hover {
