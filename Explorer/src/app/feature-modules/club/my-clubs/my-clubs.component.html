@@ -1,0 +1,39 @@
+<div class="filter-buttons">
+    <button 
+      (click)="filterClubs('all')" 
+      [class.primary]="filterOption === 'all'" 
+      [class.secondary]="filterOption !== 'all'" 
+      [class.active]="filterOption === 'all'">
+      All Clubs
+    </button>
+    <button 
+      (click)="filterClubs('my')" 
+      [class.primary]="filterOption === 'my'" 
+      [class.secondary]="filterOption !== 'my'" 
+      [class.active]="filterOption === 'my'">
+      My Clubs
+    </button>
+  </div>
+  
+  <div *ngIf="loading" class="loading-spinner">
+    loading...
+  </div>
+  
+  <div class="myClubs">
+    <div *ngIf="!loading && filterOption === 'my' && userClubs.length === 0" class="no-clubs-message">
+      You are not owner of any club.
+    </div>
+  
+    <div *ngIf="!loading && filterOption === 'all' && userClubs.length === 0" class="no-clubs-message">
+      You are not a member of any club.
+    </div>
+  
+    <ul *ngIf="!loading && userClubs.length > 0">
+      <li *ngFor="let club of userClubs">
+        <p>
+          <a [routerLink]="['/my-clubs', club.id]" class="club-link">{{ club.name }}</a>
+        </p>
+      </li>
+    </ul>
+  </div>
+  

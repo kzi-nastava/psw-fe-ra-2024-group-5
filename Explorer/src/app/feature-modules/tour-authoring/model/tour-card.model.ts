@@ -11,5 +11,6 @@ export interface TourCard{
     length: number,
     authorId: number,
     firstKeypoint: KeyPoint,
-    publishedTime: Date
+    publishedTime: Date,
+    averageRating: number
 }

@@ -20,6 +20,8 @@ export interface TourReview {
     image?: string; // Optional
     tourId?: number;
     touristId?: number;
+    completionPercentage: number;
+    
 }
 
 export interface Tour {
@@ -44,4 +46,15 @@ export interface TourTourist {
     canBeActivated: boolean;
     canBeBought: boolean;
     canBeReviewed: boolean;
+}
+
+export interface TourCreation {
+    name: string;
+    description: string;
+    tags: string;
+    level?: TourLevel; // Use enum here
+    authorId?: number; // Optional
+    keyPoints: KeyPoint[]; // Required
+    length?: number; // Optional
+    transportDurationDtos: TransportDuration[]; // Required
 }

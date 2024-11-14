@@ -14,7 +14,7 @@
     <div class="row">
         <div class="tour-details">
             <div class="description outlined-desc">
-                {{tour?.description}}sd fdsa fdsa fdsafdsafsdadsaffdsafdsadsafdsfdsafdsds
+                {{tour?.description}}
             </div>
             <div class="info-transport-container">
                 <div class="info">
@@ -42,12 +42,27 @@
             </div>
             <div class="actions-row">
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'" (click)="archiveTour()">Archive</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===0 && user?.role === 'author'" (click)="publishTour()">Publish</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===2 && user?.role === 'author'" (click)="publishTour()">Publish</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status === 0 && user?.role === 'author'" (click)="togglePublishForm()">Publish</button>
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated" (click)="startTour()">Activate</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed">Add review</button>
+                <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed" (click)="openReviewDialog()">Add review</button>
                 <button mat-button class="secondary button-mg" *ngIf="user?.role === 'author'">Edit</button>
             </div>
         </div>
+    </div>
+
+    <div *ngIf="showPublishForm" class="publish-form">
+        <label>Price:</label>
+        <input type="number" [(ngModel)]="newPrice" placeholder="Enter price" required>
+        
+        <label>Currency:</label>
+        <select [(ngModel)]="newCurrency" required>
+            <option [ngValue]="Currency.Rsd">Rsd</option>
+            <option [ngValue]="Currency.Eur">Eur</option>
+            <option [ngValue]="Currency.Dol">Usd</option>            
+        </select>
+        
+        <button mat-button class="primary button-mg" (click)="publishTourWithPrice()">Confirm Publish</button>
     </div>
 
     <div class="title-container">
@@ -79,6 +94,8 @@
                 </div>
             </div>
         </div>
+
+        
 
         <!-- Example of review card
         <div class="review-card">

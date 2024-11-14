@@ -1,14 +1,38 @@
-<div class="execute-tour container">
-    <div class="map-container" *ngIf="!noActiveTours">
-        <app-map
-            [simulatorEnabled]="true"
-            [isViewOnly]="true"
-            (userLocationChange)="onUserLocationChange($event)"
-            [keyPoints]="tour.keyPoints"/>
+<div class="container" *ngIf="tour && !noActiveTours">
+    <div class="column">
+        <div class="map-container">
+            <app-map
+                [simulatorEnabled]="true"
+                [isViewOnly]="true"
+                (userLocationChange)="onUserLocationChange($event)"
+                [keyPoints]="tour.keyPoints"/> 
+        </div>
+        <div>
+            <button mat-button class="secondary button-mg" (click)="abandonTour()">Abandon tour</button>
+        </div> 
+    </div>
+    <div class="progress-container">
+        <div class="progress-wrapper" [class.inactive]="!completedKeyPoints.length">
+          <ul>
+            <li *ngFor="let i of getTotalNodes(); let index = index" 
+                [class.completed]="index <= completedKeyPoints.length"
+                [style.top]="getDotPosition(index)">
+              <div class="inner-dot"></div>
+              <div class="node-content" [class.visible]="index <= completedKeyPoints.length">
+                <div *ngIf="index === 0" class="message">
+                  Welcome! For starters, head for the first key point. Good luck!
+                </div>
+                <div (click)="openDialog(completedKeyPoints[index - 1])" *ngIf="index > 0 && index <= completedKeyPoints.length && tour?.keyPoints" class="message">
+                  {{ completedKeyPoints[index - 1].keyPoint.name || 'Checkpoint ' + index }}
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="progress-bar" [style.height]="getCompletionPercentage() + '%'"></div>
+        </div>
+      </div>
+</div>
 
-        <button mat-button class="secondary button-mg" (click)="abandonTour()">Abandon tour</button>
-    </div>
-    <div class="no-active-tours" *ngIf="noActiveTours">
-        <h1>No active tour...</h1>
-    </div>
+<div class="no-active-tours" *ngIf="noActiveTours">
+    <h1>No active tour...</h1>
 </div>

@@ -10,7 +10,10 @@ import { TourLevel, TourStatus, Currency, TourTransport } from '../model/tour.en
 import { TourExecutionService } from '../../tour-execution/tour-execution.service';
 import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
 import { OrderItem } from '../../marketplace/model/order-item.model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
+import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -25,6 +28,14 @@ export class TourDetailedViewComponent implements OnInit {
   canBeBought: boolean = false;
   canBeActivated: boolean = false;
   canBeReviewed: boolean = false;
+  showPublishForm = false;
+  
+    public Currency = Currency; 
+    newPrice: number;
+    newCurrency: Currency = Currency.Rsd; 
+
+   
+
 
   constructor(
     private service: TourAuthoringService,
@@ -32,7 +43,10 @@ export class TourDetailedViewComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private shoppingCartService: ShoppingCartService
+    private reviewService: ReviewService,
+    private shoppingCartService: ShoppingCartService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -147,9 +161,52 @@ export class TourDetailedViewComponent implements OnInit {
     });
   }
 
+  openReviewDialog(): void {
+    const dialogRef = this.dialog.open(TourReviewFormComponent, {
+      width: '600px',
+      data: {
+        tourId: this.tour?.id,
+        touristId: this.user?.id
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.showSuccessAlert('Review successfully submitted!');
+        console.log('Review successfully submitted');
+  
+        const reviewUrl = this.reviewService.getReviewUrl();
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([`${reviewUrl}/${this.tour?.id}`]); 
+        });
+      } else if (result === false) {
+        this.showErrorAlert('Error submitting review. Please try again.');
+        console.log('Error submitting review');
+      }
+    });
+  }
+  
+  private showSuccessAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-success', 'custom-snackbar']
+    });
+  }
+  
+  private showErrorAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-danger', 'custom-snackbar']
+    });
+  }
+
   publishTour(): void {
     if (this.tour?.id) {
-      this.service.publishTour(this.tour.id).subscribe({
+      if (!Object.values(Currency).includes(this.newCurrency)) {
+        console.error('Invalid currency');
+        return;
+      }
+      this.service.publishTour(this.tour.id, this.newPrice, this.newCurrency).subscribe({
         next: () => {
           if (this.tour) {
             this.tour.status = TourStatus.Published;
@@ -178,6 +235,7 @@ export class TourDetailedViewComponent implements OnInit {
       });
     }
   }
+
   addToCart(): void{
     if(!this.tour || !this.tour.id || !this.user)
       return;
@@ -198,4 +256,53 @@ export class TourDetailedViewComponent implements OnInit {
   });
 
   }
+
+  togglePublishForm() {
+    this.showPublishForm = !this.showPublishForm;
+}
+
+currencyToEnum(currency: number): Currency | null {
+  switch (currency) {
+    case 0:
+      return Currency.Rsd;  
+    case 1:
+      return Currency.Dol;  
+    case 2:
+      return Currency.Eur; 
+    default:
+      console.error('Invalid currency value:', currency); 
+      return null;
+  }
+}
+
+publishTourWithPrice(): void {
+  if (this.newPrice != null && this.newCurrency !== undefined) {
+    if (!Object.values(Currency).includes(this.newCurrency)) {
+      console.error('Invalid currency value:', this.newCurrency);
+      alert('Invalid currency');
+      return;
+    }
+    if (this.tour?.id) {
+      console.log('Publishing tour:', this.tour.id, 'with price:', this.newPrice, 'and currency:', this.newCurrency);
+      this.service.publishTour(this.tour.id, this.newPrice, this.newCurrency).subscribe({
+        next: () => {
+          if (this.tour) {
+            this.tour.status = TourStatus.Published;
+          }
+          console.log('Tour published with new price and currency');
+          this.showPublishForm = false;  
+          this.initializeTour(); 
+        },
+        error: (error) => {
+          console.error('Error publishing tour:', error);
+          alert('Error publishing tour: ' + error.message);
+        }
+      });
+    } else {
+      alert('Tour ID is missing.');
+    }
+  } else {
+    alert('Please enter both price and currency.');
+  }
+}
 }
