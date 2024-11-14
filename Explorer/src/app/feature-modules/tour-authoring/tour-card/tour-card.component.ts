@@ -18,6 +18,7 @@ export class TourCardComponent {
   location: string = 'Location unknown';
   currencies: string[] = ['rsd','e','$'];
   imageSource: string = '';
+  
 
   constructor(private mapService: MapService,private authService: AuthService){}
 

@@ -7,6 +7,7 @@ import { Tour, TourCreation, TourTourist } from './model/tour.model';
 import { TourCard } from './model/tour-card.model';
 import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Currency } from './model/tour.enums';
 
 
 @Injectable({
@@ -70,10 +71,15 @@ export class TourAuthoringService {
     return this.http.delete<Tour>(environment.apiHost + 'tour/' + id)
   }
 
-  publishTour(id: number): Observable<any> {
-    return this.http.post(`${environment.apiHost}tour/publish/${id}`, {});
-  }
-  
+  publishTour(id: number, newPrice: number, newCurrency: Currency): Observable<any> {
+    const payload = {
+        amount: newPrice,
+        currency: newCurrency
+    };
+
+    return this.http.post(`${environment.apiHost}tour/publish/${id}`, payload);
+}
+
   archiveTour(id: number): Observable<any> {
     return this.http.post(`${environment.apiHost}tour/archive/${id}`, {});
   }
