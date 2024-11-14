@@ -43,6 +43,10 @@ export class BlogService {
     return this.http.get<PagedResults<Blog>>(environment.apiHost + 'author/blog/all')
   }
 
+  getBlogById(blogId: number): Observable<Blog> {
+    return this.http.get<Blog>(environment.apiHost + `author/blog/${blogId}`)
+  }
+
   updateBlogStatus(blogId: number, newStatus: number, userId: number): Observable<Blog> {
     return this.http.put<Blog>(environment.apiHost + `author/blog/${blogId}/status?userId=${userId}`, newStatus);
   }

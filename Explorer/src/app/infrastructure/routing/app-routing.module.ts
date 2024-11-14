@@ -27,8 +27,9 @@ import { AppRatingComponent } from 'src/app/feature-modules/administration/app-r
 import { ShoppingCartComponent } from 'src/app/feature-modules/marketplace/shopping-cart/shopping-cart.component';
 import { FollowersListComponent } from 'src/app/feature-modules/administration/followers-list/followers-list.component';
 import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours-page/tours-page.component';
-import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component'; 
-import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component'; 
+import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component';
+import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component';
+import { BlogPreviewComponent } from 'src/app/feature-modules/blog/blog-preview/blog-preview.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -59,7 +60,8 @@ const routes: Routes = [
   { path: 'followers/:id', component: FollowersListComponent },
   { path: 'tours-page', component: ToursPageComponent },
   { path: 'my-clubs', component: MyClubsComponent},
-  { path: 'my-clubs/:id', component: ClubPageComponent}
+  { path: 'my-clubs/:id', component: ClubPageComponent},
+  { path: 'blog/:id', component: BlogPreviewComponent}
 ];
 
 @NgModule({
