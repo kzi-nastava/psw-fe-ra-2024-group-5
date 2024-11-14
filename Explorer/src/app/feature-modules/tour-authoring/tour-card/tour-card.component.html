@@ -8,11 +8,16 @@
         <span class="text">Length: {{tourCard.length}} km</span>
         <span class="text">{{tourLevels[tourCard.level]}}</span>
         <span class="text">{{tourCard.tags}}</span>
+        <div class="rating-container">
+            <span class="star" *ngFor="let i of [1,2,3,4,5]">
+              <span *ngIf="tourCard.averageRating >= i">&#9733;</span>
+            </span>
+          </div>                        
     </div>
     <div class="bottom-container rounded">
         <div class="price-container">
             <div class="price-text">{{tourCard.price.amount}} {{currencies[tourCard.price.currency]}}</div>
-            <button mat-button class="secondary" (click)="addToCart()" *ngIf="user?.role === 'tourist'">Buy now!</button>
+            <button mat-button class="secondary" (click)="addToCart()" *ngIf="user?.role === 'tourist'">View more</button>
         </div>
     </div>
 </div>

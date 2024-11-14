@@ -47,6 +47,24 @@
     padding: 25px 5px;
 }
 
-.bio-motto > .mat-mdc-card {
-    width: 100% !important;
+.profile-motto {
+    margin-top: 20px;
+    font-style: italic;
+    color: #555;
+    position: relative; 
+    padding-left: 15px;
+    font-size: 20px;
+    max-width: 100%;  
+    word-wrap: break-word;  
+    overflow-wrap: break-word;
+}
+
+.bio-label {
+    font-weight: bold; 
+    font-size: 20px; 
+}
+
+.motto-label {
+    font-weight: bold;
+    font-size: 20px;
 }

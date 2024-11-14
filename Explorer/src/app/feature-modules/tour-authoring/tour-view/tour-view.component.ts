@@ -28,6 +28,13 @@ export class TourDetailedViewComponent implements OnInit {
   canBeBought: boolean = false;
   canBeActivated: boolean = false;
   canBeReviewed: boolean = false;
+  showPublishForm = false;
+  
+    public Currency = Currency; 
+    newPrice: number;
+    newCurrency: Currency = Currency.Rsd; 
+
+   
 
 
   constructor(
@@ -195,7 +202,11 @@ export class TourDetailedViewComponent implements OnInit {
 
   publishTour(): void {
     if (this.tour?.id) {
-      this.service.publishTour(this.tour.id).subscribe({
+      if (!Object.values(Currency).includes(this.newCurrency)) {
+        console.error('Invalid currency');
+        return;
+      }
+      this.service.publishTour(this.tour.id, this.newPrice, this.newCurrency).subscribe({
         next: () => {
           if (this.tour) {
             this.tour.status = TourStatus.Published;
@@ -245,4 +256,53 @@ export class TourDetailedViewComponent implements OnInit {
   });
 
   }
+
+  togglePublishForm() {
+    this.showPublishForm = !this.showPublishForm;
+}
+
+currencyToEnum(currency: number): Currency | null {
+  switch (currency) {
+    case 0:
+      return Currency.Rsd;  
+    case 1:
+      return Currency.Dol;  
+    case 2:
+      return Currency.Eur; 
+    default:
+      console.error('Invalid currency value:', currency); 
+      return null;
+  }
+}
+
+publishTourWithPrice(): void {
+  if (this.newPrice != null && this.newCurrency !== undefined) {
+    if (!Object.values(Currency).includes(this.newCurrency)) {
+      console.error('Invalid currency value:', this.newCurrency);
+      alert('Invalid currency');
+      return;
+    }
+    if (this.tour?.id) {
+      console.log('Publishing tour:', this.tour.id, 'with price:', this.newPrice, 'and currency:', this.newCurrency);
+      this.service.publishTour(this.tour.id, this.newPrice, this.newCurrency).subscribe({
+        next: () => {
+          if (this.tour) {
+            this.tour.status = TourStatus.Published;
+          }
+          console.log('Tour published with new price and currency');
+          this.showPublishForm = false;  
+          this.initializeTour(); 
+        },
+        error: (error) => {
+          console.error('Error publishing tour:', error);
+          alert('Error publishing tour: ' + error.message);
+        }
+      });
+    } else {
+      alert('Tour ID is missing.');
+    }
+  } else {
+    alert('Please enter both price and currency.');
+  }
+}
 }
