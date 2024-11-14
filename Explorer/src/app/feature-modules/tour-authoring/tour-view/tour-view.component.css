@@ -230,3 +230,73 @@ button.close:hover {
   background-color: #bf616a; 
   color: #2e3440; 
 }
+
+.publish-form {
+   
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 500px; 
+  width: 400px;
+  margin-right: 320px; 
+  align-self: flex-end; 
+}
+
+
+.publish-form label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.publish-form input,
+.publish-form select {
+  font-size: 1rem;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.publish-form input:focus,
+.publish-form select:focus {
+  border-color: #007bff;
+}
+
+.publish-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  width: 60%; 
+  max-width: 200px; 
+  margin: 0 auto; 
+  display: block; 
+}
+
+
+.publish-form button:hover {
+  background-color: #0056b3;
+}
+
+.price-amount {
+  color: #28a745; /* Zelena boja za cenu */
+  font-size: 1.5rem; /* Povećanje veličine fonta za cenu */
+  font-weight: bold;
+}
+
+.currency {
+  color: #28a745; /* Zelena boja za valutu */
+  font-size: 1.2rem; /* Manja veličina fonta za valutu */
+}
