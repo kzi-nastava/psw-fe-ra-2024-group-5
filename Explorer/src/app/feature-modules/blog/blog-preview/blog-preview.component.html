@@ -1,0 +1,44 @@
+<div class="blog-post" *ngIf="blog">
+    <h1>{{ blog.title }}</h1>
+    <div class="blog-images">
+      <div *ngIf="blog.images && blog.images.length > 0 && currentImageIndex[blog.id] !== undefined">
+        <img [src]="'data:' + blog.images[currentImageIndex[blog.id]].contentType + ';base64,' + blog.images[currentImageIndex[blog.id]].base64Data" alt="{{ blog.title }}">
+        <div class="image-navigation" *ngIf="blog.images.length > 1">
+          <button (click)="previousImage(blog.id)" class="btn btn-secondary">Previous</button>
+          <button (click)="nextImage(blog.id)" class="btn btn-secondary">Next</button>
+        </div>     
+      </div>
+    </div>
+    <p>{{ blog.description }}</p>
+  </div>
+  
+  <div class="comments-section" *ngIf="blog && blog.comments">
+    <h2>Comments</h2>
+    <div *ngFor="let comment of blog.comments">
+      
+      <!-- Show text or edit area depending on edit mode -->
+      <div *ngIf="editingCommentId !== comment.id; else editMode">
+        <p><strong>{{ comment.commentText }}</strong>: {{ comment.creationTime | date }}</p>
+      </div>
+  
+      <!-- Edit Mode Template -->
+      <ng-template #editMode>
+        <textarea [(ngModel)]="editedCommentText" rows="3"></textarea>
+        <button (click)="saveComment(comment.id!)" class="btn btn-primary">Save</button>
+        <button (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+      </ng-template>
+  
+      <!-- Edit and Delete buttons -->
+      <div *ngIf="isCommentAuthor(comment.userId) && editingCommentId !== comment.id" class="comment-actions">
+        <button (click)="editComment(comment.id!, comment.commentText)" class="btn btn-secondary">Edit</button>
+        <button (click)="deleteComment(comment.id!)" class="btn btn-danger">Delete</button>
+      </div>
+
+    </div>
+    <div class="add-comment">
+        <h3>Add a Comment</h3>
+        <textarea [(ngModel)]="newCommentText" rows="3" placeholder="Write your comment here..."></textarea>
+        <button (click)="addComment()" class="btn btn-primary">Submit</button>
+      </div>
+  </div>
+  

@@ -5,6 +5,8 @@ import { Blog } from '../model/blog.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Vote } from '../model/vote.model';
 import { BlogPostComment } from '../model/blog-post-comment'; 
+import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 
@@ -14,6 +16,7 @@ import { BlogPostComment } from '../model/blog-post-comment';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
+
 
   blogs: Blog[] = [];
   upvotes: { [key: number]: number } = {}; 
@@ -25,7 +28,7 @@ export class BlogComponent implements OnInit {
   filteredComments: { [blogId: number]: BlogPostComment[] } = {};
   currentImageIndex: { [blogId: number]: number } = {};
 
-  constructor(private service : BlogService, private authService : AuthService){}
+  constructor(private service : BlogService, private authService : AuthService, private router: Router){}
 
   ngOnInit(): void {
     this.getBlog();
@@ -159,5 +162,21 @@ export class BlogComponent implements OnInit {
       });
     }
 
+    isUserAuthor(userId: number): Observable<boolean> {
+      return this.authService.user$.pipe(
+        map(user => {
+          if (user) {
+            return userId === user.id;
+          } else {
+            console.error('User is not logged in.');
+            return false;
+          }
+        })
+      );
+  }
+
+  blogPreview(blogId: number): void {
+    this.router.navigate(['/blog', blogId]);
+  }
 
 }
