@@ -1,104 +1,52 @@
-<!-- <div class="profile-container container" *ngIf="userProfile">
-  <div class="profile-image"></div>
-  <div class="profile-image">
-    <img
-      *ngIf="userProfile.profilePictureUrl; else defaultImage"
-      [src]="userProfile.profilePictureUrl"
-      alt="Profile Picture"
-    />
-    <ng-template #defaultImage>
-      <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
-    </ng-template>
-  </div>
-  <div class="profile-info">
-    <div class="profile-header">
-      <div class="profile-name">
-        {{ userProfile.name }} {{ userProfile.surname }}
-      </div>
-      <button
-        class="edit-button"
-        *ngIf="isOwnProfile"
-        [routerLink]="['profile-form', userProfile.id]"
-      >
-        Edit Profile
-      </button>
-      <button
-        class="follow-button"
-        *ngIf="!isOwnProfile"
-        (click)="followOrUnfollow()"
-      >
-        {{ isFollowing ? "Unfollow" : "Follow" }}
-      </button>
-      <button class="primary" mat-flat-button>Send Message</button>
-    </div>
-    <div
-      class="followers-info"
-      *ngIf="isOwnProfile"
-      [routerLink]="['/followers', userProfile.id]"
-    >
-      <div class="followers-count">{{ followersCount }}</div>
-      <div class="followers">Followers</div>
-    </div>
-    <div class="profile-bio">
-      <span class="bio-label">Biography:</span> {{ userProfile.biography }}
-    </div>
-    <div class="profile-motto">
-      <span class="motto-label">Motto:</span> {{ userProfile.motto }}
-    </div>
-  </div>
-</div> -->
-
 <div class="profile-page container">
-    <div class="profile-header">
-        <div class="profile-image">
-            <img *ngIf="userProfile.profilePictureUrl; else defaultImage" [src]="userProfile.profilePictureUrl"
-                alt="Profile Picture" />
-            <ng-template #defaultImage>
-                <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
-            </ng-template>
-        </div>
-        <div class="profile-info">
-            <div class="info">
-                <h1>{{ userProfile.name }} {{ userProfile.surname }} </h1>
-                <b><span>Followers: {{ followersCount }}</span></b>
-            </div>
-            <div class="actions">
-                <button class="secondary" mat-button *ngIf="!isOwnProfile" (click)="followOrUnfollow()">
-                    {{ isFollowing ? "Unfollow" : "Follow" }}
-                </button>
-                <button class="secondary" mat-button *ngIf="isOwnProfile"
-                    [routerLink]="['profile-form', userProfile.id]">
-                    <mat-icon>edit</mat-icon>
-                    Edit Profile
-                </button>
-                <button [routerLink]="['/followers', userProfile.id]" class="secondary" mat-button>
-                    <mat-icon>people</mat-icon>
-                    Followers
-                </button>
-                <button class="primary" mat-button *ngIf="isFollower && !isOwnProfile"
-                    (click)="openSendMessageDialog()">
-                    <mat-icon>message</mat-icon>
-                    Send Message
-                </button>
-            </div>
-        </div>
+  <div class="profile-header">
+    <div class="profile-image">
+      <img *ngIf="userProfile.profilePictureUrl; else defaultImage" [src]="userProfile.profilePictureUrl"
+        alt="Profile Picture" />
+      <ng-template #defaultImage>
+        <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
+      </ng-template>
     </div>
-    <div class="bio-motto">
-        <mat-card>
-            <mat-card-header>
-                <h2>Biography</h2>
-            </mat-card-header>
-            <mat-card-content>
-                {{ userProfile.biography }}
-            </mat-card-content>
-        </mat-card>
-        <mat-card>
-            <mat-card-header>
-                <h2>Motto</h2>
-            </mat-card-header>
-            <mat-card-content>
-                {{ userProfile.motto }}
-            </mat-card-content>
-        </mat-card>
+    <div class="profile-info">
+      <div class="info">
+        <h1>{{ userProfile.name }} {{ userProfile.surname }} </h1>
+        <b><span>Followers: {{ followersCount }}</span></b>
+      </div>
+      <div class="actions">
+        <button class="secondary" mat-button *ngIf="!isOwnProfile" (click)="followOrUnfollow()">
+          {{ isFollowing ? "Unfollow" : "Follow" }}
+        </button>
+        <button class="secondary" mat-button *ngIf="isOwnProfile" [routerLink]="['profile-form', userProfile.id]">
+          <mat-icon>edit</mat-icon>
+          Edit Profile
+        </button>
+        <button [routerLink]="['/followers', userProfile.id]" class="secondary" mat-button>
+          <mat-icon>people</mat-icon>
+          Followers
+        </button>
+        <button class="primary" mat-button *ngIf="isFollower && !isOwnProfile" (click)="openSendMessageDialog()">
+          <mat-icon>message</mat-icon>
+          Send Message
+        </button>
+      </div>
     </div>
+  </div>
+  <div class="bio-motto">
+    <mat-card>
+      <mat-card-header>
+        <h2>Biography</h2>
+      </mat-card-header>
+      <mat-card-content>
+        {{ userProfile.biography }}
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <h2>Motto</h2>
+      </mat-card-header>
+      <mat-card-content>
+        {{ userProfile.motto }}
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

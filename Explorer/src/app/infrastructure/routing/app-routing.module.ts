@@ -31,7 +31,6 @@ import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs
 import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component';
 import { BlogPreviewComponent } from 'src/app/feature-modules/blog/blog-preview/blog-preview.component';
 
-
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'home', component: LandingComponent },
