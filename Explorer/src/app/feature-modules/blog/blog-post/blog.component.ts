@@ -86,6 +86,27 @@ export class BlogComponent implements OnInit {
     }
   }
 
+  // updateBlogStatus(blogId: number, newStatus: number): void {
+  //   this.authService.user$.subscribe(user => {
+  //     if (user) {
+  //       const userId = user.id;
+  
+  //       this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
+  //         next: (updatedBlog) => {
+  //           this.getBlog()
+  //         },
+  //         error: (err) => {
+  //           console.error('Failed to update blog status', err);
+  //         }
+  //       });
+  //     } else {
+  //       console.error('User is not logged in.');
+  //     }
+  //   });
+  // }
+
+
+  
   updateBlogStatus(blogId: number, newStatus: number): void {
     this.authService.user$.subscribe(user => {
       if (user) {
@@ -93,17 +114,34 @@ export class BlogComponent implements OnInit {
 
         this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
           next: (updatedBlog) => {
-            this.getBlog()
+            // Ako je blog sada u statusu "Published", pozovi ažuriranje statusa na osnovu glasova i komentara
+            if (newStatus === 1) { // Proveri da li je status "Published"
+              this.service.updateBlogStatusBasedOnVotesAndComments(blogId, userId).subscribe({
+                next: () => {
+                  // Osvježi listu blogova kako bi prikazao ažurirani status
+                  this.getBlog();
+                },
+                error: (err) => {
+                  console.error('Neuspešno ažuriranje statusa na osnovu glasova i komentara:', err);
+                }
+              });
+            } else {
+              // Osvježi listu blogova za bilo koje drugo ažuriranje statusa
+              this.getBlog();
+            }
           },
           error: (err) => {
-            console.error('Failed to update blog status', err);
+            console.error('Neuspešno ažuriranje statusa bloga', err);
           }
         });
       } else {
-        console.error('User is not logged in.');
+        console.error('Korisnik nije ulogovan.');
       }
     });
   }
+
+
+
 
     vote(blogId: number, voteType: number): void {
       this.authService.user$.subscribe(user => {
@@ -128,13 +166,11 @@ export class BlogComponent implements OnInit {
         type: voteType,
         voteTime: new Date().toISOString(),
       };
-
       this.service.vote(blogId, voteData).subscribe({
         next: () => {
           // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-
           // Update user's current vote type for this blog
           this.userVotes[blogId] = voteType;
           console.log('Vote successfully submitted');
@@ -151,7 +187,6 @@ export class BlogComponent implements OnInit {
           // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-
           // Reset user's current vote type for this blog (no vote)
           this.userVotes[blogId] = null;
           console.log('Vote successfully removed');
