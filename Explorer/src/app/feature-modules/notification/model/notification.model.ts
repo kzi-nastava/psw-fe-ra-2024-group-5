@@ -1,8 +1,8 @@
 import { NotificationType } from '../enum/notification-type.enum';
-import { Attachment } from '../../club/model/attachment.model';
+import { Attachment } from '../../administration/model/attachment.model';
 import { NotificationReadStatus } from './notification-read-status.model';
 
-export interface Notification{
+export interface Notification {
     id?: number,
     userIds: number[],
     content: String,

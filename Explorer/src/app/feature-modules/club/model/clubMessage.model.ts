@@ -1,6 +1,6 @@
-import { Attachment } from '../model/attachment.model';
+import { Attachment } from "../../administration/model/attachment.model"
 
-export interface ClubMessage{
+export interface ClubMessage {
     id?: number,
     senderId: number,
     clubId: number,
