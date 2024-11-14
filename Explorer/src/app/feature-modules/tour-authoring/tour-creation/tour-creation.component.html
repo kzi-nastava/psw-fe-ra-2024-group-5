@@ -1,70 +1,121 @@
-
 <div class="container">
-    <div class="component component-1">
+  <div class="component component-1">
       <div class="map-container">
-        <app-map (addItem)="sendCoordinates($event)"></app-map>
+          <app-map (addKeyPoint)="sendCordinates($event)"  (setaRouteLength)='setTourLength($event)'></app-map>
       </div>
       <div class="scrollable-form-container">
-        <form [formGroup]="form">
-          <div mat-dialog-content class="content-container">
-              <mat-form-field appearance="outline" class="custom-form-field">
-                  <mat-label>Name</mat-label>
-                  <input matInput placeholder="Enter tour name" formControlName="Name">
-                  <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
-                      {{ getErrorMessage('Name') }}
-                    </mat-error>
-              </mat-form-field>
+          <form [formGroup]="form">
+              <div mat-dialog-content class="content-container">
+                  <mat-form-field appearance="outline" class="custom-form-field">
+                      <mat-label>Name</mat-label>
+                      <input matInput placeholder="Enter tour name" formControlName="Name">
+                      <mat-error *ngIf="form.controls['Name'].invalid && form.controls['Name'].touched">
+                          {{ getErrorMessage('Name') }}
+                      </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                      <mat-label>Description</mat-label>
+                      <textarea matInput placeholder="Write description for tour" cdkTextareaAutosize
+                                cdkAutosizeMinRows="1" formControlName="Description"
+                                cdkAutosizeMaxRows="5"></textarea>
+                      <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
+                          {{ getErrorMessage('Description') }}
+                      </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="custom-form-field">
+                      <mat-label>Tags</mat-label>
+                      <input matInput placeholder="Add tags" formControlName="Tags">
+                      <mat-error *ngIf="form.controls['Tags'].invalid && form.controls['Tags'].touched">
+                          {{ getErrorMessage('Tags') }}
+                      </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                      <mat-label>Level</mat-label>
+                      <mat-select formControlName="Level">
+                          <mat-option *ngFor="let level of tourLevels" [value]="level">
+                              {{ level }}
+                          </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="form.get('Level')?.invalid && form.get('Level')?.touched">
+                          Tour level is required
+                      </mat-error>
+                  </mat-form-field>
+
+                    <form [formGroup]="formTransport">
+                        <div class="input-group">
+                            <mat-form-field appearance="outline" class="input-number">
+                                <mat-label>Duration (minutes)</mat-label>
+                                <input matInput type="number" placeholder="Enter duration" formControlName="Duration">
+                            </mat-form-field>
       
-              <mat-form-field appearance="outline">
-                  <mat-label>Description</mat-label>
-                  <textarea matInput
-                            placeholder="Write description for tour"
-                            cdkTextareaAutosize
-                            cdkAutosizeMinRows="1"
-                            formControlName="Description"
-                            cdkAutosizeMaxRows="5"></textarea>
-                            <mat-error *ngIf="form.controls['Description'].invalid && form.controls['Description'].touched">
-                      {{ getErrorMessage('Description') }}
-                  </mat-error>
-              </mat-form-field>
-      
-              <mat-form-field appearance="outline" class="custom-form-field">
-                  <mat-label>Tags</mat-label>
-                  <input matInput placeholder="Add tags" formControlName="Tags">
-                  <mat-error *ngIf="form.controls['Tags'].invalid && form.controls['Tags'].touched">
-                      {{ getErrorMessage('Tags') }}
-                  </mat-error>
-              </mat-form-field>
-      
-              <mat-form-field appearance="outline">
-                  <mat-label>Level</mat-label>
-                  <mat-select formControlName="Level">
-                    <mat-option *ngFor="let level of tourLevels" [value]="level">
-                      {{ level }}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="form.get('Level')?.invalid && form.get('Level')?.touched">
-                    Tour level is required
-                  </mat-error>
-                </mat-form-field>
-                
-              </div>
+                            <mat-form-field appearance="outline" class="input-dropdown">
+                                <mat-label>Transport</mat-label>
+                                <mat-select formControlName="Transport">
+                                    <mat-option *ngFor="let transport of tourTransports" [value]="transport">
+                                        {{ transport }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formTransport.controls['Transport'].invalid && formTransport.controls['Transport'].touched">
+                                    {{ getErrorMessage('Transport') }}
+                                </mat-error>
+                            </mat-form-field>      
+
+                            <div mat-dialog-actions class="action-container">
+                                <button *ngIf="tourTransports.length" mat-raised-button color="secondary" (click)="addTransportDuration()">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </form>
-          </div>
+      </div>
+      <!-- Add Table Below the Form -->
+    <div class="table-container">
+        <table mat-table [dataSource]="tourDurationTransports" class="mat-table">
+          <!-- Table Header -->
+          <ng-container matColumnDef="transportDuration">
+            <th mat-header-cell *matHeaderCellDef>Duration</th>
+            <td mat-cell *matCellDef="let element">{{ element.duration }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="transport">
+            <th mat-header-cell *matHeaderCellDef>Transport</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.transport === 0 ? 'On Foot' : (element.transport === 1 ? 'Bicycle' : (element.transport === 2 ? 'Car' : 'Unknown')) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="deleteButton">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="warn" (click)="deleteTourTransport(element.transport)">
+                <mat-icon>delete</mat-icon>
+                Delete
+            </button>
+            </td>
+        </ng-container>
+          <!-- Table Row Definition -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
       
       <div mat-dialog-actions class="action-container">
-          <!-- <button mat-button (click)="closeDialog()">Close</button> -->
-          <button mat-raised-button color="primary">Save</button>
+        <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
       </div>
-      </div>
-      <div class="component component-3">
+
+    </div>
         
-        <xp-key-points [coordinates]="coordinates" (cancel)="cancelKeyPoint()"></xp-key-points>
-      </div>
-    </div>
+  <div class="component">
+      <xp-key-points [coordinates]="coordinates" (cancel)="cancelKeyPoint($event)"></xp-key-points>
+  </div>
+
     <div>
-      <button mat-raised-button color="primary" (click)="back()">
-        <mat-icon>back</mat-icon>
-        Close
-    </button>
+        <button mat-raised-button color="primary" (click)="back()">
+            <mat-icon>back</mat-icon>
+            Close
+        </button>
     </div>
+</div>  

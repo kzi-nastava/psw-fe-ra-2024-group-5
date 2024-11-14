@@ -70,11 +70,11 @@ export class ToursPageComponent {
 
    
   changeLongLat(latLong: number[]): void {
-    const [lat, long] = latLong;
-    this.centerLatitude.next(lat);
-    this.centerLongitude.next(long);
-    console.log("Coordinates set to:", lat, long); 
-}
+      const [lat, long] = latLong;
+      this.centerLatitude.next(lat);
+      this.centerLongitude.next(long);
+      console.log("Coordinates set to:", lat, long); 
+  }
 
 onRadiusChange(): void {
   this.radius.next(this.radiusInput); 

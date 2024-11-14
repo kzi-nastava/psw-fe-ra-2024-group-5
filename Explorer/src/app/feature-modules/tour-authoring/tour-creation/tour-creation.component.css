@@ -63,3 +63,35 @@
     display: flex;
     flex-direction: column;
 }
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px; /* Adjust spacing as needed */
+}
+
+.input-number, .input-dropdown {
+  flex: 1; /* Allows both fields to take equal space */
+  margin-right: 8px; /* Space between the two fields */
+}
+
+.input-dropdown:last-child {
+  margin-right: 0; /* Remove right margin from the last item */
+}
+
+.full-width {
+  width: 100%; /* Full width of the parent */
+}
+
+.table-container {
+  width: 100%; /* Ensures the table container is full width */
+}
+
+.mat-table {
+  width: 100%; /* Ensures the table itself is full width */
+  border-collapse: collapse; /* Optional: removes space between cells */
+}
+
+.key-point-image {
+  border-radius: 4px; /* Optional: add some style to images */
+}

@@ -5,7 +5,7 @@
     </div>
 
     <div class="map-container" *ngIf="showSearch">
-        <app-map [markerAddMode]="'facility'" (addItem)="changeLongLat($event)"></app-map>
+        <app-map [markerAddMode]="'facility'" (addFacility)="changeLongLat($event)"></app-map>
         <div class="search-fields">
        
           <label>Radius (km): <input [(ngModel)]="radiusInput" type="number" (change)="onRadiusChange()" /></label>

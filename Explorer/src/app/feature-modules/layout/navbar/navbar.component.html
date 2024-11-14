@@ -14,6 +14,11 @@
         Tours
       </button>
 
+      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
+          [routerLink]="['tour-creation']">
+          Add Tour
+      </button>
+
       <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['equipment']">
         Manage equipment
       </button>
@@ -32,6 +37,10 @@
 
       <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['addBlog']">
         Add Blog
+      </button>
+
+      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['facility']">
+        Facilities
       </button>
 
       <button class="secondary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['appRatingForm']">
