@@ -1,0 +1,23 @@
+export enum TourLevel {
+    Beginner = 0,
+    Intermediate = 1,
+    Advanced = 2
+}
+
+export enum TourStatus {
+    Draft = 0,
+    Published = 1,
+    Archived = 2
+}
+
+export enum Currency {
+    Rsd = 0,
+    Eur = 1,
+    Dol = 2
+}
+
+export enum TourTransport {
+    OnFoot = 0,
+    Bicycle = 1,
+    Car = 2
+}

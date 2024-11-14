@@ -7,12 +7,21 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { AppRatingFormComponent } from './app-rating-form/app-rating-form.component';
+import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 
+
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-review-form.component';
 
 @NgModule({
   declarations: [
     PreferenceComponent,
-    PreferenceDialogComponent
+    PreferenceDialogComponent,
+    AppRatingFormComponent,
+    ShoppingCartComponent,
+    TourReviewFormComponent
   ],
   imports: [
     CommonModule,
@@ -22,10 +31,13 @@ import { MatOptionModule } from '@angular/material/core';
     MatSelectModule,
     MatOptionModule,
     ReactiveFormsModule,
-    
+    MaterialModule,
+    MatDialogModule,
   ],
   exports: [
-    PreferenceComponent
+    PreferenceComponent,
+    AppRatingFormComponent
+
   ]
 })
 export class MarketplaceModule { }

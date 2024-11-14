@@ -1,0 +1,17 @@
+.send-message-dialog {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 450px;
+}
+
+.attachment-fields {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}

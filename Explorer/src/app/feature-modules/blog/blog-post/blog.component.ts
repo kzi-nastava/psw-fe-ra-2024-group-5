@@ -3,6 +3,13 @@ import { BlogService } from '../blog.service';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Blog } from '../model/blog.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Vote } from '../model/vote.model';
+import { BlogPostComment } from '../model/blog-post-comment'; 
+import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'xp-blog',
@@ -11,13 +18,20 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 })
 export class BlogComponent implements OnInit {
 
+
   blogs: Blog[] = [];
+  loadedBlogs: Blog[] = [];
+  selectedFilter = 0;
+  upvotes: { [key: number]: number } = {};
+  downvotes: { [key: number]: number } = {};
+  userVotes: { [blogId: number]: number | null } = {};
   isLoading = true;
   error: string | null = null;
 
+  filteredComments: { [blogId: number]: BlogPostComment[] } = {};
   currentImageIndex: { [blogId: number]: number } = {};
 
-  constructor(private service : BlogService, private authService : AuthService){}
+  constructor(private service : BlogService, private authService : AuthService, private router: Router){}
 
   ngOnInit(): void {
     this.getBlog();
@@ -28,9 +42,18 @@ export class BlogComponent implements OnInit {
       next: (result: PagedResults<Blog>) => {
         this.blogs = result.results;
         this.isLoading = false;
-        console.log(result);
+
+        this.blogs.forEach(blog => {
+          this.service.getUpvotes(blog.id).subscribe(upvoteCount => this.upvotes[blog.id] = upvoteCount);
+          this.service.getDownvotes(blog.id).subscribe(downvoteCount => this.downvotes[blog.id] = downvoteCount);
+
+          this.userVotes[blog.id] = null;
+        });
+
+        this.loadedBlogs = this.blogs;
+
         this.initializeImageIndex();
-        
+
       },
       error: (err: any) => {
         this.error = 'Failed to load blogs';
@@ -40,10 +63,12 @@ export class BlogComponent implements OnInit {
     })
   }
 
+
+
   initializeImageIndex(): void {
     this.blogs.forEach(blog => {
-      if (blog.imageData && blog.imageData.length > 0) {
-        this.currentImageIndex[blog.id] = 0; 
+      if (blog.images && blog.images.length > 0) {
+        this.currentImageIndex[blog.id] = 0;
       }
     });
   }
@@ -52,7 +77,7 @@ export class BlogComponent implements OnInit {
     if (this.currentImageIndex[blogId] < imageCount - 1) {
       this.currentImageIndex[blogId]++;
     } else {
-      this.currentImageIndex[blogId] = 0; 
+      this.currentImageIndex[blogId] = 0;
     }
   }
 
@@ -60,30 +85,148 @@ export class BlogComponent implements OnInit {
     if (this.currentImageIndex[blogId] > 0) {
       this.currentImageIndex[blogId]--;
     } else {
-      const imageCount = this.blogs.find(blog => blog.id === blogId)?.imageData?.length || 0;
+      const imageCount = this.blogs.find(blog => blog.id === blogId)?.images?.length || 0;
       this.currentImageIndex[blogId] = imageCount - 1;
     }
   }
 
+  // updateBlogStatus(blogId: number, newStatus: number): void {
+  //   this.authService.user$.subscribe(user => {
+  //     if (user) {
+  //       const userId = user.id;
+  
+  //       this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
+  //         next: (updatedBlog) => {
+  //           this.getBlog()
+  //         },
+  //         error: (err) => {
+  //           console.error('Failed to update blog status', err);
+  //         }
+  //       });
+  //     } else {
+  //       console.error('User is not logged in.');
+  //     }
+  //   });
+  // }
+
+
+  
   updateBlogStatus(blogId: number, newStatus: number): void {
     this.authService.user$.subscribe(user => {
-      if (user && user.id){
+      if (user) {
         const userId = user.id;
 
         this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
           next: (updatedBlog) => {
-            this.blogs = this.blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog);
-            this.getBlog()
+            // Ako je blog sada u statusu "Published", pozovi ažuriranje statusa na osnovu glasova i komentara
+            if (newStatus === 1) { // Proveri da li je status "Published"
+              this.service.updateBlogStatusBasedOnVotesAndComments(blogId, userId).subscribe({
+                next: () => {
+                  // Osvježi listu blogova kako bi prikazao ažurirani status
+                  this.getBlog();
+                },
+                error: (err) => {
+                  console.error('Neuspešno ažuriranje statusa na osnovu glasova i komentara:', err);
+                }
+              });
+            } else {
+              // Osvježi listu blogova za bilo koje drugo ažuriranje statusa
+              this.getBlog();
+            }
           },
           error: (err) => {
-            console.error('Failed to update blog status', err);
+            console.error('Neuspešno ažuriranje statusa bloga', err);
           }
         });
       } else {
-        console.error('User is not loged in.')
+        console.error('Korisnik nije ulogovan.');
       }
-    })
-    
+    });
   }
+
+
+
+
+    vote(blogId: number, voteType: number): void {
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          // Check if user has already voted the same way
+          if (this.userVotes[blogId] === voteType) {
+            // User clicked the same vote type, remove vote
+            this.removeVote(blogId, user.id);
+          } else {
+            // New vote or different vote type, add or update vote
+            this.addVote(blogId, voteType, user.id);
+          }
+        } else {
+          console.error('User is not logged in.');
+        }
+      });
+    }
+
+    addVote(blogId: number, voteType: number, userId: number): void {
+      const voteData: Vote = {
+        userId: userId,
+        type: voteType,
+        voteTime: new Date().toISOString(),
+      };
+      this.service.vote(blogId, voteData).subscribe({
+        next: () => {
+          // Update vote counts
+          this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
+          this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
+          // Update user's current vote type for this blog
+          this.userVotes[blogId] = voteType;
+          console.log('Vote successfully submitted');
+        },
+        error: (err: any) => {
+          console.error('Failed to submit vote:', err);
+        }
+      });
+    }
+
+    removeVote(blogId: number, userId: number): void {
+      this.service.removeVote(blogId, userId).subscribe({
+        next: () => {
+          // Update vote counts
+          this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
+          this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
+          // Reset user's current vote type for this blog (no vote)
+          this.userVotes[blogId] = null;
+          console.log('Vote successfully removed');
+        },
+        error: (err: any) => {
+          console.error('Failed to remove vote:', err);
+        }
+      });
+    }
+
+
+    isUserAuthor(userId: number): Observable<boolean> {
+      return this.authService.user$.pipe(
+        map(user => {
+          if (user) {
+            return userId === user.id;
+          } else {
+            console.error('User is not logged in.');
+            return false;
+          }
+        })
+      );
+  }
+
+  blogPreview(blogId: number): void {
+    this.router.navigate(['/blog', blogId]);
+  }
+
+    applyFilter(): void {
+      if (this.selectedFilter === -1) {
+        this.blogs = this.loadedBlogs;
+        return;
+      }
+
+      this.blogs = this.loadedBlogs.filter(blog => blog.status === this.selectedFilter);
+    }
+
 
 }

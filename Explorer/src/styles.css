@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
+
     /* Background Colors */
     --background-color: #ECEFF4;
     /* General background */
@@ -92,6 +93,13 @@ h2 {
     line-height: 2rem;
 }
 
+h3 {
+    color: var(--text-subtitle);
+    font-size: 1.5em;
+    font-weight: 125;
+    line-height: 1.5rem;
+}
+
 /* Paragraphs */
 p {
     color: var(--text-paragraph);
@@ -177,6 +185,13 @@ footer {
     background-color: var(--background-color-alt);
     color: var(--text-paragraph);
     text-align: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 50px 0;
 }
 
 .raised {

@@ -14,7 +14,7 @@ import { Registration } from './model/registration.model';
   providedIn: 'root'
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User>({username: "", id: 0, role: "" });
+  user$ = new BehaviorSubject<User>({ username: "", id: 0, role: "" });
 
   constructor(private http: HttpClient,
     private tokenStorage: TokenStorage,
@@ -33,20 +33,23 @@ export class AuthService {
 
   register(registration: Registration): Observable<AuthenticationResponse> {
     return this.http
-    .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
-    .pipe(
-      tap((authenticationResponse) => {
-        this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-        this.setUser();
-      })
-    );
+      .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
+      .pipe(
+        tap((authenticationResponse) => {
+          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+          this.setUser();
+          this.createCart(this.user$.value.id).subscribe();
+          this.logout();
+        })
+      );
   }
 
   logout(): void {
     this.router.navigate(['/home']).then(_ => {
       this.tokenStorage.clear();
-      this.user$.next({username: "", id: 0, role: "" });
-      }
+      localStorage.clear();
+      this.user$.next({ username: "", id: 0, role: "" });
+    }
     );
   }
 
@@ -56,6 +59,10 @@ export class AuthService {
       return;
     }
     this.setUser();
+  }
+
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${environment.apiHost}users/${userId}`);
   }
 
   private setUser(): void {
@@ -69,5 +76,9 @@ export class AuthService {
       ],
     };
     this.user$.next(user);
+  }
+
+  createCart(touristId: number): Observable<any> {
+    return this.http.get<any>(environment.apiHost + `shopping-cart/create/${touristId}`);
   }
 }

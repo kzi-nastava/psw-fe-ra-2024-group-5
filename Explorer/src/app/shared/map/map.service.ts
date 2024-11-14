@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserPosition } from '../model/userPosition.model';
+import { USER } from '../constants';
 
 @Injectable({
   providedIn: 'root'

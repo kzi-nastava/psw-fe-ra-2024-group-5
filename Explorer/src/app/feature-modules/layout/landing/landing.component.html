@@ -11,7 +11,7 @@
 
     <div class="card-links">
         <!-- Card links can use [routerLink] -->
-        <xp-card-link icon="language">Tours</xp-card-link>
+        <xp-card-link icon="language" [routerLink]="['tours-page']">Tours</xp-card-link>
         <xp-card-link icon="ballot">Blogs</xp-card-link>
         <xp-card-link [routerLink]="['/clubs']" icon="group">Clubs</xp-card-link>
     </div>
@@ -19,13 +19,10 @@
     <div class="rec-tours content-card-section">
         <div>
             <h1>Recommended Tours</h1>
-            <button [routerLink]="['tours']" class="secondary" mat-flat-button>View more</button>
+            <button [routerLink]="['tours-page']" class="secondary" mat-flat-button>View more</button>
         </div>
         <div class="content-cards">
-            <div class="tour-card rounded raised">TOUR CARD</div>
-            <div class="tour-card rounded raised">TOUR CARD</div>
-            <div class="tour-card rounded raised">TOUR CARD</div>
-            <div class="tour-card rounded raised">TOUR CARD</div>
+            <xp-tour-card class="tour-card rounded raised" *ngFor="let tour of recommendedTours" [tourCard]="tour" (click)="detailedTour(tour)"></xp-tour-card>
         </div>
     </div>
 

@@ -15,6 +15,8 @@ export class BlogPostCommentFormComponent implements OnChanges{
   @Output() commentUpdated = new EventEmitter<null>();
   @Input() comment: BlogPostComment;
   @Input() shouldEdit: boolean = false;
+  @Input() blogId: number;
+
 
   userId: number;
 
@@ -40,7 +42,16 @@ export class BlogPostCommentFormComponent implements OnChanges{
     }
   }
 
-  
+  updateBlogStatus(blogId: number): void {
+    this.service.updateBlogStatusBasedOnVotesAndComments(blogId, this.userId).subscribe({
+      next: (updatedBlog) => {
+        console.log("Blog status updated successfully", updatedBlog);
+      },
+      error: (err) => {
+        console.error("Error updating blog status:", err);
+      }
+    });
+  }
 
   addComment(): void {
     console.log(this.blogCommentForm.value);
@@ -49,13 +60,16 @@ export class BlogPostCommentFormComponent implements OnChanges{
       commentText: this.blogCommentForm.value.commentText || "",
       creationTime: new Date(),  
       lastEditedTime:  null,
-      userId: this.userId
+      userId: this.userId,
+      blogPostId: this.blogId
     };
 
-    this.service.addComment(comment as BlogPostComment).subscribe({
+    this.service.addComment(this.blogId, comment).subscribe({
       next: (_) => {
+        this.updateBlogStatus(this.blogId)
         this.commentUpdated.emit()
         console.log("Comment added succesdfully");
+        
       },
       error: (err) => {
         console.error('Error adding comment:', err);
@@ -68,10 +82,12 @@ export class BlogPostCommentFormComponent implements OnChanges{
       commentText: this.blogCommentForm.value.commentText || "",
       creationTime: this.comment.creationTime,  
       lastEditedTime: new Date(),
-      userId: this.userId
+      userId: this.userId,
+      blogPostId: this.blogId 
+
     };
     comment.id= this.comment.id;
-    this.service.updateComment(comment).subscribe({
+    this.service.updateComment(this.blogId, this.comment.id!, comment).subscribe({
       next: (_) => {
         this.commentUpdated.emit()
         console.log("Comment updated succesdfully");

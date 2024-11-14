@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {  MatGridList, MatGridListModule  } from '@angular/material/grid-list';
+import {MatCard, MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -21,7 +23,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatTableModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule
   ],
   exports: [
     MatToolbar,
@@ -37,7 +40,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatGridList,
+    MatCardModule
   ]
 })
 export class MaterialModule { }

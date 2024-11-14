@@ -67,7 +67,8 @@ export class UserProfileFormComponent implements OnInit {
         surname: this.profileForm.value.surname,
         biography: this.profileForm.value.biography,
         motto: this.profileForm.value.motto,
-        profilePictureUrl: this.userProfile.profilePictureUrl
+        profilePictureUrl: this.userProfile.profilePictureUrl,
+        //messages:     ->   dodati kad se napravi ProfileMessage
       };
 
       if(this.profileForm.invalid)

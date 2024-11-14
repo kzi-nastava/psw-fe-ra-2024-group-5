@@ -13,37 +13,55 @@ import { EquipmentManagementComponent } from 'src/app/feature-modules/tour-execu
 import { KeyPointsComponent } from 'src/app/feature-modules/tour-authoring/key-points/key-points.component';
 import { TourComponent } from 'src/app/feature-modules/tour-authoring/tour/tour.component';
 import { TourCreationComponent } from 'src/app/feature-modules/tour-authoring/tour-creation/tour-creation.component';
-import { TourEditComponent } from 'src/app/feature-modules/tour-authoring/tour-edit/tour-edit.component';
+import { TourDetailedViewComponent } from 'src/app/feature-modules/tour-authoring/tour-view/tour-view.component';
 import { PreferenceComponent } from 'src/app/feature-modules/marketplace/preference/preference.component';
 import { BlogComponent } from 'src/app/feature-modules/blog/blog-post/blog.component';
 import { BlogFormComponent } from 'src/app/feature-modules/blog/blog-form/blog-form.component';
-import { TourMapComponent } from 'src/app/feature-modules/tour-authoring/tour-map/tour-map.component';
 import { LandingComponent } from 'src/app/feature-modules/layout/landing/landing.component';
 import { BlogPostCommentComponent } from 'src/app/feature-modules/blog/blog-post-comment/blog-post-comment.component';
 import { BlogPostCommentFormComponent } from 'src/app/feature-modules/blog/blog-post-comment-form/blog-post-comment-form.component';
 import { ClubComponent } from 'src/app/feature-modules/club/club/club.component';
+import { ExecuteTourComponent } from 'src/app/feature-modules/tour-execution/execute-tour/execute-tour.component';
+import { AppRatingFormComponent } from 'src/app/feature-modules/marketplace/app-rating-form/app-rating-form.component';
+import { AppRatingComponent } from 'src/app/feature-modules/administration/app-rating/app-rating.component';
+import { ShoppingCartComponent } from 'src/app/feature-modules/marketplace/shopping-cart/shopping-cart.component';
+import { FollowersListComponent } from 'src/app/feature-modules/administration/followers-list/followers-list.component';
+import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours-page/tours-page.component';
+import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component';
+import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component';
+import { BlogPreviewComponent } from 'src/app/feature-modules/blog/blog-preview/blog-preview.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent},
-  { path: 'home', component: HomeComponent },
+  { path: '', component: LandingComponent },
+  { path: 'home', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'profile', component: UserProfileComponent},
-  { path: 'profile/profile-form', component: UserProfileFormComponent},
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'profile/:id', component: UserProfileComponent },
+  { path: 'profile/profile-form/:id', component: UserProfileFormComponent },
   { path: 'equipment', component: EquipmentComponent, canActivate: [AuthGuard] },
   { path: 'facility', component: FacilityComponent },
-  { path: 'tour-map', component: TourMapComponent },
-  { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard],},
-  { path: 'tour', component: TourComponent},
-  { path: 'tour-creation', component: TourCreationComponent},
-  { path: 'tour-edit/:tourId', component: TourEditComponent},
+  { path: 'equipment-management', component: EquipmentManagementComponent, canActivate: [AuthGuard], },
+  { path: 'tours', component: TourComponent },
+  { path: 'tour-creation', component: TourCreationComponent },
+  { path: 'tour-detailed-view/:tourId', component: TourDetailedViewComponent },
   { path: 'accounts', component: AccountsComponent },
-  { path: 'preferences', component: PreferenceComponent } ,
-  { path: 'blog', component:BlogComponent},
-  { path: 'addBlog', component:BlogFormComponent},
-  { path: 'create-comment', component: BlogPostCommentComponent},
-  { path: 'add-comment', component: BlogPostCommentFormComponent},
-  {path: 'clubs', component: ClubComponent}
+  { path: 'preferences', component: PreferenceComponent },
+  { path: 'blog', component: BlogComponent },
+  { path: 'addBlog', component: BlogFormComponent },
+  { path: 'create-comment', component: BlogPostCommentComponent },
+  { path: 'add-comment', component: BlogPostCommentFormComponent },
+  { path: 'clubs', component: ClubComponent },
+  { path: 'tour-execution/:tourId', component: ExecuteTourComponent },
+  { path: 'appRating', component: AppRatingComponent },
+  { path: 'appRatingForm', component: AppRatingFormComponent },
+  { path: 'shopping-cart', component: ShoppingCartComponent },
+  { path: 'tour-execution', component: ExecuteTourComponent },
+  { path: 'followers/:id', component: FollowersListComponent },
+  { path: 'tours-page', component: ToursPageComponent },
+  { path: 'my-clubs', component: MyClubsComponent},
+  { path: 'my-clubs/:id', component: ClubPageComponent},
+  { path: 'blog/:id', component: BlogPreviewComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,36 @@
+<div class="notification-popup">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Notifications</mat-card-title>
+      <mat-checkbox [(ngModel)]="markAllAsRead" (change)="onMarkAllAsRead()">
+        Mark all as read
+      </mat-checkbox>
+    </mat-card-header>
+    <mat-card-content class="notification-list">
+      <div *ngIf="notifications.length > 0; else noNotifications">
+        <mat-list>
+          <mat-list-item *ngFor="let notification of notifications" (click)="onNotificationClick(notification)">
+            <div class="notification-time-wrapper">
+              <mat-icon *ngIf="isNotificationUnread(notification)" class="notification-icon">fiber_manual_record</mat-icon>
+              <mat-icon *ngIf="!isNotificationUnread(notification)" class="notification-icon2">check</mat-icon>
+              <div mat-line class="notification-time">{{ notification.createdAt | date: 'short' }}</div>
+            </div>
+            <div mat-line class="notification-content">{{ notification.content }}</div>
+            <div mat-line class="notification-content">
+              " {{ notification.message && notification.message.length > 185 ? (notification.message.slice(0, 185) + ' ...') : notification.message }} "
+            </div>
+            <div *ngIf="notification.type === 1 && notification.attachment" mat-line class="notification-content">
+              <a *ngIf="notification.attachment.resourceType === 0"
+                    [routerLink]="['/tour-detailed-view', notification.attachment.resourceId]">
+                    View Tour
+              </a> 
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <ng-template #noNotifications>
+        <div class="no-notifications-text">No new notifications</div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>

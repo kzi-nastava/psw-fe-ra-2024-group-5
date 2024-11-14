@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyPoint } from './model/key-point.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
-import { Tour } from './model/tour.model';
+import { Tour, TourCreation, TourTourist } from './model/tour.model';
+import { TourCard } from './model/tour-card.model';
 import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Currency } from './model/tour.enums';
 
 
 @Injectable({
@@ -31,12 +33,34 @@ export class TourAuthoringService {
     }
   }
 
-  addTour(tour: Tour) : Observable<Tour>{
+  getPublishedTourCardsFiltered(searchParams: {
+    page: number,
+    pageSize: number,
+    startLat: number,
+    endLat: number,
+    startLong: number,
+    endLong: number
+  }): Observable<TourCard[]> {
+    const url = `${environment.apiHost}tour/published/filtered`;
+    return this.http.post<TourCard[]>(url, searchParams);
+  }
+  
+  
+
+  getPublishedTourCards(page: number, pageSize: number): Observable<TourCard[]> {
+    return this.http.get<TourCard[]>(environment.apiHost + `tour/published/${page}/${pageSize}`)
+  }
+
+  addTour(tour: TourCreation) : Observable<Tour>{
     return this.http.post<Tour>(environment.apiHost + 'tour/', tour)
   }
 
   getTourbyId(id : number) : Observable<Tour>{
     return this.http.get<Tour>(environment.apiHost + 'tour/' + id)
+  }
+
+  getTourForTouristById(id : number, touristId: number) : Observable<TourTourist>{
+    return this.http.get<TourTourist>(environment.apiHost + 'tour/tourist/' + id + '/' + touristId)
   }
 
   updateTour(tour:Tour) : Observable<Tour>{
@@ -46,4 +70,19 @@ export class TourAuthoringService {
   deleteTour(id : number): Observable<Tour>{
     return this.http.delete<Tour>(environment.apiHost + 'tour/' + id)
   }
+
+  publishTour(id: number, newPrice: number, newCurrency: Currency): Observable<any> {
+    const payload = {
+        amount: newPrice,
+        currency: newCurrency
+    };
+
+    return this.http.post(`${environment.apiHost}tour/publish/${id}`, payload);
+}
+
+  archiveTour(id: number): Observable<any> {
+    return this.http.post(`${environment.apiHost}tour/archive/${id}`, {});
+  }
+  
+
 }

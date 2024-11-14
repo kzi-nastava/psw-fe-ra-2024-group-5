@@ -1,0 +1,27 @@
+.app-rating-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+button {
+  margin-top: 15px;
+}
+  
+
+.mat-icon {
+  vertical-align: middle;
+}
