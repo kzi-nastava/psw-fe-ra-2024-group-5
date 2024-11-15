@@ -31,7 +31,7 @@
         Active tour
       </button>
 
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['blog']">
+      <button class="secondary" mat-button [routerLink]="['blog']">
         Blogs
       </button>
 
@@ -63,6 +63,12 @@
         class="icon-button">
         <mat-icon>shopping_cart</mat-icon>
       </button>
+      
+      <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button" (click)="toggleNotifications()">
+                <mat-icon>notifications</mat-icon>
+                <span *ngIf="getUnreadCount() > 0" class="unread-count">{{ getUnreadCount() }}</span>
+            </button>
+      <xp-notification *ngIf="showNotifications"></xp-notification>
 
       <button mat-icon-button class="icon-button" [routerLink]="['profile']">
         <mat-icon>person</mat-icon>

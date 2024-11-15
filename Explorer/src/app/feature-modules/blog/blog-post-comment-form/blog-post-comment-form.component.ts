@@ -42,7 +42,16 @@ export class BlogPostCommentFormComponent implements OnChanges{
     }
   }
 
-  
+  updateBlogStatus(blogId: number): void {
+    this.service.updateBlogStatusBasedOnVotesAndComments(blogId, this.userId).subscribe({
+      next: (updatedBlog) => {
+        console.log("Blog status updated successfully", updatedBlog);
+      },
+      error: (err) => {
+        console.error("Error updating blog status:", err);
+      }
+    });
+  }
 
   addComment(): void {
     console.log(this.blogCommentForm.value);
@@ -57,8 +66,10 @@ export class BlogPostCommentFormComponent implements OnChanges{
 
     this.service.addComment(this.blogId, comment).subscribe({
       next: (_) => {
+        this.updateBlogStatus(this.blogId)
         this.commentUpdated.emit()
         console.log("Comment added succesdfully");
+        
       },
       error: (err) => {
         console.error('Error adding comment:', err);

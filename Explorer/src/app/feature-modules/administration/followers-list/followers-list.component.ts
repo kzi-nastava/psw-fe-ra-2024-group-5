@@ -4,6 +4,7 @@ import { UserProfileService } from '../user-profile.service';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Following } from '../model/following.model';
 import { UserProfile } from '../model/userProfile.model';
+import { TokenStorage } from 'src/app/infrastructure/auth/jwt/token.service';
 
 @Component({
   selector: 'xp-followers-list',
@@ -16,11 +17,11 @@ export class FollowersListComponent implements OnInit {
 
   constructor(private service: UserProfileService, 
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    private tokenStorage: TokenStorage) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');  
-    this.userId = idParam ? Number(idParam) : null;
+    this.userId = this.tokenStorage.getUserId();
 
     this.loadFollowers();
   }

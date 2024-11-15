@@ -1,12 +1,13 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { BlogPostComment } from './model/blog-post-comment';
 import { environment } from 'src/env/environment';
 import { Blog } from './model/blog.model';
 import { createBlog } from './model/createBlog.model';
 import { Vote } from './model/vote.model';
+import { map } from 'leaflet';
 
 @Injectable({
   providedIn: 'root'
@@ -42,11 +43,29 @@ export class BlogService {
     return this.http.get<PagedResults<Blog>>(environment.apiHost + 'author/blog/all')
   }
 
+  getBlogById(blogId: number): Observable<Blog> {
+    return this.http.get<Blog>(environment.apiHost + `author/blog/${blogId}`)
+  }
+
   updateBlogStatus(blogId: number, newStatus: number, userId: number): Observable<Blog> {
     return this.http.put<Blog>(environment.apiHost + `author/blog/${blogId}/status?userId=${userId}`, newStatus);
   }
 
+  // updateBlogStatus(blogId: number, newStatus: number, userId: number): Observable<void> {
+  //   return this.http.put<void>(`${environment.apiHost}author/blog/${blogId}/status?userId=${userId}`, newStatus).pipe(
+  //     switchMap(() => this.http.post<void>(`${environment.apiHost}author/blog/${blogId}/update-status`, {}))
+  //   );
+  // }
 
+  // updateBlogStatusBasedOnVotesAndComments(blogId: number): Observable<string> {
+  //   return this.http.post(`${environment.apiHost}author/blog/${blogId}/update-status`, {}, { responseType: 'text' });
+  // }
+  
+  updateBlogStatusBasedOnVotesAndComments(blogId: number, userId: number): Observable<Blog> {
+    return this.http.put<Blog>(`${environment.apiHost}author/blog/${blogId}/update-status?userId=${userId}`, {} );
+}
+
+  
 
   createBlog(blog: createBlog): Observable<createBlog>{
     return this.http.post<createBlog>(environment.apiHost + 'author/blog/create', blog);

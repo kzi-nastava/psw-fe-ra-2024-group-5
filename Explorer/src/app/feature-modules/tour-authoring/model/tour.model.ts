@@ -21,6 +21,7 @@ export interface TourReview {
     tourId?: number;
     touristId?: number;
     completionPercentage: number;
+    
 }
 
 export interface Tour {
