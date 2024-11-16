@@ -239,12 +239,13 @@ export class TourDetailedViewComponent implements OnInit {
   addToCart(): void{
     if(!this.tour || !this.tour.id || !this.user)
       return;
-
-    const orderItem :OrderItem = {
+    
+    let orderItem :OrderItem = {
       tourId : this.tour.id,
       tourName : this.tour.name,
       price: this.tour.price
     }
+    console.log(orderItem)
 
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
       next: () => {
