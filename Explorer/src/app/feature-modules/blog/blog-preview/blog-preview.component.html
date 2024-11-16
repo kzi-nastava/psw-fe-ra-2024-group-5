@@ -14,31 +14,46 @@
   
   <div class="comments-section" *ngIf="blog && blog.comments">
     <h2>Comments</h2>
-    <div *ngFor="let comment of blog.comments">
-      
-      <!-- Show text or edit area depending on edit mode -->
-      <div *ngIf="editingCommentId !== comment.id; else editMode">
-        <p><strong>{{ comment.commentText }}</strong>: {{ comment.creationTime | date }}</p>
+
+    <div *ngIf="blog.status === 0 || blog.status === 2; else addCommentSection">
+      <p class="text-muted">You can't comment on a blog that is not published.</p>
+    </div>
+
+    <ng-template #addCommentSection>
+    <div class="add-comment">
+      <h3>Add a Comment</h3>
+      <textarea [(ngModel)]="newCommentText" rows="3" placeholder="Write your comment here..." [disabled]="blog.status === 0 || blog.status === 2"></textarea>
+      <button (click)="addComment()" class="btn primary" [disabled]="blog.status === 0 || blog.status === 2">Submit</button>
+    </div>
+  </ng-template>
+
+    <div *ngFor="let comment of blog.comments" [id]="'comment-' + comment.id" 
+    [class.highlight]="comment.id === newCommentId">
+
+      <div class="comment-header">
+        <span class="username">Username</span>
+        <span class="creation-time">{{ comment.creationTime | date: 'short' }}</span>
+      </div>
+    
+      <!-- Comment Text -->
+      <div class="comment-text" *ngIf="editingCommentId !== comment.id; else editMode">
+        <p>{{ comment.commentText }}</p>
       </div>
   
       <!-- Edit Mode Template -->
       <ng-template #editMode>
         <textarea [(ngModel)]="editedCommentText" rows="3"></textarea>
-        <button (click)="saveComment(comment.id!)" class="btn btn-primary">Save</button>
-        <button (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+        <button (click)="saveComment(comment.id!)" class="btn primary" [disabled]="blog.status === 0 || blog.status === 2">Save</button>
+        <button (click)="cancelEdit()" class="btn secondary" [disabled]="blog.status === 0 || blog.status === 2">Cancel</button>
       </ng-template>
   
       <!-- Edit and Delete buttons -->
       <div *ngIf="isCommentAuthor(comment.userId) && editingCommentId !== comment.id" class="comment-actions">
-        <button (click)="editComment(comment.id!, comment.commentText)" class="btn btn-secondary">Edit</button>
-        <button (click)="deleteComment(comment.id!)" class="btn btn-danger">Delete</button>
+        <button (click)="editComment(comment.id!, comment.commentText)" class="btn primary" [disabled]="blog.status === 0 || blog.status === 2">Edit</button>
+        <button (click)="deleteComment(comment.id!)" class="btn secondary" [disabled]="blog.status === 0 || blog.status === 2">Delete</button>
       </div>
 
     </div>
-    <div class="add-comment">
-        <h3>Add a Comment</h3>
-        <textarea [(ngModel)]="newCommentText" rows="3" placeholder="Write your comment here..."></textarea>
-        <button (click)="addComment()" class="btn btn-primary">Submit</button>
-      </div>
+    
   </div>
   

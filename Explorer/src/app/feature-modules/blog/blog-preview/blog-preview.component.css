@@ -61,7 +61,16 @@
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #ddd;
+  
+    /* Center the section and constrain its width */
+    max-width: 800px;
+    margin: 30px auto; /* Center horizontally */
+    background-color: #f9f9f9; /* Optional background for better visibility */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+  
   
   .comments-section h2 {
     font-size: 1.5em;
@@ -85,4 +94,50 @@
   .comments-section p strong {
     color: #007bff;
   }
+  
+  .highlight {
+    background-color: #ffffcc; /* Light yellow for visibility */
+    border: 1px solid #ffcc00; /* Optional border for emphasis */
+    animation: fadeHighlight 2s forwards;
+  }
+  
+  @keyframes fadeHighlight {
+    0% {
+      background-color: #ffffcc;
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+
+  .comment-container {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    margin-bottom: 10px;
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .username {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .creation-time {
+    font-style: italic;
+    color: #888;
+  }
+  
+  .comment-text {
+    margin-top: 5px;
+    font-size: 16px;
+    color: #000;
+  }
+  
   
