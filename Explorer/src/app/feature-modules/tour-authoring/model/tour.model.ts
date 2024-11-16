@@ -1,10 +1,6 @@
+import { Money } from "src/app/shared/model/money";
 import { KeyPoint } from "./key-point.model";
 import { TourLevel, TourStatus, TourTransport, Currency } from "./tour.enums"; // Adjust path as needed
-
-export interface Money {
-    amount: number;
-    currency: Currency;
-}
 
 export interface TransportDuration {
     duration: number;
