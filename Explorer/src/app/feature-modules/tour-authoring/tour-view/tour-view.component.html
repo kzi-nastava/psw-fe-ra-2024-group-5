@@ -26,7 +26,7 @@
                 <div class="transport">
                     <h3>Transport Durations</h3>
                     <ul>
-                        <li *ngFor="let transport of tour?.transportDurationDtos" class="transport-duration">
+                        <li *ngFor="let transport of tour?.transportDurations" class="transport-duration">
                             <strong>{{ transport.duration }} min</strong> -
                             <strong>{{ getTransport(transport.transport) }}</strong>
                         </li>
@@ -42,8 +42,7 @@
             </div>
             <div class="actions-row">
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'" (click)="archiveTour()">Archive</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status===2 && user?.role === 'author'" (click)="publishTour()">Publish</button>
-                <button mat-button class="secondary button-mg" *ngIf="tour?.status === 0 && user?.role === 'author'" (click)="togglePublishForm()">Publish</button>
+                <button mat-button class="secondary button-mg" *ngIf="(tour?.status===2 || tour?.status===0) && user?.role === 'author'" (click)="togglePublishForm()">Publish</button>
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated" (click)="startTour()">Activate</button>
                 <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed" (click)="openReviewDialog()">Add review</button>
                 <button mat-button class="secondary button-mg" *ngIf="user?.role === 'author'">Edit</button>
