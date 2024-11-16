@@ -30,6 +30,7 @@ import { ToursPageComponent } from 'src/app/feature-modules/tour-authoring/tours
 import { MyClubsComponent } from 'src/app/feature-modules/club/my-clubs/my-clubs.component';
 import { ClubPageComponent } from 'src/app/feature-modules/club/club-page/club-page.component';
 import { BlogPreviewComponent } from 'src/app/feature-modules/blog/blog-preview/blog-preview.component';
+import { EncountersManagingComponent } from 'src/app/feature-modules/administration/encounters-managing/encounters-managing.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -61,7 +62,8 @@ const routes: Routes = [
   { path: 'tours-page', component: ToursPageComponent },
   { path: 'my-clubs', component: MyClubsComponent},
   { path: 'my-clubs/:id', component: ClubPageComponent},
-  { path: 'blog/:id', component: BlogPreviewComponent}
+  { path: 'blog/:id', component: BlogPreviewComponent},
+  { path: 'encounters-managing', component: EncountersManagingComponent}
 ];
 
 @NgModule({

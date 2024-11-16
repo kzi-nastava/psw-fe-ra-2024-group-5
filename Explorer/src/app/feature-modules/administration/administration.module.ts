@@ -19,8 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-
-
+import { EncountersManagingComponent } from './encounters-managing/encounters-managing.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,8 @@ import { MatSelectModule } from '@angular/material/select';
     UserProfileFormComponent,
     AccountsComponent,
     FollowersListComponent,
-    SendMessageDialogComponent
+    SendMessageDialogComponent,
+    EncountersManagingComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +54,8 @@ import { MatSelectModule } from '@angular/material/select';
     AccountsComponent,
     MatTableModule,
     AppRatingComponent,
-    FollowersListComponent
+    FollowersListComponent,
+    EncountersManagingComponent
   ]
 })
 export class AdministrationModule { }
