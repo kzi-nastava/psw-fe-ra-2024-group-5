@@ -18,7 +18,7 @@
       </div>
   
       <div class="map-container" *ngIf="!miscModalVisible">            
-        <app-map>[isViewOnly]="true"</app-map>
+        <app-map [isViewOnly]="true" [encounters] = "encountersByCreator"></app-map>
       </div>
     </div>
 

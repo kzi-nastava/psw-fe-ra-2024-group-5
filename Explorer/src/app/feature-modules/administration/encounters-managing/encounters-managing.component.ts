@@ -31,10 +31,12 @@ export class EncountersManagingComponent implements OnInit {
     EncounterType: EncounterType.MISC,  
     creatorId: 0 
   };
+  encountersByCreator: Encounter[];
 
   ngOnInit(): void {
     this.userId = this.tokenStorage.getUserId();
     console.log(this.userId);
+    this.loadEncountersByCreator();
   }
 
   openCreateEncounterModal(): void {
@@ -71,5 +73,20 @@ export class EncountersManagingComponent implements OnInit {
 
   cancelCreateEncounter() {
     this.miscModalVisible = false;  
+  }
+
+  loadEncountersByCreator(): void {
+    if (this.userId) {
+      this.encounterService.getByCreatorId(this.userId).subscribe({
+        next: (encounters: Encounter[]) => {
+          this.encountersByCreator = encounters;
+          console.log('Encounters loaded:', encounters);
+        },
+        error: (err) => {
+          console.error('Error loading encounters:', err);
+          alert('An error occurred while loading the encounters.');
+        }
+      });
+    }
   }
 }
