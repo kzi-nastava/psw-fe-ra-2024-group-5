@@ -19,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { EncountersManagingComponent } from './encounters-managing/encounters-managing.component';
 import { SharedModule } from 'src/app/shared/shared.module'; 
 
 @NgModule({
@@ -31,8 +30,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     UserProfileFormComponent,
     AccountsComponent,
     FollowersListComponent,
-    SendMessageDialogComponent,
-    EncountersManagingComponent
+    SendMessageDialogComponent
   ],
   imports: [
     CommonModule,
@@ -56,8 +54,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AccountsComponent,
     MatTableModule,
     AppRatingComponent,
-    FollowersListComponent,
-    EncountersManagingComponent
+    FollowersListComponent
   ]
 })
 export class AdministrationModule { }

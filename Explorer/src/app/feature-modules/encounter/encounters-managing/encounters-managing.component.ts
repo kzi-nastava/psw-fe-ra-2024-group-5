@@ -27,15 +27,14 @@ export class EncountersManagingComponent implements OnInit {
     description: '',
     location: { latitude: 0, longitude: 0 },
     xp: NaN, // mora da bi lijepo pisao placeholder a ne 0
-    EncounterStatus: EncounterStatus.DRAFT,
-    EncounterType: EncounterType.MISC,  
+    Status: EncounterStatus.ACTIVE,
+    Type: EncounterType.MISC,  
     creatorId: 0 
   };
   encountersByCreator: Encounter[];
 
   ngOnInit(): void {
     this.userId = this.tokenStorage.getUserId();
-    console.log(this.userId);
     this.loadEncountersByCreator();
   }
 
@@ -46,8 +45,9 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   createEncounter(): void {
-    this.encounter.EncounterType = EncounterType[this.selectedEncounterType as keyof typeof EncounterType];
+    this.encounter.Type = EncounterType[this.selectedEncounterType as keyof typeof EncounterType];
     this.encounter.creatorId = this.userId ?? 0;
+    this.encounter.Status = EncounterStatus.ACTIVE;
     this.encounterService.create(this.encounter).subscribe({
       next: (createdEncounter) => {
         this.miscModalVisible = false;  
@@ -58,14 +58,15 @@ export class EncountersManagingComponent implements OnInit {
           description: '',
           location: { latitude: 0, longitude: 0 },
           xp: NaN,  
-          EncounterStatus: EncounterStatus.DRAFT,
-          EncounterType: EncounterType.MISC,  
+          Status: EncounterStatus.ACTIVE,
+          Type: EncounterType.MISC,  
           creatorId: 0 
         };
+
+        this.loadEncountersByCreator();
       },
       error: (err) => {
         console.error('Error creating encounter:', err);
-        alert('An error occurred while creating the encounter.');
       }
     });
 
@@ -84,7 +85,6 @@ export class EncountersManagingComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error loading encounters:', err);
-          alert('An error occurred while loading the encounters.');
         }
       });
     }

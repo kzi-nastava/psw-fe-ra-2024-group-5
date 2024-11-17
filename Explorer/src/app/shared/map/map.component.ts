@@ -6,7 +6,7 @@ import * as L from 'leaflet';
 import { UserLocationService } from '../user-location/user-location.service';
 import { UserPosition } from '../model/userPosition.model';
 import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point.model';
-import { Encounter } from 'src/app/feature-modules/administration/model/encounter.model';
+import { Encounter } from 'src/app/feature-modules/encounter/model/encounter.model';
 
 @Component({
   selector: 'app-map',
