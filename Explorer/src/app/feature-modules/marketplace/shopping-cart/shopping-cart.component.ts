@@ -12,7 +12,7 @@ import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 export class ShoppingCartComponent implements OnInit {
   shoppingCart: ShoppingCart | null = null;
   touristId: number ; 
-  priceCurrencies: string[] = ['Rsd', 'Eur', 'Dol']
+  priceCurrencies: string[] = ['AC', 'Eur', 'Dol','Rsd']
 
   constructor(private shoppingCartService: ShoppingCartService,private tokenStorage: TokenStorage) {}
 

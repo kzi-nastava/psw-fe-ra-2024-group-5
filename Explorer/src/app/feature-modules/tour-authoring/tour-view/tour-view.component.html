@@ -52,14 +52,10 @@
 
     <div *ngIf="showPublishForm" class="publish-form">
         <label>Price:</label>
-        <input type="number" [(ngModel)]="newPrice" placeholder="Enter price" required>
-        
-        <label>Currency:</label>
-        <select [(ngModel)]="newCurrency" required>
-            <option [ngValue]="Currency.Rsd">Rsd</option>
-            <option [ngValue]="Currency.Eur">Eur</option>
-            <option [ngValue]="Currency.Dol">Usd</option>            
-        </select>
+        <div>
+            <input type="number" [(ngModel)]="newPrice" placeholder="Enter price" required>
+            <span [style]="{'margin-left': '10px'}">AC</span>
+        </div>
         
         <button mat-button class="primary button-mg" (click)="publishTourWithPrice()">Confirm Publish</button>
     </div>
