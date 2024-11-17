@@ -1,1 +1,49 @@
-<p>encounters-managing works!</p>
+<div class="container">
+    <h1 class="title">Managing Tourism Encounters</h1>
+  
+    <div class="content">
+      <div class="left-panel">
+        <h3>Create New Encounter</h3>
+        <div class="filter-container" style="text-align: center; margin: 10px 0;">
+          <mat-form-field appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select [(value)]="selectedEncounterType">
+              <mat-option [value]="'MISC'">MISC</mat-option>
+              <mat-option [value]="'SOCIAL'">SOCIAL</mat-option>
+              <mat-option [value]="'HIDDEN LOCATION'">HIDDEN LOCATION</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button (click)="openCreateEncounterModal ()">Create</button>
+      </div>
+  
+      <div class="map-container" *ngIf="!miscModalVisible">            
+        <app-map>[isViewOnly]="true"</app-map>
+      </div>
+    </div>
+
+    <!-- modal za kreiranje encounter-a -->
+    <div class="modal-overlay" *ngIf="miscModalVisible">
+      <div class="modal">
+          <h2>Create Encounter</h2>
+          <input type="text" placeholder="Name" [(ngModel)]="encounter.name" />
+          <textarea rows="4" class="message-input" placeholder="Description"
+           [(ngModel)]="encounter.description"></textarea>
+          <input type="number" placeholder="Experience Points" [(ngModel)]="encounter.xp" />
+          <input type="number" placeholder="long" [(ngModel)]="encounter.location.longitude" />
+          <input type="number" placeholder="lat" [(ngModel)]="encounter.location.latitude" />
+          
+          <!--<div class="modal-map-container">
+            <app-map [isViewOnly]="false"></app-map>
+          </div>  ova mapa nece da se prikaze zbog one gore -->
+
+          <div class="modal-buttons">
+              <button class="create-btn"
+               (click)="createEncounter()">Create</button>
+              <button class="cancel-btn"
+              (click)="cancelCreateEncounter()">Cancel</button>
+          </div>
+      </div>
+    </div>
+  </div>
+  

@@ -6,6 +6,7 @@ import * as L from 'leaflet';
 import { UserLocationService } from '../user-location/user-location.service';
 import { UserPosition } from '../model/userPosition.model';
 import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point.model';
+import { Encounter } from 'src/app/feature-modules/administration/model/encounter.model';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +27,7 @@ export class MapComponent implements AfterViewInit {
   @Input() keyPoints: KeyPoint[];
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
+  @Input() encounters: Encounter[];
 
   @Output() addFacility = new EventEmitter<number[]>();
   @Output() addKeyPoint = new EventEmitter<number[]>();
@@ -202,6 +204,8 @@ export class MapComponent implements AfterViewInit {
       this.loadFacilities();
     if (this.keyPoints && this.keyPoints.length !== 0)
       this.loadKeyPoints();
+    if(this.encounters && this.encounters.length !== 0)
+      this.loadEncounters();
 
     this.loadUserLocation();
   }
@@ -228,6 +232,21 @@ export class MapComponent implements AfterViewInit {
       });
 
       const marker = new L.Marker([keypoint.latitude, keypoint.longitude], { icon: keypointIcon }).setZIndexOffset(1000).bindPopup('Ja sam keypoint').addTo(this.map);
+      this.markers.push(marker);
+    });
+  }
+
+  loadEncounters(): void {
+    this.encounters.forEach(encounter => {
+      const encounterIcon = L.icon({
+        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-pushpin.png', 
+        iconSize: [40, 40],
+        iconAnchor: [16, 32],
+      });
+  
+      const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon })
+        .addTo(this.map)
+        .bindPopup(encounter.name);  
       this.markers.push(marker);
     });
   }
@@ -283,6 +302,10 @@ export class MapComponent implements AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['facilities'] && changes['facilities'].currentValue) {
+      this.loadMarkers();
+    }
+
+    if (changes['encounters'] && changes['encounters'].currentValue) {
       this.loadMarkers();
     }
   }
