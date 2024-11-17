@@ -1,16 +1,25 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div>
-        <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput formControlName="username" type="text"/>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password"/>
-        </mat-form-field>
-    <button color="primary" type="submit" mat-raised-button>Login</button>
-    <p>Don't have an account yet?<a href="/register">Sign Up</a></p>
-    </div>
-</form>
+<div class="login-page container">
+    <mat-card class="form-container">
+        <h1 class="form-title">Explorer</h1>
+        <p class="form-subtitle">Welcome back!</p>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <div>
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" type="text" />
+                    <small class="error" *ngIf="username?.invalid && (username?.dirty || username?.touched)">Username is
+                        required.</small>
+                </mat-form-field>
 
-
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password" />
+                    <small class="error" *ngIf="password?.invalid && (password?.dirty || password?.touched)">Password is
+                        required.</small>
+                </mat-form-field>
+                <button class="secondary" type="submit" mat-button>Login</button>
+                <p class="register-link">Don't have an account yet? <a href="/register">Register</a></p>
+            </div>
+        </form>
+    </mat-card>
+</div>
