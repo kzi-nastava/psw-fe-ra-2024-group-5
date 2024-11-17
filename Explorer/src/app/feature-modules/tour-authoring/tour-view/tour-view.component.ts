@@ -30,9 +30,9 @@ export class TourDetailedViewComponent implements OnInit {
   canBeReviewed: boolean = false;
   showPublishForm = false;
   
-    public Currency = Currency; 
-    newPrice: number;
-    newCurrency: Currency = Currency.AC; 
+  public Currency = Currency; 
+  newPrice: number;
+  newCurrency: Currency = Currency.AC; 
 
    
 
