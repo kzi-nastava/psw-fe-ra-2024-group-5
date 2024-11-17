@@ -38,7 +38,6 @@ export class AuthService {
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
           this.setUser();
-          this.createCart(this.user$.value.id).subscribe();
           this.logout();
         })
       );
@@ -76,9 +75,5 @@ export class AuthService {
       ],
     };
     this.user$.next(user);
-  }
-
-  createCart(touristId: number): Observable<any> {
-    return this.http.get<any>(environment.apiHost + `shopping-cart/create/${touristId}`);
   }
 }

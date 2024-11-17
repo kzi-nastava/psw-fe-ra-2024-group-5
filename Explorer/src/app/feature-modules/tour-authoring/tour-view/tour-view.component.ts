@@ -32,7 +32,7 @@ export class TourDetailedViewComponent implements OnInit {
   
     public Currency = Currency; 
     newPrice: number;
-    newCurrency: Currency = Currency.Rsd; 
+    newCurrency: Currency = Currency.AC; 
 
    
 
@@ -265,11 +265,13 @@ export class TourDetailedViewComponent implements OnInit {
 currencyToEnum(currency: number): Currency | null {
   switch (currency) {
     case 0:
-      return Currency.Rsd;  
+      return Currency.AC;  
     case 1:
       return Currency.Dol;  
     case 2:
       return Currency.Eur; 
+    case 3:
+      return Currency.Rsd; 
     default:
       console.error('Invalid currency value:', currency); 
       return null;

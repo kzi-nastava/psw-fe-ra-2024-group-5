@@ -11,9 +11,10 @@ export enum TourStatus {
 }
 
 export enum Currency {
-    Rsd = 0,
+    AC = 0,
     Eur = 1,
-    Dol = 2
+    Dol = 2,
+    Rsd = 3
 }
 
 export enum TourTransport {
