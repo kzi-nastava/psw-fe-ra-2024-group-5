@@ -30,9 +30,9 @@ export class TourDetailedViewComponent implements OnInit {
   canBeReviewed: boolean = false;
   showPublishForm = false;
   
-    public Currency = Currency; 
-    newPrice: number;
-    newCurrency: Currency = Currency.Rsd; 
+  public Currency = Currency; 
+  newPrice: number;
+  newCurrency: Currency = Currency.AC; 
 
    
 
@@ -239,12 +239,13 @@ export class TourDetailedViewComponent implements OnInit {
   addToCart(): void{
     if(!this.tour || !this.tour.id || !this.user)
       return;
-
-    const orderItem :OrderItem = {
+    
+    let orderItem :OrderItem = {
       tourId : this.tour.id,
       tourName : this.tour.name,
       price: this.tour.price
     }
+    console.log(orderItem)
 
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
       next: () => {
@@ -264,11 +265,13 @@ export class TourDetailedViewComponent implements OnInit {
 currencyToEnum(currency: number): Currency | null {
   switch (currency) {
     case 0:
-      return Currency.Rsd;  
+      return Currency.AC;  
     case 1:
       return Currency.Dol;  
     case 2:
       return Currency.Eur; 
+    case 3:
+      return Currency.Rsd; 
     default:
       console.error('Invalid currency value:', currency); 
       return null;
