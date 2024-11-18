@@ -243,10 +243,32 @@ export class MapComponent implements AfterViewInit {
         iconSize: [40, 40],
         iconAnchor: [16, 32],
       });
+
+      const statusMap = {
+        0: 'Draft',
+        1: 'Active',
+        2: 'Archived',
+      };
+      const typeMap = {
+        0: 'Misc',
+        1: 'Social',
+        2: 'Location',
+      };
+
+      console.log(encounter.status);
+      const popupContent = `
+      <div style="padding: 5px;">
+        <h3 style="font-weight: bold">${encounter.name}</h3>
+        <p>${encounter.description}</p>
+        <p>Experience Points: <span class="popup-encounter__xp-value" style="color: var(--text-title);">${encounter.xp}</span></p>
+        <p>Status: <span class="popup-encounter__status-value" style="color: var(--text-title);">${statusMap[encounter.status]}</span></p>
+        <p>Type: <span class="popup-encounter__type-value" style="color: var(--text-title);">${typeMap[encounter.type]}</span></p>
+      </div>
+      `;
   
-      const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon })
-        .addTo(this.map)
-        .bindPopup(encounter.name);  
+    const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon })
+      .addTo(this.map)
+      .bindPopup(popupContent);  
       this.markers.push(marker);
     });
   }

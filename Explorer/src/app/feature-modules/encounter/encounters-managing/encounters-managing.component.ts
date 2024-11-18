@@ -5,6 +5,7 @@ import { Encounter } from '../model/encounter.model';
 import { EncounterService } from '../encounter.service';
 import { EncounterStatus } from '../enum/encounter-status.enum';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'xp-encounters-managing',
@@ -14,26 +15,22 @@ import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 export class EncountersManagingComponent implements OnInit {
 
   constructor(private encounterService: EncounterService,
-    private tokenStorage: TokenStorage) {}
+    private tokenStorage: TokenStorage,
+    private fb: FormBuilder ) {}
 
   @ViewChild(MapComponent) map: MapComponent;
+
   encounterTypes: string[] = ['MISC', 'SOCIAL', 'HIDDEN LOCATION'];
   selectedEncounterType: string | null = null;
   miscModalVisible = false;
   userId: number | null = null;
-  encounter: Encounter = {
-    id: 0,
-    name: '',
-    description: '',
-    location: { latitude: 0, longitude: 0 },
-    xp: NaN, // mora da bi lijepo pisao placeholder a ne 0
-    Status: EncounterStatus.ACTIVE,
-    Type: EncounterType.MISC,  
-    creatorId: 0 
-  };
+  encounterForm: FormGroup;
   encountersByCreator: Encounter[];
-
+  long: number = 0;
+  lat: number = 0;
   ngOnInit(): void {
+    this.setEncounterFormFields();
+
     this.userId = this.tokenStorage.getUserId();
     this.loadEncountersByCreator();
   }
@@ -45,23 +42,29 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   createEncounter(): void {
-    this.encounter.Type = EncounterType[this.selectedEncounterType as keyof typeof EncounterType];
-    this.encounter.creatorId = this.userId ?? 0;
-    this.encounter.Status = EncounterStatus.ACTIVE;
-    this.encounterService.create(this.encounter).subscribe({
+    if(this.encounterForm.invalid)
+    {
+      return;
+    }
+
+    const encounter: Encounter = {
+      id:0,
+      name: this.encounterForm.value.name,
+      description: this.encounterForm.value.description,
+      location: {
+        longitude: this.encounterForm.value.longitude,  
+        latitude: this.encounterForm.value.latitude      
+      },
+      xp: this.encounterForm.value.xp,
+      status: EncounterStatus.ACTIVE,
+      type: EncounterType.MISC,  
+      creatorId: this.userId ?? 0
+    }
+
+    this.encounterService.create(encounter).subscribe({
       next: (createdEncounter) => {
         this.miscModalVisible = false;  
-
-        this.encounter = {
-          id: 0,
-          name: '',
-          description: '',
-          location: { latitude: 0, longitude: 0 },
-          xp: NaN,  
-          Status: EncounterStatus.ACTIVE,
-          Type: EncounterType.MISC,  
-          creatorId: 0 
-        };
+        this.setEncounterFormFields();
 
         this.loadEncountersByCreator();
       },
@@ -74,6 +77,25 @@ export class EncountersManagingComponent implements OnInit {
 
   cancelCreateEncounter() {
     this.miscModalVisible = false;  
+   
+    this.setEncounterFormFields();
+  }
+
+  setEncounterFormFields(): void {
+    this.encounterForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      xp: [NaN, [Validators.required, this.xpValidator]],
+      longitude: [0, Validators.required],  
+      latitude: [0, Validators.required]   
+    });
+  }
+
+  xpValidator(control: FormControl): { [key: string]: any } | null {
+    if (control.value && !isNaN(control.value) && control.value > 0) {
+      return null;   
+    }
+    return { 'invalidXp': true };  
   }
 
   loadEncountersByCreator(): void {

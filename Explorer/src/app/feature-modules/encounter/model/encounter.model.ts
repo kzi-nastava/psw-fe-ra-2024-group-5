@@ -8,7 +8,7 @@ export interface Encounter {
     description: string,
     location: Location,
     xp: number,
-    Status: EncounterStatus,
-    Type: EncounterType,
+    status: EncounterStatus,
+    type: EncounterType,
     creatorId: number
 }
