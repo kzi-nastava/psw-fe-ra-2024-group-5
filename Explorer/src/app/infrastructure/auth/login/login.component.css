@@ -5,6 +5,10 @@
     align-items: center;
 }
 
+.form-app-logo {
+    width: 280px;
+}
+
 .form-container {
     display: flex;
     flex-direction: column;
