@@ -14,6 +14,7 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-review-form.component';
+import { AddFundsDialogComponent } from './add-funds-dialog/add-funds-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-re
     PreferenceDialogComponent,
     AppRatingFormComponent,
     ShoppingCartComponent,
-    TourReviewFormComponent
+    TourReviewFormComponent,
+    AddFundsDialogComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +38,8 @@ import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-re
   ],
   exports: [
     PreferenceComponent,
-    AppRatingFormComponent
-
+    AppRatingFormComponent,
+    AddFundsDialogComponent
   ]
 })
 export class MarketplaceModule { }

@@ -5,7 +5,8 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Preference } from './model/preference.model';
 import { environment } from 'src/env/environment';
 import { AppRating } from './model/app-rating.model';
-
+import { Wallet } from './model/wallet';
+import { Money } from 'src/app/shared/model/money';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,11 @@ export class MarketplaceService {
     return this.http.post<AppRating>(environment.apiHost + 'tourist/appRating', appRating);
   }
 
+  getWalletByAdmin(touristId: number) : Observable<Wallet> {
+    return this.http.get<Wallet>(environment.apiHost + 'wallet/admin/' + touristId);
+  }
+
+  addFunds(money: Money, touristId: number): Observable<Wallet>{
+    return this.http.post<Wallet>(environment.apiHost +'wallet/addFunds/' + touristId, money);
+  }
 }
