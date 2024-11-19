@@ -37,8 +37,8 @@ export class EncountersManagingComponent implements OnInit {
 
   openCreateEncounterModal(): void {
     if (this.selectedEncounterType === 'MISC') {
-      this.miscModalVisible = true; 
-    } 
+      this.miscModalVisible = true;
+    }
   }
 
   createEncounter(): void {
@@ -48,22 +48,22 @@ export class EncountersManagingComponent implements OnInit {
     }
 
     const encounter: Encounter = {
+      type: EncounterType.MISC,
       id:0,
       name: this.encounterForm.value.name,
       description: this.encounterForm.value.description,
       location: {
-        longitude: this.encounterForm.value.longitude,  
-        latitude: this.encounterForm.value.latitude      
+        longitude: this.encounterForm.value.longitude,
+        latitude: this.encounterForm.value.latitude
       },
       xp: this.encounterForm.value.xp,
       status: EncounterStatus.ACTIVE,
-      type: EncounterType.MISC,  
       creatorId: this.userId ?? 0
     }
 
     this.encounterService.create(encounter).subscribe({
       next: (createdEncounter) => {
-        this.miscModalVisible = false;  
+        this.miscModalVisible = false;
         this.setEncounterFormFields();
 
         this.loadEncountersByCreator();
@@ -76,8 +76,8 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   cancelCreateEncounter() {
-    this.miscModalVisible = false;  
-   
+    this.miscModalVisible = false;
+
     this.setEncounterFormFields();
   }
 
@@ -86,16 +86,16 @@ export class EncountersManagingComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       xp: [NaN, [Validators.required, this.xpValidator]],
-      longitude: [0, Validators.required],  
-      latitude: [0, Validators.required]   
+      longitude: [0, Validators.required],
+      latitude: [0, Validators.required]
     });
   }
 
   xpValidator(control: FormControl): { [key: string]: any } | null {
     if (control.value && !isNaN(control.value) && control.value > 0) {
-      return null;   
+      return null;
     }
-    return { 'invalidXp': true };  
+    return { 'invalidXp': true };
   }
 
   loadEncountersByCreator(): void {
