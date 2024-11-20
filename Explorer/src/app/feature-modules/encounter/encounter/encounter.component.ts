@@ -26,7 +26,15 @@ export class EncounterComponent implements OnInit{
   }
 
   loadActiveEncounters(): void {
-    
+    this.encounterService.getAllActive().subscribe({
+      next: (encounters: Encounter[]) => {
+        this.activeEncounters = encounters;
+        console.log('Encounters loaded:', encounters);
+      },
+      error: (err) => {
+        console.error('Error loading encounters:', err);
+      }
+    });
   }
 
 }
