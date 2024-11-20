@@ -43,7 +43,7 @@
                 <button class="secondary" mat-flat-button [disabled]="!element.isActive"
                     (click)="blockAccount(element)"><mat-icon>block</mat-icon> Block </button>
                 <button class="primary" mat-flat-button [disabled]="element.role !== 'tourist'" [ngStyle]="{'margin-left': '10px'}"
-                    (click)="openDialog(element.id)"> <mat-icon>attach_money</mat-icon> Add </button>
+                    (click)="openDialog(element)"> <mat-icon>attach_money</mat-icon> Add </button>
             </td>
         </ng-container>
 

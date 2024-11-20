@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { AppRatingFormComponent } from './app-rating-form/app-rating-form.component';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
@@ -35,6 +36,7 @@ import { AddFundsDialogComponent } from './add-funds-dialog/add-funds-dialog.com
     ReactiveFormsModule,
     MaterialModule,
     MatDialogModule,
+    MatChipsModule  
   ],
   exports: [
     PreferenceComponent,

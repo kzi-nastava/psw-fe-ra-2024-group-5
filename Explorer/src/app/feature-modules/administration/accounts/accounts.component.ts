@@ -31,6 +31,10 @@ export class AccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sendAccountsRequest();
+  }
+
+  sendAccountsRequest():void{
     this.administrationService.getAccounts().subscribe(
       (data) => {
         this.accounts = data.results;
@@ -70,13 +74,15 @@ export class AccountsComponent implements OnInit {
     )
   }
 
-  openDialog(id?: number): void{
+  openDialog(acc: Account): void{
     const dialogRef = this.dialog.open(AddFundsDialogComponent, {
-      width: '600px',
+      width: '500px',
+      data: acc
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-        console.log('dialog closed')
+        if(result)
+          this.sendAccountsRequest()
     });
   }
 }

@@ -34,4 +34,8 @@ export class MarketplaceService {
   addFunds(money: Money, touristId: number): Observable<Wallet>{
     return this.http.post<Wallet>(environment.apiHost +'wallet/addFunds/' + touristId, money);
   }
+
+  getWalletByTourist() : Observable<Wallet> {
+    return this.http.get<Wallet>(environment.apiHost + 'wallet');
+  }
 }
