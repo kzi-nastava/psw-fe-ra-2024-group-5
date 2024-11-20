@@ -3,7 +3,7 @@ export interface UserProfile {
     userId: number,
     name: string,
     surname: string,
-    profilePictureUrl?: string,
+    profileImage?: string,
     biography?: string,
     motto?: string
     // messages?: ProfileMessage[]; dodati kad se napravi ProfileMessage
