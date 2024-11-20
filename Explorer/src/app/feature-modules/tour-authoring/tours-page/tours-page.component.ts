@@ -3,6 +3,8 @@ import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-tours-page',
@@ -13,7 +15,7 @@ export class ToursPageComponent {
   tours: TourCard[] = [];
   currentPage = 1;
   showSearch: boolean = false;
-
+  user: User;
   startLatitude: number = 0;
   endLatitude: number = 0;
   startLongitude: number = 0;
@@ -24,18 +26,34 @@ export class ToursPageComponent {
   centerLongitude = new BehaviorSubject<number | null>(null);
   radius = new BehaviorSubject<number>(0);
 
-  constructor(private tourService: TourAuthoringService, private router: Router){
-    this.loadTours();
+  constructor(private tourService: TourAuthoringService, private authService: AuthService, private router: Router){
+    
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.loadTours();
+    });
   }
 
   loadTours(): void {
-    this.tourService.getPublishedTourCards(this.currentPage, 8).subscribe({
-      next: (result: TourCard[]) => {
-        this.tours = result;
-        console.log(this.tours);
-      },
-      error: () => {}
-    });
+    if(this.user.role === 'author'){
+      this.tourService.getTours(this.user).subscribe({
+        next: (result: TourCard[]) => {
+          this.tours = result
+          console.log(this.tours)
+        },
+        error: (err: any) => {
+          console.log(err)
+        }
+     });
+    }else{
+      this.tourService.getPublishedTourCards(this.currentPage, 8).subscribe({
+        next: (result: TourCard[]) => {
+          this.tours = result;
+          console.log(this.tours);
+        },
+        error: () => {}
+      });
+    }
   }
 
   changeSearch(): void{
