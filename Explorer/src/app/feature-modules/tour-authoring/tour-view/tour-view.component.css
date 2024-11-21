@@ -138,7 +138,7 @@ button.close:hover {
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
-  max-height: 800px; /* Adjust the max-height as needed */
+  max-height: 1000px; /* Adjust the max-height as needed */
   overflow-y: auto;
   gap: 20px;
   border: 1px solid #ccc; /* Optional border to visually separate */
@@ -147,10 +147,11 @@ button.close:hover {
 
 .review-card {
   width: 800px;
-  height: 200px;
+  height: 250px;
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
+  justify-content: start;
   padding: 15px;
   box-sizing: border-box;
   gap: 20px;
@@ -164,8 +165,8 @@ button.close:hover {
 }
 
 .image-container {
-  width: 170px;
-  height: 170px;
+  width: 220px;
+  height: 220px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -193,12 +194,16 @@ button.close:hover {
   margin: 0;
   color: #333;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .review-footer {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .review-dates {
