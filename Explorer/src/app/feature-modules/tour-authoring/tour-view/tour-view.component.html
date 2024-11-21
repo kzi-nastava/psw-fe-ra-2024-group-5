@@ -69,62 +69,34 @@
     </div>
     <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
         <div class="review-card" *ngFor="let review of tour?.reviews">
-            <div class="image-container">
-                <img [src]="'data:image/jpeg;base64,' + review.image"  alt="review-picture">
-            </div>
-            <div class="review-info">
-                <p class="review-comment">{{review.comment}}</p>
-                <div class="review-footer">
-                    <div class="review-dates">
-                        <div class="review-date">Visit: {{review.visitDate}}</div>
-                        <div class="review-date">Review: {{review.reviewDate}}</div>
-                    </div>
-                    <div class="star-rating">
-                        <span class="star" *ngIf="review.rating >= 1">&#9733;</span>
-                        <span class="star" *ngIf="review.rating >= 2">&#9733;</span>
-                        <span class="star" *ngIf="review.rating >= 3">&#9733;</span>
-                        <span class="star" *ngIf="review.rating >= 4">&#9733;</span>
-                        <span class="star" *ngIf="review.rating >= 5">&#9733;</span>
-                    </div>
+          <div class="image-container">
+            <img [src]="'data:image/jpeg;base64,' + review.image" 
+                 alt="review-picture"
+                 class="review-picture">
+          </div>
+          <div class="review-info">
+            <p class="review-comment">{{review.comment}}</p>
+            <div class="review-footer">
+              <div class="review-dates">
+                <div class="review-date">
+                  <span class="date-label">Visited:</span> 
+                  {{review.visitDate | date:'MMM d, y'}}
                 </div>
+                <div class="review-date">
+                  <span class="date-label">Reviewed:</span> 
+                  {{review.reviewDate | date:'MMM d, y'}}
+                </div>
+              </div>
+              <div class="star-rating">
+                <span class="star" *ngIf="review.rating >= 1">&#9733;</span>
+                <span class="star" *ngIf="review.rating >= 2">&#9733;</span>
+                <span class="star" *ngIf="review.rating >= 3">&#9733;</span>
+                <span class="star" *ngIf="review.rating >= 4">&#9733;</span>
+                <span class="star" *ngIf="review.rating >= 5">&#9733;</span>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        
-
-        <!-- Example of review card
-        <div class="review-card">
-            <div class="image-container">
-                <img class="review-picture" src="assets/images/pexels-florencia-potter-82066-351283.jpg"
-                  alt="review-picture">
-            </div>
-            <div class="review-info">
-                <p class="review-comment">
-                    This is a long comment about the experience.
-                    The service was excellent and I would highly recommend it to others!
-                </p>
-                <div class="review-footer">
-                    <div class="review-dates">
-                        <div class="review-date">Visit: November 3, 2024</div>
-                        <div class="review-date">Review: November 2, 2024</div>
-                    </div>
-                    <div class="star-rating">
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-    </div>
-
-    <div class="row">
-        <button mat-raised-button class="close" (click)="back()">
-            <mat-icon>back</mat-icon>
-            Home
-        </button>
-    </div>
 </div>
