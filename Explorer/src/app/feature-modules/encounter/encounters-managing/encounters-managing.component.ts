@@ -6,6 +6,7 @@ import { EncounterService } from '../encounter.service';
 import { EncounterStatus } from '../enum/encounter-status.enum';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MapService } from 'src/app/shared/map/map.service';
 
 @Component({
   selector: 'xp-encounters-managing',
@@ -16,7 +17,8 @@ export class EncountersManagingComponent implements OnInit {
 
   constructor(private encounterService: EncounterService,
     private tokenStorage: TokenStorage,
-    private fb: FormBuilder ) {}
+    private fb: FormBuilder,
+    private mapService: MapService) {}
 
   @ViewChild(MapComponent) map: MapComponent;
 
@@ -25,9 +27,11 @@ export class EncountersManagingComponent implements OnInit {
   miscModalVisible = false;
   userId: number | null = null;
   encounterForm: FormGroup;
-  encountersByCreator: Encounter[];
+  encountersByCreator: Encounter[] = [];
   long: number = 0;
   lat: number = 0;
+  isViewOnly: boolean = true;
+
   ngOnInit(): void {
     this.setEncounterFormFields();
 
@@ -38,6 +42,7 @@ export class EncountersManagingComponent implements OnInit {
   openCreateEncounterModal(): void {
     if (this.selectedEncounterType === 'MISC') {
       this.miscModalVisible = true;
+      this.isViewOnly = false;
     }
   }
 
@@ -64,8 +69,8 @@ export class EncountersManagingComponent implements OnInit {
     this.encounterService.create(encounter).subscribe({
       next: (createdEncounter) => {
         this.miscModalVisible = false;
+        this.isViewOnly = true;
         this.setEncounterFormFields();
-
         this.loadEncountersByCreator();
       },
       error: (err) => {
@@ -77,7 +82,7 @@ export class EncountersManagingComponent implements OnInit {
 
   cancelCreateEncounter() {
     this.miscModalVisible = false;
-
+    this.isViewOnly = true;
     this.setEncounterFormFields();
   }
 
@@ -86,8 +91,9 @@ export class EncountersManagingComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       xp: [NaN, [Validators.required, this.xpValidator]],
-      longitude: [0, Validators.required],
-      latitude: [0, Validators.required]
+      longitude: ['',Validators.required],
+      latitude: ['', Validators.required],
+      location: ['', Validators.required],
     });
   }
 
@@ -110,5 +116,40 @@ export class EncountersManagingComponent implements OnInit {
         }
       });
     }
+  }
+
+  changeLongLat(latLong: number[]): void{
+    const [lat,long] = latLong;
+
+    this.mapService.reverseSearch(lat, long).subscribe((res) => {
+      this.encounterForm.patchValue({
+        location: res.display_name,
+        longitude: long,
+        latitude: lat
+      })
+    });
+  }
+
+  searchLocation(): void{
+    const location = this.encounterForm.value.location
+    if(!location)
+      return;
+    
+    this.mapService.search(location).subscribe((res) => {
+      if(res.length == 0){
+        this.encounterForm.patchValue({
+          Location: ''
+        });
+        this.encounterForm.controls['location'].markAsTouched();
+      }
+      else{
+        this.map.search(location)
+        this.encounterForm.patchValue({
+          Longitude: res[0].lon,
+          Latitude: res[0].lat
+        });
+      }
+    });  
+    this.encounterForm.updateValueAndValidity();
   }
 }

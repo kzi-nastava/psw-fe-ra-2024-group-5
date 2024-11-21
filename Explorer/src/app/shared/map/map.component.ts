@@ -98,7 +98,10 @@ export class MapComponent implements AfterViewInit {
       case 'facility':
         this.addFacility.emit([lat, lng])
         break;
-        case 'keypoint':
+      case 'encounter':
+        this.addFacility.emit([lat, lng])
+        break;
+      case 'keypoint':
         this.addKeyPoint.emit([lat, lng])
         break;
       default:
@@ -132,6 +135,9 @@ export class MapComponent implements AfterViewInit {
       case 'keypoint':
         this.addKeyPointMarker(latlng, popupText ?? 'keypoint');
         break;
+      case 'encounter':
+        this.addOneMarker(latlng, popupText ?? 'keypoint');
+        break;
       default:
         break;
     }
@@ -144,6 +150,21 @@ export class MapComponent implements AfterViewInit {
 
     const marker = new L.Marker(latlng, { title: 'facility' }).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
+  }
+
+  addOneMarker(latlng: [number, number], popupText: string): void {
+    this.removeAllMarkers();
+
+    const marker = new L.Marker(latlng, { title: 'encounter' }).addTo(this.map).bindPopup(popupText);
+    this.markers.push(marker);
+  }
+
+  removeAllMarkers(): void {
+    this.markers.forEach(marker => {
+      this.map.removeLayer(marker);  
+    });
+  
+    this.markers = [];
   }
 
   addKeyPointMarker(latlng: [number, number], popupText: string): void {
@@ -239,7 +260,7 @@ export class MapComponent implements AfterViewInit {
   loadEncounters(): void {
     this.encounters.forEach(encounter => {
       const encounterIcon = L.icon({
-        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-pushpin.png', 
+        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', 
         iconSize: [40, 40],
         iconAnchor: [16, 32],
       });
