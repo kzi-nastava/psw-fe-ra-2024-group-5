@@ -1,25 +1,46 @@
-<div id="appRating">
-  <p>App ratings</p>
-  <hr>
-  <div id="appRating-details">
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Grade</th>
-            <th>Comment</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let ar of appRating">
-            <td>{{ getUserName(ar.userId) }}</td>
-            <td>{{ ar.grade }}</td>
-            <td>{{ ar.comment }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="app-rating-container">
+  <h1>App Ratings</h1>
+
+  <!-- Search and Filter -->
+  <div class="search-filter">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="onSearchChange()"
+      placeholder="Search by username or grade"
+    />
   </div>
+
+  <!-- Button to open the rating dialog -->
+  <div class="rate-button">
+    <button (click)="openRatingDialog()">Rate our App</button>
+  </div>
+
+  <!-- Ratings Table -->
+  <div *ngIf="isLoading" class="loading">Loading ratings...</div>
+
+  <table *ngIf="!isLoading" class="ratings-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Grade</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appRating of appRatings">
+        <td>{{ getUserName(appRating.userId) }}</td>
+        <td>{{ appRating.grade }}</td>
+        <td>{{ appRating.comment }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div *ngIf="!isLoading" class="pagination">
+    <button (click)="onPageChange(page - 1)" [disabled]="page <= 1">Previous</button>
+<span>Page {{ page }}</span>
+<button (click)="onPageChange(page + 1)" [disabled]="!hasMoreResults()">Next</button>
+
+  </div>
+</div>

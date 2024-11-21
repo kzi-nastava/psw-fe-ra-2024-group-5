@@ -29,7 +29,8 @@ thead {
   color: #fff;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -37,14 +38,15 @@ th, td {
 
 tbody tr {
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
-  tbody tr:hover {
-    background-color: #f0f0f0;
-  }
+tbody tr:hover {
+  background-color: #f0f0f0;
+}
 
-  tbody tr.active-row {
-    background-color: #e3f2fd;
-    font-weight: bold;
-    color: #3f51b5;
-  }
+tbody tr.active-row {
+  background-color: #e3f2fd;
+  font-weight: bold;
+  color: #3f51b5;
+}

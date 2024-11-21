@@ -18,7 +18,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MarketplaceModule } from '../marketplace/marketplace.module';
 import { MatSelectModule } from '@angular/material/select';
+import { AppRatingDialogComponent } from './app-rating/app-rating-dialog/app-rating-dialog.component';
 
 
 
@@ -31,6 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
     UserProfileFormComponent,
     AccountsComponent,
     FollowersListComponent,
+    AppRatingDialogComponent,
     SendMessageDialogComponent
   ],
   imports: [
@@ -39,6 +42,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     RouterModule,
     MatTableModule,
+    MarketplaceModule, 
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
@@ -54,6 +58,7 @@ import { MatSelectModule } from '@angular/material/select';
     AccountsComponent,
     MatTableModule,
     AppRatingComponent,
+    AppRatingDialogComponent,
     FollowersListComponent
   ]
 })
