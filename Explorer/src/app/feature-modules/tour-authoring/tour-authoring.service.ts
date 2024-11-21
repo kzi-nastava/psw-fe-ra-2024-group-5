@@ -24,9 +24,9 @@ export class TourAuthoringService {
     return this.http.post<KeyPoint[]>(`https://localhost:44333/api/tours/${tourId}/keypoints`, keyPoints);
   }
 
-  getTours(user: User) : Observable<TourCard[]>{
+  getTours(user: User, page: number, pageSize: number) : Observable<TourCard[]>{
     if(user.role === 'author')
-      return this.http.get<TourCard[]>(environment.apiHost + 'tour/author/' + user.id);
+      return this.http.get<TourCard[]>(`${environment.apiHost}tour/author/${user.id}/${page}/${pageSize}`);
     else{
       console.log('Nije dobra rola');
       throw console.error('Nije dobra rola');

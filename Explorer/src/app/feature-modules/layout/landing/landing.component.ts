@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { TourAuthoringService } from '../../tour-authoring/tour-authoring.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 //import { Blog } from '../../blog/model/blog.model';
 
 @Component({
@@ -11,9 +13,13 @@ import { Router } from '@angular/router';
 })
 export class LandingComponent {
   recommendedTours: TourCard[] = [];
+  user: User;
   //recommendedBlogs: Blog[] = [];
 
-  constructor(private tourService: TourAuthoringService, private router: Router){
+  constructor(private tourService: TourAuthoringService, private authService: AuthService, private router: Router){
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
     this.loadTours();
   }
 
