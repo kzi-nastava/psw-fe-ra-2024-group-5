@@ -1,44 +1,32 @@
-<form [formGroup]="appRatingForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <mat-form-field>
-      <mat-label>Grade (1-5)</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="grade"
-        min="1"
-        max="5"
-        required
-      />
-    </mat-form-field>
-    <div *ngIf="appRatingForm.get('grade')?.invalid && appRatingForm.get('grade')?.touched" class="error">
-      Grade must be between 1 and 5.
-    </div>
-  </div>
-
-  <div class="form-group">
-    <mat-form-field>
-      <mat-label>Comment</mat-label>
-      <textarea
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-        formControlName="comment"
-      ></textarea>
-    </mat-form-field>
-    <div *ngIf="appRatingForm.get('comment')?.hasError('maxlength')" class="error">
-      Comment cannot exceed 250 characters.
-    </div>
+<mat-dialog-content>
+  <div class="rating-form">
+    <h1>Rate our App</h1>
+    <br>
     
-  </div>
+    <div class="stars">
+      <span (click)="grade = 1" [class.selected]="grade >= 1" role="button" aria-label="1 star">★</span>
+      <span (click)="grade = 2" [class.selected]="grade >= 2" role="button" aria-label="2 stars">★</span>
+      <span (click)="grade = 3" [class.selected]="grade >= 3" role="button" aria-label="3 stars">★</span>
+      <span (click)="grade = 4" [class.selected]="grade >= 4" role="button" aria-label="4 stars">★</span>
+      <span (click)="grade = 5" [class.selected]="grade >= 5" role="button" aria-label="5 stars">★</span>
+    </div>
 
-  <button
-    [disabled]="appRatingForm.invalid || isLoading"
-    mat-raised-button
-    color="primary"
-    type="submit"
-  >
-    {{ isLoading ? 'Submitting...' : 'Submit' }}
-  </button>
-</form>
+    <p>Rating: {{ grade }} star{{ grade !== 1 ? 's' : '' }}</p>
+
+   
+    <textarea [(ngModel)]="comment" 
+              placeholder="Leave a comment..." 
+              rows="4" 
+              aria-label="Leave a comment" 
+              (keydown.enter)="onSubmit()"></textarea>
+
+    
+    <div *ngIf="comment.trim() === ''" class="error">Please provide a comment.</div>
+
+    
+    <button (click)="onSubmit()" [disabled]="grade === 0 || comment.trim() === ''">
+      Submit
+    </button>
+  </div>
+</mat-dialog-content>
+

@@ -4,9 +4,10 @@ import { UserProfile } from '../model/userProfile.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Following } from '../model/following.model';
-import { PagedResults } from 'src/app/shared/model/paged-results.model';
+import { PagedResults } from '../../../shared/model/paged-results.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SendMessageDialogComponent } from '../send-message-dialog/send-message-dialog.component';
+import { AppRatingFormComponent } from '../../marketplace/app-rating-form/app-rating-form.component';
 
 @Component({
   selector: 'xp-user-profile',
@@ -20,6 +21,8 @@ export class UserProfileComponent implements OnInit {
   isFollower: boolean = false;
   followersCount: number = 0;
   userId: number | null;
+  userRating: { grade: number; comment: string } | null = null;
+
 
   constructor(private service: UserProfileService,
     private tokenStorage: TokenStorage,
@@ -38,6 +41,11 @@ export class UserProfileComponent implements OnInit {
 
     const parsedProfileId = profileId ? parseInt(profileId, 10) : null;
 
+    const storedRating = localStorage.getItem('userRating');
+    if (storedRating) {
+      this.userRating = JSON.parse(storedRating);
+    }
+    
     this.userId = this.tokenStorage.getUserId();
     if (profileId && parsedProfileId != this.userId) {
       this.userId = parsedProfileId;
@@ -82,6 +90,44 @@ export class UserProfileComponent implements OnInit {
       console.error("User ID is null");
     }
   }
+
+  openRatingDialog(): void {
+    const dialogRef = this.dialog.open(AppRatingFormComponent, {
+      width: '400px',
+      data: { grade: this.userRating?.grade || 0, comment: this.userRating?.comment || '' }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userRating = { grade: result.grade, comment: result.comment };
+        console.log('Rating:', result.grade, 'Comment:', result.comment);
+      }
+    });
+  }
+  
+
+  openReviewDialog(): void {
+    if (this.userRating) {
+      const dialogRef = this.dialog.open(AppRatingFormComponent, {
+        width: '400px',
+        data: { grade: this.userRating.grade, comment: this.userRating.comment }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.userRating = { grade: result.grade, comment: result.comment };
+          console.log('Updated Rating:', result.grade, 'Updated Comment:', result.comment);
+        }
+      });
+    }
+  }
+
+  deleteReview(): void {
+    this.userRating = null;
+    console.log('Review deleted');
+  }
+  
+  
 
   followOrUnfollow(): void {
     const userId = this.tokenStorage.getUserId();

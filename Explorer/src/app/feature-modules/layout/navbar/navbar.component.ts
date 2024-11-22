@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
-import { AuthService } from 'src/app/infrastructure/auth/auth.service';
-import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../../../infrastructure/auth/auth.service';
+import { User } from '../../../infrastructure/auth/model/user.model';
 import { MatDialog } from '@angular/material/dialog';
-import { TourEquipmentDialogComponent } from '../../tour-authoring/tour-equipment-dialog/tour-equipment-dialog.component';
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationComponent } from '../../notification/notification/notification.component';
+import { AppRatingFormComponent } from '../../marketplace/app-rating-form/app-rating-form.component';
+import { TourEquipmentDialogComponent } from '../../tour-authoring/tour-equipment-dialog/tour-equipment-dialog.component';
+import { RatingConfirmationDialogComponent } from '../../marketplace/app-rating-form/rating-confirmation-dialog/rating-confirmation-dialog.component';
 
 @Component({
   selector: 'xp-navbar',
@@ -34,6 +36,8 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+
+    // Open the App Rating Dialog
 
   openTourEquipmentDialog(): void {
     this.dialog.open(TourEquipmentDialogComponent, {
@@ -65,5 +69,4 @@ export class NavbarComponent implements OnInit {
   getUnreadCount(): number {
     return this.notificationComponent ? this.notificationComponent.getUnreadNotificationsCount() : 0;
   }
-
 }

@@ -1,7 +1,7 @@
 <div class="app-rating-container">
   <h1>App Ratings</h1>
 
-  <!-- Search and Filter -->
+ 
   <div class="search-filter">
     <input
       type="text"
@@ -11,12 +11,12 @@
     />
   </div>
 
-  <!-- Button to open the rating dialog -->
+
   <div class="rate-button">
     <button (click)="openRatingDialog()">Rate our App</button>
   </div>
 
-  <!-- Ratings Table -->
+
   <div *ngIf="isLoading" class="loading">Loading ratings...</div>
 
   <table *ngIf="!isLoading" class="ratings-table">
@@ -36,7 +36,7 @@
     </tbody>
   </table>
 
-  <!-- Pagination -->
+
   <div *ngIf="!isLoading" class="pagination">
     <button (click)="onPageChange(page - 1)" [disabled]="page <= 1">Previous</button>
 <span>Page {{ page }}</span>

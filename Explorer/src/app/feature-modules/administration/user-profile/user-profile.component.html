@@ -20,10 +20,6 @@
           <mat-icon>edit</mat-icon>
           Edit Profile
         </button>
-        
-        <button class="secondary">
-            Nice
-        </button>
         <button [routerLink]="['/followers', userProfile.id]" class="secondary" mat-button>
           <mat-icon>people</mat-icon>
           Followers
@@ -32,9 +28,28 @@
           <mat-icon>message</mat-icon>
           Send Message
         </button>
-      </div>
-    </div>
+
+    
+    <button class="edit-rating-button primary" *ngIf="!userRating" mat-button (click)="openRatingDialog()">
+      <mat-icon>star</mat-icon>
+      Rate Our App
+    </button>
+
+    <button class="edit-rating-button primary" *ngIf="userRating" mat-button (click)="openReviewDialog()">
+      <mat-icon>rate_review</mat-icon>
+      Edit Your Review
+    </button>
+
+    
+    <button class="edit-rating-button danger" *ngIf="userRating" mat-button (click)="deleteReview()">
+      <mat-icon>delete</mat-icon>
+      Delete Your Review
+    </button>
   </div>
+</div>
+</div>
+
+  
   <div class="bio-motto">
     <mat-card>
       <mat-card-header>

@@ -68,3 +68,47 @@
     font-weight: bold;
     font-size: 20px;
 }
+
+/* Specific styles for the three buttons to match "Edit Profile" */
+.edit-rating-button {
+    padding: 10px 20px; /* Same padding as Edit Profile button */
+    font-size: 14px; /* Font size similar to Edit Profile button */
+    border-radius: 5px; /* Rounded corners like Edit Profile button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-rating-button mat-icon {
+    margin-right: 5px; /* Space between icon and text */
+  }
+  
+  /* Button Color Variations (to match Edit Profile button color) */
+  .edit-rating-button.secondary {
+    background-color: #bf616a; /* Light background for secondary buttons */
+    color: #bf616a; /* Text color */
+  }
+  
+  .edit-rating-button.secondary:hover {
+    background-color: #bf616a; /* Darker shade on hover */
+  }
+  
+  .edit-rating-button.primary {
+    background-color: #bf616a; /* Blue background for primary buttons */
+    color: white; /* White text */
+  }
+  
+  .edit-rating-button.primary:hover {
+    background-color: #bf616a; /* Darker blue on hover */
+  }
+  
+  .edit-rating-button.danger {
+    background-color: #bf616a; /* Red background for delete button */
+    color: white; /* White text */
+  }
+  
+  .edit-rating-button.danger:hover {
+    background-color: #bf616a; /* Darker red on hover */
+  }
+  

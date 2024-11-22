@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { AppRatingDialogComponent } from './app-rating-dialog/app-rating-dialog.component';
+import { AppRatingFormComponent } from '../../marketplace/app-rating-form/app-rating-form.component';
 
 @Component({
   selector: 'xp-app-rating',
@@ -15,36 +15,36 @@ import { AppRatingDialogComponent } from './app-rating-dialog/app-rating-dialog.
 })
 export class AppRatingComponent implements OnInit {
   appRatings: AppRating[] = [];
-  userNames: { [key: number]: string } = {}; // Cache usernames
-  isAdmin: boolean = false; // Whether the user is an admin
-  isLoading: boolean = false; // Loading state
-  searchQuery: string = ''; // Filter by username or grade
-  page: number = 1; // Current page for pagination
-  pageSize: number = 10; // Number of ratings per page
+  userNames: { [key: number]: string } = {}; 
+  isAdmin: boolean = false; 
+  isLoading: boolean = false; 
+  searchQuery: string = ''; 
+  page: number = 1; 
+  pageSize: number = 10; 
 
-  // Observable for the current user
+  
   user$: Observable<User>;
 
   constructor(
     private authService: AuthService,
     private service: AdministrationService,
-    public dialog: MatDialog // Inject MatDialog for dialog functionality
+    public dialog: MatDialog
   ) {
     this.user$ = this.authService.user$;
   }
 
   ngOnInit(): void {
-    // Subscribe to user information and determine admin status
+    
     this.user$.subscribe((user) => {
       this.isAdmin = user.role === 'administrator';
     });
 
-    // Fetch app ratings on component initialization
+    
     this.getAppRatings();
   }
 
   getAppRatings(): void {
-    this.isLoading = true; // Start loading
+    this.isLoading = true; 
     const params = {
       searchQuery: this.searchQuery,
       page: this.page,
@@ -55,11 +55,11 @@ export class AppRatingComponent implements OnInit {
       next: (result: PagedResults<AppRating>) => {
         this.appRatings = result.results;
         this.loadUserNames();
-        this.isLoading = false; // Stop loading
+        this.isLoading = false; 
       },
       error: () => {
         console.error('Failed to fetch app ratings');
-        this.isLoading = false; // Stop loading
+        this.isLoading = false; 
       },
     });
   }
@@ -82,14 +82,14 @@ export class AppRatingComponent implements OnInit {
   }
 
   openRatingDialog(existingRating?: { grade: number, comment: string }): void {
-    const dialogRef = this.dialog.open(AppRatingDialogComponent, {
+    const dialogRef = this.dialog.open(AppRatingFormComponent, {
       width: '400px',
-      data: existingRating // Pass existing rating data to the dialog
+      data: existingRating 
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.submitRating(result); // Submit the rating if available
+        this.submitRating(result); 
       }
     });
   }
@@ -104,14 +104,14 @@ export class AppRatingComponent implements OnInit {
     const newRating: AppRating = {
       grade: ratingData.grade,
       comment: ratingData.comment,
-      userId: 1, // Assuming the user is logged in, replace this with the actual user ID
+      userId: 1, 
     };
 
-    // Call addAppRating to submit the rating
+   
     this.service.addAppRating(newRating).subscribe({
       next: () => {
         alert('Your review has been submitted!');
-        this.getAppRatings(); // Refresh the list after submission
+        this.getAppRatings(); 
       },
       error: () => {
         alert('Failed to submit the review');
@@ -120,16 +120,16 @@ export class AppRatingComponent implements OnInit {
   }
 
   refreshRatings(): void {
-    this.getAppRatings(); // Refresh the list of ratings
+    this.getAppRatings(); 
   }
 
   onPageChange(page: number): void {
     this.page = page;
-    this.getAppRatings(); // Fetch ratings for the new page
+    this.getAppRatings(); 
   }
 
   onSearchChange(): void {
-    this.page = 1; // Reset to the first page
-    this.getAppRatings(); // Fetch ratings with the updated search query
+    this.page = 1; 
+    this.getAppRatings(); 
   }
 }
