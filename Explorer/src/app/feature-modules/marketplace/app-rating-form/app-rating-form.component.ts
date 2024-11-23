@@ -58,6 +58,10 @@ export class AppRatingFormComponent implements OnInit {
     }
   }
   
+  isFormValid(): boolean {
+    return this.grade > 0 && this.comment.trim().length > 0;
+  }
+  
 
   onDelete(): void {
     

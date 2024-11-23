@@ -30,10 +30,12 @@
         </button>
 
     
-    <button class="edit-rating-button primary" *ngIf="!userRating" mat-button (click)="openRatingDialog()">
-      <mat-icon>star</mat-icon>
-      Rate Our App
-    </button>
+  
+<button class="edit-rating-button primary" *ngIf="!isAdmin && !userRating" mat-button (click)="openRatingDialog()">
+  <mat-icon>star</mat-icon>
+  Rate Our App
+</button>
+
 
     <button class="edit-rating-button primary" *ngIf="userRating" mat-button (click)="openReviewDialog()">
       <mat-icon>rate_review</mat-icon>

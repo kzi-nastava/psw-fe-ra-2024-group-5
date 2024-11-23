@@ -24,9 +24,10 @@
     <div *ngIf="comment.trim() === ''" class="error">Please provide a comment.</div>
 
     
-    <button (click)="onSubmit()" [disabled]="grade === 0 || comment.trim() === ''">
+    <button (click)="onSubmit()" [disabled]="!isFormValid()">
       Submit
     </button>
+    
   </div>
 </mat-dialog-content>
 

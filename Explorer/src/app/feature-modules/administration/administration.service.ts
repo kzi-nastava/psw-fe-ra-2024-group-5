@@ -43,15 +43,17 @@ export class AdministrationService {
   }
 
   deleteAppRating(id: number): Observable<AppRating> {
-    return this.http.delete<AppRating>(environment.apiHost + 'tourist/appRating' + id);
+    return this.http.delete<AppRating>(`${environment.apiHost}tourist/appRating/${id}`);
   }
+  
 
   addAppRating(appRating: AppRating): Observable<AppRating> {
     return this.http.post<AppRating>(environment.apiHost + 'tourist/appRating', appRating);
   }
 
   updateAppRating(appRating: AppRating): Observable<AppRating> {
-    return this.http.put<AppRating>(environment.apiHost + 'tourist/appRating' + appRating.id, appRating);
+    return this.http.put<AppRating>(`${environment.apiHost}tourist/appRating/${appRating.id}`, appRating);
   }
+  
 
 }

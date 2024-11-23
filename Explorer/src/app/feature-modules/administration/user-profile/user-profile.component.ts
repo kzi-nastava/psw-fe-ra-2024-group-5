@@ -8,6 +8,9 @@ import { PagedResults } from '../../../shared/model/paged-results.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SendMessageDialogComponent } from '../send-message-dialog/send-message-dialog.component';
 import { AppRatingFormComponent } from '../../marketplace/app-rating-form/app-rating-form.component';
+import { User } from '../../../infrastructure/auth/model/user.model';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../../infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-user-profile',
@@ -22,13 +25,16 @@ export class UserProfileComponent implements OnInit {
   followersCount: number = 0;
   userId: number | null;
   userRating: { grade: number; comment: string } | null = null;
-
+  isAdmin: boolean = false; // Add this property
+  user$: Observable<User>;
 
   constructor(private service: UserProfileService,
     private tokenStorage: TokenStorage,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) { this.user$ = this.authService.user$;
+     }
 
   openSendMessageDialog(): void {
     const dialogRef = this.dialog.open(SendMessageDialogComponent, {
@@ -39,18 +45,22 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     const profileId = this.route.snapshot.paramMap.get('id');
 
+    
+  
     const parsedProfileId = profileId ? parseInt(profileId, 10) : null;
-
+  
     const storedRating = localStorage.getItem('userRating');
     if (storedRating) {
       this.userRating = JSON.parse(storedRating);
     }
     
     this.userId = this.tokenStorage.getUserId();
+ 
+  
     if (profileId && parsedProfileId != this.userId) {
       this.userId = parsedProfileId;
       this.isOwnProfile = false;
-
+  
       const currentUserId = this.tokenStorage.getUserId();
       if (currentUserId && this.userId) {
         this.service.isFollowing(currentUserId, this.userId).subscribe({
@@ -61,26 +71,22 @@ export class UserProfileComponent implements OnInit {
             console.error("Error checking following status", err);
           }
         });
-
-        //console.log(`IS ${this.userId} FOLLOWING ${currentUserId}`)
-        this.service.isFollowing(this.userId, currentUserId!).subscribe(
-          {
-            next: (res) => this.isFollower = res,
-            error: (err) => console.error("Error checking following status", err)
-          }
-        )
+  
+        this.service.isFollowing(this.userId, currentUserId!).subscribe({
+          next: (res) => this.isFollower = res,
+          error: (err) => console.error("Error checking following status", err)
+        });
       }
     } else {
       this.isOwnProfile = true;
     }
-
+  
     this.loadFollowers();
-
+  
     if (this.userId) {
       this.service.getUserProfile(+this.userId).subscribe({
         next: (result: UserProfile) => {
           this.userProfile = result;
-
         },
         error: (err: any) => {
           console.log(err);
@@ -89,7 +95,15 @@ export class UserProfileComponent implements OnInit {
     } else {
       console.error("User ID is null");
     }
+
+
+    this.user$.subscribe((user) => {
+      this.isAdmin = user.role === 'administrator';
+    });
   }
+  
+ 
+  
 
   openRatingDialog(): void {
     const dialogRef = this.dialog.open(AppRatingFormComponent, {
