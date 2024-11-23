@@ -36,7 +36,7 @@ export class ToursAuthorPageComponent {
 
   loadTours(): void {
     if(this.user.role === 'author'){
-      this.tourService.getTours(this.user, this.currentPage, 8).subscribe({
+      this.tourService.getAuthorTours(this.user, this.currentPage, 8).subscribe({
         next: (result: TourCard[]) => {
           this.tours = result
           console.log(this.tours)
@@ -132,16 +132,27 @@ searchTours(): void {
 
   console.log("Search boundaries:", searchParams); 
 
- 
-  this.tourService.getPublishedTourCardsFiltered(searchParams).subscribe({
+  if(this.user.role === 'author'){
+    this.tourService.getAuthorTourCardsFiltered(this.user, searchParams).subscribe({
       next: (result) => {
           this.tours = result;
           console.log("Filtered tours:", this.tours);
       },
       error: (error) => {
-          console.error("Error fetching filtered tours:", error);
+        console.error("Error fetching filtered tours:", error);
       }
-  });
+    });
+  }else{
+    this.tourService.getPublishedTourCardsFiltered(searchParams).subscribe({
+      next: (result) => {
+          this.tours = result;
+          console.log("Filtered tours:", this.tours);
+      },
+      error: (error) => {
+        console.error("Error fetching filtered tours:", error);
+      }
+    });
+  }
 }
 
 
