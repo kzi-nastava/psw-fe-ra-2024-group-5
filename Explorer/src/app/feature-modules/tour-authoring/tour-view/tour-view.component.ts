@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
 import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CompletedKeyPointDetailsComponent } from '../../tour-execution/completed-key-point-details/completed-key-point-details.component';
+
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -122,6 +124,15 @@ export class TourDetailedViewComponent implements OnInit {
 
   back(): void {
     this.router.navigate(['/']);
+  }
+
+  openKeyPointDialog(keyPoint: KeyPoint) {
+    this.dialog.open(CompletedKeyPointDetailsComponent, {
+      data: {
+        keyPoint: keyPoint,
+        isExe: false
+      }
+    });
   }
 
   getTourLevel(level: number | undefined): string {
