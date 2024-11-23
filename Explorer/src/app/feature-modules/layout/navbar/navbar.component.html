@@ -10,10 +10,6 @@
         Logout
       </button>
 
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['tour']">
-        Tours
-      </button>
-
       <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
           [routerLink]="['tour-creation']">
           Add Tour
