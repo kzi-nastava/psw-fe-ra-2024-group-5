@@ -51,6 +51,10 @@
         App Ratings
       </button>
 
+      <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['accounts']">
+        Accounts
+      </button>
+
       <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')" mat-raised-button
         [routerLink]="['create-comment']">
         Make comment
