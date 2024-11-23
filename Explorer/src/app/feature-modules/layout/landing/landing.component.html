@@ -19,7 +19,7 @@
     <div class="rec-tours content-card-section">
         <div>
             <h1>Recommended Tours</h1>
-            <button [routerLink]="['tours-page']" class="secondary" mat-flat-button>View more</button>
+            <button [routerLink]="user.role === 'author' ? ['tours-author-page'] : ['tours-page']" class="secondary" mat-flat-button>View more</button>
         </div>
         <div class="content-cards">
             <xp-tour-card class="tour-card rounded raised" *ngFor="let tour of recommendedTours" [tourCard]="tour" (click)="detailedTour(tour)"></xp-tour-card>
