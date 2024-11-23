@@ -145,8 +145,8 @@ export class EncountersManagingComponent implements OnInit {
       else{
         this.map.search(location)
         this.encounterForm.patchValue({
-          Longitude: res[0].lon,
-          Latitude: res[0].lat
+          longitude: res[0].lon,
+          latitude: res[0].lat
         });
       }
     });  
