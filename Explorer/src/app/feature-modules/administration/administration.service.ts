@@ -54,4 +54,6 @@ export class AdministrationService {
     return this.http.put<AppRating>(environment.apiHost + 'tourist/appRating' + appRating.id, appRating);
   }
 
+  
+
 }

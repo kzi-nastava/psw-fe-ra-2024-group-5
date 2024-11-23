@@ -1,3 +1,7 @@
+<div class="title-container">
+    <h1>All users</h1>
+</div>
+
 <div class="table-container">
     <table mat-table [dataSource]="accounts" class="mat-elevation-z8">
 
@@ -16,6 +20,11 @@
             <td mat-cell *matCellDef="let element"> {{element.role}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="wallet">
+            <th mat-header-cell *matHeaderCellDef> Wallet </th>
+            <td mat-cell *matCellDef="let element"> {{formatWallet(element.walletBalance)}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef> Status </th>
             <td mat-cell *matCellDef="let element">
@@ -29,10 +38,12 @@
         </ng-container>
 
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let element">
-                <button class="block-button" mat-flat-button [disabled]="!element.isActive"
-                    (click)="blockAccount(element)">Block</button>
+                <button class="secondary" mat-flat-button [disabled]="!element.isActive"
+                    (click)="blockAccount(element)"><mat-icon>block</mat-icon> Block </button>
+                <button class="primary" mat-flat-button [disabled]="element.role !== 'tourist'" [ngStyle]="{'margin-left': '10px'}"
+                    (click)="openDialog(element)"> <mat-icon>attach_money</mat-icon> Add </button>
             </td>
         </ng-container>
 
