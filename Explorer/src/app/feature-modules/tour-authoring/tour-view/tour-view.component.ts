@@ -236,6 +236,8 @@ export class TourDetailedViewComponent implements OnInit {
     }
   }
 
+
+  
   addToCart(): void{
     if(!this.tour || !this.tour.id || !this.user)
       return;

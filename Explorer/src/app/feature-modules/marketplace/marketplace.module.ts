@@ -14,6 +14,7 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-review-form.component';
+import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-re
     ReactiveFormsModule,
     MaterialModule,
     MatDialogModule,
-  ],
+    TourAuthoringModule
+],
   exports: [
     PreferenceComponent,
     AppRatingFormComponent
