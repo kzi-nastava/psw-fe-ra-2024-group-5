@@ -3,7 +3,7 @@
 <div mat-dialog-content class="dialog-content">
   <mat-card class="dialog-card">
     <mat-card-header>
-      <mat-card-title>Congratulations! You have now arrived at {{ data.keyPoint.name }}</mat-card-title>
+      <mat-card-title><span *ngIf="data.isExe">Congratulations! You have now arrived at </span>{{ data.keyPoint.name }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div class="image-container">

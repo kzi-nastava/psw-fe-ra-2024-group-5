@@ -2,6 +2,10 @@
 
 <div *ngIf="shoppingCart; else emptyCart" class="cart-container">
   <h2 class="cart-total"> Total Price: {{ shoppingCart.totalPrice.amount }} {{ priceCurrencies[shoppingCart.totalPrice.currency] }}</h2>
+
+  <div class="wallet" *ngIf="wallet">
+    <h2>Balance: {{wallet.balance.amount}} {{priceCurrencies[wallet.balance.currency]}}</h2>
+  </div>
   
   <ul *ngIf="shoppingCart?.items?.length; else noItems" class="cart-items">
     <li *ngFor="let item of shoppingCart.items" class="cart-item">

@@ -23,23 +23,23 @@ export class TourComponent implements OnInit{
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
-      this.loadTours();
+      // this.loadTours();
     });
   }
 
-  loadTours(): void{
-    if(!this.user)
-      return;
-    this.service.getTours(this.user).subscribe({
-      next: (result: PagedResults<Tour>) => {
-        this.tours = result.results
-        console.log(result)
-      },
-      error: (err: any) => {
-        console.log(err)
-      }
-   });
-  }
+  // loadTours(): void{
+  //   if(!this.user)
+  //     return;
+  //   this.service.getTours(this.user).subscribe({
+  //     next: (result: PagedResults<Tour>) => {
+  //       this.tours = result.results
+  //       console.log(result)
+  //     },
+  //     error: (err: any) => {
+  //       console.log(err)
+  //     }
+  //  });
+  // }
   
   onAddTour(): void{
     this.router.navigate(['/tour-creation'])
@@ -51,7 +51,7 @@ export class TourComponent implements OnInit{
     if(this.user?.role === 'author' && t.id){
       this.service.deleteTour(t.id).subscribe({
         next: (result: Tour) =>{
-          this.loadTours();
+          // this.loadTours();
           console.log(result)
         },
         error: (err: any) => {

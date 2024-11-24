@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CompletedKeyPoint } from '../model/completed-key-point.model';
 import { MatCard, MatCardHeader } from '@angular/material/card';
+import { KeyPoint } from '../../tour-authoring/model/key-point.model';
 
 @Component({
   selector: 'xp-completed-key-point-details',
@@ -11,6 +12,6 @@ import { MatCard, MatCardHeader } from '@angular/material/card';
 export class CompletedKeyPointDetailsComponent {
   constructor(
     public dialogRef: MatDialogRef<CompletedKeyPointDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CompletedKeyPoint
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 }
