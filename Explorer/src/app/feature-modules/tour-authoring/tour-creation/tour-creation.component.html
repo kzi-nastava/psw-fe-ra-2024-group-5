@@ -1,9 +1,13 @@
 <div class="container">
+    <div class="component component-1">
+        <div class="map-container">
+            <app-map (addKeyPoint)="sendCordinates($event)"  (setaRouteLength)='setTourLength($event)'></app-map>
+        </div>
+        <xp-key-points [coordinates]="coordinates" (cancel)="cancelKeyPoint($event)"></xp-key-points>
+    </div>
   <div class="component component-1">
-      <div class="map-container">
-          <app-map (addKeyPoint)="sendCordinates($event)"  (setaRouteLength)='setTourLength($event)'></app-map>
-      </div>
       <div class="scrollable-form-container">
+        
           <form [formGroup]="form">
               <div mat-dialog-content class="content-container">
                   <mat-form-field appearance="outline" class="custom-form-field">
@@ -64,7 +68,7 @@
                             </mat-form-field>      
 
                             <div mat-dialog-actions class="action-container">
-                                <button *ngIf="tourTransports.length" mat-raised-button color="secondary" (click)="addTransportDuration()">Add</button>
+                                <button *ngIf="tourTransports.length" mat-raised-button class="ternary" (click)="addTransportDuration()">Add</button>
                             </div>
                         </div>
                     </form>
@@ -103,18 +107,13 @@
       </div>
       
       <div mat-dialog-actions class="action-container">
-        <button mat-raised-button color="primary" (click)="submitForm()">Save</button>
+        <button mat-raised-button class="primary" (click)="submitForm()">Save</button>
       </div>
 
     </div>
         
-  <div class="component">
-      <xp-key-points [coordinates]="coordinates" (cancel)="cancelKeyPoint($event)"></xp-key-points>
-  </div>
-
     <div>
-        <button mat-raised-button color="primary" (click)="back()">
-            <mat-icon>back</mat-icon>
+        <button mat-raised-button class="secondary" (click)="back()">
             Close
         </button>
     </div>

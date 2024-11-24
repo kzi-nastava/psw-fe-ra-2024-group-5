@@ -10,6 +10,12 @@
     <div class="profile-info">
       <div class="info">
         <h1>{{ userProfile?.name }} {{ userProfile?.surname }} </h1>
+        <div class="wallet" *ngIf="wallet">
+          <h2>Balance: {{wallet.balance.amount}} {{currencies[wallet.balance.currency]}}</h2>
+          <button class="add-button">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
         <b><span>Followers: {{ followersCount }}</span></b>
       </div>
       <div class="actions">
