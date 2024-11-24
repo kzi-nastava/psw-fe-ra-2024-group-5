@@ -3,6 +3,10 @@ import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCart } from '../model/shopping-cart.model';
 import { OrderItem } from '../model/order-item.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
+import { Wallet } from '../model/wallet';
+import { MarketplaceService } from '../marketplace.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'xp-shopping-cart',
@@ -12,13 +16,21 @@ import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 export class ShoppingCartComponent implements OnInit {
   shoppingCart: ShoppingCart | null = null;
   touristId: number ; 
-  priceCurrencies: string[] = ['Rsd', 'Eur', 'Dol']
+  priceCurrencies: string[] = ['AC', 'Eur', 'Dol','Rsd']
+  wallet : Wallet;
+  user: User;
 
-  constructor(private shoppingCartService: ShoppingCartService,private tokenStorage: TokenStorage) {}
+  constructor(private shoppingCartService: ShoppingCartService, private tokenStorage: TokenStorage,
+    private marketService : MarketplaceService, private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.touristId = this.tokenStorage.getUserId() ?? 0;
     this.getCartItems();
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.loadWallet();
+  });
   
 }
 getCartItems(): void {
@@ -77,6 +89,7 @@ checkout(): void {
       console.log('Purchase completed successfully', response);
       this.shoppingCart = null; 
       this.getCartItems(); 
+      this.loadWallet();
     },
     error => {
       console.error('Error during checkout', error);
@@ -84,6 +97,17 @@ checkout(): void {
   );
 }
 
-
+loadWallet(): void{
+  if(this.user.role === 'tourist' && this.user.id){
+    this.marketService.getWalletByTourist().subscribe({
+      next: (result: Wallet) => {
+        this.wallet = result;
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
+  }
+}
 
 }

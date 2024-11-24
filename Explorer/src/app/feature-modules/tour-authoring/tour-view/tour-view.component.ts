@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
 import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CompletedKeyPointDetailsComponent } from '../../tour-execution/completed-key-point-details/completed-key-point-details.component';
+
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -30,9 +32,9 @@ export class TourDetailedViewComponent implements OnInit {
   canBeReviewed: boolean = false;
   showPublishForm = false;
   
-    public Currency = Currency; 
-    newPrice: number;
-    newCurrency: Currency = Currency.Rsd; 
+  public Currency = Currency; 
+  newPrice: number;
+  newCurrency: Currency = Currency.AC; 
 
    
 
@@ -122,6 +124,15 @@ export class TourDetailedViewComponent implements OnInit {
 
   back(): void {
     this.router.navigate(['/']);
+  }
+
+  openKeyPointDialog(keyPoint: KeyPoint) {
+    this.dialog.open(CompletedKeyPointDetailsComponent, {
+      data: {
+        keyPoint: keyPoint,
+        isExe: false
+      }
+    });
   }
 
   getTourLevel(level: number | undefined): string {
@@ -265,11 +276,13 @@ export class TourDetailedViewComponent implements OnInit {
 currencyToEnum(currency: number): Currency | null {
   switch (currency) {
     case 0:
-      return Currency.Rsd;  
+      return Currency.AC;  
     case 1:
       return Currency.Dol;  
     case 2:
       return Currency.Eur; 
+    case 3:
+      return Currency.Rsd; 
     default:
       console.error('Invalid currency value:', currency); 
       return null;

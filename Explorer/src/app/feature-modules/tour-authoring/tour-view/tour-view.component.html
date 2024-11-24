@@ -7,7 +7,20 @@
             <app-map [isViewOnly]="true"></app-map>
         </div>
         <div class="keypoints-container">
-            <xp-key-points [tourId]="tourId" (displayKeyPoints)="displayKeyPoints()"></xp-key-points>
+            <div><h2>Key points:</h2></div>
+            <div class="progress-wrapper" *ngIf="tour">
+                <ul>
+                  <li *ngFor="let keyPoint of tour.keyPoints; let index = index" 
+                      class="completed"
+                      [style.top]="(index / (tour.keyPoints.length - 1)) * 100 + '%'">
+                    <div class="inner-dot"></div>
+                    <div class="node-content visible" (click)="openKeyPointDialog(keyPoint)">
+                        {{ keyPoint.name || 'Checkpoint ' + (index + 1) }}
+                    </div>
+                  </li>
+                </ul>
+                <div class="progress-bar" *ngIf="tour.keyPoints.length > 1" style="height: 100%"></div>
+              </div>
         </div>
     </div>
 
@@ -52,14 +65,10 @@
 
     <div *ngIf="showPublishForm" class="publish-form">
         <label>Price:</label>
-        <input type="number" [(ngModel)]="newPrice" placeholder="Enter price" required>
-        
-        <label>Currency:</label>
-        <select [(ngModel)]="newCurrency" required>
-            <option [ngValue]="Currency.Rsd">Rsd</option>
-            <option [ngValue]="Currency.Eur">Eur</option>
-            <option [ngValue]="Currency.Dol">Usd</option>            
-        </select>
+        <div>
+            <input type="number" [(ngModel)]="newPrice" placeholder="Enter price" required>
+            <span [style]="{'margin-left': '10px'}">AC</span>
+        </div>
         
         <button mat-button class="primary button-mg" (click)="publishTourWithPrice()">Confirm Publish</button>
     </div>

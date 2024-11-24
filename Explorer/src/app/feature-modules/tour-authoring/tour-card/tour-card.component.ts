@@ -16,7 +16,7 @@ export class TourCardComponent {
   user: User | undefined;
   tourLevels: string[] = ['Beginner','Intermediate','Expert'];
   location: string = 'Location unknown';
-  currencies: string[] = ['rsd','e','$'];
+  currencies: string[] = ['AC','e','$','rsd'];
   imageSource: string = '';
   
 

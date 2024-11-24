@@ -88,14 +88,7 @@
     transform: translateY(-50%);
     min-width: 200px;
     opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .node-content.visible {
-    opacity: 1;
-  }
-  
-  .message {
+    transition: 0.3s ease;
     color: var(--button-primary-bg);
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -106,6 +99,11 @@
     border-left: 3px solid var(--button-secondary-bg);
     cursor: pointer;
   }
+  
+  .node-content.visible {
+    opacity: 1;
+  }
+  
   
   /* Make sure the content doesn't interfere with clicks */
   .progress-wrapper ul li {
@@ -124,10 +122,11 @@
   
   /* Optional hover effect for better interactivity */
   .node-content.visible {
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    transition: 0.3s ease;
   }
   
   .node-content.visible:hover {
-    opacity: 1;
+    color: white;
+    background: var(--button-primary-bg);
+    border-left: 5px solid white;
   }

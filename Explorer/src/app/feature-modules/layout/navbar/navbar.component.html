@@ -10,10 +10,6 @@
         Logout
       </button>
 
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['tour']">
-        Tours
-      </button>
-
       <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
           [routerLink]="['tour-creation']">
           Add Tour
@@ -49,6 +45,10 @@
 
       <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['appRating']">
         App Ratings
+      </button>
+
+      <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['accounts']">
+        Accounts
       </button>
 
       <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')" mat-raised-button
