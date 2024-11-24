@@ -82,6 +82,17 @@
     </div>
     <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
         <div class="review-card" *ngFor="let review of tour?.reviews">
+          <div class="reviewer-info">
+            <div class="reviewer-image">
+              <img [src]="'data:image/jpeg;base64,' + (getUserProfile(review.touristId!)?.profileImage || '')" 
+                   alt="profile-picture"
+                   class="profile-picture"
+                   onerror="this.src='assets/images/profile.jpg'">
+            </div>
+            <div class="reviewer-name">
+                {{ getUserProfile(review.touristId!)?.name }} {{ getUserProfile(review.touristId!)?.surname }}
+            </div>
+          </div>
           <div class="image-container">
             <img [src]="'data:image/jpeg;base64,' + review.image" 
                  alt="review-picture"
@@ -110,6 +121,6 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
 
 </div>

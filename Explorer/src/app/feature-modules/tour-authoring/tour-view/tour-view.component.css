@@ -31,9 +31,6 @@
   width: 800px;
   height: 400px; 
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .tour-details {
@@ -198,8 +195,8 @@ button.close:hover {
   color: #333;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
   -webkit-box-orient: vertical;
 }
 
@@ -438,3 +435,25 @@ button.close:hover {
   border-left: 5px solid white;
 }
 
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.reviewer-image {
+  margin-right: 1rem;
+}
+
+.profile-picture {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reviewer-name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
