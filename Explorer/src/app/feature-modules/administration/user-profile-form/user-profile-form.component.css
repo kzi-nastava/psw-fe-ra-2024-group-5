@@ -1,82 +1,50 @@
-form {
-  max-width: 500px;
-  margin: 40px auto;  
-  background-color: var(--background-color-alt);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+.edit-profile-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-h2 {
-  color: var(--text-title);
-  font-size: 1.8em;
-  margin-bottom: 20px;
-  text-align: center;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: stretch;
+  width: 600px;
+  padding: 30px 75px;
 }
 
-.form-group {
-  margin-bottom: 20px;
-  text-align: center; 
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: var(--text-subtitle);
-  text-align: left; /* Aligning labels to the left for better readability */
-}
-
-.form-group input,
-.form-group textarea {
-  width: 95%; /* Reduced width to center the inputs */
-  padding: 10px;
-  font-size: 1em;
-  color: var(--input-text);
-  background-color: var(--input-bg);
-  border: 1px solid var(--input-border);
-  border-radius: 5px;
-  transition: border-color 0.3s ease;
-  margin: 0 auto;  
-  display: block;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--input-border);
-  background-color: var(--input-bg);
-  color: var(--input-text);
-  outline: none;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 80px;
+form, .form-field {
+  width: 100%;
 }
 
 .form-actions {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
 }
 
-button[type="submit"] {
-  padding: 12px 30px;
-  font-size: 1em;
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-text);
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.profile-image-container {
+  position: relative;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-button[type="submit"]:hover {
-  background-color: var(--alert-success-bg);
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: calc(150px / 2);
+  object-fit: cover;
 }
 
-button[type="submit"]:disabled {
-  background-color: var(--button-secondary-bg);
-  cursor: not-allowed;
-  opacity: 0.7;
+.edit-pfimg-btn-container {
+  position: absolute;
+  top: 0;
+  right: 150px;
+  color: white !important;
+}
+
+.edit-pfimg-btn-container .mat-icon {
+  overflow: visible;
 }

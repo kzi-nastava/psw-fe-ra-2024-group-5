@@ -1,7 +1,7 @@
 <div class="profile-page container">
   <div class="profile-header">
     <div class="profile-image">
-      <img *ngIf="userProfile.profilePictureUrl; else defaultImage" [src]="userProfile.profilePictureUrl"
+      <img *ngIf="userProfile.profileImage; else defaultImage" [src]="'data:image/png;base64,'+userProfile.profileImage"
         alt="Profile Picture" />
       <ng-template #defaultImage>
         <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
