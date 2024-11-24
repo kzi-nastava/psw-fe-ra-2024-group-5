@@ -14,7 +14,7 @@ import { SendMessageDialogComponent } from '../send-message-dialog/send-message-
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  userProfile: UserProfile;
+  userProfile: UserProfile | undefined;
   isOwnProfile: boolean = false;
   isFollowing: boolean = false;
   isFollower: boolean = false;
@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
 
   openSendMessageDialog(): void {
     const dialogRef = this.dialog.open(SendMessageDialogComponent, {
-      data: { senderId: this.tokenStorage.getUserId(), recipientId: this.userProfile.id }
+      data: { senderId: this.tokenStorage.getUserId(), recipientId: this.userProfile?.id }
     });
   }
 
