@@ -245,8 +245,11 @@ export class TourDetailedViewComponent implements OnInit {
     let orderItem :OrderItem = {
       tourId : this.tour.id,
       tourName : this.tour.name,
-      price: this.tour.price
+      price: this.tour.price,
+      description: this.tour.description,
+      tags: this.tour.tags
     }
+    
     console.log(orderItem)
 
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({

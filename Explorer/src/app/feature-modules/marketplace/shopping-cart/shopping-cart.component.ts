@@ -21,13 +21,8 @@ export class ShoppingCartComponent implements OnInit {
   tourImageUrl: SafeUrl | null = null;
   tourImage: string | ArrayBuffer | null = null;
 
-  tourId: number = 5; // ID ture koju želiš da prikažeš
-
 
   imagePreview: string | null = null; // Ovo drži URL za prikaz slike
-  imageSource: string = '';
-
-
   tours: TourCard[] = [];
 
 
@@ -67,24 +62,28 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit(): void {
     this.touristId = this.tokenStorage.getUserId() ?? 0;
     this.getCartItems();
-    const tourId = 1; // Ovde stavi ID ture za koju učitavaš sliku
-    this.loadTourImage();
 }
 
-loadTourImage(): void {
-  this.shoppingCartService.getTourImage(this.tourId).subscribe(
-    (response: Blob) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        this.tourImage = reader.result; // Prikazivanje slike kao Data URL
-      };
-      reader.readAsDataURL(response); // Pretvaranje Blob-a u Data URL
-    },
-    error => {
-      console.error('Error fetching image:', error);
-    }
-  );
+loadTourImages(): void {
+  if (this.shoppingCart?.items) {
+    this.shoppingCart.items.forEach(item => {
+      this.shoppingCartService.getTourImage(item.tourId).subscribe(
+        (response: Blob) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            item.imageUrl = reader.result as string; // Postavljanje slike na nivou stavke
+          };
+          reader.readAsDataURL(response); // Pretvaranje Blob-a u Data URL
+        },
+        error => {
+          console.error('Error fetching image for tour:', item.tourId, error);
+          item.imageUrl = '';
+        }
+      );
+    });
+  }
 }
+
 
 
 
@@ -93,7 +92,7 @@ getCartItems(): void {
   this.shoppingCartService.getByTouristId(this.touristId).subscribe(
     (data: ShoppingCart) => {      
       this.shoppingCart = data;
-     // this.loadTourImage();
+      this.loadTourImages();
     },
     error => console.error('Error fetching cart items', error)
   );

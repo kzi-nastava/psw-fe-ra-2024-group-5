@@ -6,5 +6,7 @@ export interface OrderItem {
     tourId: number;
     tourName: string;
     price : Money;
-    imageUrl?: string; // Polje za URL slike
+    imageUrl?: string;
+    description?: string;
+    tags? : string;
 }

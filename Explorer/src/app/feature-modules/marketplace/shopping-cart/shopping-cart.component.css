@@ -38,6 +38,7 @@
 }
 
 .cart-item {
+    background-color:lemonchiffon;
     flex: 1 1 calc(25% - 20px); 
     border: 1px solid black;
     border-radius: 10px;
@@ -70,6 +71,7 @@ button.primary {
     align-items: center;
     justify-content: center;
     gap: 5px; /* Razmak između ikonice i teksta */
+    
 }
 
 button.primary .material-icons {
@@ -87,7 +89,7 @@ button.primary .material-icons.check-icon {
   }
 
   button.primary.complete-purchase {
-    margin-top: 380px; /* Razmak od drugih elemenata iznad */
+    margin-top: 50px; /* Razmak od drugih elemenata iznad */
     align-self: flex-end; /* Pomeranje dugmeta na dno (ako koristite Flexbox) */
     position: relative; /* Pomeranje sa pozicije */
     top: 20px; /* Pomerite dugme prema dole (ako želite da bude niže) */
@@ -112,6 +114,29 @@ button.primary .material-icons.check-icon {
     width: 100%; /* Širina poruke */
   }
 
+  .cart-item-image-container {
+    flex-shrink: 0;
+    width: 410px;
+    height: 300px;
+    margin-right: 20px;
+    overflow: hidden;  /* Ovaj CSS osigurava da slike ostanu u okviru */
+    border-radius: 8px; /* Za zaobljene ivice slike */
+    margin-bottom: 20px;
+  }
+  
+  .cart-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ovaj CSS osigurava da slike popune okvir bez izobličenja */
+  }
+  
+  .cart-item-image-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
 
   
   

@@ -6,25 +6,27 @@
   <ul *ngIf="shoppingCart?.items?.length; else noItems" class="cart-items">
     <li *ngFor="let item of shoppingCart.items" class="cart-item">
    
-            <!-- Prikaz slike -->
-            <img 
-        *ngIf="tourImage; else noImage" 
-        [src]="tourImage" 
-        alt="{{ item.tourName }}" 
-        class="cart-item-image" 
-      />
-      <ng-template #noImage>
+      <div class="cart-item-image-container">
         <img 
-          src="assets/images/placeholder.jpg" 
-          alt="No Image Available" 
-          class="cart-item-image-placeholder" 
+          *ngIf="item.imageUrl && item.imageUrl.trim() !== ''; else noImage" 
+          [src]="item.imageUrl" 
+          alt="{{ item.tourName }}" 
+          class="cart-item-image" 
         />
-      </ng-template>
-          
+        <ng-template #noImage>
+          <img 
+          src="assets/images/no_image.jpg" 
+          alt="No Image Available" 
+            class="cart-item-image-placeholder" 
+          />
+        </ng-template>
+      </div>  
 
       <p class="cart-item-name">Name:
            <strong >{{ item.tourName }}</strong></p>
       <p class="cart-item-price">Price: <strong>{{ item.price.amount }} {{ priceCurrencies[item.price.currency] }}</strong></p>
+      <p class="cart-item-name">Description: {{ item.description }}</p>
+      <p class="cart-item-name">{{ item.tags }}</p>
       <button class="primary" (click)="removeItem(item)">  <span class="material-icons">delete</span> Remove</button>
     </li>
   </ul>
