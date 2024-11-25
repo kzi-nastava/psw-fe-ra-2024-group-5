@@ -15,7 +15,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TourDetailedViewComponent } from './tour-view/tour-view.component';
 import { ToursPageComponent } from './tours-page/tours-page.component';
 import { TourCardComponent } from './tour-card/tour-card.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.component'; 
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     TourDetailedViewComponent,
     TourEquipmentDialogComponent,
     ToursPageComponent,
-    TourCardComponent
+    TourCardComponent,
+    ToursAuthorPageComponent
     
   ],
   imports: [

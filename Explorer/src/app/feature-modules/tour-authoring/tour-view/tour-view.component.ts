@@ -15,6 +15,10 @@ import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour
 import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
+import { CompletedKeyPointDetailsComponent } from '../../tour-execution/completed-key-point-details/completed-key-point-details.component';
+import { UserProfileService } from '../../administration/user-profile.service';
+import { UserProfileBasic } from '../../administration/model/userProfileBasic.model';
+
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -38,6 +42,7 @@ export class TourDetailedViewComponent implements OnInit {
   @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; 
 
 
+  userProfiles: UserProfileBasic[] = [];
    
 
 
@@ -50,7 +55,8 @@ export class TourDetailedViewComponent implements OnInit {
     private reviewService: ReviewService,
     private shoppingCartService: ShoppingCartService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userProfileService: UserProfileService
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +93,7 @@ export class TourDetailedViewComponent implements OnInit {
             };
             console.log('Loaded Tour:', this.tour);
             this.displayKeyPoints()
+            this.loadUserProfiles();
         },
         error: (err: any) => {
             console.log(err);
@@ -110,11 +117,41 @@ export class TourDetailedViewComponent implements OnInit {
             this.canBeBought = result.canBeBought
             this.canBeReviewed = result.canBeReviewed
             this.displayKeyPoints()
+            this.loadUserProfiles();
         },
         error: (err: any) => {
             console.log(err);
         }
     });
+  }
+
+  loadUserProfiles() {
+    
+    if (this.tour && this.tour.reviews && this.tour.reviews.length > 0) {
+      console.log('Reviews found:', this.tour.reviews);
+      
+      const touristIds = this.tour.reviews
+        .map(review => review.touristId)
+        .filter((id): id is number => id !== undefined);
+      
+      console.log('Filtered touristIds:', touristIds);
+        
+      this.userProfileService.getBasicProfiles(touristIds).subscribe({
+        next: (profiles) => {
+          this.userProfiles = profiles;
+        },
+        error: (error) => {
+          console.error('Error loading user profiles:', error);
+        }
+      });
+    } else {
+      console.log('No reviews found or tour not loaded yet');
+    }
+  }
+
+  getUserProfile(touristId: number): UserProfileBasic | undefined {
+    const profile = this.userProfiles.find(profile => profile.userId === touristId);
+    return profile;
   }
 
 
@@ -126,6 +163,15 @@ export class TourDetailedViewComponent implements OnInit {
 
   back(): void {
     this.router.navigate(['/']);
+  }
+
+  openKeyPointDialog(keyPoint: KeyPoint) {
+    this.dialog.open(CompletedKeyPointDetailsComponent, {
+      data: {
+        keyPoint: keyPoint,
+        isExe: false
+      }
+    });
   }
 
   getTourLevel(level: number | undefined): string {

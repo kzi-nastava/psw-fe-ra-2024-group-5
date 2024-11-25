@@ -1,26 +1,45 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()"> 
-  <h2>Edit Your Profile</h2> 
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input id="name" formControlName="name"/>
-    </div>
-  
-    <div class="form-group">
-      <label for="surname">Surname:</label>
-      <input id="surname" formControlName="surname" />
-    </div>
-  
-    <div class="form-group">
-      <label for="biography">Biography:</label>
-      <textarea id="biography" formControlName="biography"></textarea>
-    </div>
-  
-    <div class="form-group">
-      <label for="motto">Motto:</label>
-      <input id="motto" formControlName="motto" />
-    </div>
-  
-    <div class="form-actions">
-        <button type="submit" [disabled]="profileForm.invalid">Save</button>
-    </div>
-  </form>
+<div class="edit-profile-page container">
+  <mat-card class="form-container">
+    <form [formGroup]="profileForm">
+
+      <div class="profile-image-container">
+        <img class="profile-img raised"
+          [src]=" profileImage ? 'data:image/png;base64,'+profileImage : 'assets/images/profile.jpg'"
+          alt="Profile Picture" />
+        <div class="edit-pfimg-btn-container">
+          <button class="secondary" mat-mini-fab (click)="triggerFileInput()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <input type="file" id="profileImage" accept="image/*" (change)="onFileSelected($event)" hidden />
+        </div>
+      </div>
+
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Firstname" id="name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Surname</mat-label>
+        <input matInput placeholder="Lastname" id="surname" formControlName="surname">
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Biography</mat-label>
+        <textarea name="biography" matInput id="biography" formControlName="biography"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Motto</mat-label>
+        <textarea name="motto" matInput id="motto" formControlName="motto"></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button class="secondary" mat-button [disabled]="profileForm.invalid" (click)="onSubmit()">
+          <mat-icon>save</mat-icon>
+          Save Profile
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

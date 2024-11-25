@@ -19,8 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-
-
+import { SharedModule } from 'src/app/shared/shared.module'; 
 
 @NgModule({
   declarations: [
@@ -45,7 +44,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    SharedModule
   ],
   exports: [
     EquipmentComponent,

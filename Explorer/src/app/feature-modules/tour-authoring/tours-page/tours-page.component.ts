@@ -13,7 +13,6 @@ export class ToursPageComponent {
   tours: TourCard[] = [];
   currentPage = 1;
   showSearch: boolean = false;
-
   startLatitude: number = 0;
   endLatitude: number = 0;
   startLongitude: number = 0;
@@ -25,6 +24,7 @@ export class ToursPageComponent {
   radius = new BehaviorSubject<number>(0);
 
   constructor(private tourService: TourAuthoringService, private router: Router){
+    
     this.loadTours();
   }
 

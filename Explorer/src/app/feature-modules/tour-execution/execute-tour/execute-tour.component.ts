@@ -13,6 +13,7 @@ import { CompletedKeyPoint } from '../model/completed-key-point.model';
 import { MatGridList } from '@angular/material/grid-list';
 import { MatDialog } from '@angular/material/dialog';
 import { CompletedKeyPointDetailsComponent } from '../completed-key-point-details/completed-key-point-details.component';
+import { KeyPoint } from '../../tour-authoring/model/key-point.model';
 
 @Component({
   selector: 'xp-execute-tour',
@@ -106,7 +107,7 @@ export class ExecuteTourComponent {
     }
   }
 
-  private trackTour() {
+  private async trackTour() {
     if (this.intervalSubscription) {
       this.clearInterval();
     }
@@ -124,12 +125,13 @@ export class ExecuteTourComponent {
         })
       )
       .subscribe({
-        next: (response) => {
+        next: async (response) => {
           if(!response)
             return;
 
           this.completedKeyPoints.push(response);
-          this.openDialog(response)
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+          this.openDialog(response.keyPoint)
 
           this.service.checkIfCompleted(this.tourExecution.id).subscribe({
             next: (response) => {
@@ -147,9 +149,13 @@ export class ExecuteTourComponent {
       });
   }
 
-  openDialog(keyPoint: CompletedKeyPoint) {
+  openDialog(keyPoint: KeyPoint) {
+    console.log(keyPoint)
     this.dialog.open(CompletedKeyPointDetailsComponent, {
-      data: keyPoint
+      data: {
+        keyPoint: keyPoint,
+        isExe: true
+      }
     });
   }
 

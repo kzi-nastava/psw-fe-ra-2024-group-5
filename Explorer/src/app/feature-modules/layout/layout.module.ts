@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NotificationModule } from '../notification/notification.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,9 @@ import { NotificationModule } from '../notification/notification.module';
     RouterModule,
     TourAuthoringModule,
     SharedModule,
-    NotificationModule
-],
+    NotificationModule,
+    MatMenuModule
+  ],
   exports: [
     NavbarComponent,
     FooterComponent,

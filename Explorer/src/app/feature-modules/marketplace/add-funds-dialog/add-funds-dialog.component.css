@@ -1,0 +1,98 @@
+.title-container{
+    display: flex;
+    justify-content: center;
+    max-width: 500px;
+    margin: 10px 0px;
+}
+
+.action-container{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.content-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    gap: 50px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover; 
+    border-radius: 50%;
+}
+
+.profile-details {
+    margin-left: 10px;
+}
+
+.username {
+    font-weight: bold; 
+}
+
+.email {
+    font-size: 0.9rem;
+    color: gray; 
+}
+
+.balance{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input{
+    width: 200px;
+}
+
+.error {
+    display: flex;    
+    justify-content: center;
+    align-items: center;             
+    color: rgba(255, 0, 0, 0.87);  
+    font-size: 12px;                            
+    margin-bottom: 0;             
+    line-height: 20px;             
+    padding: 0 8px;                 
+  }
+
+
+  .chips {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  .chip {
+    cursor: pointer; 
+    border: 2px solid var(--accent-color); 
+    border-radius: 20px; 
+    transition: all 0.3s ease; 
+  }
+  
+  .chip:hover {
+    border-color: #007bff;
+    background-color: var(--background-color);
+  }
