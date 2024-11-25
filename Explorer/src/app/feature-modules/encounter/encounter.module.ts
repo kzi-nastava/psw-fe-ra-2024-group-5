@@ -8,11 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EncounterDetailsComponent } from './encounter-details/encounter-details.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     EncounterComponent,
     EncountersManagingComponent,
+    EncounterDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   exports: [
     EncounterComponent,
