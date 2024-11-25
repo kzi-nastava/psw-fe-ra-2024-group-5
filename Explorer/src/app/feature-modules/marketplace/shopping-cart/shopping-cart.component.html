@@ -4,7 +4,7 @@
   <h2 class="cart-total"> Total Price: {{ shoppingCart.totalPrice.amount }} {{ priceCurrencies[shoppingCart.totalPrice.currency] }}</h2>
   
   <ul *ngIf="shoppingCart?.items?.length; else noItems" class="cart-items">
-    <li *ngFor="let item of shoppingCart.items" class="cart-item">
+    <li *ngFor="let item of shoppingCart.items" (click)="detailedAboutTour(item.tourId)" class="cart-item">
    
       <div class="cart-item-image-container">
         <img 

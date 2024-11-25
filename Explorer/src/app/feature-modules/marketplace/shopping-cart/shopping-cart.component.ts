@@ -153,6 +153,8 @@ checkout(): void {
   
 }
 
-
+detailedAboutTour(tourId: number): void{
+  this.router.navigate(['/tour-detailed-view', tourId]);
+}
 
 }

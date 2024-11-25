@@ -45,6 +45,7 @@
     padding: 15px;
     box-sizing: border-box;
     max-width: calc(25% - 20px); 
+    cursor: pointer;
 }
 
 .cart-item-name, .cart-item-price {
