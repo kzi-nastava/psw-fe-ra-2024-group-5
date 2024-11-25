@@ -9,6 +9,8 @@ import { ShoppingCart } from '../model/shopping-cart.model';
   providedIn: 'root'
 })
 export class ShoppingCartService {
+  private itemsCountSubject = new BehaviorSubject<number>(0);
+  public itemsCount$ = this.itemsCountSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -38,5 +40,14 @@ export class ShoppingCartService {
     getItemsCount(touristId: number): Observable<number> {
       return this.http.get<number>(`${environment.apiHost}shopping-cart/items-count/${touristId}`);
     }
+    updateItemsCount(userId: number): void {
+      this.getItemsCount(userId).subscribe(count => {
+        this.itemsCountSubject.next(count);
+      });
+    }
+    updateItemCount(count: number): void {
+      this.itemsCountSubject.next(count);
+    }
+  
    
 }

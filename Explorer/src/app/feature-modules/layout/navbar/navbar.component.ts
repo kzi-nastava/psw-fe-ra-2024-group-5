@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild  } from '@angular/core';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,20 +18,28 @@ export class NavbarComponent implements OnInit {
   user: User | undefined;
   routerSubscription: Subscription;
   itemsCount: number = 0;  // Dodajte promenljivu za broj stavki u korpi
+  @Output() itemsCountUpdated = new EventEmitter<number>();
+
 
 
   constructor(
     private authService: AuthService,
     private dialog: MatDialog,
     private router: Router,
-    private shoppingCartService: ShoppingCartService,  // Uvoz ShoppingCartService
+    private shoppingCartService: ShoppingCartService,  
   ) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
-      if (user && user.id) {  // Kada korisnik bude prijavljen, pozivamo metod za broj stavki
-        this.getItemsCount(user.id);
+      this.shoppingCartService.itemsCount$.subscribe(count => {
+        this.itemsCount = count;
+        this.updateItemsCount(count); 
+        
+      });
+    
+      if (this.user) {
+        this.shoppingCartService.updateItemsCount(this.user.id);
       }
     });
 
@@ -42,7 +50,28 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-     // Pozivanje API-ja za broj stavki u korpi
+getItemCount(userId?: number): void {
+  if (!userId) {
+    console.log('Korisnički ID nije definisan.');
+    return;
+  }
+
+  this.shoppingCartService.getItemsCount(userId).subscribe({
+    next: (count: number) => {
+      this.itemsCount = count; 
+      this.updateItemsCount(count); 
+    },
+    error: (err: any) => {
+      console.log('Greška pri učitavanju broja stavki:', err);
+    }
+  });
+}
+
+// Emitovanje ažuriranog broja stavki
+updateItemsCount(count: number): void {
+  this.itemsCountUpdated.emit(count);
+}
+
      getItemsCount(userId?: number): void {
       if (!userId) {
         console.log('Korisnički ID nije definisan.');
@@ -51,12 +80,17 @@ export class NavbarComponent implements OnInit {
     
       this.shoppingCartService.getItemsCount(userId).subscribe({
         next: (count: number) => {
-          this.itemsCount = count; // Ažuriranje broja stavki
+          this.itemsCount = count; 
         },
         error: (err: any) => {
           console.log('Greška pri učitavanju broja stavki:', err);
         }
       });
+    }
+    decreaseItemsCount(): void {
+      if (this.itemsCount > 0) {
+        this.itemsCount--;
+      }
     }
     
 

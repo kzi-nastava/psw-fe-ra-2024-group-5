@@ -259,9 +259,12 @@ export class TourDetailedViewComponent implements OnInit {
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
       next: () => {
         this.initializeTour();
-         // Pozivamo metodu iz NavbarComponent 
          if (this.navbarComponent) {
           this.navbarComponent.itemsCount++;
+          this.navbarComponent.getItemsCount();
+        }
+        if (this.user?.id) {
+          this.shoppingCartService.updateItemsCount(this.user.id); // Ažuriranje preko BehaviorSubject-a
         }
       },
       error: (err: any) => {

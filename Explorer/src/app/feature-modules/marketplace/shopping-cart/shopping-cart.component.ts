@@ -10,6 +10,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 
 
+
 @Component({
   selector: 'xp-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -26,7 +27,7 @@ export class ShoppingCartComponent implements OnInit {
   imagePreview: string | null = null; // Ovo drži URL za prikaz slike
   tours: TourCard[] = [];
 
-  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; // Dodaj ViewChild za NavbarComponent
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent  | undefined; // Dodaj ViewChild za NavbarComponent
 
 
   detailedTour(tour: TourCard): void {
@@ -101,9 +102,8 @@ removeItem(item: OrderItem): void {
   if (!confirmation) {
     return; 
   }
-   // Privremeno smanji broj stavki
    if (this.navbarComponent) {
-    this.navbarComponent.itemsCount--;
+    this.navbarComponent.decreaseItemsCount();
   }
   if (this.shoppingCart) {
     const index = this.shoppingCart.items.indexOf(item);
@@ -111,13 +111,16 @@ removeItem(item: OrderItem): void {
       this.shoppingCart.items.splice(index, 1); 
     }
   }
-  // Ažurirajte total price na osnovu novih stavki
   this.updateTotalPrice(); 
 
   this.shoppingCartService.removeItemFromCart(item, this.touristId).subscribe(
     response => {
       
       console.log('Item removed successfully', response);
+      const newCount = this.shoppingCart?.items.length || 0;
+      //this.shoppingCartService.updateItemsCount(newCount);
+      this.shoppingCartService.updateItemCount(this.shoppingCart?.items.length || 0);
+
     },
     error => {
       console.error('Error removing item', error);
