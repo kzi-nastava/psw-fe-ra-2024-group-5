@@ -6,6 +6,7 @@ import { TourEquipmentDialogComponent } from '../../tour-authoring/tour-equipmen
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationComponent } from '../../notification/notification/notification.component';
+import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'xp-navbar',
@@ -16,16 +17,22 @@ export class NavbarComponent implements OnInit {
 
   user: User | undefined;
   routerSubscription: Subscription;
+  itemsCount: number = 0;  // Dodajte promenljivu za broj stavki u korpi
+
 
   constructor(
     private authService: AuthService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private shoppingCartService: ShoppingCartService,  // Uvoz ShoppingCartService
   ) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
+      if (user && user.id) {  // Kada korisnik bude prijavljen, pozivamo metod za broj stavki
+        this.getItemsCount(user.id);
+      }
     });
 
     this.routerSubscription = this.router.events.subscribe(event => {
@@ -34,6 +41,24 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+
+     // Pozivanje API-ja za broj stavki u korpi
+     getItemsCount(userId?: number): void {
+      if (!userId) {
+        console.log('Korisnički ID nije definisan.');
+        return;
+      }
+    
+      this.shoppingCartService.getItemsCount(userId).subscribe({
+        next: (count: number) => {
+          this.itemsCount = count; // Ažuriranje broja stavki
+        },
+        error: (err: any) => {
+          console.log('Greška pri učitavanju broja stavki:', err);
+        }
+      });
+    }
+    
 
   openTourEquipmentDialog(): void {
     this.dialog.open(TourEquipmentDialogComponent, {

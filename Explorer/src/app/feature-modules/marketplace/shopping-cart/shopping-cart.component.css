@@ -24,7 +24,7 @@
     text-align: right;
     align-self: flex-end; /* Poravnanje na desnoj strani ako treba */
     position: relative;
-    top: 570px; /* Pomeranje h2 iznad u odnosu na prethodni položaj */
+    top: 630px; /* Pomeranje h2 iznad u odnosu na prethodni položaj */
     margin-right: 140px;
 }
 
@@ -72,6 +72,7 @@ button.primary {
     align-items: center;
     justify-content: center;
     gap: 5px; /* Razmak između ikonice i teksta */
+    
     
 }
 

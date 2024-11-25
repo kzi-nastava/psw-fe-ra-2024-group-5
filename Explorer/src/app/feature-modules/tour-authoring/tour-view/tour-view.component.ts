@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
 import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavbarComponent } from '../../layout/navbar/navbar.component';
 @Component({
   selector: 'xp-tour-detailed-view',
   templateUrl: './tour-view.component.html',
@@ -33,6 +34,9 @@ export class TourDetailedViewComponent implements OnInit {
   public Currency = Currency; 
   newPrice: number;
   newCurrency: Currency = Currency.AC; 
+
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; 
+
 
    
 
@@ -249,18 +253,21 @@ export class TourDetailedViewComponent implements OnInit {
       description: this.tour.description,
       tags: this.tour.tags
     }
-    
+
     console.log(orderItem)
 
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
       next: () => {
         this.initializeTour();
+         // Pozivamo metodu iz NavbarComponent 
+         if (this.navbarComponent) {
+          this.navbarComponent.itemsCount++;
+        }
       },
       error: (err: any) => {
           console.log(err);
       }
   });
-
   }
 
   togglePublishForm() {

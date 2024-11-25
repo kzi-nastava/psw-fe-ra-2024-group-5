@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCart } from '../model/shopping-cart.model';
 import { OrderItem } from '../model/order-item.model';
@@ -7,6 +7,7 @@ import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { Router } from '@angular/router';
 import { Tour } from '../../tour-authoring/model/tour.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { NavbarComponent } from '../../layout/navbar/navbar.component';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class ShoppingCartComponent implements OnInit {
 
   imagePreview: string | null = null; // Ovo drži URL za prikaz slike
   tours: TourCard[] = [];
+
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; // Dodaj ViewChild za NavbarComponent
 
 
   detailedTour(tour: TourCard): void {
@@ -84,10 +87,6 @@ loadTourImages(): void {
   }
 }
 
-
-
-
-
 getCartItems(): void {
   this.shoppingCartService.getByTouristId(this.touristId).subscribe(
     (data: ShoppingCart) => {      
@@ -102,6 +101,10 @@ removeItem(item: OrderItem): void {
   if (!confirmation) {
     return; 
   }
+   // Privremeno smanji broj stavki
+   if (this.navbarComponent) {
+    this.navbarComponent.itemsCount--;
+  }
   if (this.shoppingCart) {
     const index = this.shoppingCart.items.indexOf(item);
     if (index > -1) {
@@ -113,6 +116,7 @@ removeItem(item: OrderItem): void {
 
   this.shoppingCartService.removeItemFromCart(item, this.touristId).subscribe(
     response => {
+      
       console.log('Item removed successfully', response);
     },
     error => {

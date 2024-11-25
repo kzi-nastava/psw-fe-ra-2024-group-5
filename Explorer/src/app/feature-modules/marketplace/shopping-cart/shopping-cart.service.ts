@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/env/environment';
 import { Injectable } from '@angular/core';
 import { OrderItem } from '../model/order-item.model';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ShoppingCart } from '../model/shopping-cart.model';
 
 @Injectable({
@@ -33,6 +33,10 @@ export class ShoppingCartService {
     }
     getTourImage(tourId: number): Observable<Blob> {
       return this.http.get(`${environment.apiHost}tour/${tourId}/image`, { responseType: 'blob' });
+    }
+
+    getItemsCount(touristId: number): Observable<number> {
+      return this.http.get<number>(`${environment.apiHost}shopping-cart/items-count/${touristId}`);
     }
    
 }
