@@ -34,6 +34,45 @@
             <mat-icon>create</mat-icon>
             Add Tour
           </button>
+          <button mat-menu-item *ngIf="user && user.role === 'author'" (click)="openTourEquipmentDialog()">
+            <mat-icon>add_circle_outline</mat-icon>
+            Add Equipment
+          </button>
+        </mat-menu>
+
+        <button class="primary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['tour-execution']">
+          <mat-icon> my_location</mat-icon>
+          Active tour
+        </button>
+
+        <button class="primary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['facility']">
+          <mat-icon>location_city</mat-icon>
+          Facilities
+        </button>
+
+        <button class="primary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['appRatingForm']">
+          <mat-icon>star_half</mat-icon>
+          Rate the App
+        </button>
+
+        <button class="secondary dropdown" *ngIf="user && user.role === 'administrator'" mat-button
+          [matMenuTriggerFor]="adminToolsDropdown">
+          <mat-icon>vpn_key</mat-icon>
+          Admin Tools
+        </button>
+        <mat-menu #adminToolsDropdown="matMenu">
+          <button mat-menu-item [routerLink]="['accounts']">
+            <mat-icon>supervisor_account</mat-icon>
+            Manage Accounts
+          </button>
+          <button mat-menu-item [routerLink]="['equipment']">
+            <mat-icon>widgets</mat-icon>
+            Manage Equipment
+          </button>
+          <button mat-menu-item [routerLink]="['appRating']">
+            <mat-icon>stars</mat-icon>
+            App Ratings
+          </button>
         </mat-menu>
 
       </div>
@@ -68,50 +107,5 @@
 
       </div>
     </div>
-    <!-- <div id="buttons">
-
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button
-          [routerLink]="['tour-creation']">
-          Add Tour
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['equipment']">
-        Manage equipment
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button (click)="openTourEquipmentDialog()">
-        Add equipment
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['tour-execution']">
-        Active tour
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['facility']">
-        Facilities
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['appRatingForm']">
-        Rate our App
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['appRating']">
-        App Ratings
-      </button>
-
-      <button class="secondary" *ngIf="user && user.role === 'administrator'" mat-button [routerLink]="['accounts']">
-        Accounts
-      </button>
-
-      <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')" mat-raised-button
-        [routerLink]="['create-comment']">
-        Make comment
-      </button>
-
-      <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')" mat-raised-button
-        [routerLink]="['add-comment']">
-        Add comment
-      </button>
-    </div> -->
   </div>
 </mat-toolbar>
