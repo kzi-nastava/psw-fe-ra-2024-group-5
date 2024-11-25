@@ -144,5 +144,22 @@ button.primary .material-icons.check-icon {
   
 
   
+.wallet{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
 
+.wallet > h2{
+    padding: 0px;
+    margin: 5px 0px;
+}
+
+.add-button{
+    color: var(--button-secondary-bg);
+    cursor: pointer;
+    padding: 0 !important;
+    margin: 3px 0px 0px 10px;
+    
+}
 

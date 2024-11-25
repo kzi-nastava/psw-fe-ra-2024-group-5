@@ -9,6 +9,10 @@ import { Tour } from '../../tour-authoring/model/tour.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 
+import { Wallet } from '../model/wallet';
+import { MarketplaceService } from '../marketplace.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'xp-shopping-cart',
@@ -19,6 +23,8 @@ export class ShoppingCartComponent implements OnInit {
   shoppingCart: ShoppingCart | null = null;
   touristId: number ; 
   priceCurrencies: string[] = ['AC', 'Eur', 'Dol','Rsd']
+  wallet : Wallet;
+  user: User;
   tourImageUrl: SafeUrl | null = null;
   tourImage: string | ArrayBuffer | null = null;
 
@@ -58,13 +64,19 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   constructor(private shoppingCartService: ShoppingCartService,private tokenStorage: TokenStorage,private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer, private marketService : MarketplaceService, private authService: AuthService
 
   ) {}
 
   ngOnInit(): void {
     this.touristId = this.tokenStorage.getUserId() ?? 0;
     this.getCartItems();
+
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.loadWallet();
+  });
+  
 }
 
 loadTourImages(): void {
@@ -149,6 +161,7 @@ checkout(): void {
       console.log('Purchase completed successfully', response);
       this.shoppingCart = null; 
       this.getCartItems(); 
+      this.loadWallet();
     },
     error => {
       console.error('Error during checkout', error);
@@ -159,6 +172,18 @@ checkout(): void {
 
 detailedAboutTour(tourId: number): void{
   this.router.navigate(['/tour-detailed-view', tourId]);
+
+loadWallet(): void{
+  if(this.user.role === 'tourist' && this.user.id){
+    this.marketService.getWalletByTourist().subscribe({
+      next: (result: Wallet) => {
+        this.wallet = result;
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
+  }
 }
 
 }

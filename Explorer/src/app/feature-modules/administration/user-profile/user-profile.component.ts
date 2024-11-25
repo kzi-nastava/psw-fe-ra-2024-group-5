@@ -7,6 +7,10 @@ import { Following } from '../model/following.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SendMessageDialogComponent } from '../send-message-dialog/send-message-dialog.component';
+import { MarketplaceService } from '../../marketplace/marketplace.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Wallet } from '../../marketplace/model/wallet';
 
 @Component({
   selector: 'xp-user-profile',
@@ -14,22 +18,27 @@ import { SendMessageDialogComponent } from '../send-message-dialog/send-message-
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  userProfile: UserProfile;
+  userProfile: UserProfile | undefined;
   isOwnProfile: boolean = false;
   isFollowing: boolean = false;
   isFollower: boolean = false;
   followersCount: number = 0;
   userId: number | null;
+  user: User;
+  wallet: Wallet | null = null;
+  currencies: string[] = ['AC', 'EUR', 'DOL', 'RSD'];
 
   constructor(private service: UserProfileService,
     private tokenStorage: TokenStorage,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private marketService: MarketplaceService,
+    private authService: AuthService) { }
 
   openSendMessageDialog(): void {
     const dialogRef = this.dialog.open(SendMessageDialogComponent, {
-      data: { senderId: this.tokenStorage.getUserId(), recipientId: this.userProfile.id }
+      data: { senderId: this.tokenStorage.getUserId(), recipientId: this.userProfile?.id }
     });
   }
 
@@ -81,6 +90,22 @@ export class UserProfileComponent implements OnInit {
     } else {
       console.error("User ID is null");
     }
+
+
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+
+      if(user.role === 'tourist' && user.id){
+        this.marketService.getWalletByTourist().subscribe({
+          next: (result: Wallet) => {
+            this.wallet = result;
+          },
+          error: (err: any) => {
+            console.log(err);
+          }
+        })
+      }
+    });
   }
 
   followOrUnfollow(): void {

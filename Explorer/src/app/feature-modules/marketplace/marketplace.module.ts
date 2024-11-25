@@ -9,12 +9,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { AppRatingFormComponent } from './app-rating-form/app-rating-form.component';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../marketplace/tour-review-form/tour-review-form.component';
 import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
+import { AddFundsDialogComponent } from './add-funds-dialog/add-funds-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
     PreferenceDialogComponent,
     AppRatingFormComponent,
     ShoppingCartComponent,
-    TourReviewFormComponent
+    TourReviewFormComponent,
+    AddFundsDialogComponent
   ],
   imports: [
     CommonModule,
@@ -34,12 +38,13 @@ import { TourAuthoringModule } from "../tour-authoring/tour-authoring.module";
     ReactiveFormsModule,
     MaterialModule,
     MatDialogModule,
-    TourAuthoringModule
+    TourAuthoringModule,
+    MatChipsModule
 ],
   exports: [
     PreferenceComponent,
-    AppRatingFormComponent
-
+    AppRatingFormComponent,
+    AddFundsDialogComponent
   ]
 })
 export class MarketplaceModule { }

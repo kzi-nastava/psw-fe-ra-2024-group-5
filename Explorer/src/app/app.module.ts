@@ -17,6 +17,7 @@ import { ClubModule } from './feature-modules/club/club.module';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
+import { EncounterModule } from './feature-modules/encounter/encounter.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     ClubModule,
     LayoutModule,
     MatSnackBarModule,
-    FormsModule
+    FormsModule,
+    EncounterModule
   ],
   providers: [
     {
