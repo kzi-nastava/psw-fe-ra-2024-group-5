@@ -1,143 +1,361 @@
-/* blog-preview.component.css */
+/* General Styles */
+
+.blog-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1200px;
+  max-height: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100vh; /* Visina kontejnera zauzima celu visinu prozora */
+  box-sizing: border-box; 
+  overflow: hidden; /* Sprečava sadržaj da "izađe" iz kontejnera */
+
+}
+
+.blog-container > * {
+  flex-shrink: 1; /* Omogućava smanjivanje unutrašnjih elemenata prema potrebi */
+  max-width: 100%; /* Osigurava da unutrašnji elementi ne prelaze širinu kontejnera */
+  max-height: 100%; /* Osigurava da unutrašnji elementi ne prelaze visinu kontejnera */
+}
+
 
 .blog-post {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .blog-post h1 {
-    font-size: 2em;
-    color: #333;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  .blog-images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 15px 0;
-  }
-  
-  .blog-images img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .image-navigation {
-    margin-top: 10px;
-  }
-  
-  .image-navigation button {
-    padding: 8px 12px;
-    margin: 0 5px;
-    font-size: 1em;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .image-navigation button:hover {
-    background-color: #0056b3;
-  }
-  
-  .blog-post p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #555;
-    margin-top: 20px;
-  }
-  
-  .comments-section {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-  
-    /* Center the section and constrain its width */
-    max-width: 800px;
-    margin: 30px auto; /* Center horizontally */
-    background-color: #f9f9f9; /* Optional background for better visibility */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  
-  .comments-section h2 {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .comments-section div {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-  }
-  
-  .comments-section p {
-    font-size: 1em;
-    color: #444;
-  }
-  
-  .comments-section p strong {
-    color: #007bff;
-  }
-  
-  .highlight {
-    background-color: #ffffcc; /* Light yellow for visibility */
-    border: 1px solid #ffcc00; /* Optional border for emphasis */
-    animation: fadeHighlight 2s forwards;
-  }
-  
-  @keyframes fadeHighlight {
-    0% {
-      background-color: #ffffcc;
-    }
-    100% {
-      background-color: transparent;
-    }
-  }
+  flex: 1;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Zauzima celu visinu roditeljskog kontejnera */
+  box-sizing: border-box;
+}
 
-  .comment-container {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-    margin-bottom: 10px;
-  }
+.blog-post h1 {
+  font-size: 2em;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.description {
+  margin-left: 15px;
+  margin-top: 15px;
+  word-wrap: break-word; /* Automatski prelazak u novi red ako je tekst predugačak */
+  word-break: break-word; /* Razbija reči koje su predugačke da bi stale u okvir */
+  overflow-wrap: break-word; /* Osigurava razbijanje dugih reči */
+  flex-grow: 1; /* Omogućava opisu da zauzme preostali prostor */
+
+}
+
+.blog-images {
+margin-top: 28px;
+  display: flex;
+  align-items: center; /* Centriranje slike vertikalno */
+  overflow: hidden; /* Sprečava da slika "pobegne" van okvira */
+  border-radius: 20px; /* Zaobljeni uglovi */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efekat senke */
+}
+
+.blog-images img {
+  width: 100%; /* Širina slike popunjava okvir */
+  height:12.3cm; /* Visina se prilagođava proporcijama */
+  object-fit: fill; /* Slika se razlaže u okvir */
+  object-position: center; /* Fokus na centar slike */
+  border-radius: 8px; /* Zaobljeni uglovi */
+}
+
+
+.image-navigation button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-navigation button:hover {
+  background-color: #0056b3;
+}
+
+/* Comments Section */
+.comments-section {
+  flex: 1; /* Sekcija za komentare zauzima manji deo prostora */
+  display: flex ;
+  flex-direction: column;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  height: 100%;
+
+}
+
+.comments-h2{
+  margin-left: 40px;
   
-  .comment-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
-  }
+}
+
+.comments-list {
+  flex: 1;
+  margin-bottom: 20px;
+  flex-grow: 5;
+  overflow-y: auto;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.comment-container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  height: 2.5cm;
+  display: flex;
+  flex-direction: column; /* Vertikalni raspored */
+  overflow: hidden; /* Sprečava prelazak sadržaja */
+}
+
+.comment-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  flex-grow: 1;
+  overflow: hidden; /* Sprečava izlazak sadržaja izvan okvira */
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+.username {
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.comment-text-section {
+  flex: 1;
+  margin-left: 50px;
+  margin-top: 15px;
+  margin-right: 15px;
+  word-wrap: break-word; 
+  word-break: break-word; 
+  overflow-wrap: break-word; 
+  max-height: 150px; 
+  overflow-y: scroll; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
   
-  .username {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .creation-time {
-    font-style: italic;
-    color: #888;
-  }
-  
-  .comment-text {
-    margin-top: 5px;
-    font-size: 16px;
-    color: #000;
-  }
-  
-  
+}
+
+.comment-text-section::-webkit-scrollbar {
+  display: none; 
+}
+
+
+.comment-text {
+  font-size: 1rem;
+  color: var(--text-paragraph);
+  margin: 0;
+  line-height: 1.5; 
+  width: 100%;
+}
+
+.edit-textarea {
+  height: 100%;
+  width: 9.8cm;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+background-color:  #fff3f4;;
+  overflow-y: scroll; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+/* Footer for Comments */
+.comment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0; 
+}
+
+.footer-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 140px;
+}
+
+.creation-time {
+  font-size: 0.8rem;
+  color: gray;
+  margin-right: 15px;
+}
+
+.icon-button {
+  background: none; 
+  color: inherit;
+  border: none; 
+  width: auto; 
+  height: auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; 
+  padding: 0; 
+  margin: 0; 
+  transition: transform 0.2s ease; 
+}
+
+/* Stil za dugme Done */
+.done-button {
+  background-color: #a3be8c; /* Zelena boja za uspešno */
+  color: white; /* Bela boja teksta */
+  border: none; /* Uklanja okvir */
+  border-radius: 5px; /* Blago zaobljeni uglovi */
+  padding: 8px 12px; /* Unutrašnji razmak */
+  cursor: pointer; /* Ikonica pokazivača */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Glatka animacija */
+}
+
+.done-button:hover {
+  background-color: #89b377; /* Tamnija zelena na hover */
+  transform: scale(1.1); /* Lagano povećanje pri hoveru */
+}
+
+.done-button mat-icon {
+  font-size: 1.2rem; /* Veličina ikone */
+  color: white; /* Bela boja ikone */
+}
+
+
+.cancel-icon mat-icon {
+  color: inherit;
+  font-size: 1rem;
+}
+
+
+button.icon-button:hover {
+  color: var(--accent-color);
+  transform: scale(1.1); 
+}
+
+/* Specifičan stil za dugme za uređivanje */
+button.edit-icon mat-icon {
+  font-size: 1.5rem; 
+  color: inherit;
+}
+
+/* Specifičan stil za dugme za brisanje */
+button.delete-icon mat-icon {
+  font-size: 1.5rem; 
+  color: inherit; 
+}
+
+
+
+
+/* Add Comment Section */
+.add-comment {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 9px;
+}
+
+.add-comment h3 {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.comment-textarea {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  resize: none;
+  width: 500px;
+  background-color: white;
+  border-color: white;
+  border-radius: 20px;
+
+  overflow-y: scroll; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.comment-textarea:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Primary Button */
+.btn.primary {
+  padding: 10px 20px;
+  font-size: 0.5rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.icon-button.comment-icon {
+  color: #007bff;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.icon-button.comment-icon:hover {
+  color: #0056b3;
+}
+
+.icon-button.comment-icon:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.icon-button.comment-icon mat-icon {
+  font-size: 1.5rem;
+}
