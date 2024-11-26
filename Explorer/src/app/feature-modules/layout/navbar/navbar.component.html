@@ -92,6 +92,7 @@
         <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button
           class="icon-button">
           <mat-icon>shopping_cart</mat-icon>
+          <span class="item-count" *ngIf="itemsCount > 0">{{ itemsCount }}</span>
         </button>
 
         <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button"
@@ -101,32 +102,9 @@
         </button>
         <xp-notification *ngIf="showNotifications"></xp-notification>
 
-
-      <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')" mat-raised-button
-        [routerLink]="['create-comment']">
-        Make comment
-      </button>
-      <button class="secondary" *ngIf="user && (user.role=='tourist' || user.role=='author')" mat-raised-button
-        [routerLink]="['add-comment']">
-        Add comment
-      </button>
-      <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button
-        class="icon-button">
-        <mat-icon>shopping_cart</mat-icon>
-        <span class="item-count" *ngIf="itemsCount > 0">{{ itemsCount }}</span>
-      </button>
-      
-      <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button" (click)="toggleNotifications()">
-                <mat-icon>notifications</mat-icon>
-                <span *ngIf="getUnreadCount() > 0" class="unread-count">{{ getUnreadCount() }}</span>
-            </button>
-      <xp-notification *ngIf="showNotifications"></xp-notification>
-
         <button mat-icon-button class="icon-button" *ngIf="user && user.username !== ''" [routerLink]="['profile']">
           <mat-icon>person</mat-icon>
         </button>
-
-
       </div>
     </div>
   </div>
