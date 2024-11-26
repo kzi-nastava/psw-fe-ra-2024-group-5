@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TourReviewFormComponent } from '../../marketplace/tour-review-form/tour-review-form.component';
 import { ReviewService } from '../../marketplace/tour-review-form/tour-review.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { CompletedKeyPointDetailsComponent } from '../../tour-execution/completed-key-point-details/completed-key-point-details.component';
 import { UserProfileService } from '../../administration/user-profile.service';
 import { UserProfileBasic } from '../../administration/model/userProfileBasic.model';
@@ -37,6 +38,10 @@ export class TourDetailedViewComponent implements OnInit {
   public Currency = Currency; 
   newPrice: number;
   newCurrency: Currency = Currency.AC; 
+
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; 
+
+
   userProfiles: UserProfileBasic[] = [];
    
 
@@ -281,6 +286,8 @@ export class TourDetailedViewComponent implements OnInit {
     }
   }
 
+
+  
   addToCart(): void{
     if(!this.tour || !this.tour.id || !this.user)
       return;
@@ -288,19 +295,28 @@ export class TourDetailedViewComponent implements OnInit {
     let orderItem :OrderItem = {
       tourId : this.tour.id,
       tourName : this.tour.name,
-      price: this.tour.price
+      price: this.tour.price,
+      description: this.tour.description,
+      tags: this.tour.tags
     }
+
     console.log(orderItem)
 
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
       next: () => {
         this.initializeTour();
+         if (this.navbarComponent) {
+          this.navbarComponent.itemsCount++;
+          this.navbarComponent.getItemsCount();
+        }
+        if (this.user?.id) {
+          this.shoppingCartService.updateItemsCount(this.user.id); // Ažuriranje preko BehaviorSubject-a
+        }
       },
       error: (err: any) => {
           console.log(err);
       }
   });
-
   }
 
   togglePublishForm() {
