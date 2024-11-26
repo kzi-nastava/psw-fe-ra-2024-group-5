@@ -66,4 +66,12 @@ export class EncounterService {
   getParticipantByUserId(userId: number): Observable<Participant> {
     return this.http.get<Participant>(`${this.touristBaseUrl}/participant?userId=${userId}`);
   }
+
+  getByTouristCreatorId(creatorId: number): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.touristBaseUrl}/creator/${creatorId}`);
+  }
+
+  createByTourist(encounter: Encounter): Observable<Encounter> {
+    return this.http.post<Encounter>(this.touristBaseUrl, encounter);
+  }
 }

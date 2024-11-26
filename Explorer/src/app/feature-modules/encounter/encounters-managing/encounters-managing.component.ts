@@ -7,6 +7,8 @@ import { EncounterStatus } from '../enum/encounter-status.enum';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MapService } from 'src/app/shared/map/map.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-encounters-managing',
@@ -18,7 +20,8 @@ export class EncountersManagingComponent implements OnInit {
   constructor(private encounterService: EncounterService,
     private tokenStorage: TokenStorage,
     private fb: FormBuilder,
-    private mapService: MapService) {}
+    private mapService: MapService,
+    private authService: AuthService) {}
 
   @ViewChild(MapComponent) map: MapComponent;
 
@@ -31,9 +34,14 @@ export class EncountersManagingComponent implements OnInit {
   long: number = 0;
   lat: number = 0;
   isViewOnly: boolean = true;
+  user: User | null;
 
   ngOnInit(): void {
     this.setEncounterFormFields();
+
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
 
     this.userId = this.tokenStorage.getUserId();
     this.loadEncountersByCreator();
@@ -62,22 +70,37 @@ export class EncountersManagingComponent implements OnInit {
         latitude: this.encounterForm.value.latitude
       },
       xp: this.encounterForm.value.xp,
-      status: EncounterStatus.ACTIVE,
+      status: this.user?.role === 'administrator' ? EncounterStatus.ACTIVE : EncounterStatus.DRAFT,
       creatorId: this.userId ?? 0
     }
 
-    this.encounterService.create(encounter).subscribe({
-      next: (createdEncounter) => {
-        this.miscModalVisible = false;
-        this.isViewOnly = true;
-        this.setEncounterFormFields();
-        this.loadEncountersByCreator();
-      },
-      error: (err) => {
-        console.error('Error creating encounter:', err);
-      }
-    });
-
+    if(this.user && this.user.role == 'administrator')
+    {
+      this.encounterService.create(encounter).subscribe({
+        next: (createdEncounter) => {
+          this.miscModalVisible = false;
+          this.isViewOnly = true;
+          this.setEncounterFormFields();
+          this.loadEncountersByCreator();
+        },
+        error: (err) => {
+          console.error('Error creating encounter:', err);
+        }
+      });
+    }else if(this.user && this.user.role == 'tourist')
+    {
+      this.encounterService.createByTourist(encounter).subscribe({
+        next: (createdEncounter) => {
+          this.miscModalVisible = false;
+          this.isViewOnly = true;
+          this.setEncounterFormFields();
+          this.loadEncountersByCreator();
+        },
+        error: (err) => {
+          console.error('Error creating encounter:', err);
+        }
+      });
+    }
   }
 
   cancelCreateEncounter() {
@@ -105,8 +128,18 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   loadEncountersByCreator(): void {
-    if (this.userId) {
+    if (this.userId && this.user && this.user.role == "administrator") {
       this.encounterService.getByCreatorId(this.userId).subscribe({
+        next: (encounters: Encounter[]) => {
+          this.encountersByCreator = encounters;
+          console.log('Encounters loaded:', encounters);
+        },
+        error: (err) => {
+          console.error('Error loading encounters:', err);
+        }
+      });
+    } else if(this.userId && this.user && this.user.role == "tourist") {
+      this.encounterService.getByTouristCreatorId(this.userId).subscribe({
         next: (encounters: Encounter[]) => {
           this.encountersByCreator = encounters;
           console.log('Encounters loaded:', encounters);

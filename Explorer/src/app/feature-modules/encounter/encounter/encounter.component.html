@@ -10,7 +10,7 @@
         Keep going! Reach level 10 to create your own encounter!
       </p>
       <p *ngIf="participant && participant.level >= 10" class="create-button">
-        <button>Create your own Encounter</button>
+        <button [routerLink]="['/encounters-managing']">Create your own Encounter</button>
       </p>
     </div>
 
