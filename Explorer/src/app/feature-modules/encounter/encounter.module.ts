@@ -11,12 +11,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EncounterDetailsComponent } from './encounter-details/encounter-details.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
+import { EncountersApprovalComponent } from './encounters-approval/encounters-approval.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     EncounterComponent,
     EncountersManagingComponent,
     EncounterDetailsComponent,
+    EncountersApprovalComponent,
   ],
   imports: [
     CommonModule,
@@ -27,11 +30,13 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    RouterModule
+    RouterModule,
+    MatIconModule
   ],
   exports: [
     EncounterComponent,
-    EncountersManagingComponent
+    EncountersManagingComponent,
+    EncountersApprovalComponent
   ]
 })
 export class EncounterModule { }

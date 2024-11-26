@@ -74,4 +74,16 @@ export class EncounterService {
   createByTourist(encounter: Encounter): Observable<Encounter> {
     return this.http.post<Encounter>(this.touristBaseUrl, encounter);
   }
+
+  getAllDraft(): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.administrationBaseUrl}/draft`);
+  }
+
+  acceptEncounter(id: number): Observable<any> {
+    return this.http.put(`${this.administrationBaseUrl}/${id}/accept`, {});
+  }
+
+  rejectEncounter(id: number): Observable<any> {
+    return this.http.put(`${this.administrationBaseUrl}/${id}/reject`, {});
+  }
 }
