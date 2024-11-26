@@ -3,4 +3,5 @@ export interface AppRating {
   grade: number;
   comment: string;
   userId: number;
+  timeStamp?: Date;
 }

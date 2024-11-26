@@ -1,9 +1,30 @@
+<!-- app-rating-form.component.html -->
 <div class="app-rating-form-container">
+  <!-- Show Rate button if user hasn't rated yet -->
   <button 
+    *ngIf="!userRating"
     mat-raised-button 
     color="primary" 
     (click)="openRatingDialog()"
     class="rating-button">
     Rate our App
   </button>
+
+  <!-- Show Edit and Delete buttons if user has already rated -->
+  <div *ngIf="userRating" class="rating-actions">
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="editRating()"
+      class="action-button">
+      Edit your rating
+    </button>
+    <button 
+      mat-raised-button 
+      color="warn" 
+      (click)="deleteRating()"
+      class="action-button">
+      Delete your rating
+    </button>
+  </div>
 </div>
