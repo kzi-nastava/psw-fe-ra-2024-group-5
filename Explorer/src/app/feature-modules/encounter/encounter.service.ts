@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Encounter } from './model/encounter.model';
 import { Position } from '../tour-execution/model/position.model';
+import { Participant } from './model/participant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +61,9 @@ export class EncounterService {
       userId: userId,
       location: position
     })
+  }
+
+  getParticipantByUserId(userId: number): Observable<Participant> {
+    return this.http.get<Participant>(`${this.touristBaseUrl}/participant?userId=${userId}`);
   }
 }

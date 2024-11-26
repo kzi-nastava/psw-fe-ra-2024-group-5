@@ -1,6 +1,19 @@
 <div class="container">
     <h1 class="title">Active Tourism Encounters</h1>
     
+    <div class="participant-info" *ngIf="participant">
+      <div class="xp-level-container">
+        <p><strong>XP:</strong> {{ participant?.xp ?? 0 }}</p>
+        <p><strong>Level:</strong> {{ participant?.level ?? 0 }}</p>
+      </div>
+      <p *ngIf="participant && participant.level < 10" class="warning-message">
+        Keep going! Reach level 10 to create your own encounter!
+      </p>
+      <p *ngIf="participant && participant.level >= 10" class="create-button">
+        <button>Create your own Encounter</button>
+      </p>
+    </div>
+
     <div class="map-container">
       <app-map [isViewOnly]="true" (encounterClicked)="showEncounterDetails($event)" [simulatorEnabled]="true" (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
     </div>
