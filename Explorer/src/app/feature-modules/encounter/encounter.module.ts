@@ -10,12 +10,14 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EncounterDetailsComponent } from './encounter-details/encounter-details.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { HiddenLocationEncounterComponent } from './hidden-location-encounter/hidden-location-encounter.component';
 
 @NgModule({
   declarations: [
     EncounterComponent,
     EncountersManagingComponent,
     EncounterDetailsComponent,
+    HiddenLocationEncounterComponent,
   ],
   imports: [
     CommonModule,

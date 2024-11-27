@@ -70,6 +70,8 @@ export class EncounterComponent implements OnInit{
     }
   }
 
+  
+
   progress(){
     var currentPosition = this.getPosition();
 

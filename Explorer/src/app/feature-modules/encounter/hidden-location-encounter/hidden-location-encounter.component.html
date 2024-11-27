@@ -1,0 +1,31 @@
+<div>{{ activatedEncounter?.type }}</div>
+<div class="timer-container">
+    <div class="circular-progress" [class.complete]="isComplete">
+      <svg viewBox="0 0 36 36" class="circular-svg">
+        <path 
+          d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831"
+          fill="none"
+          stroke="#eee"
+          stroke-width="3"
+        />
+        <path 
+          d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831"
+          fill="none"
+          stroke="#4CAF50"
+          stroke-width="3"
+          [attr.stroke-dasharray]="progressValue + ', 100'"
+          class="progress-bar"
+        />
+      </svg>
+      <div class="timer-label">
+        <span class="seconds">{{ remainingTime }}</span>
+      </div>
+    </div>
+    <div class="completion-message">
+      Stay close!
+    </div>
+</div>
