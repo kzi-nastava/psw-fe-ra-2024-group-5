@@ -236,7 +236,7 @@
   justify-content: center;
   margin-bottom: 20px;
   background-color: #ffffff; /* White background */
-  border: 1px solid #3f51b5; /* Blue border */
+  border: 1px solid #bf616a; /* Blue border */
   border-radius: 8px; /* Rounded corners */
   padding: 10px 20px; /* Add padding for spacing */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
@@ -249,13 +249,13 @@
 }
 
 .filter-icon {
-  color: #3f51b5; /* Blue icon */
+  color: #bf616a; /* Blue icon */
   margin-right: 8px; /* Add space between icon and label */
 }
 
 /* Add blogs button styling */
 .add-blogs {
-  background-color: #3f51b5; 
+  background-color: #bf616a; 
   color: white; 
   border: none; 
   padding: 8px 16px; 
@@ -265,7 +265,7 @@
 }
 
 .add-blogs:hover {
-  background-color: #5c6bc0; /* Slightly lighter blue */
+  background-color: #ca9096; /* Slightly lighter blue */
   transform: scale(1.05); /* Slight zoom effect */
 }
 

@@ -24,7 +24,21 @@
 
 .custom-form-field {
   width: 100%;
+  border-color: #bf616a !important;
 }
+
+.mat-form-field-outline {
+  border-color: #bf616a !important;
+}
+
+.mat-form-field-outline-thick {
+  border-color: #bf616a !important;
+}
+
+.mat-form-field-ripple {
+  background-color: #bf616a !important;
+}
+
 
 .file-container {
   display: flex;
@@ -43,11 +57,11 @@
 
 .file-label {
   display: inline-block;
-  color: #3f51b5;
+  color: #bf616a;
   background-color: white;
   border-radius: 8px; /* Consistent border radius */
   cursor: pointer;
-  border-color: #3f51b5;
+  border-color: #bf616a;
   width: 150px;
   text-align: left;
   margin-left: 5px;
@@ -168,4 +182,6 @@
 
 .create-button {
   margin-top: 50px;
+  background-color: #bf616a ;
+  color: white;
 }
