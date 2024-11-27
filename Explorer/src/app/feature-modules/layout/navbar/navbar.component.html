@@ -89,6 +89,7 @@
         <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button
           class="icon-button">
           <mat-icon>shopping_cart</mat-icon>
+          <span class="item-count" *ngIf="itemsCount > 0">{{ itemsCount }}</span>
         </button>
 
         <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button"
@@ -101,7 +102,6 @@
         <button mat-icon-button class="icon-button" *ngIf="user && user.username !== ''" [routerLink]="['profile']">
           <mat-icon>person</mat-icon>
         </button>
-
       </div>
     </div>
   </div>
