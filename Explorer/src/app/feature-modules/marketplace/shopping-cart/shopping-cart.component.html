@@ -2,16 +2,44 @@
 
 <div *ngIf="shoppingCart; else emptyCart" class="cart-container">
   <h2 class="cart-total"> Total Price: {{ shoppingCart.totalPrice.amount }} {{ priceCurrencies[shoppingCart.totalPrice.currency] }}</h2>
+
+  <div class="wallet" *ngIf="wallet">
+    <h2>Balance: {{wallet.balance.amount}} {{priceCurrencies[wallet.balance.currency]}}</h2>
+  </div>
   
   <ul *ngIf="shoppingCart?.items?.length; else noItems" class="cart-items">
-    <li *ngFor="let item of shoppingCart.items" class="cart-item">
-      <p class="cart-item-name">Name: <strong>{{ item.tourName }}</strong></p>
+    <li *ngFor="let item of shoppingCart.items" (click)="detailedAboutTour(item.tourId)" class="cart-item">
+   
+      <div class="cart-item-image-container">
+        <img 
+          *ngIf="item.imageUrl && item.imageUrl.trim() !== ''; else noImage" 
+          [src]="item.imageUrl" 
+          alt="{{ item.tourName }}" 
+          class="cart-item-image" 
+        />
+        <ng-template #noImage>
+          <img 
+          src="assets/images/no_image.jpg" 
+          alt="No Image Available" 
+            class="cart-item-image-placeholder" 
+          />
+        </ng-template>
+      </div>  
+
+      <p class="cart-item-name">Name:
+           <strong >{{ item.tourName }}</strong></p>
       <p class="cart-item-price">Price: <strong>{{ item.price.amount }} {{ priceCurrencies[item.price.currency] }}</strong></p>
-      <button class="primary" (click)="removeItem(item)">Remove</button>
+      <p class="cart-item-name">Description: {{ item.description }}</p>
+      <p class="cart-item-name">{{ item.tags }}</p>
+      <button class="primary" (click)="removeItem(item)">  <span class="material-icons">delete</span> Remove</button>
     </li>
   </ul>
 
-  <button class="primary" (click)="checkout()" *ngIf="shoppingCart && shoppingCart.items.length > 0"> Complete Purchase </button>
+   
+
+  <button class="primary complete-purchase" (click)="checkout()" *ngIf="shoppingCart && shoppingCart.items.length > 0"> 
+    <span class="material-icons check-icon">check</span> 
+    Complete Purchase </button>
   
 </div>
 

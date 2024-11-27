@@ -24,13 +24,25 @@ export class TourAuthoringService {
     return this.http.post<KeyPoint[]>(`https://localhost:44333/api/tours/${tourId}/keypoints`, keyPoints);
   }
 
-  getTours(user: User) : Observable<PagedResults<Tour>>{
+  getAuthorTours(user: User, page: number, pageSize: number) : Observable<TourCard[]>{
     if(user.role === 'author')
-      return this.http.get<PagedResults<Tour>>(environment.apiHost + 'tour/author/' + user.id);
+      return this.http.get<TourCard[]>(`${environment.apiHost}tour/author/${user.id}/${page}/${pageSize}`);
     else{
       console.log('Nije dobra rola');
       throw console.error('Nije dobra rola');
     }
+  }
+
+  getAuthorTourCardsFiltered(user: User, searchParams: {
+    page: number,
+    pageSize: number,
+    startLat: number,
+    endLat: number,
+    startLong: number,
+    endLong: number
+  }): Observable<TourCard[]> {
+    const url = `${environment.apiHost}tour/author/filtered/${user.id}`;
+    return this.http.post<TourCard[]>(url, searchParams);
   }
 
   getPublishedTourCardsFiltered(searchParams: {

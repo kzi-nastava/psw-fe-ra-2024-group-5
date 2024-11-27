@@ -1,0 +1,10 @@
+<div class="container">
+    <h1 class="title">Active Tourism Encounters</h1>
+    
+    <div class="map-container">
+      <app-map [isViewOnly]="true" (encounterClicked)="showEncounterDetails($event)" [simulatorEnabled]="true" (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
+    </div>
+    <div *ngIf="activatedEncounter">
+      {{ activatedEncounter.type }}
+    </div>
+  </div>

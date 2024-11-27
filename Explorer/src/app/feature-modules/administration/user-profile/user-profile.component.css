@@ -68,3 +68,45 @@
     font-weight: bold;
     font-size: 20px;
 }
+
+.wallet{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.wallet > h2{
+    padding: 0px;
+    margin: 5px 0px;
+}
+
+.add-button{
+    color: var(--button-secondary-bg);
+    cursor: pointer;
+    padding: 0 !important;
+    margin: 3px 0px 0px 10px;
+    
+}
+
+.rating-section {
+    margin-top: 20px;
+  }
+  
+  .app-rating-form-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+  }
+  
+  .rating-button {
+    min-width: 120px;
+  }
+  
+  .rating-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .action-button {
+    min-width: 120px;
+  }

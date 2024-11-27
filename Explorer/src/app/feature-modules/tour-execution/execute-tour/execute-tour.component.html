@@ -22,7 +22,7 @@
                 <div *ngIf="index === 0" class="message">
                   Welcome! For starters, head for the first key point. Good luck!
                 </div>
-                <div (click)="openDialog(completedKeyPoints[index - 1])" *ngIf="index > 0 && index <= completedKeyPoints.length && tour?.keyPoints" class="message">
+                <div (click)="openDialog(completedKeyPoints[index - 1].keyPoint)" *ngIf="index > 0 && index <= completedKeyPoints.length && tour?.keyPoints" class="message">
                   {{ completedKeyPoints[index - 1].keyPoint.name || 'Checkpoint ' + index }}
                 </div>
               </div>
