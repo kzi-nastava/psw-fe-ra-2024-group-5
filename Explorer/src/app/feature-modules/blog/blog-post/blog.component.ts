@@ -7,6 +7,8 @@ import { Vote } from '../model/vote.model';
 import { BlogPostComment } from '../model/blog-post-comment'; 
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { BlogFormComponent } from '../blog-form/blog-form.component';
 
 
 
@@ -31,7 +33,11 @@ export class BlogComponent implements OnInit {
   filteredComments: { [blogId: number]: BlogPostComment[] } = {};
   currentImageIndex: { [blogId: number]: number } = {};
 
-  constructor(private service : BlogService, private authService : AuthService, private router: Router){}
+  constructor(private service : BlogService,
+              private authService : AuthService, 
+              private router: Router,
+              private dialog: MatDialog // Inject MatDialog
+  ){}
 
   ngOnInit(): void {
     this.getBlog();
@@ -89,26 +95,6 @@ export class BlogComponent implements OnInit {
       this.currentImageIndex[blogId] = imageCount - 1;
     }
   }
-
-  // updateBlogStatus(blogId: number, newStatus: number): void {
-  //   this.authService.user$.subscribe(user => {
-  //     if (user) {
-  //       const userId = user.id;
-  
-  //       this.service.updateBlogStatus(blogId, newStatus, userId).subscribe({
-  //         next: (updatedBlog) => {
-  //           this.getBlog()
-  //         },
-  //         error: (err) => {
-  //           console.error('Failed to update blog status', err);
-  //         }
-  //       });
-  //     } else {
-  //       console.error('User is not logged in.');
-  //     }
-  //   });
-  // }
-
 
   
   updateBlogStatus(blogId: number, newStatus: number): void {
@@ -229,4 +215,19 @@ export class BlogComponent implements OnInit {
     }
 
 
+    openAddBlogDialog(): void {
+      const dialogRef = this.dialog.open(BlogFormComponent, {
+        width: '600px',
+       // disableClose: true // Prevent closing on outside click
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'created') {
+          console.log('New blog created. Refreshing blogs...');
+          this.getBlog(); // Osveži listu blogova
+        } else {
+          console.log('Dialog closed without creating a blog.');
+        }
+      });
+    }
 }

@@ -1,71 +1,282 @@
-/* Flex container for blogs */
+/* Container for the entire blog section */
 .blog-container {
   display: flex;
-  flex-wrap: wrap;             /* Ensures that items wrap to the next line when there's no space */
-  gap: 15px;                   /* Slightly increased gap for better spacing */
-  justify-content: flex-start;  /* Align blogs to the start */
-  padding: 20px;               /* Add some padding around the entire container */
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }
 
 /* Individual blog cards */
 .blog-card {
-  flex: 0 1 calc(33.3% - 15px);  /* Take 33.3% of the width minus the gap */
+  position: relative;
+  flex: 0 1 calc(33.3% - 20px);
   box-sizing: border-box;
-  padding: 20px;                /* Padding inside the card */
-  border: 1px solid #e0e0e0;    /* Subtle border */
-  border-radius: 10px;          /* Rounded corners */
-  background-color: #ffffff;    /* White background for contrast */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card effect */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
-}
-
-/* Hover effect for blog cards */
-.blog-card:hover {
-  transform: translateY(-5px); /* Slight upward movement on hover */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
-}
-
-/* Ensure the image fits within the blog card and is uniform in size */
-.blog-card img {
-  width: 100%;                 /* Ensure all images are the same width */
-  height: 200px;               /* Fix image height to create uniformity */
-  object-fit: cover;           /* Ensure images cover the area without distortion */
-  border-radius: 5px;          /* Round the image corners to match the card */
-  margin-bottom: 10px;         /* Space between image and content */
-  border: 1px solid #ddd;
-}
-
-/* Flex container for the buttons (Previous/Next) */
-.image-navigation {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 550px; /* Ensures a consistent card height */
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* Aligns elements vertically */
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header section of the blog card */
+.blog-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.blog-header h2 {
+  margin: 0;
+  cursor: pointer;
+}
+
+.blog-header h2:hover {
+  text-decoration: underline;
+}
+
+.blog-status,
+.blog-date {
+  font-size: 0.9em;
+  color: #666666;
+}
+
+.blog-description {
+  color: #333333;
+  text-align: justify;
+  overflow-wrap: break-word; /* Break words that are too long */
+  word-wrap: break-word; /* For older browsers */
+  word-break: break-word; /* Ensure long words break */
+  white-space: pre-line; /* Preserve newlines but allow wrapping */
+  min-height: 100px; /* Ensure consistent height */
+  max-height: 150px; /* Optional: limit the height */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis if text is truncated */
+}
+
+
+/* Carousel container */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 250px; 
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box; 
+  justify-content: center; 
+  align-items: center; 
+  margin: 0;
+}
+
+
+
+.carousel {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+  justify-content: center; 
+  align-items: center; 
+}
+.carousel-image {
+  min-width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: none;
+}
+
+.carousel-image.active {
+  display: block;
+}
+
+/* Carousel controls */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-control.prev {
+  left: 10px;
+}
+
+.carousel-control.next {
+  right: 10px;
+}
+
+/* Blog actions */
+.blog-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.lock-icon {
+  font-size: 24px;
+  color: #bf616a;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.lock-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Vote container */
+.vote-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
   margin-top: 10px;
 }
 
-/* Button styling */
-button {
-  cursor: pointer;
-  padding: 5px 10px;
-  background-color: #007bff;    /* Blue background */
-  color: white;
-  border: none;
+.vote-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px; /* Smanjen razmak između ikone i broja */
+  background: none;
+  border: 1px solid #e0e0e0;
   border-radius: 5px;
-  transition: background-color 0.2s;
+  padding: 3px 8px; /* Manji unutrašnji razmak */
+  cursor: pointer;
+  font-size: 0.5em; /* Smanjena veličina fonta za dugme */
+  color: #555555;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-button:hover {
-  background-color: #0056b3;    /* Darker blue on hover */
+.vote-button.active {
+  background-color: #4caf50; /* Zelena za pozitivne glasove */
+  color: #ffffff;
 }
+
+.vote-button.thumb-down.active {
+  background-color: #f44336; /* Crvena za negativne glasove */
+  color: #ffffff;
+}
+
+.vote-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Stil za broj lajkova */
+.vote-button span {
+  font-size: 1em; /* Broj lajkova ostaje veći za vidljivost */
+  font-weight: bold;
+}
+
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .blog-card {
-      flex: 0 1 calc(50% - 15px);  /* Two cards per row on medium screens */
+    flex: 0 1 calc(50% - 20px);
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
   .blog-card {
-      flex: 0 1 100%;  /* One card per row on small/mobile screens */
+    flex: 0 1 100%;
+  }
+}
+
+
+/* Publish button with no background */
+.publish-button {
+  background: none; 
+  border: none; 
+  color: #3f51b5; 
+  cursor: pointer; 
+  padding: 0; 
+  display: inline-flex;  
+  justify-content: right; 
+  align-items: right;
+  transition: transform 0.2s, color 0.2s; /* Smooth hover effects */
+}
+
+/* Hover effect for the icon */
+.publish-button:hover {
+  transform: scale(1.1); /* Slight zoom effect */
+  color: #5c6bc0; /* Lighter blue on hover */
+}
+
+/* Icon size */
+.publish-button mat-icon {
+  font-size: 24px; /* Default size of the icon */
+}
+
+
+/* Filter container styling */
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #ffffff; /* White background */
+  border: 1px solid #3f51b5; /* Blue border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px 20px; /* Add padding for spacing */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Filter field styling */
+.filter-field {
+  flex-grow: 1; /* Allow field to expand */
+  position: relative;
+}
+
+.filter-icon {
+  color: #3f51b5; /* Blue icon */
+  margin-right: 8px; /* Add space between icon and label */
+}
+
+/* Add blogs button styling */
+.add-blogs {
+  background-color: #3f51b5; 
+  color: white; 
+  border: none; 
+  padding: 8px 16px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  font-weight: bold; 
+}
+
+.add-blogs:hover {
+  background-color: #5c6bc0; /* Slightly lighter blue */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-blogs {
+    width: 100%; /* Full width on smaller screens */
   }
 }

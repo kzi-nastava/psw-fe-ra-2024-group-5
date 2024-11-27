@@ -1,41 +1,51 @@
-<div class="blog-form-container">
-    <h2>Create New Blog</h2>
-  
-    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
-      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input id="title" formControlName="title" class="form-control" placeholder="Enter blog title">
-        <div *ngIf="blogForm.controls['title'].invalid && blogForm.controls['title'].touched" class="error">
-          Title is required.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" formControlName="description" class="form-control" placeholder="Enter blog description"></textarea>
-        <div *ngIf="blogForm.controls['description'].invalid && blogForm.controls['description'].touched" class="error">
-          Description is required.
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="image">Upload Image</label>
-        <input type="file" (change)="onImageSelected($event)" multiple accept="image/png, image/jpeg">
+<div class="container">
+  <div class="component">
+    <div class="scrollable-form-container">
+      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-        <div class="image-preview-container" *ngIf="selectedImages.length > 0">
-          <div *ngFor="let img of selectedImages; let i = index" class="image-preview">
-            <img [src]="'data:' + img.contentType + ';base64,' + img.base64Data"
-             [alt]="'Image ' + i" style="max-width: 100%; height: auto;">
-            <button type="button" class="remove-image-btn" (click)="removeImage(i)">X</button>
+        <div class="content-container">
+          <mat-form-field appearance="outline" class="custom-form-field">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Enter blog title" formControlName="title"  maxlength="30">
+            <mat-error *ngIf="blogForm.controls['title'].invalid && blogForm.controls['title'].touched">
+              Title is required.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="custom-form-field">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Enter blog description" formControlName="description" rows="4"></textarea>
+            <mat-error *ngIf="blogForm.controls['description'].invalid && blogForm.controls['description'].touched">
+              Description is required.
+            </mat-error>
+          </mat-form-field>
+
+          <div class="file-container">
+            <label for="image" class="file-label">Upload Images</label>
+            <input type="file" id="image" (change)="onImageSelected($event)" multiple accept="image/png, image/jpeg" class="file-input">
+          </div>
+
+          <div *ngIf="selectedImages.length > 0" class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-inner" [style.transform]="'translateX(-' + currentImageIndex * 100 + '%)'" #carouselInner>
+                <div class="carousel-item" *ngFor="let img of selectedImages; let i = index">
+                  <img [src]="'data:' + img.contentType + ';base64,' + img.base64Data" [alt]="'Image ' + i" class="carousel-image">
+                  <button type="button" class="remove-image-btn" (click)="removeImage(i)">X</button>
+                </div>
+              </div>
+              <button type="button" class="carousel-control prev" (click)="previImage()">‹</button>
+              <button type="button" class="carousel-control next" (click)="nextiImage()">›</button>
+            </div>
           </div>
         </div>
-      </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
-        {{ isSubmitting ? 'Submitting...' : 'Create Blog' }}
-      </button>
-    </form>
+
+        <div class="action-container">
+          <button class="create-button" type="submit" mat-raised-button color="primary" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Submitting...' : 'Create Blog' }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</div>
