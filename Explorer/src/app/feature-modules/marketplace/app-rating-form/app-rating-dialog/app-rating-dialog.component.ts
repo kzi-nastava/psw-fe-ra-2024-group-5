@@ -68,34 +68,42 @@ export class AppRatingDialogComponent {
     });
   }
 
-  onSubmit(): void {
-    if (this.appRatingForm.valid) {
-      const userId = this.authService.user$.value.id;
-      const appRating: AppRating = {
-        id: this.data.shouldEdit ? this.data.appRating?.id : undefined,
-        grade: Number(this.appRatingForm.value.grade) || 0,
-        comment: this.appRatingForm.value.comment || '',
-        userId: userId,
-        timeStamp: new Date,
-      };
+onSubmit(): void {
+  if (this.appRatingForm.valid) {
+    const userId = this.authService.user$.value.id;
+    const appRating: AppRating = {
+      id: this.data.shouldEdit ? this.data.appRating?.id : undefined,
+      grade: Number(this.appRatingForm.value.grade) || 0,
+      comment: this.appRatingForm.value.comment || '',
+      userId: userId,
+      timeStamp: new Date().toISOString(), // Convert to ISO string for consistent date handling
+    };
 
-      if (this.data.shouldEdit && this.data.appRating?.id) {
-        this.service.updateAppRating(this.data.appRating.id, appRating).subscribe({
-          next: () => {
-            this.dialogRef.close(true);
-          },
-          error: (err) => console.error('Error updating app rating:', err)
-        });
-      } else {
-        this.service.addAppRating(appRating).subscribe({
-          next: () => {
-            this.dialogRef.close(true);
-          },
-          error: (err) => console.error('Error adding app rating:', err)
-        });
-      }
+    if (this.data.shouldEdit && this.data.appRating?.id) {
+      this.service.updateAppRating(this.data.appRating.id, appRating).subscribe({
+        next: () => {
+          this.showNotification('Rating updated successfully');
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          console.error('Error updating app rating:', err);
+          
+        }
+      });
+    } else {
+      this.service.addAppRating(appRating).subscribe({
+        next: () => {
+          this.showNotification('Rating added successfully');
+          this.dialogRef.close(true);
+        },
+        error: (err) => {
+          console.error('Error adding app rating:', err);
+          
+        }
+      });
     }
   }
+}
 
   onDelete(): void {
     if (this.data.appRating?.id) {
