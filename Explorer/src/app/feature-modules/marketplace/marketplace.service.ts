@@ -23,8 +23,20 @@ export class MarketplaceService {
     return this.http.post<Preference>(environment.apiHost + 'tourist/preference', preference);
   }
 
+   getUserAppRating(): Observable<AppRating> {
+    return this.http.get<AppRating>(`${environment.apiHost}tourist/appRating/user`);
+  }
+
   addAppRating(appRating: AppRating): Observable<AppRating> {
     return this.http.post<AppRating>(environment.apiHost + 'tourist/appRating', appRating);
+  }
+
+  updateAppRating(id: number, appRating: AppRating): Observable<AppRating> {
+    return this.http.put<AppRating>(`${environment.apiHost}tourist/appRating/${id}`, appRating);
+  }
+
+  deleteAppRating(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiHost}tourist/appRating/${id}`);
   }
 
   getWalletByAdmin(touristId: number) : Observable<Wallet> {

@@ -20,6 +20,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'src/app/shared/shared.module'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ConfirmDialogComponent } from './app-rating/app-rating-confirmation/app-rating-confirm-dialog.component';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +39,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     UserProfileFormComponent,
     AccountsComponent,
     FollowersListComponent,
+    ConfirmDialogComponent,
     SendMessageDialogComponent
   ],
   imports: [
@@ -45,6 +55,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatFormFieldModule,
     FormsModule,
     MatSelectModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatSortModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatTooltipModule,
     SharedModule
   ],
   exports: [

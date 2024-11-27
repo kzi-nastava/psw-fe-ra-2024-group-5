@@ -1,0 +1,36 @@
+/* app-rating-dialog.component.css */
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 300px;
+    padding: 1rem;
+  }
+  
+  .form-field {
+    width: 100%;
+  }
+  
+  .star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mat-icon-button {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+  }
+  
+  .mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  mat-dialog-actions {
+    padding: 1rem;
+    margin-bottom: 0;
+  }
