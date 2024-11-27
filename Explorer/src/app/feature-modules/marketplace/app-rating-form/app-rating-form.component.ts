@@ -1,48 +1,96 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { MarketplaceService } from '../marketplace.service';
-import { ThisReceiver } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppRatingDialogComponent } from './app-rating-dialog/app-rating-dialog.component';
 import { AppRating } from '../model/app-rating.model';
-import { AuthService } from '../../../infrastructure/auth/auth.service'; 
-
+import { MarketplaceService } from '../marketplace.service';
 
 @Component({
   selector: 'xp-app-rating-form',
   templateUrl: './app-rating-form.component.html',
   styleUrls: ['./app-rating-form.component.css']
 })
-export class AppRatingFormComponent{
+export class AppRatingFormComponent implements OnInit {
+  userRating: AppRating | null = null;
 
-  @Input() appRating: AppRating;
-  @Input() shouldEdit: boolean = false;
-  @Output() appRatingUpdated = new EventEmitter<null>();
+  constructor(
+    private dialog: MatDialog,
+    private service: MarketplaceService,
+    private snackBar: MatSnackBar
+  ) {}
 
-  constructor(private service: MarketplaceService, private authService: AuthService) {
+  ngOnInit(): void {
+    this.loadUserRating();
   }
 
+  showNotification(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
+  }
 
-  appRatingForm = new FormGroup({
-    grade: new FormControl('', [Validators.required]),
-    comment: new FormControl(''),
-  });
-
-  addAppRating(): void {
-    const userId = this.authService.user$.value.id;
-
-    const appRating: AppRating = {
-      grade: Number(this.appRatingForm.value.grade) || 0,
-      comment: this.appRatingForm.value.comment || "",
-      userId: userId
-
-    };
-  
-    this.service.addAppRating(appRating).subscribe({
-      next: () => {
-        this.appRatingUpdated.emit();
+  loadUserRating(): void {
+    this.service.getUserAppRating().subscribe({
+      next: (rating) => {
+        this.userRating = rating;
+      },
+      error: (err) => {
+        if (err.status !== 404) {
+          console.error('Error fetching user rating:', err);
+        }
+        this.userRating = null;
       }
     });
   }
-  
 
+  openRatingDialog(): void {
+    const dialogRef = this.dialog.open(AppRatingDialogComponent, {
+      data: {
+        shouldEdit: false,
+        appRating: null
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadUserRating();
+        this.showNotification('Your review has been submitted');
+      }
+    });
   }
+
+  editRating(): void {
+    if (!this.userRating) return;
+    
+    const dialogRef = this.dialog.open(AppRatingDialogComponent, {
+      data: {
+        shouldEdit: true,
+        appRating: this.userRating
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadUserRating();
+        this.showNotification('Your review has been updated');
+      }
+    });
+  }
+
+  deleteRating(): void {
+    if (this.userRating?.id) {
+      this.service.deleteAppRating(this.userRating.id).subscribe({
+        next: () => {
+          this.userRating = null;
+          this.showNotification('Your review has been deleted');
+        },
+        error: (err) => console.error('Error deleting app rating:', err)
+      });
+    }
+  }
+}

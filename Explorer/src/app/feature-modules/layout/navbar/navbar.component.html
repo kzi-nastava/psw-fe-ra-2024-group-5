@@ -50,10 +50,7 @@
           Facilities
         </button>
 
-        <button class="primary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['appRatingForm']">
-          <mat-icon>star_half</mat-icon>
-          Rate the App
-        </button>
+        
 
         <button class="secondary dropdown" *ngIf="user && user.role === 'administrator'" mat-button
           [matMenuTriggerFor]="adminToolsDropdown">
