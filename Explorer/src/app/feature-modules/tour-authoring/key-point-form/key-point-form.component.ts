@@ -20,10 +20,12 @@ export class KeyPointFormComponent {
     name: '',
     description: '',
     latitude: 0,
-    longitude: 0
+    longitude: 0,
+    secret: ''
   };
   imagePreview: string | null = null;
-
+  secretImagePreview: string | null = null;
+  
   constructor(private fb: FormBuilder,
               public dialogRef: MatDialogRef<KeyPointsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {latitude: number, longitude: number}
@@ -33,28 +35,34 @@ export class KeyPointFormComponent {
       description: ['', [Validators.required, Validators.maxLength(256)]],
       image: ['' , [Validators.required]],
       latitude: data.latitude,
-      longitude: data.longitude
+      longitude: data.longitude,
+      secret: ['', [Validators.required, Validators.maxLength(256)]],
+      secretImage: ['' , [Validators.required]]
     });
 
   }
 
-  onFileSelected(event: Event): void {
+  onFileSelected(event: Event, isSecretImage: boolean = false): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.convertToBase64(file);
+      this.convertToBase64(file, isSecretImage);
     }
   }
 
-  private convertToBase64(file: File): void {
+  private convertToBase64(file: File, isSecretImage: boolean = false): void {
     const reader = new FileReader();
 
     reader.onload = () => {
       const base64String = reader.result as string;
-      this.imagePreview = base64String;
-      this.keyPointForm.patchValue({ image: base64String.split(',')[1] });
-      //console.log('Base64 string:', base64String);
+      if (isSecretImage) {
+        this.secretImagePreview = base64String;
+        this.keyPointForm.patchValue({ secretImage: base64String.split(',')[1] });
+      } else {
+        this.imagePreview = base64String;
+        this.keyPointForm.patchValue({ image: base64String.split(',')[1] });
+      }
     };
 
     reader.onerror = (error) => {

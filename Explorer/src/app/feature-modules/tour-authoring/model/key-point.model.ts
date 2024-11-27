@@ -5,5 +5,7 @@ export interface KeyPoint {
     name: string,
     description: string,
     image?: string,
-    tourId?: number
+    tourId?: number,
+    secret: string,
+    secretImage?: string
 }
