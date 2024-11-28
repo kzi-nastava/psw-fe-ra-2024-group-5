@@ -86,4 +86,8 @@ export class EncounterService {
   rejectEncounter(id: number): Observable<any> {
     return this.http.put(`${this.administrationBaseUrl}/${id}/reject`, {});
   }
+
+  completeMiscEncounter(encounterId: number, userId: number): Observable<any> {
+    return this.http.patch(`${this.touristBaseUrl}/execution/complete-misc?encounterId=${encounterId}&userId=${userId}`, {});
+  }
 }
