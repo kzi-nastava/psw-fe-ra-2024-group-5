@@ -1,0 +1,39 @@
+<div class="coupons-container">
+    <div class="coupon-card" *ngFor="let coupon of coupons">
+      <div class="coupon-header">
+        <h3 class="coupon-code">{{ coupon.code }}</h3>
+        <span class="coupon-discount">{{ coupon.percentage }}% Off</span>
+      </div>
+      <div class="coupon-body">
+        <p><strong>Expiration Date:</strong> {{ coupon.expiredDate| date: 'dd.MM.yyyy.' }}</p>
+        
+        <div class="tour-list">
+          <p><strong>Related Tours:</strong></p>
+          <ul>
+            <li *ngFor="let tourName of coupon.tourName">
+              <strong>{{ tourName.name }}</strong>
+            </li>
+          </ul>
+        </div>
+
+  <div class="update-form">
+    <label>
+      New Discount:
+      <input type="number" [(ngModel)]="coupon.percentage" />
+    </label>
+    <label>
+      New Expiration Date:
+      <input type="date" [(ngModel)]="coupon.expiredDate" />
+    </label>
+    <button (click)="updateCoupon(coupon)" class="update-button">
+      Save Changes
+    </button>
+    <button (click)="deleteCoupon(coupon.id)" class="delete-button">
+      Delete
+    </button>
+  </div>
+
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,20 @@
+<div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  
+  <!-- Forma za unos kupona -->
+  <form (ngSubmit)="createCoupon()">
+   
+    <label for="percentage">Discount Percentage</label>
+    <input id="percentage" [(ngModel)]="newCoupon.percentage" name="percentage" required />
+  
+    <label for="expiredDate">Expiration Date</label>
+    <input id="expiredDate" [(ngModel)]="newCoupon.expiredDate" name="expiredDate" type="date" required />
+  
+    <button type="submit">Create Coupon</button>
+  </form>
+  
