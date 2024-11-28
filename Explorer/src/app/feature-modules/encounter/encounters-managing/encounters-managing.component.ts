@@ -9,7 +9,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MapService } from 'src/app/shared/map/map.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { EncounterDetailsComponent } from '../encounter-details/encounter-details.component';
+import { Position } from '../../tour-execution/model/position.model';
+import { UserPosition } from 'src/app/shared/model/userPosition.model';
+import { UserLocationService } from 'src/app/shared/user-location/user-location.service';
+import { EncounterManagingDetailsComponent } from '../encounter-managing-details/encounter-managing-details.component';
 @Component({
   selector: 'xp-encounters-managing',
   templateUrl: './encounters-managing.component.html',
@@ -21,7 +26,9 @@ export class EncountersManagingComponent implements OnInit {
     private tokenStorage: TokenStorage,
     private fb: FormBuilder,
     private mapService: MapService,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private userLocationService: UserLocationService) {}
 
   @ViewChild(MapComponent) map: MapComponent;
 
@@ -184,5 +191,14 @@ export class EncountersManagingComponent implements OnInit {
       }
     });  
     this.encounterForm.updateValueAndValidity();
+  }
+
+  showEncounterDetails(encounter: any): void {
+    const dialogRef = this.dialog.open(EncounterManagingDetailsComponent, {
+      data: {
+        encounter: encounter
+      }
+    });
+
   }
 }

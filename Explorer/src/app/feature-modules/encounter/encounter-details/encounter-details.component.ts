@@ -32,10 +32,8 @@ export class EncounterDetailsComponent {
   }
 
   completeMiscEncounter(encounter: any): void {
-    const userId = this.tokenStorage.getUserId();
-
-    if (userId) {
-      this.encounterService.completeMiscEncounter(encounter.id, userId).subscribe({
+    if (this.userId) {
+      this.encounterService.completeMiscEncounter(encounter.id, this.userId).subscribe({
         next: (response) => {
           console.log('Encounter completed successfully', response);
         },
