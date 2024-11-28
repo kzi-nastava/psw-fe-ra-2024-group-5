@@ -16,7 +16,8 @@ import { TourDetailedViewComponent } from './tour-view/tour-view.component';
 import { ToursPageComponent } from './tours-page/tours-page.component';
 import { TourCardComponent } from './tour-card/tour-card.component';
 import { FormsModule } from '@angular/forms';
-import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.component'; 
+import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.component';
+import { TourLeaderboardComponent } from './tour-leaderboard/tour-leaderboard.component'; 
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.
     TourEquipmentDialogComponent,
     ToursPageComponent,
     TourCardComponent,
-    ToursAuthorPageComponent
+    ToursAuthorPageComponent,
+    TourLeaderboardComponent
     
   ],
   imports: [
