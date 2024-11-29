@@ -7,5 +7,6 @@ export interface Coupon {
     expiredDate: Date; 
     tourIds: number[];
     tourName? : Tour[];
+    imageUrl?: string;
   }
   

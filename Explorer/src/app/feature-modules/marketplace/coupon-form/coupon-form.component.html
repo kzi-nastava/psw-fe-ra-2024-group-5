@@ -1,20 +1,48 @@
-<div *ngIf="successMessage" class="alert alert-success">
-    {{ successMessage }}
-  </div>
-  
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-  
-  <!-- Forma za unos kupona -->
+<div class="container">
+
   <form (ngSubmit)="createCoupon()">
-   
+    <h2><b>Create Coupon</b></h2>
+
     <label for="percentage">Discount Percentage</label>
     <input id="percentage" [(ngModel)]="newCoupon.percentage" name="percentage" required />
-  
+
     <label for="expiredDate">Expiration Date</label>
     <input id="expiredDate" [(ngModel)]="newCoupon.expiredDate" name="expiredDate" type="date" required />
-  
-    <button type="submit">Create Coupon</button>
+
+    <div class="select">
+    <h3>Select Tours for the Coupon:</h3>
+    <div class="tour-cards">
+      <div *ngFor="let tour of tours" class="tour-card" (click)="toggleTourSelection(tour)"
+      [ngClass]="{'selected': isTourSelected(tour)}">
+        
+        <label>
+          <input
+            type="checkbox"
+            [checked]="isTourSelected(tour)"
+            [value]="tour.id"
+            class="tour-card-checkbox"
+            (change)="toggleTourSelection(tour)" 
+          />
+          <strong>{{ tour.name }}</strong>
+        </label>
+
+            
+      <div *ngIf="tour.imageUrl">
+        <img [src]="tour.imageUrl" alt="Tour Image" class="tour-card-image" />
+      </div>
+
+      </div>
+    </div>
+    </div>
+
+    <button type="submit">Create</button>
   </form>
   
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+</div>

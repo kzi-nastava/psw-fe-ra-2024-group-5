@@ -4,6 +4,7 @@ import { Observable, catchError, forkJoin, of, tap } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Coupon } from '../model/coupon.model';
 import { Tour } from '../../tour-authoring/model/tour.model';
+import { UserProfile } from '../../administration/model/userProfile.model';
 
 
 @Injectable({
@@ -48,6 +49,14 @@ export class CouponsService {
         return of(null);  
       })
     );
+  }
+
+  getUserProfile(id: number): Observable<UserProfile> {
+    return this.http.get<UserProfile>(environment.apiHost + 'administration/profile/' + id);
+  }
+
+  getTourImage(tourId: number): Observable<Blob> {
+    return this.http.get(`${environment.apiHost}tour/${tourId}/image`, { responseType: 'blob' });
   }
   
 }
