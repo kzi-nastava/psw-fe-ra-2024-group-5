@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Encounter } from './model/encounter.model';
 import { Position } from '../tour-execution/model/position.model';
+import { Participant } from './model/participant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +61,33 @@ export class EncounterService {
       userId: userId,
       location: position
     })
+  }
+
+  getParticipantByUserId(userId: number): Observable<Participant> {
+    return this.http.get<Participant>(`${this.touristBaseUrl}/participant?userId=${userId}`);
+  }
+
+  getByTouristCreatorId(creatorId: number): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.touristBaseUrl}/creator/${creatorId}`);
+  }
+
+  createByTourist(encounter: Encounter): Observable<Encounter> {
+    return this.http.post<Encounter>(this.touristBaseUrl, encounter);
+  }
+
+  getAllDraft(): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.administrationBaseUrl}/draft`);
+  }
+
+  acceptEncounter(id: number): Observable<any> {
+    return this.http.put(`${this.administrationBaseUrl}/${id}/accept`, {});
+  }
+
+  rejectEncounter(id: number): Observable<any> {
+    return this.http.put(`${this.administrationBaseUrl}/${id}/reject`, {});
+  }
+
+  completeMiscEncounter(encounterId: number, userId: number): Observable<any> {
+    return this.http.patch(`${this.touristBaseUrl}/execution/complete-misc?encounterId=${encounterId}&userId=${userId}`, {});
   }
 }

@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 class="page-title">Draft Encounters</h1>
+    <div *ngIf="draftEncounters.length === 0" class="alert alert-warning">
+      No draft encounters found.
+    </div>
+    <div *ngFor="let encounter of draftEncounters" class="encounter-card raised rounded">
+      <div class="encounter-header">
+        <h2>{{ encounter.name }}</h2>
+        <p class="encounter-description">{{ encounter.description }}</p>
+      </div>
+      <div class="type">
+        <p>
+          <strong>Type: </strong>
+          <span class="status draft" *ngIf="encounter.type === 0">MISC ENCOUNTER</span>
+          <span class="status draft" *ngIf="encounter.type === 1">SOCIAL ENCOUNTER</span>
+          <span class="status draft" *ngIf="encounter.type === 2">HIDDEN LOCATION ENCOUNTER</span>
+        </p>
+      </div>
+      <div class="encounter-location">
+        <p><strong>Location:</strong> {{ encounterAddresses[encounter.id] }}</p>
+      </div>
+      <div class="encounter-xp">
+        <p><strong>XP:</strong> {{ encounter.xp }}</p>
+      </div>
+      <div class="encounter-actions">
+        <button class="primary" (click)="acceptEncounter(encounter.id)">
+          <mat-icon>thumb_up</mat-icon> Accept</button>
+        <button class="secondary" (click)="rejectEncounter(encounter.id)">
+          <mat-icon>thumb_down</mat-icon> Reject</button>
+      </div>
+    </div>
+  </div>
+  
