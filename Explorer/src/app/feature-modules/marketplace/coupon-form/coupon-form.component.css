@@ -1,0 +1,242 @@
+/* Osnovni stilovi */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Naslovi */
+h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h2 {
+  font-size: 30px;
+  text-align: center;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* Stilizacija form */
+form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+form label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+form input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+form button {
+  background-color:  #bf616a; /* Roza boja */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  float: right;
+  margin-top: 50px;
+}
+
+form button:hover {
+  background-color:rgb(109, 5, 95);
+
+}
+
+/* Stil za poruke o grešci i uspehu */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Uspešna poruka */
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Greška poruka */
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Stil za tekst u porukama */
+.alert-success, .alert-danger {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  margin-top: 90px;
+}
+
+/* Stil za ikonu ako se koristi */
+.alert-success::before, .alert-danger::before {
+  content: "⚠️";
+  margin-right: 10px;
+}
+
+/* Animacija za prikazivanje poruke */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Primena animacije */
+.alert {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Stilizacija za kartice tura */
+.tour-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  overflow-y: auto;
+  flex-wrap: wrap; /* Sprečava prelamanje u novi red */
+  max-height: 600px; /* Postavite maksimalnu visinu za kontejner */
+
+  
+}
+
+.tour-cards::-webkit-scrollbar {
+  width: 15px;  /* Visina scrollbara */
+}
+
+.tour-cards::-webkit-scrollbar-thumb {
+  background-color: silver;  /* Boja scrollbar-a */
+  border-radius: 10px;
+}
+
+.tour-cards::-webkit-scrollbar-thumb:hover {
+  background-color: #555;  /* Boja scrollbara kad se pređe mišem */
+}
+
+
+.tour-card {
+  background-color: #fff;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 230px;
+  text-align: center;
+  border: 1px solid black;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  min-width: 250px; /* Postavlja minimalnu širinu kartica (prilagodi ako je potrebno) */
+  flex-shrink: 0; /* Sprečava smanjivanje kartica */
+    max-height: 400px; /* Postavlja maksimalnu visinu za scroll, prilagodite prema potrebama */
+  overflow-y: auto;
+
+}
+.tour-card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Dodaj marginu između slike i teksta */
+}
+
+.tour-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.tour-card strong {
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tour-card span {
+  font-size: 14px;
+  color: #777;
+}
+
+.tour-card input {
+  margin-top: 10px;
+}
+
+/* Form styling for Checkbox labels */
+label input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer; /* Pokazuje da je element klikalni */
+}
+
+/* Stilizovanje checkbox-a */
+.tour-card input[type="checkbox"] {
+  width: 20px; /* Veličina checkbox-a */
+  height: 20px;
+  margin-right: 10px;
+  accent-color: #61ff69; /* Roza boja za označeni checkbox */
+  cursor: pointer; /* Pokazuje da je element klikalni */
+  position: relative;
+  top: 2px; /* Malo podizanje checkbox-a da bude u ravni sa tekstom */
+}
+
+.tour-card.selected {
+  background-color:rgb(243, 243, 182); /*kao kartice*/
+  color: white;
+  border-color: black;
+  cursor: pointer; /* Pokazuje da je element klikalni */
+
+}
+
+.tour-card-checkbox {
+  display: none; /* Sakrivamo checkbox, jer je selekcija sada vezana za karticu */
+  cursor: pointer; /* Pokazuje da je element klikalni */
+
+}
+
+.select {
+  padding: 20px;
+  border: 1px solid black;  /* Border oko cele selekcije */
+  border-radius: 8px;  /* Zaobljeni uglovi */
+  background-color: #f9f9f9;  /* Pozadina svetlo siva */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Blagi senčenje za bolji efekat */
+  margin: 20px 0;  /* Razmak od drugih elemenata */
+  overflow-y:auto; 
+
+}
+
+
+
+

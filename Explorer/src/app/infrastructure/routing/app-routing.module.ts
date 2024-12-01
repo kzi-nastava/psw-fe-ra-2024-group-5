@@ -33,6 +33,8 @@ import { BlogPreviewComponent } from 'src/app/feature-modules/blog/blog-preview/
 import { EncountersManagingComponent } from 'src/app/feature-modules/encounter/encounters-managing/encounters-managing.component';
 import { EncounterComponent } from 'src/app/feature-modules/encounter/encounter/encounter.component';
 import { ToursAuthorPageComponent } from 'src/app/feature-modules/tour-authoring/tours-author-page/tours-author-page.component';
+import { CouponsComponent } from 'src/app/feature-modules/marketplace/coupons/coupons.component';
+import { CouponFormComponent } from 'src/app/feature-modules/marketplace/coupon-form/coupon-form.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -67,7 +69,9 @@ const routes: Routes = [
   { path: 'my-clubs/:id', component: ClubPageComponent},
   { path: 'blog/:id', component: BlogPreviewComponent},
   { path: 'encounters-managing', component: EncountersManagingComponent},
-  { path: 'encounters', component: EncounterComponent}
+  { path: 'encounters', component: EncounterComponent},
+  { path: 'view-coupons', component: CouponsComponent},
+  { path: 'form-coupons', component: CouponFormComponent}
 ];
 
 @NgModule({
