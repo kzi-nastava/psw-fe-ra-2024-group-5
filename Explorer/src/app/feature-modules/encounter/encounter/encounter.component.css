@@ -35,3 +35,48 @@
     border-radius: 10px;
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
 }
+
+
+
+.participant-info {
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  
+  .xp-level-container {
+    display: flex;
+    align-items: center;  
+    justify-content: center;  
+    gap: 40px;
+    text-align: center;  
+  }
+  
+  
+  .xp-level-container p {
+    font-size: 1.25rem;
+    color: var(--text-paragraph);
+  }
+  
+  .warning-message {
+    font-size: 1.1rem;
+    color: var(--alert-warning-bg);
+    background-color: var(--alert-warning-bg);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+  }
+
+  .create-button {
+    text-align: center;
+  }
+
+  .create-button button {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text, white);
+    cursor: pointer;
+  }
+
+  .create-button button:hover {
+    background-color: var(--alert-success-bg, #28a745);
+  }

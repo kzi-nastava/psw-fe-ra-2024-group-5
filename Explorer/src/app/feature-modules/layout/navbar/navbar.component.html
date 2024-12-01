@@ -31,7 +31,7 @@
             View Tours
           </button>
           <button mat-menu-item *ngIf="user && user.role === 'author'" [routerLink]="['tour-creation']">
-            <mat-icon>create</mat-icon>
+            <mat-icon>add_circle_outline</mat-icon>
             Add Tour
           </button>
           <button mat-menu-item *ngIf="user && user.role === 'author'" (click)="openTourEquipmentDialog()">
@@ -39,9 +39,23 @@
             Add Equipment
           </button>
         </mat-menu>
+        <button class="secondary dropdown" *ngIf="user && (user.role === 'administrator' || user.role === 'tourist')" mat-button [matMenuTriggerFor]="encountersDropdown">
+          <mat-icon>videogame_asset</mat-icon>
+          Encounters
+        </button>
+        <mat-menu #encountersDropdown="matMenu">
+          <button mat-menu-item *ngIf="user && user.role === 'administrator'" [routerLink]="['/encounters-managing']">
+            <mat-icon>create</mat-icon>
+            Add Encounter
+          </button>
+          <button mat-menu-item *ngIf="user && user.role === 'tourist'" [routerLink]="['/encounters']">
+            <mat-icon>list</mat-icon>
+            View Encounters
+          </button>
+        </mat-menu>
 
         <button class="primary" *ngIf="user && user.role === 'tourist'" mat-button [routerLink]="['tour-execution']">
-          <mat-icon> my_location</mat-icon>
+          <mat-icon>my_location</mat-icon>
           Active tour
         </button>
 
@@ -49,7 +63,24 @@
           <mat-icon>location_city</mat-icon>
           Facilities
         </button>
-
+        
+        <ng-container *ngIf="user && user.role === 'author'">
+          <button class="primary" mat-button [matMenuTriggerFor]="couponDropdown">
+            <mat-icon>redeem</mat-icon>
+            Coupons
+          </button>
+          <mat-menu #couponDropdown="matMenu">
+            <button mat-menu-item [routerLink]="['view-coupons']">
+              <mat-icon>list</mat-icon>
+              View Coupon
+            </button>
+            <button mat-menu-item [routerLink]="['form-coupons']">
+              <mat-icon>create</mat-icon>
+              Add Coupon
+            </button>
+          </mat-menu>
+        </ng-container>
+        
         
 
         <button class="secondary dropdown" *ngIf="user && user.role === 'administrator'" mat-button

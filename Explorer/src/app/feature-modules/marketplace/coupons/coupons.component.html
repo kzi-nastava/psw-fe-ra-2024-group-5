@@ -1,0 +1,56 @@
+<h2>Coupon display</h2>
+<div class="coupons-container">
+  <div class="coupon-card" *ngFor="let coupon of coupons">
+    <div class="coupon-header">
+      <h3 class="coupon-code">{{ coupon.code }}</h3>
+    </div>
+      <div class="coupon-details">
+        <p><span class="coupon-discount">{{ coupon.percentage }}% Off</span></p>
+        <p><strong>Expiration Date: </strong> {{ coupon.expiredDate | date: 'dd.MM.yyyy.' }}</p>
+        <p><strong>Created by: </strong>{{ userProfile?.name }} {{ userProfile?.surname }} </p>
+    </div>
+    
+    <div class="tour-list">
+      <p><strong>Valid for tours:</strong></p>
+      <ul>
+        <li *ngFor="let tourName of coupon.tourName">
+          <strong>
+            <a (click)="detailedAboutTour(tourName.id)" class="tour-link">{{ 
+              tourName.name }}</a>
+          </strong>
+        </li>
+      </ul>
+    </div>
+
+    <div class="coupon-actions">
+      <button (click)="openEditModal(coupon)" class="secondary">
+        <span class="material-icons">edit</span> Edit
+      </button>
+      <button (click)="deleteCoupon(coupon.id)" class="secondary">
+        <span class="material-icons">delete</span> Remove
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" *ngIf="isEditModalOpen">
+  <div class="modal-content">
+    <span class="close" (click)="closeEditModal()">×</span>
+    <div class="h2">
+      <h2>Edit Coupon</h2>
+    </div>
+    <label>
+      New Discount:
+      <input type="number" [(ngModel)]="selectedCoupon.percentage" />
+    </label>
+    <label>
+      New Expiration Date:
+      <input type="date" [(ngModel)]="selectedCoupon.expiredDate" />
+    </label>
+    <div class="modal-actions">
+      <button (click)="updateCoupon(selectedCoupon)" class="button-secondary-bg">Save</button>
+      <button (click)="closeEditModal()" class="button-primary-bg">Cancel</button>
+    </div>
+  </div>
+</div>

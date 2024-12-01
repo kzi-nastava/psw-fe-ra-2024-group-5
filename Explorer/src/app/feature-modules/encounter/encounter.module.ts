@@ -10,12 +10,18 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EncounterDetailsComponent } from './encounter-details/encounter-details.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { EncountersApprovalComponent } from './encounters-approval/encounters-approval.component';
+import { MatIconModule } from '@angular/material/icon';
+import { EncounterManagingDetailsComponent } from './encounter-managing-details/encounter-managing-details.component';
 
 @NgModule({
   declarations: [
     EncounterComponent,
     EncountersManagingComponent,
     EncounterDetailsComponent,
+    EncountersApprovalComponent,
+    EncounterManagingDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -25,11 +31,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    RouterModule,
+    MatIconModule
   ],
   exports: [
     EncounterComponent,
-    EncountersManagingComponent
+    EncountersManagingComponent,
+    EncountersApprovalComponent
   ]
 })
 export class EncounterModule { }

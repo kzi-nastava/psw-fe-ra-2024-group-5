@@ -20,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationDialogComponent } from '../../../assets/notifications/notification-dialog.component';
+import { CouponsComponent } from './coupons/coupons.component';
+import { CouponFormComponent } from './coupon-form/coupon-form.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { NotificationDialogComponent } from '../../../assets/notifications/notif
     ShoppingCartComponent,
     TourReviewFormComponent,
     NotificationDialogComponent,
-    AddFundsDialogComponent
+    AddFundsDialogComponent,
+    CouponsComponent,
+    CouponFormComponent
   ],
   imports: [
     CommonModule,

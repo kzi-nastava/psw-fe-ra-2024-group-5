@@ -39,7 +39,7 @@ export class TourDetailedViewComponent implements OnInit {
   newPrice: number;
   newCurrency: Currency = Currency.AC; 
 
-  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; 
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null; 
 
 
   userProfiles: UserProfileBasic[] = [];

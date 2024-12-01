@@ -30,4 +30,17 @@ export class EncounterDetailsComponent {
       }
     })
   }
+
+  completeMiscEncounter(encounter: any): void {
+    if (this.userId) {
+      this.encounterService.completeMiscEncounter(encounter.id, this.userId).subscribe({
+        next: (response) => {
+          console.log('Encounter completed successfully', response);
+        },
+        error: (err) => {
+          console.error('Error completing encounter', err);
+        }
+      });
+    }
+  }
 }
