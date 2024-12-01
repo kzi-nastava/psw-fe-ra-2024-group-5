@@ -2,7 +2,7 @@
     <h2>Write a Review</h2>
     <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="rating">Rating</label>
+        <label for="rating">Rating<span style="color: red;">*</span></label>
         <div class="star-rating">
           <span *ngFor="let star of [1,2,3,4,5]" 
                 [class.filled]="star <= reviewForm.get('rating')?.value"
@@ -12,7 +12,7 @@
       </div>
   
       <div class="form-group">
-        <label for="comment">Comment</label>
+        <label for="comment">Comment<span style="color: red;">*</span></label>
         <textarea id="comment" 
                   formControlName="comment" 
                   rows="4"
@@ -23,16 +23,17 @@
       </div>
   
       <div class="form-group">
-        <label for="image">Image</label>
-        <input type="file" 
-               id="image" 
-               (change)="onFileSelected($event)"
-               accept="image/*">
-      </div>
+        <label for="image">Image <span style="color: red;">*</span></label>
+        <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput>
+        <button type="button" class="primary" (click)="fileInput.click()">Choose Image</button>
+        <div *ngIf="selectedImage" class="image-preview">
+            <img [src]="selectedImage" alt="Image preview" />
+        </div>
+    </div>
   
       <div class="button-group">
-        <button type="button" class="secondary" (click)="onCancel()">Cancel</button>
-        <button type="submit" [disabled]="!reviewForm.valid">Submit Review</button>
+        <button type="button" class="primary" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="secondary" [disabled]="!reviewForm.valid">Submit Review</button>
       </div>
     </form>
   </div>

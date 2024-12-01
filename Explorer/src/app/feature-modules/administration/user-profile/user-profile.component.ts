@@ -11,6 +11,12 @@ import { MarketplaceService } from '../../marketplace/marketplace.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Wallet } from '../../marketplace/model/wallet';
+import { AppRating } from '../../marketplace/model/app-rating.model';
+import { AppRatingDialogComponent } from '../../marketplace/app-rating-form/app-rating-dialog/app-rating-dialog.component';
+import { AppRatingFormComponent } from '../../marketplace/app-rating-form/app-rating-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 
 @Component({
   selector: 'xp-user-profile',
@@ -25,6 +31,7 @@ export class UserProfileComponent implements OnInit {
   followersCount: number = 0;
   userId: number | null;
   user: User;
+  userRating: AppRating | null = null;
   wallet: Wallet | null = null;
   currencies: string[] = ['AC', 'EUR', 'DOL', 'RSD'];
 
@@ -33,6 +40,8 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
+    private marketplaceService: MarketplaceService,
+    private snackBar: MatSnackBar,
     private marketService: MarketplaceService,
     private authService: AuthService) { }
 
@@ -42,10 +51,30 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  loadUserRating(): void {
+    // Only load rating for non-admin users
+    if (this.user && this.user.role !== 'administrator') {
+      this.marketplaceService.getUserAppRating().subscribe({
+        next: (rating) => {
+          this.userRating = rating;
+        },
+        error: (err) => {
+          if (err.status !== 404) {
+            console.error('Error fetching user rating:', err);
+          }
+          this.userRating = null;
+        }
+      });
+    }
+  }
+
+
   ngOnInit(): void {
     const profileId = this.route.snapshot.paramMap.get('id');
 
     const parsedProfileId = profileId ? parseInt(profileId, 10) : null;
+
+    
 
     this.userId = this.tokenStorage.getUserId();
     if (profileId && parsedProfileId != this.userId) {
@@ -90,11 +119,15 @@ export class UserProfileComponent implements OnInit {
     } else {
       console.error("User ID is null");
     }
-
+    this.loadUserRating();
 
     this.authService.user$.subscribe(user => {
       this.user = user;
 
+      if (user && user.role !== 'administrator') {
+        this.loadUserRating();
+      }
+      
       if(user.role === 'tourist' && user.id){
         this.marketService.getWalletByTourist().subscribe({
           next: (result: Wallet) => {
@@ -138,6 +171,76 @@ export class UserProfileComponent implements OnInit {
     } else {
       console.error("Followed user ID is null");
     }
+  }
+
+
+ 
+
+  showNotification(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
+  }
+
+ 
+
+  openRatingDialog(): void {
+    if (this.user.role === 'administrator') {
+      return;
+    }
+    
+    const dialogRef = this.dialog.open(AppRatingDialogComponent, {
+      data: {
+        shouldEdit: false,
+        appRating: null
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadUserRating();
+        this.showNotification('Your review has been submitted');
+      }
+    });
+  }
+
+  editRating(): void {
+    if (this.user.role === 'administrator' || !this.userRating) {
+      return;
+    }
+    
+    const dialogRef = this.dialog.open(AppRatingDialogComponent, {
+      data: {
+        shouldEdit: true,
+        appRating: this.userRating
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadUserRating();
+        this.showNotification('Your review has been updated');
+      }
+    });
+  }
+
+  deleteRating(): void {
+    if (this.user.role === 'administrator' || !this.userRating?.id) {
+      return;
+    }
+
+    this.marketplaceService.deleteAppRating(this.userRating.id).subscribe({
+      next: () => {
+        this.userRating = null;
+        this.showNotification('Your review has been deleted');
+      },
+      error: (err) => console.error('Error deleting app rating:', err)
+    });
   }
 
   loadFollowers(page: number = 1, pageSize: number = 10): void {

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { UserProfile } from './model/userProfile.model';
 import { Following } from './model/following.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
+import { UserProfileBasic } from './model/userProfileBasic.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,10 @@ export class UserProfileService {
         }
       }
     );
+  }
+
+  getBasicProfiles(userIds: number[]): Observable<UserProfileBasic[]> {
+    const userIdsString = userIds.join(',');
+    return this.http.get<UserProfileBasic[]>(`${environment.apiHost}administration/profile/basic-profiles/${userIdsString}`);
   }
 }

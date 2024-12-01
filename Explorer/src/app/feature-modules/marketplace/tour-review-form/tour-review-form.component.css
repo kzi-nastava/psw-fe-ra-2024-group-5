@@ -22,13 +22,14 @@
   }
   
   textarea {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 1px solid var(--input-border);
     border-radius: 4px;
     background-color: var(--input-bg);
     color: var(--input-text);
     font-family: var(--font-family-base);
+    height: 200px; 
   }
   
   .star-rating {
@@ -43,7 +44,7 @@
   }
   
   .star.filled {
-    color: var(--accent-color);
+    color: gold;
   }
   
   .button-group {
@@ -75,4 +76,15 @@
     color: var(--alert-danger-bg);
     font-size: 14px;
     margin-top: 5px;
+  }
+
+  .image-preview {
+    margin-top: 10px;
+  }
+
+  .image-preview img {
+    max-width: 100%;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
