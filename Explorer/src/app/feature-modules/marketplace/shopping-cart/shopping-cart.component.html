@@ -37,7 +37,7 @@
 
    
 
-  <button class="primary complete-purchase" (click)="checkout()" *ngIf="shoppingCart && shoppingCart.items.length > 0"> 
+  <button class="primary complete-purchase" (click)="openCheckoutModal()" *ngIf="shoppingCart && shoppingCart.items.length > 0"> 
     <span class="material-icons check-icon">check</span> 
     Complete Purchase </button>
   
@@ -50,3 +50,17 @@
 <ng-template #noItems>
   <p class="empty-cart-message">Your cart is empty.</p>
 </ng-template>
+
+<!-- Modal for entering discount code -->
+<div *ngIf="isCheckoutModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Enter Discount Code</h3>
+    <input type="text" [(ngModel)]="discountCode" placeholder="Enter your discount code" class="discount-input" />
+    <div class="modal-buttons">
+      <button class="primary" (click)="checkout()">Confirm</button>
+      <button class="secondary" (click)="closeCheckoutModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+

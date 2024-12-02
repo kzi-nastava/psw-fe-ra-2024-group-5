@@ -163,3 +163,55 @@ button.primary .material-icons.check-icon {
     
 }
 
+
+
+
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal content */
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  /* Input field */
+  .discount-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Modal buttons */
+  .modal-buttons button {
+    padding: 10px;
+    margin: 5px;
+    width: 100px;
+  }
+  
+  .primary {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .secondary {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  

@@ -30,9 +30,17 @@ export class ShoppingCartService {
       return this.http.get<ShoppingCart>(environment.apiHost + `shopping-cart/tourist/${touristId}`);
     }
 
-    checkout(touristId: number): Observable<any> {
-      return this.http.post<any>(environment.apiHost + `shopping-cart/checkout/${touristId}`, {});
+    checkout(touristId: number, discountCode: string | null): Observable<any> {
+      // Ako nema discountCode, šalje se prazan string
+      const codeParam = discountCode ? `?code=${discountCode}` : '';
+    
+      // Slanje POST zahteva sa discountCode u URL-u
+      return this.http.post<any>(
+        `${environment.apiHost}shopping-cart/checkout/${touristId}${codeParam}`,
+        {}  // Telo zahteva može biti prazno, jer se kod šalje kao query parametar
+      );
     }
+    
     getTourImage(tourId: number): Observable<Blob> {
       return this.http.get(`${environment.apiHost}tour/${tourId}/image`, { responseType: 'blob' });
     }

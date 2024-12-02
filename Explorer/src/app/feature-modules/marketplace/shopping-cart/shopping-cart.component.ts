@@ -29,6 +29,11 @@ export class ShoppingCartComponent implements OnInit {
   tourImageUrl: SafeUrl | null = null;
   tourImage: string | ArrayBuffer | null = null;
 
+  discountCode: string = ''; // Kod kupona koji korisnik unosi
+
+  isCheckoutModalOpen: boolean = false; // Da li je modal otvoren
+
+
 
   imagePreview: string | null = null; // Ovo drži URL za prikaz slike
   tours: TourCard[] = [];
@@ -155,23 +160,24 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   checkout(): void {
-    const confirmation = window.confirm('Are you sure you want to complete the purchase?');
-    if (!confirmation) {
-      return;
-    }
-    this.shoppingCartService.checkout(this.touristId).subscribe(
+    
+      this.shoppingCartService.checkout(this.touristId, this.discountCode).subscribe(
       response => {
         console.log('Purchase completed successfully', response);
+        
+        // Ažurira stanje shoppingCart, prazni ga nakon uspešne kupovine
         this.shoppingCart = null;
-        this.getCartItems();
-        this.loadWallet();
+        this.getCartItems();  // Ponovno učitavanje stavki u korpi
+        this.loadWallet();     // Ponovno učitavanje stanja novčanika
+        this.closeCheckoutModal(); // Zatvara modal nakon kupovine
       },
       error => {
         console.error('Error during checkout', error);
+        alert('Error during checkout: ' + error.message); 
       }
     );
-
   }
+  
 
   detailedAboutTour(tourId: number): void {
     this.router.navigate(['/tour-detailed-view', tourId]);
@@ -190,4 +196,14 @@ export class ShoppingCartComponent implements OnInit {
     }
   }
 
+    // Otvoriti modal za unos kupona
+    openCheckoutModal(): void {
+      this.isCheckoutModalOpen = true;
+    }
+      // Zatvoriti modal
+  closeCheckoutModal(): void {
+    this.isCheckoutModalOpen = false;
+  }
+
 }
+
