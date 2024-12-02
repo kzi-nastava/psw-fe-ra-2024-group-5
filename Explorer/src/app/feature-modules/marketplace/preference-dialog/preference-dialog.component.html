@@ -1,12 +1,18 @@
+<div>
+    <button class="custom-button" (click)="toggleFormVisibility()">
+        {{ isFormVisible ? 'Close' : 'Add Preference' }}
+      </button>
+
+<div *ngIf="isFormVisible" style="display: flex; justify-content: center; margin-top: 20px;">      
 <form [formGroup]="preferenceDialog" (ngSubmit)="addPreference()">
     <div style="display: flex; width: 350px; flex-direction: column; gap: 13px; align-items: center;">
        
         <mat-form-field style="width: 300px;">
             <mat-label>Preferred Difficulty</mat-label>
             <mat-select formControlName="preferredDifficulty">
-                <mat-option [value]="TourDifficulty.BEGINNER">BEGINNER</mat-option>
-                <mat-option [value]="TourDifficulty.INTERMEDIATE">INTERMEDIATE</mat-option>
-                <mat-option [value]="TourDifficulty.ADVANCED">ADVANCED</mat-option>
+                <mat-option [value]="TourDifficulty.Beginner">BEGINNER</mat-option>
+                <mat-option [value]="TourDifficulty.Intermediate">INTERMEDIATE</mat-option>
+                <mat-option [value]="TourDifficulty.Advanced">ADVANCED</mat-option>
             </mat-select>
         </mat-form-field>        
         
@@ -35,9 +41,11 @@
             <input matInput formControlName="interestTags" type="text"/>
         </mat-form-field>
 
-        <button mat-raised-button type="submit" style="background-color: pink; color: black; font-size: 18px; padding: 12px 24px; border-radius: 8px; cursor: pointer;" >
-            Add Preference
-          </button>
+        <div class="button-container">
+            <button type="submit" class="custom-button color-secondary">
+                Add Preference
+              </button>
+            </div>
           
           
     </div>

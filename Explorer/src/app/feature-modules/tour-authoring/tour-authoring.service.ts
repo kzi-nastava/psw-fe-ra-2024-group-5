@@ -101,5 +101,8 @@ export class TourAuthoringService {
     return this.http.get<TourLeaderboard>(environment.apiHost + `tour/${tourId}/leaderboard`);
   }
 
+  getToursByActivePreference(touristId: number, page: number, pageSize: number): Observable<TourCard[]> {
+    return this.http.get<TourCard[]>(`${environment.apiHost}tour/tourist/${touristId}/preferences/${page}/${pageSize}`);
+  }
 
 }

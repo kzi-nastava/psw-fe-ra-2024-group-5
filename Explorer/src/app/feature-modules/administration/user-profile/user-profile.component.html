@@ -60,6 +60,14 @@
               Delete Rating
             </button>
           </ng-container>
+          <button 
+              *ngIf="user.role === 'tourist'"
+              class="secondary"
+              mat-button
+              [routerLink]="['/preferences']">
+              <mat-icon>favorite</mat-icon>
+              My Preferences
+            </button>
         </ng-container>
       </div>
     </div>
