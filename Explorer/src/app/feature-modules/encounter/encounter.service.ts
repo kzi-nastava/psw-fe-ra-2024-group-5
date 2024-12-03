@@ -30,8 +30,8 @@ export class EncounterService {
     return this.http.delete<void>(`${this.administrationBaseUrl}/${id}`);
   }
 
-  getAllActive(): Observable<Encounter[]> {
-    return this.http.get<Encounter[]>(`${this.touristBaseUrl}/active`);
+  getAllActive(userId: number): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.touristBaseUrl}/active/${userId}`);
   }
 
   checkEncounterAvailability(encounterId: number, userId: number, position: Position): Observable<string>{

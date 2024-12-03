@@ -34,7 +34,7 @@ export class EncounterComponent implements OnInit{
     this.userId = this.tokenStorage.getUserId();
 
     if (this.userId !== null) {
-      this.loadActiveEncounters();
+      this.loadActiveEncounters(this.userId);
 
       this.encounterService.getActiveEncounter(this.userId).subscribe({
         next: (response) => {
@@ -52,8 +52,8 @@ export class EncounterComponent implements OnInit{
     console.log(this.activatedEncounter);
   }
 
-  loadActiveEncounters(): void {
-    this.encounterService.getAllActive().subscribe({
+  loadActiveEncounters(userId: number): void {
+    this.encounterService.getAllActive(userId).subscribe({
       next: (encounters: Encounter[]) => {
         this.activeEncounters = encounters;
         console.log('Encounters loaded:', encounters);
