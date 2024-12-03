@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Encounter } from './model/encounter.model';
+import { Encounter, SocialEncounter } from './model/encounter.model';
 import { Position } from '../tour-execution/model/position.model';
 import { Participant } from './model/participant.model';
 
