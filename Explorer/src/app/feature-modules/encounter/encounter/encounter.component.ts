@@ -9,7 +9,7 @@ import { Position } from '../../tour-execution/model/position.model';
 import { UserPosition } from 'src/app/shared/model/userPosition.model';
 import { UserLocationService } from 'src/app/shared/user-location/user-location.service';
 import { Participant } from '../model/participant.model';
-import { EncounterType } from '../enum/encounter-type.enum';
+import { EncounterType, encounterTypeToString } from '../enum/encounter-type.enum';
 
 @Component({
   selector: 'xp-encounter',
@@ -22,6 +22,7 @@ export class EncounterComponent implements OnInit{
   activatedEncounter: Encounter | null = null;
   participant: Participant | null = null;
   isSocialEncounter = isSocialEncounter;
+  encounterTypeToString = encounterTypeToString;
 
   @ViewChild(MapComponent) map: MapComponent;
 
@@ -163,6 +164,18 @@ export class EncounterComponent implements OnInit{
       },
       error: (err) => {
         console.error(err);
+      },
+    });
+  }
+
+  abandonEncounterExecution(): void {
+    if (!this.userId) {
+      return;
+    }
+
+    this.encounterService.abandonEncounterExecution(this.userId).subscribe({
+      next: () => {
+        this.activatedEncounter = null;
       },
     });
   }

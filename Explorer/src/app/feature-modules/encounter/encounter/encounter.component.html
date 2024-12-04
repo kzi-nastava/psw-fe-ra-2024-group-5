@@ -19,7 +19,13 @@
       (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
   </div>
   <div *ngIf="activatedEncounter" class="encounter-info">
-    <h2>Encounter details</h2>
+    <div>
+      <h2>Active encounter details</h2>
+      <button mat-button class="secondary abandon-button" (click)="abandonEncounterExecution()">
+        Abandon
+      </button>
+    </div>
+    <p><strong>Type: </strong> {{ encounterTypeToString(activatedEncounter.type) }} </p>
     <p><strong>Name: </strong> {{ activatedEncounter.name }}</p>
     <p><strong>Description: </strong> {{ activatedEncounter.description }}</p>
     <p><strong>XP: </strong> {{ activatedEncounter.xp }}</p>

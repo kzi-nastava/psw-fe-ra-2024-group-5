@@ -34,6 +34,10 @@ export class EncounterService {
     return this.http.get<Encounter[]>(`${this.touristBaseUrl}/active/${userId}`);
   }
 
+  abandonEncounterExecution(userId: number): Observable<any> {
+    return this.http.delete(`${this.touristBaseUrl}/execution/${userId}`);
+  }
+
   checkEncounterAvailability(encounterId: number, userId: number, position: Position): Observable<string>{
 
     return this.http.post<string>(`${this.touristBaseUrl}/execution/check-availability`, {

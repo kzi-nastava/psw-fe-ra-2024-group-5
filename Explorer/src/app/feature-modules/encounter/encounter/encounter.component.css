@@ -87,3 +87,15 @@
   text-align: left;
   width: 100%;
 }
+
+.encounter-info div:first-child {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.abandon-button {
+  margin-bottom: 15px;
+  margin-left: 50px;
+  text-align: center;
+}
