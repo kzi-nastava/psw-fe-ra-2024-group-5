@@ -13,6 +13,7 @@ import { Wallet } from '../model/wallet';
 import { MarketplaceService } from '../marketplace.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Coupon } from '../model/coupon.model';
 
 
 @Component({
@@ -22,6 +23,8 @@ import { User } from 'src/app/infrastructure/auth/model/user.model';
 })
 export class ShoppingCartComponent implements OnInit {
   shoppingCart: ShoppingCart | null = null;
+
+  
   touristId: number;
   priceCurrencies: string[] = ['AC', 'Eur', 'Dol', 'Rsd']
   wallet: Wallet;
@@ -33,10 +36,13 @@ export class ShoppingCartComponent implements OnInit {
 
   isCheckoutModalOpen: boolean = false; // Da li je modal otvoren
 
-
-
   imagePreview: string | null = null; // Ovo drži URL za prikaz slike
   tours: TourCard[] = [];
+
+  discountApplied: boolean = false; // Flag koji označava da li je popust primenjen
+  discountedPrice: number = 0; 
+  coupon: Coupon;
+  
 
   @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | undefined; // Dodaj ViewChild za NavbarComponent
 
@@ -92,9 +98,9 @@ export class ShoppingCartComponent implements OnInit {
           (response: Blob) => {
             const reader = new FileReader();
             reader.onloadend = () => {
-              item.imageUrl = reader.result as string; // Postavljanje slike na nivou stavke
+              item.imageUrl = reader.result as string; 
             };
-            reader.readAsDataURL(response); // Pretvaranje Blob-a u Data URL
+            reader.readAsDataURL(response); 
           },
           error => {
             console.error('Error fetching image for tour:', item.tourId, error);
@@ -109,6 +115,7 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartService.getByTouristId(this.touristId).subscribe(
       (data: ShoppingCart) => {
         this.shoppingCart = data;
+
         this.loadTourImages();
       },
       error => console.error('Error fetching cart items', error)
@@ -165,11 +172,10 @@ export class ShoppingCartComponent implements OnInit {
       response => {
         console.log('Purchase completed successfully', response);
         
-        // Ažurira stanje shoppingCart, prazni ga nakon uspešne kupovine
         this.shoppingCart = null;
-        this.getCartItems();  // Ponovno učitavanje stavki u korpi
-        this.loadWallet();     // Ponovno učitavanje stanja novčanika
-        this.closeCheckoutModal(); // Zatvara modal nakon kupovine
+        this.getCartItems(); 
+        this.loadWallet();    
+        this.closeCheckoutModal(); 
       },
       error => {
         console.error('Error during checkout', error);
@@ -196,13 +202,64 @@ export class ShoppingCartComponent implements OnInit {
     }
   }
 
-    // Otvoriti modal za unos kupona
     openCheckoutModal(): void {
       this.isCheckoutModalOpen = true;
     }
-      // Zatvoriti modal
+
   closeCheckoutModal(): void {
     this.isCheckoutModalOpen = false;
+  }
+
+  applyDiscount(): void {
+    if (this.discountCode.trim() !== '') {
+      this.shoppingCartService.getCouponByCode(this.discountCode).subscribe(
+        (data: Coupon) => {
+          this.coupon = data;
+  
+          if (this.coupon && this.coupon.percentage) {
+            const discountPercentage = this.coupon.percentage;
+  
+            if (this.shoppingCart) {
+              let totalAmount = 0;
+              
+              this.shoppingCart.items.forEach(item => {
+                //totalAmount += item.price.amount;
+  
+                //var discountedAmount;
+                if(this.coupon.tourIds.includes(item.tourId))
+                  {
+                    const discountedAmount = item.price.amount - (item.price.amount * (discountPercentage / 100));
+                    item.discountedPrice = discountedAmount;
+                    item.showOldPrice = true;
+                    totalAmount += item.discountedPrice;
+                  }
+                else
+                {
+                  item.discountedPrice = item.price.amount;
+                  item.showOldPrice = false;
+                  totalAmount += item.price.amount;
+                }
+                  
+              });
+
+              this.shoppingCart.totalPrice.amount = totalAmount;
+              this.discountApplied = true;
+              this.closeCheckoutModal();
+            }
+
+          } else {
+            console.error('Coupon or percentage is undefined.');
+            alert('Invalid coupon or no percentage defined.');
+          }
+        },
+        error => {
+          console.error('Error fetching coupon:', error);
+          alert('Error fetching coupon: ' + error.message);
+        }
+      );
+    } else {
+      alert('Please enter a valid discount code');
+    }
   }
 
 }

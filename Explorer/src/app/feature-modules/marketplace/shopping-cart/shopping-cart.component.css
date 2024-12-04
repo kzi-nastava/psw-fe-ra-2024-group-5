@@ -213,5 +213,16 @@ button.primary .material-icons.check-icon {
     background-color: #f44336;
     color: white;
   }
+
+  .old-price {
+    text-decoration: line-through;
+    color: red; 
+    margin-right: 10px; 
+  }
+  
+  .new-price {
+    font-weight: bold;
+    color: green; 
+  }
   
   
