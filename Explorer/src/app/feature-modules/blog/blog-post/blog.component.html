@@ -15,8 +15,10 @@
       <mat-option [value]="4">Famous</mat-option>
     </mat-select>
   </mat-form-field>
-  <button (click)="openAddBlogDialog()" class="add-blogs">Add Blog</button>
-</div>
+  <button *ngIf="user && user.role === 'author'" (click)="openAddBlogDialog()" class="add-blogs">
+    Add Blog
+  </button>
+  </div>
 
 <div class="blog-container">
   <div *ngFor="let blog of blogs" class="blog-card">
@@ -51,10 +53,10 @@
     </div>
 
     <!-- Actions -->
-    <div class="blog-actions">
+    <div class="blog-actions" *ngIf="isBlogCreator(blog.userId)">
       <!-- Publish button -->
       <button
-        *ngIf="blog.status === 0 && (isUserAuthor(blog.userId) | async)"
+        *ngIf="blog.status === 0 && isBlogCreator(blog.userId) "
         (click)="updateBlogStatus(blog.id, 1)"
         matTooltip="Publish blog"
         class="publish-button"
@@ -64,7 +66,7 @@
 
       <!-- Lock/unlock buttons -->
       <mat-icon
-        *ngIf="blog.status === 1 && (isUserAuthor(blog.userId) | async)"
+        *ngIf="blog.status === 1 && isBlogCreator(blog.userId)"
         class="lock-icon"
         matTooltip="Close blog"
         (click)="updateBlogStatus(blog.id, 2)"

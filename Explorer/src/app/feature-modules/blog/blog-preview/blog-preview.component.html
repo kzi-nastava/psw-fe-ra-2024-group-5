@@ -61,7 +61,7 @@
         </div>
 
       <ng-template #addCommentSection>
-        <div class="add-comment">
+        <div class="add-comment" *ngIf="currentUser && currentUser.role === 'author'">
           <textarea
             [(ngModel)]="newCommentText"
             rows="1"

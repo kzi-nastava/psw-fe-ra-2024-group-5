@@ -10,16 +10,12 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BlogFormComponent } from '../blog-form/blog-form.component';
 
-
-
-
 @Component({
   selector: 'xp-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
-
 
   blogs: Blog[] = [];
   loadedBlogs: Blog[] = [];
@@ -29,6 +25,9 @@ export class BlogComponent implements OnInit {
   userVotes: { [blogId: number]: number | null } = {};
   isLoading = true;
   error: string | null = null;
+  isAuthor: boolean = false; // Dodata promenljiva
+  user: any; // Trenutni korisnik
+
 
   filteredComments: { [blogId: number]: BlogPostComment[] } = {};
   currentImageIndex: { [blogId: number]: number } = {};
@@ -40,6 +39,12 @@ export class BlogComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+  
+    this.authService.user$.subscribe(user => {
+      this.user = user; // Čuvamo podatke o korisniku
+      this.isAuthor = user && user.role === 'Author'; // Provera da li je korisnik autor
+    });
+  
     this.getBlog();
   }
 
@@ -69,7 +74,10 @@ export class BlogComponent implements OnInit {
     })
   }
 
-
+  isBlogCreator(blogUserId: number): boolean {
+    return this.user && this.user.id === blogUserId;
+  }
+  
 
   initializeImageIndex(): void {
     this.blogs.forEach(blog => {
@@ -192,7 +200,9 @@ export class BlogComponent implements OnInit {
       return this.authService.user$.pipe(
         map(user => {
           if (user) {
-            return userId === user.id;
+            const isAuthor = user.role === 'Author';
+            const isSameUser = userId === user.id;
+            return isAuthor && isSameUser;
           } else {
             console.error('User is not logged in.');
             return false;
@@ -218,7 +228,7 @@ export class BlogComponent implements OnInit {
     openAddBlogDialog(): void {
       const dialogRef = this.dialog.open(BlogFormComponent, {
         width: '600px',
-       // disableClose: true // Prevent closing on outside click
+        //disableClose: true // Prevent closing on outside click
       });
   
       dialogRef.afterClosed().subscribe((result) => {
