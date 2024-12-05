@@ -3,6 +3,8 @@ import { MatDialogRef , MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Account } from '../../administration/model/account.model';
 import { MarketplaceService } from '../marketplace.service';
 import { Money } from 'src/app/shared/model/money';
+import { UserProfileService } from '../../administration/user-profile.service';
+import { UserProfile } from '../../administration/model/userProfile.model';
 
 @Component({
   selector: 'xp-add-funds-dialog',
@@ -14,6 +16,7 @@ export class AddFundsDialogComponent {
   amount: number | null = null;
   amountError: boolean = false;
   account: Account;
+  userProfile: UserProfile | undefined;
   currencies: string[] = ['AC', 'EUR', 'DOL', 'RSD']
   getCurrencyName(currencyNum: number | undefined){
     if(!currencyNum)
@@ -26,13 +29,29 @@ export class AddFundsDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<AddFundsDialogComponent>, 
     @Inject(MAT_DIALOG_DATA) private data: Account,
-    private marketService: MarketplaceService){
+    private marketService: MarketplaceService,
+    private profileService: UserProfileService){
 
       if (this.data) {
         this.account = this.data;
       }
   }
 
+  ngOnInit(): void {
+    if (this.account.id) {
+      this.profileService.getUserProfile(+this.account.id).subscribe({
+        next: (result: UserProfile) => {
+          this.userProfile = result;
+          console.log(this.userProfile)
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      });
+    } else {
+      console.error("User ID is null");
+    }
+  }
 
   validateAmount(): boolean {
     if (this.amount === null || this.amount < 0) {
