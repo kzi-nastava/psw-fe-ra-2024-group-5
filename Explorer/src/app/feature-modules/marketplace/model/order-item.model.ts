@@ -9,4 +9,6 @@ export interface OrderItem {
     imageUrl?: string;
     description?: string;
     tags? : string;
+    discountedPrice?: number;  // Dodajemo novi property za popust
+    showOldPrice : boolean;
 }

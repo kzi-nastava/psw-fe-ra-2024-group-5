@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { MarketplaceService } from '../../marketplace/marketplace.service';
 
 @Component({
   selector: 'xp-tours-author-page',
@@ -26,7 +27,13 @@ export class ToursAuthorPageComponent {
   centerLongitude = new BehaviorSubject<number | null>(null);
   radius = new BehaviorSubject<number>(0);
 
-  constructor(private tourService: TourAuthoringService, private authService: AuthService, private router: Router){
+  selectedTours: TourCard[] = [];
+  showBundleForm = false;
+  bundleName = '';
+  bundlePrice = 0;
+  bundleCurrency = 0;
+
+  constructor(private tourService: TourAuthoringService, private authService: AuthService, private bundleService: MarketplaceService, private router: Router){
     
     this.authService.user$.subscribe(user => {
       this.user = user;
@@ -99,7 +106,73 @@ onRadiusChange(): void {
   console.log("Radius set to:", this.radius.getValue()); 
 }
 
+isSelected(tour: TourCard): boolean {
+  return this.selectedTours.includes(tour);
+}
 
+// Toggle the selection of a tour
+toggleSelection(tour: TourCard): void {
+  const index = this.selectedTours.indexOf(tour);
+  if (index > -1) {
+    this.selectedTours.splice(index, 1); // Deselect the tour
+  } else {
+    this.selectedTours.push(tour); // Select the tour
+  }
+}
+
+finalizeTourSelection(): void {
+  if (this.selectedTours.length === 0) {
+    alert('Please select at least one tour.');
+    return;
+  }
+  this.showBundleForm = true;
+}
+
+openBundleForm(): void {
+  if (this.selectedTours.length < 2) {
+    alert('Please select at least one tour.');
+    return;
+  }
+  this.showBundleForm = true;
+}
+
+closeBundleForm(): void {
+  this.showBundleForm = false;
+  this.bundleName = '';
+  this.bundlePrice = 0;
+  this.bundleCurrency = 0;
+  this.selectedTours = [];
+}
+
+createBundle(): void {
+  console.log(this.bundleName);
+  if (!this.bundleName || this.bundlePrice <= 0) {
+    alert('Please provide a valid name and price for the bundle.');
+    return;
+  }
+
+  const bundle = {
+    name: this.bundleName,
+    price: {
+      amount: this.bundlePrice,
+      currency: this.bundleCurrency,
+    },
+    authorId: this.user.id,
+    bundleItems: this.selectedTours.map((tour) => tour.id),
+  };
+
+  this.bundleService.createBundle(bundle).subscribe({
+    next: () => {
+      alert('Bundle created successfully!');
+      this.closeBundleForm();
+      this.loadTours();
+    },
+    error: (err) => {
+      console.error('Error creating bundle:', err);
+      alert('Failed to create bundle.');
+    },
+  });
+}
   
 searchTours(): void {
  

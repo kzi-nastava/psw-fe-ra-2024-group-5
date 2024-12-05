@@ -5,7 +5,13 @@
 <div mat-dialog-content class="content-container">
     <div class="info">
         <div class="profile-info">
-            <img src="..\..\..\assets\images\user-placeholder.png" alt="Profile Picture" class="profile-img">
+            <!-- <img src="..\..\..\assets\images\user-placeholder.png" alt="Profile Picture" class="profile-img"> -->
+            <img *ngIf="userProfile?.profileImage; else defaultImage"
+                [src]="'data:image/png;base64,'+userProfile?.profileImage" alt="Profile Picture" class="profile-img" />
+            <ng-template #defaultImage>
+                <img src="..\..\..\assets\images\user-placeholder.png" alt="Default Profile Picture" class="profile-img" />
+            </ng-template>
+
             <div class="profile-details">
                 <div class="username">{{account.username}}</div>
                 <div class="email">{{account.email}}</div>
