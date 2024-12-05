@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BundleCard, BundleDetailed } from '../model/bundle.models';
-import { TourAuthoringService } from '../../tour-authoring/tour-authoring.service';
 import { TourCard } from '../../tour-authoring/model/tour-card.model';
+import { MarketplaceService } from '../marketplace.service';
+import { TourAuthoringService } from '../../tour-authoring/tour-authoring.service';
 
 @Component({
   selector: 'xp-bundles-page',
@@ -14,13 +15,13 @@ export class BundlesPageComponent {
   detailedBundles : BundleDetailed[] = [];
   currentPage = 1;
 
-  constructor(private tourService: TourAuthoringService, private router: Router){
+  constructor(private marketplaceService : MarketplaceService, private tourService : TourAuthoringService, private router: Router){
     this.loadBundles();
   }
 
   loadBundles(): void{
     this.bundles = [];
-    this.tourService.getBundles(this.currentPage, 2).subscribe({
+    this.marketplaceService.getBundles(this.currentPage, 2).subscribe({
       next: (result: BundleDetailed[]) => {
         this.detailedBundles = result;
         // console.log(this.detailedBundles);

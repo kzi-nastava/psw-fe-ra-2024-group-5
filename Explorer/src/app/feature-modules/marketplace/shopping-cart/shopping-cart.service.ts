@@ -83,7 +83,7 @@ export class ShoppingCartService {
     updateItemCount(count: number): void {
       this.itemsCountSubject.next(count);
     }
-  
+
     getBundleById(id : number): Observable<BundleDetailed>{
       return this.http.get<BundleDetailed>(environment.apiHost + `author/bundle/get/${id}`);
     }

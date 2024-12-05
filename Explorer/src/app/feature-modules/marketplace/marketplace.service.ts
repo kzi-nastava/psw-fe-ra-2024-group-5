@@ -8,6 +8,7 @@ import { AppRating } from './model/app-rating.model';
 import { Wallet } from './model/wallet';
 import { Money } from 'src/app/shared/model/money';
 import { createBundle } from './model/create-bundle.model';
+import { BundleDetailed } from './model/bundle.models';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,9 @@ export class MarketplaceService {
 
   createBundle(dto: createBundle): Observable<createBundle> {
     return this.http.post<createBundle>(environment.apiHost + 'author/bundle/create', dto);
+  }
+
+  getBundles(page: number, pageSize: number) : Observable<BundleDetailed[]>{
+    return this.http.get<BundleDetailed[]>(environment.apiHost +`tourist/bundle/all/${page}/${pageSize}`);
   }
 }

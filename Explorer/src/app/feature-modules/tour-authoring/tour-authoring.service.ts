@@ -102,9 +102,6 @@ export class TourAuthoringService {
     return this.http.get<TourLeaderboard>(environment.apiHost + `tour/${tourId}/leaderboard`);
   }
 
-  getBundles(page: number, pageSize: number) : Observable<BundleDetailed[]>{
-    return this.http.get<BundleDetailed[]>(environment.apiHost +`tourist/bundle/all/${page}/${pageSize}`);
-  }
   getToursByActivePreference(touristId: number, page: number, pageSize: number): Observable<TourCard[]> {
     return this.http.get<TourCard[]>(`${environment.apiHost}tour/tourist/${touristId}/preferences/${page}/${pageSize}`);
   }
