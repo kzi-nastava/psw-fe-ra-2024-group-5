@@ -39,7 +39,7 @@ export class TourDetailedViewComponent implements OnInit {
   newPrice: number;
   newCurrency: Currency = Currency.AC; 
 
-  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent; 
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null; 
 
 
   userProfiles: UserProfileBasic[] = [];
@@ -297,7 +297,8 @@ export class TourDetailedViewComponent implements OnInit {
       tourName : this.tour.name,
       price: this.tour.price,
       description: this.tour.description,
-      tags: this.tour.tags
+      tags: this.tour.tags,
+      showOldPrice: true
     }
 
     console.log(orderItem)

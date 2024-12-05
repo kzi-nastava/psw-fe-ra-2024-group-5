@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-color: var(--background-color-alt, #f4f4f4);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+.page-title {
+    text-align: center;
+    color: var(--text-title);
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+.encounter-card {
+    margin-top: 20px;
+    width: 900px;
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+.encounter-actions {
+    display: flex;
+    justify-content: flex-end;   
+    gap: 10px;   
+}
+
+.encounter-actions button {
+    cursor: pointer;
+    font-weight: bold;    
+    display: flex;      
+    justify-content: center; 
+    align-items: center;   
+    height: 40px; 
+}
+
+.encounter-actions button mat-icon {
+    margin-right: 8px;  
+}
+
+.alert {
+    margin-top: 20px;
+}

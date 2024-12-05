@@ -13,12 +13,23 @@
     </thead>
     <tbody>
         <tr *ngFor="let preference of preferences">
-            <td>{{ preference.preferredDifficulty }}</td>
+            <td>{{ difficultyMap[+preference.preferredDifficulty] || 'UNKNOWN' }}</td>
             <td>{{ preference.walkRating }}</td>
             <td>{{ preference.bikeRating }}</td>
             <td>{{ preference.carRating }}</td>
             <td>{{ preference.boatRating }}</td>
             <td>{{ preference.interestTags.join(', ') }}</td>
+            <td>
+                <button class="delete-button"
+                        (click)="toggleActivation(preference)">
+                  {{ preference.isActive ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+            <td>
+                <button class="delete-button" (click)="deletePreference(preference)">
+                    Delete
+                  </button>
+              </td>
         </tr>
     </tbody>
 </table>

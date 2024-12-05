@@ -11,6 +11,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EncounterDetailsComponent } from './encounter-details/encounter-details.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HiddenLocationEncounterComponent } from './hidden-location-encounter/hidden-location-encounter.component';
+import { RouterModule } from '@angular/router';
+import { EncountersApprovalComponent } from './encounters-approval/encounters-approval.component';
+import { MatIconModule } from '@angular/material/icon';
+import { EncounterManagingDetailsComponent } from './encounter-managing-details/encounter-managing-details.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,8 @@ import { HiddenLocationEncounterComponent } from './hidden-location-encounter/hi
     EncountersManagingComponent,
     EncounterDetailsComponent,
     HiddenLocationEncounterComponent,
+    EncountersApprovalComponent,
+    EncounterManagingDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -27,11 +33,14 @@ import { HiddenLocationEncounterComponent } from './hidden-location-encounter/hi
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    RouterModule,
+    MatIconModule
   ],
   exports: [
     EncounterComponent,
-    EncountersManagingComponent
+    EncountersManagingComponent,
+    EncountersApprovalComponent
   ]
 })
 export class EncounterModule { }

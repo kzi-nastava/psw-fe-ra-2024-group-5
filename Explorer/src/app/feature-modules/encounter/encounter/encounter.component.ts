@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Encounter } from '../model/encounter.model';
+import { Encounter, isSocialEncounter, SocialEncounter } from '../model/encounter.model';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { TokenStorage } from 'src/app/infrastructure/auth/jwt/token.service';
 import { EncounterService } from '../encounter.service';
@@ -8,6 +8,8 @@ import { EncounterDetailsComponent } from '../encounter-details/encounter-detail
 import { Position } from '../../tour-execution/model/position.model';
 import { UserPosition } from 'src/app/shared/model/userPosition.model';
 import { UserLocationService } from 'src/app/shared/user-location/user-location.service';
+import { Participant } from '../model/participant.model';
+import { EncounterType, encounterTypeToString } from '../enum/encounter-type.enum';
 
 @Component({
   selector: 'xp-encounter',
@@ -18,6 +20,9 @@ export class EncounterComponent implements OnInit{
   activeEncounters: Encounter[] = [];
   userId: number | null = null;
   activatedEncounter: Encounter | null = null;
+  participant: Participant | null = null;
+  isSocialEncounter = isSocialEncounter;
+  encounterTypeToString = encounterTypeToString;
 
   @ViewChild(MapComponent) map: MapComponent;
 
@@ -30,14 +35,16 @@ export class EncounterComponent implements OnInit{
     this.userId = this.tokenStorage.getUserId();
 
     if (this.userId !== null) {
-      this.loadActiveEncounters();
-      
+      this.loadActiveEncounters(this.userId);
+
       this.encounterService.getActiveEncounter(this.userId).subscribe({
         next: (response) => {
           if(response)
             this.activatedEncounter = response;
-        }
+          }
       })
+
+      this.getParticipantByUserId(this.userId);
     }
   }
 
@@ -46,8 +53,8 @@ export class EncounterComponent implements OnInit{
     console.log(this.activatedEncounter);
   }
 
-  loadActiveEncounters(): void {
-    this.encounterService.getAllActive().subscribe({
+  loadActiveEncounters(userId: number): void {
+    this.encounterService.getAllActive(userId).subscribe({
       next: (encounters: Encounter[]) => {
         this.activeEncounters = encounters;
         console.log('Encounters loaded:', encounters);
@@ -60,7 +67,7 @@ export class EncounterComponent implements OnInit{
 
   getPosition(): Position | null{
     const userPosition: UserPosition | null = this.userLocationService.getUserPosition();
-    
+
     if(!userPosition)
       return null;
 
@@ -90,7 +97,7 @@ export class EncounterComponent implements OnInit{
       },
       error: (err) => {
         console.log(err);
-      } 
+      }
     })
   }
 
@@ -100,7 +107,7 @@ export class EncounterComponent implements OnInit{
 
     if  (this.userId == null)
       return;
-    
+
     if  (position == null){
       availability = 'We are unable to locate you!'
       this.openEncounterDialog(encounter, availability, position);
@@ -111,9 +118,19 @@ export class EncounterComponent implements OnInit{
           this.openEncounterDialog(encounter, availability, position);
         },
         error: (err) => {
+          let subCode: number | undefined;
+          if (err.error && err.error.detail) {
+            const metadataMatch = err.error.detail.match(/\[subCode, (\d+)\]/);
+            if (metadataMatch && metadataMatch[1]) {
+              subCode = parseInt(metadataMatch[1], 10);
+            }
+          }
           switch (err.status){
             case 400:
-              availability = "You are too far away!";
+              if (subCode === 2)
+                availability = "You have already completed this encounter!";
+              else
+                availability = "You are too far away!";
               break;
             case 409:
               availability = "Finish or abandon your current encounter to start a new one!";
@@ -139,6 +156,29 @@ export class EncounterComponent implements OnInit{
 
     dialogRef.componentInstance.startEncounter.subscribe((response) => {
       this.encounterStarted(response);  // Handle the emitted data here
+    });
+  }
+
+  getParticipantByUserId(userId: number): void {
+    this.encounterService.getParticipantByUserId(userId).subscribe({
+      next: (data) => {
+        this.participant = data;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  abandonEncounterExecution(): void {
+    if (!this.userId) {
+      return;
+    }
+
+    this.encounterService.abandonEncounterExecution(this.userId).subscribe({
+      next: () => {
+        this.activatedEncounter = null;
+      },
     });
   }
 }

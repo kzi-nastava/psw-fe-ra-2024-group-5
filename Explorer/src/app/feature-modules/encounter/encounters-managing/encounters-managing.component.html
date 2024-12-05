@@ -19,6 +19,7 @@
 
     <div class="map-container" [ngClass]="{'map-modal': miscModalVisible}">
       <app-map [isViewOnly]="isViewOnly" [encounters]="encountersByCreator"
+      (encounterClicked)="showEncounterDetails($event)"
       (addFacility)="changeLongLat($event)" [markerAddMode]="'encounter'" ></app-map>
     </div>
   </div>

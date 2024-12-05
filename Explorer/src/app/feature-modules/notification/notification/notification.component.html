@@ -16,7 +16,7 @@
               <div mat-line class="notification-time">{{ notification.createdAt | date: 'short' }}</div>
             </div>
             <div mat-line class="notification-content">{{ notification.content }}</div>
-            <div mat-line class="notification-content">
+            <div mat-line class="notification-content" *ngIf="notification.message">
               " {{ notification.message && notification.message.length > 185 ? (notification.message.slice(0, 185) + ' ...') : notification.message }} "
             </div>
             <div *ngIf="notification.type === 1 && notification.attachment" mat-line class="notification-content">

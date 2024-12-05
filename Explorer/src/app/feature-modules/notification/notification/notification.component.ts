@@ -61,6 +61,13 @@ export class NotificationComponent implements OnInit {
     {
       this.router.navigate(['/my-clubs', notification.clubId]);
     }
+    if(notification.type == NotificationType.ENCOUNTER_CREATED)
+    {
+      this.router.navigate(['encounters-approval']);
+    } else if(notification.type == NotificationType.ENCOUNTER_APPROVAL_STATUS)
+    {
+      this.router.navigate(['encounters-managing']);
+    }
   }
 
   isNotificationUnread(notification: Notification): boolean {
