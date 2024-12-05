@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Encounter } from './model/encounter.model';
+import { Position } from '../tour-execution/model/position.model';
+import { Participant } from './model/participant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +32,62 @@ export class EncounterService {
 
   getAllActive(): Observable<Encounter[]> {
     return this.http.get<Encounter[]>(`${this.touristBaseUrl}/active`);
+  }
+
+  checkEncounterAvailability(encounterId: number, userId: number, position: Position): Observable<string>{
+
+    return this.http.post<string>(`${this.touristBaseUrl}/execution/check-availability`, {
+      encounterId: encounterId,
+      userId: userId,
+      location: position
+    })
+  }
+
+  startEncounter(encounterId: number, userId: number, position: Position): Observable<Encounter>{
+    return this.http.post<Encounter>(`${this.touristBaseUrl}/execution`, {
+      encounterId: encounterId,
+      userId: userId,
+      location: position
+    })
+  }
+
+  getActiveEncounter(userId: number): Observable<Encounter>{
+    return this.http.get<Encounter>(`${this.touristBaseUrl}/execution/${userId}`);
+  }
+
+  progressEncounter(encounterId: number, userId: number, position: Position): Observable<any>{
+    return this.http.patch(`${this.touristBaseUrl}/execution`, {
+      encounterId: encounterId,
+      userId: userId,
+      location: position
+    })
+  }
+
+  getParticipantByUserId(userId: number): Observable<Participant> {
+    return this.http.get<Participant>(`${this.touristBaseUrl}/participant?userId=${userId}`);
+  }
+
+  getByTouristCreatorId(creatorId: number): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.touristBaseUrl}/creator/${creatorId}`);
+  }
+
+  createByTourist(encounter: Encounter): Observable<Encounter> {
+    return this.http.post<Encounter>(this.touristBaseUrl, encounter);
+  }
+
+  getAllDraft(): Observable<Encounter[]> {
+    return this.http.get<Encounter[]>(`${this.administrationBaseUrl}/draft`);
+  }
+
+  acceptEncounter(id: number): Observable<any> {
+    return this.http.put(`${this.administrationBaseUrl}/${id}/accept`, {});
+  }
+
+  rejectEncounter(id: number): Observable<any> {
+    return this.http.put(`${this.administrationBaseUrl}/${id}/reject`, {});
+  }
+
+  completeMiscEncounter(encounterId: number, userId: number): Observable<any> {
+    return this.http.patch(`${this.touristBaseUrl}/execution/complete-misc?encounterId=${encounterId}&userId=${userId}`, {});
   }
 }

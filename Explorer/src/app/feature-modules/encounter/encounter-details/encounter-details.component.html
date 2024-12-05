@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{ data.encounter.name }}</h1>
+<mat-dialog-content class="mat-typography">
+  <h3>{{ data.encounter.description }}</h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" [disabled]="data.availability != 'Activate'" (click)="start(data.encounter)" cdkFocusInitial>{{ data.availability }}</button>
+  <button mat-button [mat-dialog-close]="true"
+   *ngIf="data.encounter.type === 0 && 
+   data.availability === 'Finish or abandon your current encounter to start a new one!'" 
+   (click)="completeMiscEncounter(data.encounter)"
+    cdkFocusInitial>Finish</button>
+</mat-dialog-actions>
+
+
+

@@ -11,7 +11,7 @@ import { TourReview } from '../../tour-authoring/model/tour.model';
 })
 export class TourReviewFormComponent {
   reviewForm: FormGroup;
-  selectedImage: File | null = null;
+  selectedImage: string | ArrayBuffer | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -30,11 +30,22 @@ export class TourReviewFormComponent {
     this.reviewForm.patchValue({ rating });
   }
 
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedImage = file;
-      this.convertToBase64(file);
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement; 
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+    
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          this.selectedImage = e.target.result as string; 
+          this.reviewForm.patchValue({
+            image: this.selectedImage.split(',')[1] 
+          });
+        }
+      };
+    
+      reader.readAsDataURL(file); 
     }
   }
 

@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/env/environment';
 import { Injectable } from '@angular/core';
 import { OrderItem } from '../model/order-item.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ShoppingCart } from '../model/shopping-cart.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
+  private itemsCountSubject = new BehaviorSubject<number>(0);
+  public itemsCount$ = this.itemsCountSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -31,4 +33,21 @@ export class ShoppingCartService {
     checkout(touristId: number): Observable<any> {
       return this.http.post<any>(environment.apiHost + `shopping-cart/checkout/${touristId}`, {});
     }
+    getTourImage(tourId: number): Observable<Blob> {
+      return this.http.get(`${environment.apiHost}tour/${tourId}/image`, { responseType: 'blob' });
+    }
+
+    getItemsCount(touristId: number): Observable<number> {
+      return this.http.get<number>(`${environment.apiHost}shopping-cart/items-count/${touristId}`);
+    }
+    updateItemsCount(userId: number): void {
+      this.getItemsCount(userId).subscribe(count => {
+        this.itemsCountSubject.next(count);
+      });
+    }
+    updateItemCount(count: number): void {
+      this.itemsCountSubject.next(count);
+    }
+  
+   
 }

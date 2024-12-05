@@ -3,6 +3,7 @@ import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { MapService } from 'src/app/shared/map/map.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { OrderItem } from '../../marketplace/model/order-item.model';
 
 @Component({
   selector: 'xp-tour-card',
@@ -11,6 +12,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 })
 export class TourCardComponent {
   @Input() tourCard: TourCard;
+  @Input() itemCard: OrderItem | null = null;
   @Output() tourSelected = new EventEmitter<number>();
 
   user: User | undefined;

@@ -34,6 +34,33 @@
           <mat-icon>message</mat-icon>
           Send Message
         </button>
+        <!-- Rating Buttons - only show for non-admin users -->
+        <ng-container *ngIf="user.role !== 'administrator'">
+          <button 
+            *ngIf="!userRating"
+            class="secondary"
+            mat-button
+            (click)="openRatingDialog()">
+            <mat-icon>star</mat-icon>
+            Rate App
+          </button>
+          <ng-container *ngIf="userRating">
+            <button 
+              class="secondary"
+              mat-button
+              (click)="editRating()">
+              <mat-icon>edit</mat-icon>
+              Edit Rating
+            </button>
+            <button 
+              class="secondary"
+              mat-button
+              (click)="deleteRating()">
+              <mat-icon>delete</mat-icon>
+              Delete Rating
+            </button>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </div>

@@ -1,5 +1,7 @@
 export enum NotificationType {
     PROFILE_MESSAGE = 0,
     CLUB_MESSAGE = 1,
-    CLUB_ACTIVITY = 2
+    CLUB_ACTIVITY = 2,
+    ENCOUNTER_CREATED = 3,
+    ENCOUNTER_APPROVAL_STATUS = 4
 }

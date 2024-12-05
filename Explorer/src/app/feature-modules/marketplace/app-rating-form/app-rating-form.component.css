@@ -1,27 +1,19 @@
+/* app-rating-form.component.css */
 .app-rating-form-container {
-  max-width: 600px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.rating-button {
+  min-width: 120px;
 }
 
-.error-message {
-  color: red;
-  margin-bottom: 15px;
+.rating-actions {
+  display: flex;
+  gap: 1rem;
 }
 
-.error {
-  color: red;
-  font-size: 12px;
-}
-
-button {
-  margin-top: 15px;
-}
-  
-
-.mat-icon {
-  vertical-align: middle;
+.action-button {
+  min-width: 120px;
 }

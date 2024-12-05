@@ -33,6 +33,7 @@ export class MapComponent implements AfterViewInit {
   @Output() addKeyPoint = new EventEmitter<number[]>();
   @Output() setaRouteLength = new EventEmitter<number>();
   @Output() userLocationChange = new EventEmitter<[number, number]>();
+  @Output() encounterClicked = new EventEmitter<any>();
 
   constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
 
@@ -67,7 +68,11 @@ export class MapComponent implements AfterViewInit {
 
     L.Marker.prototype.options.icon = DefaultIcon;
 
-    this.initMap();
+    setTimeout(() => {
+      if (!this.map) {
+        this.initMap();
+      }
+    }, 0);
   }
 
   search(searchInput: string): void {
@@ -287,9 +292,13 @@ export class MapComponent implements AfterViewInit {
       </div>
       `;
   
-    const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon })
-      .addTo(this.map)
-      .bindPopup(popupContent);  
+    const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon, alt: `${encounter.id}` })
+      .addTo(this.map); 
+
+      marker.on('click', () => {
+        this.encounterClicked.emit(encounter);
+      })
+
       this.markers.push(marker);
     });
   }
