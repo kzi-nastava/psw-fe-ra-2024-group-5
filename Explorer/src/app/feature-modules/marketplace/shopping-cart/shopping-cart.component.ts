@@ -5,7 +5,6 @@ import { BundleOrderItem, OrderItem } from '../model/order-item.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { Router } from '@angular/router';
-import { Tour } from '../../tour-authoring/model/tour.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -200,10 +199,10 @@ export class ShoppingCartComponent implements OnInit {
       response => {
 
         console.log('Item removed successfully', response);
-        const newCount = this.shoppingCart?.tourItems.length || 0;
+        const newCount = this.shoppingCart?.bundleItems.length || 0;
         //this.shoppingCartService.updateItemsCount(newCount);
-        this.shoppingCartService.updateItemCount(this.shoppingCart?.tourItems.length || 0);
-
+        this.shoppingCartService.updateItemCount(this.shoppingCart?.bundleItems.length || 0);
+        this.getCartItems();
       },
       error => {
         console.error('Error removing item', error);
