@@ -3,6 +3,7 @@ import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-tours-page',
@@ -22,9 +23,11 @@ export class ToursPageComponent {
   centerLatitude = new BehaviorSubject<number | null>(null);
   centerLongitude = new BehaviorSubject<number | null>(null);
   radius = new BehaviorSubject<number>(0);
+  isFeatureEnabled: boolean = false; 
+  touristId: number;
 
-  constructor(private tourService: TourAuthoringService, private router: Router){
-    
+  constructor(private tourService: TourAuthoringService, private router: Router, private authService: AuthService){
+    this.touristId = this.authService.user$.value.id; 
     this.loadTours();
   }
 
@@ -131,4 +134,40 @@ searchTours(): void {
   detailedTour(tour: TourCard): void {
     this.router.navigate(['/tour-detailed-view', tour.id]);
   }
+
+  onFeatureToggle(event: any): void {
+    this.isFeatureEnabled = event.checked; // Dobijanje stanja checkboxa
+  
+    if (this.isFeatureEnabled) {
+      this.getToursByActivePreference();
+    } else {
+      this.loadTours();
+    }
+  }
+  
+  
+
+  getToursByActivePreference(): void {
+    if (!this.touristId) {
+      console.error('Tourist ID is not set.');
+      return;
+    }
+  
+    this.tourService.getToursByActivePreference(this.touristId, this.currentPage, 8).subscribe({
+      next: (response: any) => {
+        if (response.results && Array.isArray(response.results)) {
+          this.tours = response.results; 
+          console.log("Tours based on preferences:", this.tours);
+        } else {
+          console.error("Unexpected response format:", response);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching preference-based tours:', err);
+      },
+    });
+  }
+  
 }
+
+

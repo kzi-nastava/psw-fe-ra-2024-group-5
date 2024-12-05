@@ -1,7 +1,12 @@
 <div class="content">
     <div class="header">
         <h1>Experience tours.</h1>
+        <div class="button-group">
         <button mat-button class="secondary" (click)="changeSearch()" matTooltip="Click to open/clear search">Show Search</button>
+        <mat-checkbox [(ngModel)]="isFeatureEnabled" (change)="onFeatureToggle($event)">
+            {{ isFeatureEnabled ? 'Deactivate Filter' : 'Activate Filter' }}
+          </mat-checkbox>
+        </div>
     </div>
 
     <div class="map-container" *ngIf="showSearch">

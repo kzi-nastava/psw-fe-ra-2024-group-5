@@ -17,6 +17,8 @@ export class PreferenceDialogComponent {
 
   touristId: number; 
   public TourDifficulty = TourDifficulty; 
+  preferences: Preference[] = [];
+  isFormVisible: boolean = false;
 
 
   constructor(private service: MarketplaceService, private authService: AuthService) {
@@ -24,12 +26,14 @@ export class PreferenceDialogComponent {
   }
   
   preferenceDialog = new FormGroup({
-    preferredDifficulty: new FormControl(TourDifficulty.BEGINNER, [Validators.required]),
+    preferredDifficulty: new FormControl(TourDifficulty.Beginner, [Validators.required]),
     walkRating: new FormControl(0, [Validators.required]),
     bikeRating: new FormControl(0, [Validators.required]),
     carRating: new FormControl(0, [Validators.required]),
     boatRating: new FormControl(0, [Validators.required]),
-    interestTags: new FormControl('', [Validators.required])
+    interestTags: new FormControl('', [Validators.required]),
+    isActive: new FormControl(false, [Validators.required])
+
   });
 
   addPreference(): void {
@@ -42,12 +46,14 @@ export class PreferenceDialogComponent {
 
     const preference: Preference = {
         touristId: this.touristId,
-        preferredDifficulty: this.preferenceDialog.value.preferredDifficulty || TourDifficulty.BEGINNER,
+        preferredDifficulty: this.preferenceDialog.value.preferredDifficulty || TourDifficulty.Beginner,
         walkRating: this.preferenceDialog.value.walkRating || 0,
         bikeRating: this.preferenceDialog.value.bikeRating || 0,
         carRating: this.preferenceDialog.value.carRating || 0,
         boatRating: this.preferenceDialog.value.boatRating || 0,
-        interestTags: interestTags 
+        interestTags: interestTags, 
+        isActive: this.preferenceDialog.value.isActive || false
+
     };
 
     this.service.addPreference(preference).subscribe({
@@ -63,6 +69,10 @@ export class PreferenceDialogComponent {
             }
         }
     });
+}
+
+toggleFormVisibility(): void {
+  this.isFormVisible = !this.isFormVisible; 
 }
 
   }

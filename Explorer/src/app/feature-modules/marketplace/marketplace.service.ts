@@ -51,6 +51,18 @@ export class MarketplaceService {
   getWalletByTourist() : Observable<Wallet> {
     return this.http.get<Wallet>(environment.apiHost + 'wallet');
   }
+  
+  activatePreference(id: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiHost}tourist/preference/activate/${id}`, {});
+  }
+
+  deactivatePreference(id: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiHost}tourist/preference/deactivate/${id}`, {});
+  }
+
+  deletePreference(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiHost}tourist/preference/${id}`);
+  }
 
   createBundle(dto: createBundle): Observable<createBundle> {
     return this.http.post<createBundle>(environment.apiHost + 'author/bundle/create', dto);
