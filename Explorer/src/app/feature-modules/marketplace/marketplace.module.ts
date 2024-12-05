@@ -22,7 +22,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationDialogComponent } from '../../../assets/notifications/notification-dialog.component';
 import { CouponsComponent } from './coupons/coupons.component';
 import { CouponFormComponent } from './coupon-form/coupon-form.component';
-
+import { BundleCardComponent } from './bundle-card/bundle-card.component';
+import { BundlesPageComponent } from './bundle-page/bundles-page.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { CouponFormComponent } from './coupon-form/coupon-form.component';
     AddFundsDialogComponent,
     CouponsComponent,
     CouponFormComponent,
+    BundleCardComponent,
+    BundlesPageComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +55,8 @@ import { CouponFormComponent } from './coupon-form/coupon-form.component';
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
-    TourAuthoringModule
+    TourAuthoringModule,
+    MatGridListModule
 ],
   exports: [
     PreferenceComponent,

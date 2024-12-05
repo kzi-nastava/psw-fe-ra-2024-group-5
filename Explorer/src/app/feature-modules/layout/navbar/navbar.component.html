@@ -22,7 +22,7 @@
           Tours
         </button>
         <mat-menu #toursDropdown="matMenu">
-          <button mat-menu-item [routerLink]="['tours-page']">
+          <button mat-menu-item [routerLink]="user && user.role === 'author' ? ['/tours-author-page'] : ['/tours-page']">
             <mat-icon>list</mat-icon>
             View Tours
           </button>
