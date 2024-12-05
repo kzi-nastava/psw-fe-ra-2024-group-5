@@ -67,6 +67,14 @@ export class EncounterService {
     })
   }
 
+  completeHiddenLocationEncounter(encounterId: number, userId: number, position: Position): Observable<any>{
+    console.log('jao')
+    return this.http.patch('https://localhost:44333/api/tourist/encounter/execution/complete-hle', {
+      encounterId: encounterId,
+      userId: userId,
+      location: position
+    })
+  }
   getParticipantByUserId(userId: number): Observable<Participant> {
     return this.http.get<Participant>(`${this.touristBaseUrl}/participant?userId=${userId}`);
   }
