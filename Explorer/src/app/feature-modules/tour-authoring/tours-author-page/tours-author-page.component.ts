@@ -7,6 +7,7 @@ import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { MarketplaceService } from '../../marketplace/marketplace.service';
 
+
 @Component({
   selector: 'xp-tours-author-page',
   templateUrl: './tours-author-page.component.html',

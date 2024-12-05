@@ -35,7 +35,7 @@ import { CouponFormComponent } from './coupon-form/coupon-form.component';
     NotificationDialogComponent,
     AddFundsDialogComponent,
     CouponsComponent,
-    CouponFormComponent
+    CouponFormComponent,
   ],
   imports: [
     CommonModule,

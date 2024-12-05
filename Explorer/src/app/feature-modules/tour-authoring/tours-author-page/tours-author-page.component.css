@@ -94,4 +94,77 @@
     margin-top: 0; 
     padding: 5px 10px; 
   }
+  .bundle-form {
+    margin: 20px auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px; /* Ograničenje širine za bolje formatiranje */
+    background-color: #f9f9f9; /* Svetla pozadina */
+    border-radius: 8px; /* Zaobljeni uglovi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blaga senka za moderniji izgled */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Razmak između elemenata */
+  }
+  
+  .bundle-form h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333; /* Neutralna boja naslova */
+  }
+  
+  .bundle-form label {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    color: #555; /* Blago tamnija boja za tekst */
+  }
+  
+  .bundle-form input,
+  .bundle-form select {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Elementi unutar forme zauzimaju celu širinu */
+    box-sizing: border-box;
+  }
+  
+  .bundle-form button.primary {
+    background-color: #3f51b5;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .bundle-form button.primary:hover {
+    background-color: #2c3e9e;
+  }
+  
+  .bundle-form button.secondary {
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .bundle-form button.secondary:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .bundle-form button {
+    width: 100%; /* Dugmad zauzimaju celu širinu forme */
+    margin-top: 10px;
+  }
+  
   
