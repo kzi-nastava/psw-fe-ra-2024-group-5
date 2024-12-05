@@ -9,51 +9,46 @@
     padding: 15px; /* Dodati padding za prostor oko sadržaja */
 }
 
-.image-container {
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-    border-radius: 10px; /* Dodajte zakrivljenost za slike */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f3f3f3; /* Pozadina ako slika nije postavljena */
-}
-
-.image-container img {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Slika se lepo uklapa u okvir */
-}
-
 .details {
     display: flex;
     flex-direction: column;
     gap: 10px; /* Razmak između stavki */
     font-size: 1.1em; /* Umeren font za bolju preglednost */
+    flex-grow: 1; /* Make it take up all remaining space */
+}
+
+.tile-content {
+    display: flex;
+    flex-direction: column; /* Stack the items vertically */
+    justify-content: center; /* Center the content within each tile */
+    align-items: center; /* Center horizontally */
+    height: 100%; /* Ensure the tile content takes up full space */
+    text-align: center; /* Center the text below the image */
+}
+
+.image-container {
+    width: 100%; /* Set the image container to fill the width */
+    max-height: 300px; /* Fixed max height for images */
+    overflow: hidden;
+    border-radius: 10px; /* Rounded corners for images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3; /* Background color if image is not set */
+}
+
+.image-container img {
+    width: auto; /* Maintain aspect ratio */
+    height: 100%; /* Make the height fill the container */
+    object-fit: contain; /* Ensure the whole image is visible */
 }
 
 .details h2 {
     font-size: 1.4em;
     font-weight: bold;
-    margin: 0; /* Smanjenje margine za bolji raspored */
-    color: #333; /* Tamna boja za bolji kontrast */
-}
-
-.text {
-    color: #555;
-    font-size: 1.1em;
-}
-
-.rating-container {
-    display: flex;
-    margin-top: 10px;
-}
-
-.star {
-    font-size: 25px; /* Manje zvezdice, prilagođene prostoru */
-    color: gold;
-    margin-right: 5px;
+    margin: 10px 0 5px 0; /* Add some space between the image and text */
+    color: #333; /* Dark color for better contrast */
+    flex-shrink: 0; /* Prevent text from shrinking */
 }
 
 .bottom-container {
@@ -65,6 +60,7 @@
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+    margin-top: auto; /* Push it to the bottom */
 }
 
 .summary-container {
@@ -72,11 +68,13 @@
     flex-direction: column;
     gap: 5px;
 }
+
 .name-text {
     font-size: 1.2em;
     font-weight: bold;
     color: #000000;
 }
+
 .price-text {
     font-size: 1.2em;
     font-weight: bold;

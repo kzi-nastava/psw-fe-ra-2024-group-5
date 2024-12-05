@@ -23,8 +23,12 @@
         </button>
         <mat-menu #toursDropdown="matMenu">
           <button mat-menu-item [routerLink]="user && user.role === 'author' ? ['/tours-author-page'] : ['/tours-page']">
-            <mat-icon>list</mat-icon>
+            <mat-icon>place</mat-icon>
             View Tours
+          </button>
+          <button mat-menu-item *ngIf="user && user.role === 'tourist'" [routerLink]="['bundles-page']">
+            <mat-icon>discount</mat-icon>
+            View Bundles
           </button>
           <button mat-menu-item *ngIf="user && user.role === 'author'" [routerLink]="['tour-creation']">
             <mat-icon>add_circle_outline</mat-icon>
