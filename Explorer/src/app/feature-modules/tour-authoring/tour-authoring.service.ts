@@ -9,6 +9,7 @@ import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Currency } from './model/tour.enums';
 import { TourLeaderboard } from './model/tour-leaderboard.model';
+import { BundleDetailed } from './model/bundle.models';
 
 
 @Injectable({
@@ -101,5 +102,12 @@ export class TourAuthoringService {
     return this.http.get<TourLeaderboard>(environment.apiHost + `tour/${tourId}/leaderboard`);
   }
 
+  getBundles(page: number, pageSize: number) : Observable<BundleDetailed[]>{
+    return this.http.get<BundleDetailed[]>(environment.apiHost +`tourist/bundle/all/${page}/${pageSize}`);
+  }
 
+  getBundleTours(tourIds: number[]): Observable<TourCard[]>{
+    console.log(tourIds)
+    return this.http.post<TourCard[]>(environment.apiHost + 'tour/bundle', tourIds); //post je jer ne mogu parametar tourIds da prosledim ako je get i mrzi me da nadjem drugi nacin :-)
+  }
 }

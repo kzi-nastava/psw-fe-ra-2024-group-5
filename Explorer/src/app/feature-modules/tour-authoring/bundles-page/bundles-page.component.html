@@ -1,0 +1,17 @@
+<div class="content">
+    <div class="header">
+        <h1>Experience tours.</h1>
+    </div>
+    
+    <div class="card-container">
+        <xp-bundle-card class="bundle-card rounded raised" 
+            *ngFor="let bundle of bundles" [bundleCard]="bundle" (click)="detailedBundle(bundle)">
+        </xp-bundle-card>
+    </div>
+</div>
+
+<div class="bottom-nav">
+    <button mat-button class="secondary button-size" (click)="previousPage()">Previous</button>
+    <h1>Page {{ currentPage }}</h1>
+    <button mat-button class="secondary button-size" (click)="nextPage()">Next</button>
+</div>

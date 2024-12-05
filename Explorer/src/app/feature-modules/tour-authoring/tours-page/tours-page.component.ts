@@ -33,6 +33,9 @@ export class ToursPageComponent {
       next: (result: TourCard[]) => {
         this.tours = result;
         console.log(this.tours);
+        for(let t of this.tours){
+          console.log(t);
+        }
       },
       error: () => {}
     });
