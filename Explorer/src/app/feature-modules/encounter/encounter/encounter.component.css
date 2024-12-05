@@ -1,3 +1,5 @@
+@import 'src/styles.css';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -15,6 +17,19 @@
   color: var(--text-title);
   font-size: 2.5em;
   font-weight: 600;
+}
+
+img {
+  height: 175px;
+  margin-right: 50px;
+}
+
+.hidden {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-right: 100px;
 }
 
 .map-container {
@@ -90,7 +105,7 @@
   .completion-message {
     margin-top: 20px;
     font-size: 1.5rem;
-    color: #4CAF50;
+    color: var(--button-primary-bg);
     animation: pulse 1s infinite;
   }
 
@@ -110,7 +125,7 @@
   }
 
   .circular-progress.complete .progress-bar {
-    stroke: #ff4500;
+    stroke: var(--button-primary-bg);
   }
 
 
@@ -158,10 +173,18 @@
 }
 
 .encounter-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
   margin-left: 100px;
   text-align: left;
   width: 100%;
+}
+
+.encounter-details {
+  display: flex;
+  flex-direction: column;
 }
 
 .encounter-info div:first-child {
@@ -172,6 +195,6 @@
 
 .abandon-button {
   margin-bottom: 15px;
-  margin-left: 50px;
+  margin-left: 10px;
   text-align: center;
 }

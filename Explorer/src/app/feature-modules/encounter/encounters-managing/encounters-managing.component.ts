@@ -42,6 +42,7 @@ export class EncountersManagingComponent implements OnInit {
   lat: number = 0;
   isViewOnly: boolean = true;
   user: User | null;
+  typeErrorMessage: boolean = false;
 
   ngOnInit(): void {
     this.setEncounterFormFields();
@@ -55,10 +56,13 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   openCreateEncounterModal(): void {
-    if (this.selectedEncounterType === 'MISC') {
+    if (this.selectedEncounterType) {
       this.miscModalVisible = true;
       this.isViewOnly = false;
+      this.typeErrorMessage = false;
     }
+    else 
+      this.typeErrorMessage = true;
   }
 
   createEncounter(): void {
@@ -168,6 +172,8 @@ export class EncountersManagingComponent implements OnInit {
         latitude: lat
       })
     });
+
+    this.openCreateEncounterModal();
   }
 
   searchLocation(): void{

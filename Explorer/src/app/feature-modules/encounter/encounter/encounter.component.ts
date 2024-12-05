@@ -23,6 +23,11 @@ export class EncounterComponent implements OnInit{
   participant: Participant | null = null;
   isSocialEncounter = isSocialEncounter;
   encounterTypeToString = encounterTypeToString;
+  remainingTime: number = 30;
+  progressValue: number = 0;
+  isComplete: boolean = false;
+  isTimerActive: boolean = false;
+  private timerInterval: any;
 
   @ViewChild(MapComponent) map: MapComponent;
 
@@ -93,12 +98,62 @@ export class EncounterComponent implements OnInit{
 
     this.encounterService.progressEncounter(this.activatedEncounter.id, this.userId, currentPosition).subscribe({
       next: (response) => {
-        console.log(response);
+        if (this.activatedEncounter?.type == 2 && response.inRange){
+          this.startTimer();
+        }
+          
       },
       error: (err) => {
         console.log(err);
       }
     })
+  }
+
+  private startTimer() {
+    this.isTimerActive = true;
+    this.timerInterval = setInterval(() => {
+      if (this.remainingTime > 0) {
+        this.remainingTime--;
+        this.progressValue = ((30 - this.remainingTime) / 30) * 100;
+      } else {
+        this.completeTimer();
+      }
+    }, 1000);
+  }
+
+  completeTimer() {
+    this.isTimerActive = false;
+    this.clearTimer();
+    this.progressValue = 100;
+    this.isComplete = true;
+    var position = this.getPosition();
+    if (this.activatedEncounter && this.userId && position){
+      console.log(this.activatedEncounter.id)
+      console.log(this.userId)
+      console.log(position)
+      this.encounterService.completeHiddenLocationEncounter(this.activatedEncounter?.id, this.userId, position).subscribe({
+        next: (response) => {
+          console.log('Request successful:', response);
+        },
+        error: (err) => {
+          console.error('Request failed:', err);
+          // Handle the error (e.g., show a message to the user)
+        }
+      });
+    }
+      
+  }
+
+  private clearTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.isTimerActive = false;
+    }
+  }
+
+  private resetTimer(){
+    this.clearTimer();
+    this.startTimer();
   }
 
   showEncounterDetails(encounter: any): void {

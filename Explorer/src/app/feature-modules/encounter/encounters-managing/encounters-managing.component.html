@@ -14,11 +14,11 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <button (click)="openCreateEncounterModal()">Create</button>
+      <div [ngClass]="{'normal-text': !typeErrorMessage, 'error-text': typeErrorMessage}">Choose a type and click on the location you want to start creating an encounter.</div>
     </div>
 
-    <div class="map-container" [ngClass]="{'map-modal': miscModalVisible}">
-      <app-map [isViewOnly]="isViewOnly" [encounters]="encountersByCreator"
+    <div class="map-container">
+      <app-map *ngIf="!miscModalVisible" [encounters]="encountersByCreator"
       (encounterClicked)="showEncounterDetails($event)"
       (addFacility)="changeLongLat($event)" [markerAddMode]="'encounter'" ></app-map>
     </div>

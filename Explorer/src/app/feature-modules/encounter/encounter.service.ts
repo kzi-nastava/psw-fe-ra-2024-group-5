@@ -68,7 +68,8 @@ export class EncounterService {
   }
 
   completeHiddenLocationEncounter(encounterId: number, userId: number, position: Position): Observable<any>{
-    return this.http.patch(`${this.touristBaseUrl}/execution/complete-hle`, {
+    console.log('jao')
+    return this.http.patch('https://localhost:44333/api/tourist/encounter/execution/complete-hle', {
       encounterId: encounterId,
       userId: userId,
       location: position
