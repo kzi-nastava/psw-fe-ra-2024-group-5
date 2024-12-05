@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Blog } from '../model/blog.model';
 import { BlogPostComment } from '../model/blog-post-comment';
 import { ActivatedRoute } from '@angular/router';
@@ -20,6 +20,7 @@ export class BlogPreviewComponent implements OnInit {
   editingCommentId: number | null = null;
   editedCommentText: string = '';
   newCommentText: string = '';
+  newCommentId: number | null = null;
 
   constructor(private route: ActivatedRoute, private blogService: BlogService, private authService: AuthService) {}
   
@@ -106,7 +107,12 @@ export class BlogPreviewComponent implements OnInit {
   }
   
   addComment(): void {
-    // Create a new comment object
+    if (this.blog.status === 0 || this.blog.status === 2){
+      return;
+    }
+
+    if (!this.newCommentText.trim()) return;
+
     const newComment: BlogPostComment = {
       commentText: this.newCommentText,
       creationTime: new Date(),
@@ -118,11 +124,19 @@ export class BlogPreviewComponent implements OnInit {
     // Call the service to add the comment
     this.blogService.addComment(this.blog.id, newComment).subscribe((addedComment) => {
       this.blog.comments = this.blog.comments || [];
-      this.blog.comments.push(addedComment); // Update the local comments list
-      this.newCommentText = ''; // Clear the text area after submission
+      this.blog.comments.push(addedComment);
+      this.newCommentText = ''; 
+
+      setTimeout(() => this.scrollToComment(addedComment.id!), 100);
     });
   }
   
+  scrollToComment(commentId: number): void {
+    const commentElement = document.getElementById(`comment-${commentId}`);
+    if (commentElement) {
+      commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 
   cancelEdit(): void {
     this.editingCommentId = null;

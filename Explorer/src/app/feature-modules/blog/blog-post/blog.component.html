@@ -1,55 +1,105 @@
-<div *ngIf="isLoading">
-    Loading blogs...
+<div *ngIf="isLoading" class="loading-message">
+  Loading blogs...
+</div>
+
+<div *ngIf="error" class="error-message">
+  {{ error }}
+</div>
+<div class="filter-container">
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-icon matPrefix class="filter-icon">filter_alt</mat-icon>
+    <mat-label>Filter Blogs</mat-label>
+    <mat-select [(value)]="selectedFilter" (selectionChange)="applyFilter()">
+      <mat-option [value]="-1">All</mat-option>
+      <mat-option [value]="3">Active</mat-option>
+      <mat-option [value]="4">Famous</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button *ngIf="user && user.role === 'author'" (click)="openAddBlogDialog()" class="add-blogs">
+    Add Blog
+  </button>
   </div>
 
-  <div *ngIf="error">
-    {{ error }}
-  </div>
-
-  <div class="filter-container" style="text-align: center; margin: 10px 0;">
-    <mat-form-field appearance="fill">
-      <mat-label>Filter Blogs</mat-label>
-      <mat-select [(value)]="selectedFilter" (selectionChange)="applyFilter()">
-        <mat-option [value]="-1">All</mat-option>
-        <mat-option [value]="3">Active</mat-option>
-        <mat-option [value]="4">Famous</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="blog-container">
-    <div *ngFor="let blog of blogs" class="blog-card">
+<div class="blog-container">
+  <div *ngFor="let blog of blogs" class="blog-card">
+    <!-- Header -->
+    <div class="blog-header">
       <h2 (click)="blogPreview(blog.id)">{{ blog.title }}</h2>
+      <p class="blog-status">
+        Status: 
+        {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : blog.status === 3 ? 'Active' : blog.status === 4 ? 'Famous' : 'Unknown' }}
+      </p>
+      <p class="blog-date">Created: {{ blog.createdDate | date }}</p>
+    </div>
 
-      <div style="display: flex; justify-content: space-between;">
-        <p>Status:
-          {{ blog.status === 0 ? 'Draft' : blog.status === 1 ? 'Published' : blog.status === 2 ? 'Closed' : blog.status === 3 ? 'Active': blog.status === 4 ? 'Famous': 'Unknown' }}
-        </p>
+    <!-- Description -->
+    <div class="blog-description" [innerHTML]="blog.description"></div>
 
-        <p>Created at: {{ blog.createdDate | date }}</p>
-      </div>
-
-      <div [innerHTML]="blog.description"></div>
-
-      <div *ngIf="blog.images && blog.images.length > 0">
-        <img [src]="'data:' + blog.images[currentImageIndex[blog.id]].contentType + ';base64,' + blog.images[currentImageIndex[blog.id]].base64Data"
-             alt="{{ blog.title }}">
-
-        <div class="image-navigation" *ngIf="blog.images.length > 1">
-          <button (click)="previousImage(blog.id)" class="btn btn-secondary">Previous</button>
-          <button (click)="nextImage(blog.id, blog.images.length)" class="btn btn-secondary">Next</button>
+    <!-- Carousel -->
+    <div *ngIf="blog.images && blog.images.length > 0" class="carousel-container">
+      <div class="carousel">
+        <button class="carousel-control prev" (click)="previousImage(blog.id)">&#10094;</button>
+        <div class="carousel-inner">
+          <img
+            *ngFor="let image of blog.images; let i = index"
+            [src]="'data:' + blog.images[currentImageIndex[blog.id]].contentType + ';base64,' + blog.images[currentImageIndex[blog.id]].base64Data"
+            [alt]="'Image ' + (i + 1)"
+            class="carousel-image"
+            [class.active]="i === currentImageIndex[blog.id]"
+          />
         </div>
-      </div>
-
-      <div style="margin-top: 10px;">
-        <button *ngIf="blog.status === 0 && (isUserAuthor(blog.userId) | async)" (click)="updateBlogStatus(blog.id, 1)" class="btn btn-primary">Publish</button>
-        <button *ngIf="blog.status !== 2 && (isUserAuthor(blog.userId) | async)" (click)="updateBlogStatus(blog.id, 2)" class="btn btn-danger">Close</button>
-      </div>
-
-
-      <div style="margin-top: 10px;" *ngIf="blog.status !== 0 && blog.status !== 2">
-        <button (click)="vote(blog.id, 0)" class="btn btn-primary" [disabled]="blog.status === 2">Upvote ({{ upvotes[blog.id] || 0 }})</button>
-        <button (click)="vote(blog.id, 1)" class="btn btn-primary" [disabled]="blog.status === 2">Downvote ({{ downvotes[blog.id] || 0 }})</button>
+        <button class="carousel-control next" (click)="nextImage(blog.id, blog.images.length)">&#10095;</button>
       </div>
     </div>
+
+    <!-- Actions -->
+    <div class="blog-actions" *ngIf="isBlogCreator(blog.userId)">
+      <!-- Publish button -->
+      <button
+        *ngIf="blog.status === 0 && isBlogCreator(blog.userId) "
+        (click)="updateBlogStatus(blog.id, 1)"
+        matTooltip="Publish blog"
+        class="publish-button"
+      >
+        <mat-icon>publish</mat-icon>
+      </button>
+
+      <!-- Lock/unlock buttons -->
+      <mat-icon
+        *ngIf="blog.status === 1 && isBlogCreator(blog.userId)"
+        class="lock-icon"
+        matTooltip="Close blog"
+        (click)="updateBlogStatus(blog.id, 2)"
+      >
+        lock_open
+      </mat-icon>
+      <mat-icon
+        *ngIf="blog.status === 2"
+        class="lock-icon"
+        matTooltip="This blog is closed"
+      >
+        lock
+      </mat-icon>
+    </div>
+
+    <!-- Voting -->
+    <div class="vote-container" *ngIf="blog.status !== 0 && blog.status !== 2">
+      <button
+        (click)="vote(blog.id, 0)"
+        class="vote-button"
+        [class.active]="userVotes[blog.id] === 0"
+        [disabled]="blog.status === 2 || blog.status === 0"
+      >
+        <mat-icon>thumb_up</mat-icon> ({{ upvotes[blog.id] || 0 }})
+      </button>
+      <button
+        (click)="vote(blog.id, 1)"
+        class="vote-button thumb-down"
+        [class.active]="userVotes[blog.id] === 1"
+        [disabled]="blog.status === 2 || blog.status === 0"
+      >
+        <mat-icon>thumb_down</mat-icon> ({{ downvotes[blog.id] || 0 }})
+      </button>
+    </div>
   </div>
+</div>

@@ -1,44 +1,88 @@
-<div class="blog-post" *ngIf="blog">
-    <h1>{{ blog.title }}</h1>
+<div class="blog-container">
+  <div class="blog-post" *ngIf="blog">
+    <h1 >{{ blog.title }}</h1>
     <div class="blog-images">
       <div *ngIf="blog.images && blog.images.length > 0 && currentImageIndex[blog.id] !== undefined">
         <img [src]="'data:' + blog.images[currentImageIndex[blog.id]].contentType + ';base64,' + blog.images[currentImageIndex[blog.id]].base64Data" alt="{{ blog.title }}">
         <div class="image-navigation" *ngIf="blog.images.length > 1">
-          <button (click)="previousImage(blog.id)" class="btn btn-secondary">Previous</button>
-          <button (click)="nextImage(blog.id)" class="btn btn-secondary">Next</button>
-        </div>     
+          <button class="carousel-control prev" (click)="previousImage(blog.id)">
+            &#10094;
+          </button>
+          <button class="carousel-control next" (click)="nextImage(blog.id)">
+            &#10095;
+          </button>
+        </div>
       </div>
     </div>
-    <p>{{ blog.description }}</p>
+    <p class ="description" >{{ blog.description }}</p>
   </div>
-  
+
   <div class="comments-section" *ngIf="blog && blog.comments">
-    <h2>Comments</h2>
-    <div *ngFor="let comment of blog.comments">
-      
-      <!-- Show text or edit area depending on edit mode -->
-      <div *ngIf="editingCommentId !== comment.id; else editMode">
-        <p><strong>{{ comment.commentText }}</strong>: {{ comment.creationTime | date }}</p>
-      </div>
-  
-      <!-- Edit Mode Template -->
-      <ng-template #editMode>
-        <textarea [(ngModel)]="editedCommentText" rows="3"></textarea>
-        <button (click)="saveComment(comment.id!)" class="btn btn-primary">Save</button>
-        <button (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+    <h2  class="comments-h2">Comments</h2>
+        <div class="comments-list">
+
+          <div *ngFor="let comment of blog.comments" class="comment-container">
+            <div class="comment-row">
+              <div class="profile-section">
+                <img [src]="comment.userId" alt="Profile Picture" class="profile-picture">
+                <span class="username">{{ comment.userId }}</span>
+              </div>
+              <div class="comment-text-section">
+                <ng-container *ngIf="editingCommentId === comment.id; else viewComment">
+                  <textarea [(ngModel)]="editedCommentText" class="edit-textarea"></textarea>
+                </ng-container>
+                <ng-template #viewComment>
+                  <p class="comment-text">{{ comment.commentText }}</p>
+                </ng-template>
+              </div>
+            </div>
+            <div class="comment-footer">
+              <div class="footer-actions">
+                <ng-container *ngIf="editingCommentId === comment.id; else actionIcons">
+                  <button  class="icon-button done-button" (click)="saveComment(comment.id)">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="icon-button secondary" (click)="cancelEdit()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </ng-container>
+                <ng-template #actionIcons>
+                  <button class="icon-button edit-icon" *ngIf="isCommentAuthor(comment.userId)" (click)="editComment(comment.id!, comment.commentText)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button class="icon-button delete-icon" *ngIf="isCommentAuthor(comment.userId)" (click)="deleteComment(comment.id!)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </ng-template>
+              </div>
+              <div class="creation-time">{{ comment.creationTime | date: 'short' }}</div>
+            </div>
+          </div>
+        </div>
+
+      <ng-template #addCommentSection>
+        <div class="add-comment" *ngIf="currentUser && currentUser.role === 'author'">
+          <textarea
+            [(ngModel)]="newCommentText"
+            rows="1"
+            placeholder="Write your comment here..."
+            [disabled]="blog.status === 0 || blog.status === 2"
+            class="comment-textarea"
+          ></textarea>
+          <button
+          (click)="addComment()"
+          class="icon-button comment-icon"
+          [disabled]="blog.status === 0 || blog.status === 2"
+        >
+          <mat-icon>send</mat-icon>
+        </button>
+        </div>
       </ng-template>
-  
-      <!-- Edit and Delete buttons -->
-      <div *ngIf="isCommentAuthor(comment.userId) && editingCommentId !== comment.id" class="comment-actions">
-        <button (click)="editComment(comment.id!, comment.commentText)" class="btn btn-secondary">Edit</button>
-        <button (click)="deleteComment(comment.id!)" class="btn btn-danger">Delete</button>
+
+      <div *ngIf="blog.status === 0 || blog.status === 2; else addCommentSection">
+        <p class="text-muted">You can't comment on a blog that is not published.</p>
       </div>
 
-    </div>
-    <div class="add-comment">
-        <h3>Add a Comment</h3>
-        <textarea [(ngModel)]="newCommentText" rows="3" placeholder="Write your comment here..."></textarea>
-        <button (click)="addComment()" class="btn btn-primary">Submit</button>
-      </div>
+
   </div>
-  
+</div>

@@ -15,10 +15,6 @@
             <mat-icon>list</mat-icon>
             View Blogs
           </button>
-          <button mat-menu-item *ngIf="user && user.role === 'author'" [routerLink]="['addBlog']">
-            <mat-icon>create</mat-icon>
-            Add Blogs
-          </button>
         </mat-menu>
 
         <button class="secondary dropdown" mat-button [matMenuTriggerFor]="toursDropdown">
@@ -63,7 +59,7 @@
           <mat-icon>location_city</mat-icon>
           Facilities
         </button>
-        
+
         <ng-container *ngIf="user && user.role === 'author'">
           <button class="primary" mat-button [matMenuTriggerFor]="couponDropdown">
             <mat-icon>redeem</mat-icon>
@@ -80,8 +76,8 @@
             </button>
           </mat-menu>
         </ng-container>
-        
-        
+
+
 
         <button class="secondary dropdown" *ngIf="user && user.role === 'administrator'" mat-button
           [matMenuTriggerFor]="adminToolsDropdown">
