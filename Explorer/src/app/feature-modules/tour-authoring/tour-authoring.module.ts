@@ -18,9 +18,6 @@ import { TourCardComponent } from './tour-card/tour-card.component';
 import { FormsModule } from '@angular/forms';
 import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.component';
 import { TourLeaderboardComponent } from './tour-leaderboard/tour-leaderboard.component';
-import { BundlesPageComponent } from './bundles-page/bundles-page.component';
-import { BundleCardComponent } from './bundle-card/bundle-card.component'; 
-import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -36,9 +33,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ToursPageComponent,
     TourCardComponent,
     ToursAuthorPageComponent,
-    TourLeaderboardComponent,
-    BundlesPageComponent,
-    BundleCardComponent
+    TourLeaderboardComponent
   ],
   imports: [
     CommonModule,
@@ -46,8 +41,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ReactiveFormsModule,
     MatCheckboxModule,
     SharedModule,
-    FormsModule,
-    MatGridListModule
+    FormsModule
   ],
   exports: [
     KeyPointsComponent,

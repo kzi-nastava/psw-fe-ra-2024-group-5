@@ -1,7 +1,4 @@
 <div class="container">
-    <!-- <div class="image-container rounded">
-        <img [src]="imageSource" alt="picture"/>
-    </div> -->
     <div class="details">
         <mat-grid-list *ngIf="bundleCard.tours.length == 2" cols="2" rowHeight="1:1">
             <mat-grid-tile>
@@ -64,20 +61,11 @@
                 <h2>{{bundleCard.tours[3].name}}</h2>
             </mat-grid-tile>
         </mat-grid-list>
-        <!-- <h2>{{tourCard.name}}</h2>
-        <span class="text">{{location}}</span>
-        <span class="text">Length: {{tourCard.length}} km</span>
-        <span class="text">{{tourLevels[tourCard.level]}}</span>
-        <span class="text">{{tourCard.tags}}</span>
-        <div class="rating-container">
-            <span class="star" *ngFor="let i of [1,2,3,4,5]">
-              <span *ngIf="tourCard.averageRating >= i">&#9733;</span>
-            </span>
-          </div>                         -->
     </div>
     <div class="bottom-container rounded">
         <div class="summary-container">
             <div class="name-text">{{bundleCard.name}}</div>
+            <div class="text">{{bundleCard.status}}</div>
             <div class="price-text">{{bundleCard.price.amount}} {{currencies[bundleCard.price.currency]}}</div>
             <button mat-button class="secondary" (click)="viewMore()" *ngIf="user?.role === 'tourist'">View more</button>
         </div>

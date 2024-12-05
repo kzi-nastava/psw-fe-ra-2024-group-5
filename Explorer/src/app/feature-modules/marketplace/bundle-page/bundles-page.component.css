@@ -32,7 +32,7 @@
 
   .card-container {
     display: grid;
-    grid-template-columns: repeat(4, 300px);
+    grid-template-columns: repeat(2, 500px);
     gap: 20px;
     justify-content: space-evenly;
     margin-bottom: 30px;
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 600px;
+    width: 500px;
     height: 550px; 
     margin-top: 50px;
     margin-bottom: 50px;

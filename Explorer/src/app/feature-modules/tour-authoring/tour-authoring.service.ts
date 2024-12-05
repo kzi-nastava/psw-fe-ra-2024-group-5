@@ -9,7 +9,7 @@ import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Currency } from './model/tour.enums';
 import { TourLeaderboard } from './model/tour-leaderboard.model';
-import { BundleDetailed } from './model/bundle.models';
+import { BundleDetailed } from '../marketplace/model/bundle.models';
 
 
 @Injectable({

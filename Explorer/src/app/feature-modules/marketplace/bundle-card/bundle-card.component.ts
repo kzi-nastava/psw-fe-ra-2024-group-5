@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BundleCard } from '../model/bundle.models';
-import { OrderItem } from '../../marketplace/model/order-item.model';
-import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { OrderItem } from '../model/order-item.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { BundleCard } from '../model/bundle.models';
 
 @Component({
   selector: 'xp-bundle-card',
