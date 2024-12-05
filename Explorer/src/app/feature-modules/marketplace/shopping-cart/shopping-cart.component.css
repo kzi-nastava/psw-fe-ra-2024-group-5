@@ -140,7 +140,18 @@ button.primary .material-icons.check-icon {
   }
   
 
-  
+ .cart-total {
+    color: var(--text-subtitle);
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-top: 30px; /* Razmak od kartica iznad */
+     margin-bottom: 20px; /* Razmak ispod h2 (prema dugmetu) */
+    text-align: right;
+    align-self: flex-end; /* Poravnanje na desnoj strani ako treba */
+    position: relative;
+    top: 630px; /* Pomeranje h2 iznad u odnosu na prethodni položaj */
+    margin-right: 140px;
+} 
   
 
   
@@ -162,10 +173,6 @@ button.primary .material-icons.check-icon {
     margin: 3px 0px 0px 10px;
     
 }
-
-
-
-
 
 .modal-overlay {
   position: fixed;
@@ -227,8 +234,6 @@ button.secondary {
   align-items: center; /* Vertikalno centriranje */
 }
 
-
-
 button:hover {
   opacity: 0.9;
 }
@@ -245,4 +250,20 @@ button:hover {
     color: green; 
   }
   
+/*snack bar custom css*/
+.custom-snackbar {
+    position: fixed; 
+    top: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 1000; 
+  }
+  .alert-success {
+    background-color: #a3be8c; 
+    color: #2e3440; 
+  }
   
+  .alert-danger {
+    background-color: #bf616a; 
+    color: #2e3440; 
+  }

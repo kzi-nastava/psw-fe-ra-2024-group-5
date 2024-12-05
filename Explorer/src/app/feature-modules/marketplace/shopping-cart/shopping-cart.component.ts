@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Tour } from '../../tour-authoring/model/tour.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Wallet } from '../model/wallet';
 import { MarketplaceService } from '../marketplace.service';
@@ -76,7 +77,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   constructor(private shoppingCartService: ShoppingCartService, private tokenStorage: TokenStorage, private router: Router,
-    private sanitizer: DomSanitizer, private marketService: MarketplaceService, private authService: AuthService
+    private sanitizer: DomSanitizer, private marketService: MarketplaceService, private authService: AuthService, private snackBar: MatSnackBar
 
   ) { }
 
@@ -179,10 +180,21 @@ export class ShoppingCartComponent implements OnInit {
         this.closeCheckoutModal(); 
       },
       error => {
-        console.error('Error during checkout', error);
-        alert('Error during checkout: ' + error.message); 
+        if (error.status === 400 && error.error?.error === "Not enough funds in wallet.") {
+          console.error('Insufficient funds error:', error);
+          this.showErrorAlert('You do not have enough funds in your wallet to complete this purchase.');
+        } else {
+          console.error('Error during checkout', error);
+        }
       }
     );
+  }
+
+  private showErrorAlert(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['alert-danger', 'custom-snackbar']
+    });
   }
   
 
