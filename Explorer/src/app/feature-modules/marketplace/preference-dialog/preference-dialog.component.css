@@ -1,12 +1,26 @@
+/* Zajednički stil za sve dugmiće */
 .custom-button {
-    background-color: #e91e63; /* Pink color */
-    color: white;
-    font-size: 18px; /* Larger font size */
-    padding: 12px 24px; /* Increase padding for a larger button */
-    border-radius: 8px; /* Rounded corners */
-  }
-  
-  .custom-button:hover {
-    background-color: #d81b60; /* Slightly darker pink on hover */
-  }
-  
+  background-color: #007bff; /* Plava boja */
+  color: white;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.custom-button:hover {
+  background-color: #0056b3; /* Tamnija plava kad se pređe */
+  transform: scale(1.05); /* Lagano povećanje */
+}
+
+.custom-button:active {
+  transform: scale(0.95); /* Klik efekat */
+}
+
+.button-container {
+  display:flex;
+}
+
+

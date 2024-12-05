@@ -1,0 +1,64 @@
+.leaderboard {
+    width: 800px;
+    max-width: 1024px;
+}
+
+.leaderboard-container {
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+tr.example-element-row:nth-child(1) {
+    background: #ffeea4;
+}
+
+tr.example-element-row:nth-child(2) {
+    background: #e9ecef;
+}
+
+tr.example-element-row:nth-child(3) {
+    background: #dda86e;
+}
+
+.pos-no {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: calc(25px / 2);
+}
+
+tr.example-element-row:nth-child(1) .pos-no,
+tr.example-element-row:nth-child(2) .pos-no,
+tr.example-element-row:nth-child(3) .pos-no {
+    color: white;
+    font-weight: 600;
+    box-shadow: 2px 2px 0px rgb(120, 120, 120);
+}
+
+tr.example-element-row:nth-child(1) .pos-no {
+    background-color: #ffd100;
+}
+
+tr.example-element-row:nth-child(2) .pos-no {
+    background-color: #7e8285;
+}
+
+tr.example-element-row:nth-child(3) .pos-no {
+    background-color: #bf874b;
+}

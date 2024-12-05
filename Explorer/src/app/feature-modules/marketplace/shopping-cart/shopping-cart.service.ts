@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { OrderItem } from '../model/order-item.model';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ShoppingCart } from '../model/shopping-cart.model';
+import { Coupon } from '../model/coupon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +31,31 @@ export class ShoppingCartService {
       return this.http.get<ShoppingCart>(environment.apiHost + `shopping-cart/tourist/${touristId}`);
     }
 
-    checkout(touristId: number): Observable<any> {
-      return this.http.post<any>(environment.apiHost + `shopping-cart/checkout/${touristId}`, {});
+    checkout(touristId: number, discountCode: string | null): Observable<any> {
+      // Ako nema discountCode, šalje se prazan string
+      const codeParam = discountCode ? `?code=${discountCode}` : '';
+    
+      // Slanje POST zahteva sa discountCode u URL-u
+      return this.http.post<any>(
+        `${environment.apiHost}shopping-cart/checkout/${touristId}${codeParam}`,
+        {}  // Telo zahteva može biti prazno, jer se kod šalje kao query parametar
+      );
     }
+
+    getCouponByCode(code: string): Observable<Coupon> {
+      return this.http.get<Coupon>(`${environment.apiHost}coupon/code?code=${code}`).pipe(
+        map((coupon: any) => {
+          return {
+            id: coupon.id, 
+            code: coupon.code,
+            percentage: coupon.percentage,
+            expiredDate: new Date(coupon.expiredDate), 
+            tourIds: coupon.tourIds
+          };
+        })
+      );
+    }
+    
     getTourImage(tourId: number): Observable<Blob> {
       return this.http.get(`${environment.apiHost}tour/${tourId}/image`, { responseType: 'blob' });
     }

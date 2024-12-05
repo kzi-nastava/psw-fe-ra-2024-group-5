@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{ data.encounter.name }}</h1>
+<mat-dialog-content class="mat-typography flex-container">
+  <h3>{{ data.encounter.description }}</h3>
+  <p>
+    <strong>Status: </strong>
+    <span class="status draft" *ngIf="data.encounter.status === 0">DRAFT</span>
+    <span class="status active" *ngIf="data.encounter.status === 1">ACTIVE</span>
+    <span class="status archived" *ngIf="data.encounter.status === 2">ARCHIVED</span>
+  </p>
+  <button mat-button mat-dialog-close mat-raised-button class="secondary">Cancel</button>
+</mat-dialog-content>
+
+
+
+

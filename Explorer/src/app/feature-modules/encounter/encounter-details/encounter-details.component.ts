@@ -4,6 +4,7 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dia
 import { EncounterService } from '../encounter.service';
 import { TokenStorage } from 'src/app/infrastructure/auth/jwt/token.service';
 import { Encounter } from '../model/encounter.model';
+import { encounterTypeToString } from '../enum/encounter-type.enum';
 
 @Component({
   selector: 'xp-encounter-details',
@@ -15,6 +16,7 @@ export class EncounterDetailsComponent {
               private encounterService: EncounterService,
               private tokenStorage: TokenStorage){}
   userId: number | null = this.tokenStorage.getUserId();
+  encounterTypeToString = encounterTypeToString;
 
   @Output() startEncounter = new EventEmitter<any>();
 
@@ -29,5 +31,18 @@ export class EncounterDetailsComponent {
         console.log(err);
       }
     })
+  }
+
+  completeMiscEncounter(encounter: any): void {
+    if (this.userId) {
+      this.encounterService.completeMiscEncounter(encounter.id, this.userId).subscribe({
+        next: (response) => {
+          console.log('Encounter completed successfully', response);
+        },
+        error: (err) => {
+          console.error('Error completing encounter', err);
+        }
+      });
+    }
   }
 }

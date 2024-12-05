@@ -12,3 +12,13 @@ export interface Encounter {
     status: EncounterStatus,
     creatorId: number
 }
+
+export interface SocialEncounter extends Encounter {
+    radius: number,
+    peopleCount: number,
+    currentPeopleCount: number,
+}
+
+export function isSocialEncounter(encounter: Encounter): encounter is SocialEncounter {
+    return encounter.type === EncounterType.SOCIAL;
+}

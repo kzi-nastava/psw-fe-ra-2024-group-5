@@ -9,4 +9,5 @@ export interface Preference {
     carRating: number; 
     boatRating: number; 
     interestTags: string[]; 
+    isActive?: boolean;
 }

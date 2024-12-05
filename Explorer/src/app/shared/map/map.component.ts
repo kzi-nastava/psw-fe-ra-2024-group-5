@@ -68,7 +68,11 @@ export class MapComponent implements AfterViewInit {
 
     L.Marker.prototype.options.icon = DefaultIcon;
 
-    this.initMap();
+    setTimeout(() => {
+      if (!this.map) {
+        this.initMap();
+      }
+    }, 0);
   }
 
   search(searchInput: string): void {
