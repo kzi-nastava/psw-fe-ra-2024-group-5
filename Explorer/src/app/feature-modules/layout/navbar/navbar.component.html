@@ -15,10 +15,6 @@
             <mat-icon>list</mat-icon>
             View Blogs
           </button>
-          <button mat-menu-item *ngIf="user && user.role === 'author'" [routerLink]="['addBlog']">
-            <mat-icon>create</mat-icon>
-            Add Blogs
-          </button>
         </mat-menu>
 
         <button class="secondary dropdown" mat-button [matMenuTriggerFor]="toursDropdown">
@@ -63,7 +59,7 @@
           <mat-icon>location_city</mat-icon>
           Facilities
         </button>
-        
+
         <ng-container *ngIf="user && user.role === 'author'">
           <button class="primary" mat-button [matMenuTriggerFor]="couponDropdown">
             <mat-icon>redeem</mat-icon>
@@ -80,8 +76,8 @@
             </button>
           </mat-menu>
         </ng-container>
-        
-        
+
+
 
         <button class="secondary dropdown" *ngIf="user && user.role === 'administrator'" mat-button
           [matMenuTriggerFor]="adminToolsDropdown">
@@ -103,11 +99,6 @@
           </button>
         </mat-menu>
 
-<<<<<<< HEAD
-      <button class="secondary" *ngIf="user && user.role === 'author'" mat-button [routerLink]="['facility']">
-        Facilities
-      </button>
-=======
       </div>
       <div class="side-links">
         <button class="primary" *ngIf="user && user.username === ''" [routerLink]="['login']" mat-button>
@@ -121,7 +112,6 @@
         <button class="secondary" *ngIf="user && user.username === ''" [routerLink]="['register']" mat-button>
           Register
         </button>
->>>>>>> dev
 
         <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button
           class="icon-button">
@@ -136,27 +126,10 @@
         </button>
         <xp-notification *ngIf="showNotifications"></xp-notification>
 
-<<<<<<< HEAD
-      <button class="secondary" *ngIf="user && user.role=='tourist'" [routerLink]="['shopping-cart']" mat-icon-button
-        class="icon-button">
-        <mat-icon>shopping_cart</mat-icon>
-      </button>
-      
-      <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button" (click)="toggleNotifications()">
-                <mat-icon>notifications</mat-icon>
-                <span *ngIf="getUnreadCount() > 0" class="unread-count">{{ getUnreadCount() }}</span>
-            </button>
-      <xp-notification *ngIf="showNotifications"></xp-notification>
-
-      <button mat-icon-button class="icon-button" [routerLink]="['profile']">
-        <mat-icon>person</mat-icon>
-      </button>
-=======
         <button mat-icon-button class="icon-button" *ngIf="user && user.username !== ''" [routerLink]="['profile']">
           <mat-icon>person</mat-icon>
         </button>
       </div>
->>>>>>> dev
     </div>
   </div>
 </mat-toolbar>
