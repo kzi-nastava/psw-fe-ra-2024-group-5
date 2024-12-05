@@ -168,6 +168,7 @@ export class ShoppingCartComponent implements OnInit {
 
   checkout(): void {
     
+    const discountCodeToUse = this.discountCode && this.discountCode.trim() !== '' ? this.discountCode : null; 
       this.shoppingCartService.checkout(this.touristId, this.discountCode).subscribe(
       response => {
         console.log('Purchase completed successfully', response);
