@@ -28,6 +28,8 @@ export class ToursPageComponent {
   touristId: number;
   searchName: string= '';
   searchLength: number = 0;
+  minPrice: number = 0;
+  maxPrice: number = 0;
 
   constructor(private tourService: TourAuthoringService, private router: Router, private authService: AuthService){
     this.touristId = this.authService.user$.value.id; 
@@ -129,6 +131,14 @@ searchTours(): void {
   if (this.searchLength > 0) {
     tourSearchParams.length = this.searchLength;
   }
+
+  if (this.minPrice > 0) {
+    tourSearchParams.minPrice = this.minPrice;
+}
+
+if (this.maxPrice > 0) {
+    tourSearchParams.maxPrice = this.maxPrice;
+}
 
   console.log("Search parameters:", tourSearchParams);
 

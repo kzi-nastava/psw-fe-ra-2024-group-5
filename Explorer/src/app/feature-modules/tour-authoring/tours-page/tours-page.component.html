@@ -1,39 +1,51 @@
 <div class="content">
   <div class="header">
-      <h1>Experience tours.</h1>
-      <div class="button-group">
-          <button mat-button class="secondary" (click)="changeSearch()" matTooltip="Click to open/clear search">Show Search</button>
-          <mat-checkbox [(ngModel)]="isFeatureEnabled" (change)="onFeatureToggle($event)">
-              {{ isFeatureEnabled ? 'Deactivate Filter' : 'Activate Filter' }}
-          </mat-checkbox>
-      </div>
+    <h1>Experience tours.</h1>
+    <div class="button-group">
+      <button mat-button class="secondary" (click)="changeSearch()" matTooltip="Click to open/clear search">Show Search</button>
+      <mat-checkbox [(ngModel)]="isFeatureEnabled" (change)="onFeatureToggle($event)">
+        {{ isFeatureEnabled ? 'Deactivate Filter' : 'Activate Filter' }}
+      </mat-checkbox>
+    </div>
   </div>
 
-  <div class="map-container" *ngIf="showSearch">
-      <div class="map-wrapper">
-          <app-map [markerAddMode]="'facility'" (addFacility)="changeLongLat($event)"></app-map>
+  <div class="map-search-container" *ngIf="showSearch">
+    <div class="map-wrapper">
+      <app-map [markerAddMode]="'facility'" (addFacility)="changeLongLat($event)"></app-map>
+    </div>
+    <div class="search-fields">
+      <div class="search-grid">
+        <label class="field">
+          Name:
+          <input [(ngModel)]="searchName" type="text" placeholder="Search by name"/>
+        </label>
+        <label class="field">
+          Radius (km):
+          <input [(ngModel)]="radiusInput" type="number" (change)="onRadiusChange()" />
+        </label>
+        <label class="field">
+          Length (km):
+          <input [(ngModel)]="searchLength" type="number" min="0" />
+        </label>
+        <label class="field">
+          Min Price:
+          <input [(ngModel)]="minPrice" type="number" min="0" />
+        </label>
+        <label class="field">
+          Max Price:
+          <input [(ngModel)]="maxPrice" type="number" min="0" />
+        </label>
+        <button mat-button class="secondary search-button" (click)="searchTours()">Search</button>
       </div>
-      <div class="search-fields">
-          <label>
-              Name:
-              <input [(ngModel)]="searchName" type="text" placeholder="Search by name"/>
-          </label>
-          <label>
-              Radius (km):
-              <input [(ngModel)]="radiusInput" type="number" (change)="onRadiusChange()" />
-          </label>
-          <label>
-              Maximum Length (km):
-              <input [(ngModel)]="searchLength" type="number" min="0" />
-          </label>
-          <button mat-button class="secondary search-button" (click)="searchTours()">Search</button>
-      </div>
+    </div>
   </div>
 
   <div class="card-container">
-      <xp-tour-card class="tour-card rounded raised" 
-          *ngFor="let tour of tours" [tourCard]="tour" (click)="detailedTour(tour)">
-      </xp-tour-card>
+    <xp-tour-card class="tour-card rounded raised" 
+      *ngFor="let tour of tours" 
+      [tourCard]="tour" 
+      (click)="detailedTour(tour)">
+    </xp-tour-card>
   </div>
 </div>
 
