@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Add a key point</h2>
-<form [formGroup]="keyPointForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="keyPointForm" (ngSubmit)="onSubmit()" class="example-form">
   <mat-dialog-content class="mat-typography">
     <mat-form-field appearance="fill" class="example-full-width">
       <mat-label>Name</mat-label>
@@ -22,17 +22,29 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Wrap file input in a mat-form-field for consistency -->
-    <div appearance="fill" class="example-full-width file-input-field">
-      <div class="file-input-wrapper">
-        <button mat-button type="button" class="upload-button" (click)="fileInput.click()">Upload Image</button>
-        <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" />
-        <div *ngIf="imagePreview" class="image-preview-container">
-            <img [src]="imagePreview" alt="Profile Image Preview" class="image-preview" />
-        </div>
+    <div class="file-input-wrapper">
+      <button type="button" class="upload-button" (click)="fileInput.click()">Upload Image</button>
+      <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" />
+      <div *ngIf="imagePreview" class="image-preview-container">
+        <img [src]="imagePreview" alt="Profile Image Preview" class="image-preview" />
       </div>
     </div>
 
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Secret</mat-label>
+      <textarea matInput formControlName="secret" required maxlength="256"></textarea>
+      <mat-error *ngIf="keyPointForm.controls['secret'].invalid && keyPointForm.controls['secret'].touched">
+        Secret is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="file-input-wrapper">
+      <button type="button" class="upload-button" (click)="secretFileInput.click()">Upload Secret Image</button>
+      <input #secretFileInput type="file" accept="image/*" (change)="onFileSelected($event, true)" class="file-input" />
+      <div *ngIf="secretImagePreview" class="image-preview-container">
+        <img [src]="secretImagePreview" alt="Secret Image Preview" class="image-preview" />
+      </div>
+    </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">

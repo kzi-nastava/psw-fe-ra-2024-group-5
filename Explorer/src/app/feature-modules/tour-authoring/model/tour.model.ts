@@ -1,10 +1,6 @@
+import { Money } from "src/app/shared/model/money";
 import { KeyPoint } from "./key-point.model";
 import { TourLevel, TourStatus, TourTransport, Currency } from "./tour.enums"; // Adjust path as needed
-
-export interface Money {
-    amount: number;
-    currency: Currency;
-}
 
 export interface TransportDuration {
     duration: number;
@@ -36,7 +32,7 @@ export interface Tour {
     keyPoints: KeyPoint[]; // Required
     reviews: TourReview[]; // Required
     length?: number; // Optional
-    transportDurationDtos: TransportDuration[]; // Required
+    transportDurations: TransportDuration[]; // Required
     publishedTime: Date; // Required
     archivedTime: Date; // Required
 }
@@ -56,5 +52,5 @@ export interface TourCreation {
     authorId?: number; // Optional
     keyPoints: KeyPoint[]; // Required
     length?: number; // Optional
-    transportDurationDtos: TransportDuration[]; // Required
+    transportDurations: TransportDuration[]; // Required
 }

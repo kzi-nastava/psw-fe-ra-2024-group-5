@@ -1,21 +1,33 @@
 .cart-title {
-    color: var(--text-title);
+    color: black;
+    font-size: 2em; 
+    text-align: center; 
     margin-bottom: 20px;
 }
 
 .cart-container {
     padding: 20px;
     background-color: var(--background-color-alt);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Visina korpe */
+    justify-content: space-between; /* Rasporedi sadržaj vertikalno */
+
+
 }
 
 .cart-total {
     color: var(--text-subtitle);
     font-weight: bold;
-    margin-bottom: 15px;
+    font-size: 1.5em;
+    margin-top: 30px; /* Razmak od kartica iznad */
+    margin-bottom: 20px; /* Razmak ispod h2 (prema dugmetu) */
+    text-align: right;
+    align-self: flex-end; /* Poravnanje na desnoj strani ako treba */
+    position: relative;
+    top: 630px; /* Pomeranje h2 iznad u odnosu na prethodni položaj */
+    margin-right: 140px;
 }
+
 
 .cart-items {
     display: flex;
@@ -26,13 +38,25 @@
 }
 
 .cart-item {
+    background-color:lemonchiffon;
     flex: 1 1 calc(25% - 20px); 
-    background-color: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: 4px;
+    border: 1px solid black;
+    border-radius: 10px;
     padding: 15px;
     box-sizing: border-box;
     max-width: calc(25% - 20px); 
+    cursor: pointer;
+}
+
+.cart-bundle {
+  background-color:gold;
+  flex: 1 1 calc(30% - 25px); 
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  max-width: calc(30% - 25px); 
+  cursor: pointer;
 }
 
 .cart-item-name, .cart-item-price {
@@ -54,6 +78,203 @@
 }
 
 button.primary {
-    margin-top: 20px; 
+    display: flex;
+    margin-top: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Razmak između ikonice i teksta */
+    
+    
+}
+
+button.primary .material-icons {
+    vertical-align: middle;
+}
+
+button.primary span:last-child {
+    position: relative;
+    top: -2px; /* Pomeranje teksta prema gore */
+}
+
+button.primary .material-icons.check-icon {
+    font-size: 1.3em; /* Veličina ikonice */
+    color: greenyellow; /* Boja ikonice (zeleno kao "tacno") */
   }
 
+  button.primary.complete-purchase {
+    margin-top: 50px; /* Razmak od drugih elemenata iznad */
+    align-self: flex-end; /* Pomeranje dugmeta na dno (ako koristite Flexbox) */
+    position: relative; /* Pomeranje sa pozicije */
+    top: 20px; /* Pomerite dugme prema dole (ako želite da bude niže) */
+    margin-left: 1500px;
+
+
+    font-size: 1.5em; /* Povećanje veličine teksta */
+    padding: 15px 30px; /* Povećanje unutrašnjeg razmaka (uvećanje dugmeta) */
+    border-radius: 8px; /* Zaobljeni ivice dugmeta */
+    min-width: 200px; /* Minimalna širina dugmeta */
+}
+
+.empty-cart-message {
+    font-size: 2.5em; /* Povećajte veličinu fonta */
+    text-align: center; /* Poravnajte tekst po sredini */
+    color: var(--text-muted); /* Boja teksta, možete promeniti */
+    font-weight: bold; /* Da tekst bude podebljan */
+    position: absolute; /* Pozicioniranje poruke apsolutno */
+    top: 50%; /* Postavite poruku u sredinu vertikalno */
+    left: 50%; /* Postavite poruku u sredinu horizontalno */
+    transform: translate(-50%, -50%); /* Precizno centriranje */
+    width: 100%; /* Širina poruke */
+  }
+
+  .cart-item-image-container {
+    flex-shrink: 0;
+    width: 410px;
+    height: 300px;
+    margin-right: 20px;
+    overflow: hidden;  /* Ovaj CSS osigurava da slike ostanu u okviru */
+    border-radius: 8px; /* Za zaobljene ivice slike */
+    margin-bottom: 20px;
+  }
+  
+  .cart-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ovaj CSS osigurava da slike popune okvir bez izobličenja */
+  }
+  
+  .cart-item-image-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+
+ .cart-total {
+    color: var(--text-subtitle);
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-top: 30px; /* Razmak od kartica iznad */
+     margin-bottom: 20px; /* Razmak ispod h2 (prema dugmetu) */
+    text-align: right;
+    align-self: flex-end; /* Poravnanje na desnoj strani ako treba */
+    position: relative;
+    top: 630px; /* Pomeranje h2 iznad u odnosu na prethodni položaj */
+    margin-right: 140px;
+} 
+  
+
+  
+.wallet{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.wallet > h2{
+    padding: 0px;
+    margin: 5px 0px;
+}
+
+.add-button{
+    color: var(--button-secondary-bg);
+    cursor: pointer;
+    padding: 0 !important;
+    margin: 3px 0px 0px 10px;
+    
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  text-align: center;
+  border-color: black;
+}
+
+h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.discount-input {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+button.secondary {
+  font-size: 0.875rem; /* Smanjen font */
+  height: 43px;
+  margin-top: 48px;
+  display: flex; /* Aktivira Flexbox */
+  justify-content: center; /* Horizontalo centriranje */
+  align-items: center; /* Vertikalno centriranje */
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+
+  .old-price {
+    text-decoration: line-through;
+    color: red; 
+    margin-right: 10px; 
+  }
+  
+  .new-price {
+    font-weight: bold;
+    color: green; 
+  }
+  
+/*snack bar custom css*/
+.custom-snackbar {
+    position: fixed; 
+    top: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 1000; 
+  }
+  .alert-success {
+    background-color: #a3be8c; 
+    color: #2e3440; 
+  }
+  
+  .alert-danger {
+    background-color: #bf616a; 
+    color: #2e3440; 
+  }

@@ -68,3 +68,74 @@
     font-weight: bold;
     font-size: 20px;
 }
+
+.wallet{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.wallet > h2{
+    padding: 0px;
+    margin: 5px 0px;
+}
+
+.add-button{
+    color: var(--button-secondary-bg);
+    cursor: pointer;
+    padding: 0 !important;
+    margin: 3px 0px 0px 10px;
+    font-size: 26px;
+    
+    
+}
+
+.rating-section {
+    margin-top: 20px;
+  }
+  
+  .app-rating-form-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+  }
+  
+  .rating-button {
+    min-width: 130px;
+  }
+  
+  .rating-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .action-button {
+    min-width: 120px;
+  }
+
+  .rating-preference-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+button.secondary, 
+button.primary {
+    min-width: 170px;  
+    padding: 12px 25px;  
+    font-size: 14px;  
+    display: flex;
+    align-items: center; 
+    justify-content: center;  
+}
+
+
+/* Specifično za dugme sa ikonom 'add-circle' */
+.add-button {
+    padding: 8px 10px;  /* Dodaj padding */
+    min-width: 150px;  /* Povećaj minimalnu širinu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  

@@ -1,0 +1,71 @@
+<div class="container">
+  <h1 class="title">Managing Tourism Encounters</h1>
+
+  <div class="content">
+    <div class="left-panel">
+      <h3>Create New Encounter</h3>
+      <div class="filter-container" style="text-align: center; margin: 10px 0;">
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <mat-select [(value)]="selectedEncounterType">
+            <mat-option [value]="'MISC'">MISC</mat-option>
+            <mat-option [value]="'SOCIAL'">SOCIAL</mat-option>
+            <mat-option [value]="'HIDDEN LOCATION'">HIDDEN LOCATION</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div [ngClass]="{'normal-text': !typeErrorMessage, 'error-text': typeErrorMessage}">Choose a type and click on the location you want to start creating an encounter.</div>
+    </div>
+
+    <div class="map-container">
+      <app-map *ngIf="!miscModalVisible" [encounters]="encountersByCreator"
+      (encounterClicked)="showEncounterDetails($event)"
+      (addFacility)="changeLongLat($event)" [markerAddMode]="'encounter'" ></app-map>
+    </div>
+  </div>
+
+  <form [formGroup]="encounterForm" class="modal-overlay" *ngIf="miscModalVisible" (ngSubmit)="createEncounter()">
+    <div class="modal">
+        <h2>Create Encounter</h2>
+        <input type="text" formControlName="name" placeholder="Name"/>
+        <div *ngIf="encounterForm.get('name')?.invalid; else validName" class="error-message">
+          Name is required.
+        </div>
+        <ng-template #validName>
+          <div class="empty-row"></div>  
+        </ng-template>
+
+        <textarea rows="4" formControlName="description" class="message-input" placeholder="Description"></textarea>
+        <div *ngIf="encounterForm.get('description')?.invalid; else validName" class="error-message">
+          Description is required.
+        </div>
+        <ng-template #validName>
+          <div class="empty-row"></div>  
+        </ng-template>
+
+        <input type="number" formControlName="xp" placeholder="Experience Points" />
+        <div *ngIf="encounterForm.get('xp')?.invalid; else validName" class="error-message">
+          Experience Points are required.
+        </div>
+        <ng-template #validName>
+          <div class="empty-row"></div>  
+        </ng-template>
+
+        <div class="input-location">
+          <input type="text" formControlName="location" placeholder="Location (City, Address)" />
+          <div *ngIf="encounterForm.get('location')?.invalid; else validName" class="error-message">
+            Location is required.
+          </div>
+          <ng-template #validName>
+            <div class="empty-row"></div>  
+          </ng-template>
+          <button class="search-button" (click)="searchLocation()">Search</button>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="create-btn" [disabled]="encounterForm.invalid">Create</button>
+            <button class="cancel-btn" (click)="cancelCreateEncounter()">Cancel</button>
+        </div>
+    </div>
+  </form>
+</div>

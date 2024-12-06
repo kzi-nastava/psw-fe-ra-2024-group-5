@@ -12,5 +12,6 @@ export interface TourCard{
     authorId: number,
     firstKeypoint: KeyPoint,
     publishedTime: Date,
-    averageRating: number
+    averageRating: number,
+    imageUrl? : string
 }

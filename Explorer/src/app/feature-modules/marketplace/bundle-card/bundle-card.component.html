@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="details">
+        <mat-grid-list *ngIf="bundleCard.tours.length == 2" cols="2" rowHeight="1:1">
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[0].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[0].name}}</h2>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[1].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[1].name}}</h2>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list *ngIf="bundleCard.tours.length == 3" cols="2" rowHeight="2:1">
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[0].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[0].name}}</h2>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[1].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[1].name}}</h2>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[2].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[2].name}}</h2>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list *ngIf="bundleCard.tours.length >= 4" cols="2" rowHeight="2:1">
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[0].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[0].name}}</h2>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[1].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[1].name}}</h2>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[2].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[2].name}}</h2>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="tile-content">
+                    <div class="image-container rounded">
+                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[3].firstKeypoint.image" alt="picture"/>
+                    </div>
+                    <h2>{{bundleCard.tours[3].name}}</h2>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div class="bottom-container rounded">
+        <div class="summary-container">
+            <div class="name-text">{{bundleCard.name}}</div>
+            <div class="text">{{bundleCard.status}}</div>
+            <div class="price-text">{{bundleCard.price.amount}} {{currencies[bundleCard.price.currency]}}</div>
+            <button mat-button class="secondary" (click)="addToCart()" *ngIf="user?.role === 'tourist'">Add to cart</button>
+        </div>
+    </div>
+</div>

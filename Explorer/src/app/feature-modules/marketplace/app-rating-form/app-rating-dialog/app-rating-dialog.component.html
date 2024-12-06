@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{ data.shouldEdit ? 'Edit' : 'Add' }} Your Rating</h2>
+
+<form [formGroup]="appRatingForm" (ngSubmit)="onSubmit()" #ratingForm="ngForm">
+  <mat-dialog-content>
+    <div class="dialog-content">
+      <div class="star-rating">
+        <mat-icon
+          *ngFor="let star of stars"
+          [class.starred]="isStarred(star)"
+          (click)="rate(star)"
+          (mouseenter)="hover(star)"
+          (mouseleave)="resetHover()">
+          {{ isStarred(star) ? 'star' : 'star_border' }}
+        </mat-icon>
+      </div>
+
+      <mat-form-field class="form-field">
+        <mat-label>Comment</mat-label>
+        <textarea matInput
+                  formControlName="comment"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"
+                  (keydown.enter)="$event.preventDefault(); onSubmit()">
+        </textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" class="secondary" (click)="onCancel()">Cancel</button>
+    <button mat-button type="button" 
+            *ngIf="data.shouldEdit" 
+            class="secondary"
+            color="warn" 
+            (click)="onDelete()">
+      Delete
+    </button>
+    <button mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="!appRatingForm.valid">
+      {{ data.shouldEdit ? 'Update' : 'Submit' }}
+    </button>
+  </mat-dialog-actions>
+</form>

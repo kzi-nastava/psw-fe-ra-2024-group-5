@@ -59,6 +59,9 @@
     --font-family-base: GT Eesti, sans-serif;
     --font-size-base: 16px;
     --line-height-base: 1.6;
+
+    /* Styles */
+    --raised-style: 1px 1px 4px rgba(0, 0, 0, 0.35) !important;
 }
 
 html,
@@ -200,4 +203,8 @@ footer {
 
 .rounded {
     border-radius: 20px !important;
+}
+
+small.error {
+    color: red;
 }

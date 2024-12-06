@@ -3,13 +3,16 @@
 <div mat-dialog-content class="dialog-content">
   <mat-card class="dialog-card">
     <mat-card-header>
-      <mat-card-title>Congratulations! You have now arrived at {{ data.keyPoint.name }}</mat-card-title>
+      <mat-card-title><span *ngIf="data.isExe">Congratulations! You have now arrived at </span>{{ data.keyPoint.name }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div class="image-container">
-            <img src="../../../../assets/images/tmp.jpeg" alt="" class="dialog-image"/>
-          </div>
       <p class="description">{{ data.keyPoint.description }}</p>
+      <div *ngIf="data.isExe">
+        <div class="image-container">
+          <img [src]="'data:image/*;base64,' + data.keyPoint.secretImage" alt="" class="dialog-image" />
+        </div>
+        <p class="secret">{{ data.keyPoint.secret }}</p>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

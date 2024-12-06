@@ -1,0 +1,59 @@
+<div class="title-container">
+    <h1 mat-dialog-title>Add funds</h1>
+</div>
+
+<div mat-dialog-content class="content-container">
+    <div class="info">
+        <div class="profile-info">
+            <!-- <img src="..\..\..\assets\images\user-placeholder.png" alt="Profile Picture" class="profile-img"> -->
+            <img *ngIf="userProfile?.profileImage; else defaultImage"
+                [src]="'data:image/png;base64,'+userProfile?.profileImage" alt="Profile Picture" class="profile-img" />
+            <ng-template #defaultImage>
+                <img src="..\..\..\assets\images\user-placeholder.png" alt="Default Profile Picture" class="profile-img" />
+            </ng-template>
+
+            <div class="profile-details">
+                <div class="username">{{account.username}}</div>
+                <div class="email">{{account.email}}</div>
+            </div>
+        </div>
+        <div class="balance">
+            <div class="email">Balance: </div>
+            <h2 [ngStyle]="{'margin': '0px'}">{{account.walletBalance?.amount}} 
+                {{getCurrencyName(account.walletBalance?.currency)}}</h2>
+        </div>
+    </div>
+    
+    <div class="chips">
+        <mat-chip *ngFor="let chip of chips" (click)="onChipClick(chip)" class="chip">
+            {{ chip.amount }} {{ getCurrencyName(chip.currency)}}
+        </mat-chip>
+    </div>
+
+    <div class="inputs">
+        <mat-form-field appearance="outline" class="input" [ngClass]="{ 'mat-form-field-invalid': amountError }">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" placeholder="Enter a number" [(ngModel)]="amount" 
+            (ngModelChange)="validateAmount()"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input">
+            <mat-label>Currency</mat-label>
+            <mat-select [(value)]="selectedCurrency">
+              <mat-option value="0">AC</mat-option>
+              <mat-option value="1">EUR</mat-option>
+              <mat-option value="2">DOL</mat-option>
+              <mat-option value="3">RSD</mat-option>
+            </mat-select>
+          </mat-form-field>     
+    </div>
+    
+    
+</div>
+<div class="error" *ngIf="amountError">
+    Please select a valid amount!      
+</div>
+<div mat-dialog-actions class="action-container">
+    <button mat-button (click)="closeDialog()" matTooltip="Are you sure you want to close?">Close</button>
+    <button mat-raised-button class="primary" (click)="addFunds()">Add</button>
+</div>

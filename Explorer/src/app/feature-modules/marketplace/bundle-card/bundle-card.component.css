@@ -1,0 +1,117 @@
+.container {
+    width: 600px; /* Prošireno i smanjen maksimalni width da se stane u ekran */
+    max-width: 100%; /* Da se širi maksimalno do širine ekrana */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Razmak između sekcija */
+    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+    padding: 15px; /* Dodati padding za prostor oko sadržaja */
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Razmak između stavki */
+    font-size: 1.1em; /* Umeren font za bolju preglednost */
+    flex-grow: 1; /* Make it take up all remaining space */
+}
+
+.tile-content {
+    display: flex;
+    flex-direction: column; /* Stack the items vertically */
+    justify-content: center; /* Center the content within each tile */
+    align-items: center; /* Center horizontally */
+    height: 100%; /* Ensure the tile content takes up full space */
+    text-align: center; /* Center the text below the image */
+}
+
+.image-container {
+    width: 100%; /* Set the image container to fill the width */
+    max-height: 300px; /* Fixed max height for images */
+    overflow: hidden;
+    border-radius: 10px; /* Rounded corners for images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3; /* Background color if image is not set */
+}
+
+.image-container img {
+    width: auto; /* Maintain aspect ratio */
+    height: 100%; /* Make the height fill the container */
+    object-fit: contain; /* Ensure the whole image is visible */
+}
+
+.details h2 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 10px 0 5px 0; /* Add some space between the image and text */
+    color: #333; /* Dark color for better contrast */
+    flex-shrink: 0; /* Prevent text from shrinking */
+}
+
+.bottom-container {
+    width: 100%;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: auto; /* Push it to the bottom */
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.name-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #000000;
+}
+
+.price-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+button.secondary {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.secondary:hover {
+    background-color: pink;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        width: 100%; /* Širina od 100% za manje ekrane */
+        padding: 10px; /* Smanjeni padding na manjim ekranima */
+    }
+
+    .details h2 {
+        font-size: 1.2em; /* Smanjena veličina naziva */
+    }
+
+    .text, .price-text {
+        font-size: 1em; /* Manji font za male ekrane */
+    }
+
+    .star {
+        font-size: 20px; /* Manje zvezdice na manjim ekranima */
+    }
+}

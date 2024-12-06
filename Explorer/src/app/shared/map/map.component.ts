@@ -6,6 +6,7 @@ import * as L from 'leaflet';
 import { UserLocationService } from '../user-location/user-location.service';
 import { UserPosition } from '../model/userPosition.model';
 import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point.model';
+import { Encounter } from 'src/app/feature-modules/encounter/model/encounter.model';
 
 @Component({
   selector: 'app-map',
@@ -26,11 +27,13 @@ export class MapComponent implements AfterViewInit {
   @Input() keyPoints: KeyPoint[];
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
+  @Input() encounters: Encounter[];
 
   @Output() addFacility = new EventEmitter<number[]>();
   @Output() addKeyPoint = new EventEmitter<number[]>();
   @Output() setaRouteLength = new EventEmitter<number>();
   @Output() userLocationChange = new EventEmitter<[number, number]>();
+  @Output() encounterClicked = new EventEmitter<any>();
 
   constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
 
@@ -65,7 +68,11 @@ export class MapComponent implements AfterViewInit {
 
     L.Marker.prototype.options.icon = DefaultIcon;
 
-    this.initMap();
+    setTimeout(() => {
+      if (!this.map) {
+        this.initMap();
+      }
+    }, 0);
   }
 
   search(searchInput: string): void {
@@ -96,7 +103,10 @@ export class MapComponent implements AfterViewInit {
       case 'facility':
         this.addFacility.emit([lat, lng])
         break;
-        case 'keypoint':
+      case 'encounter':
+        this.addFacility.emit([lat, lng])
+        break;
+      case 'keypoint':
         this.addKeyPoint.emit([lat, lng])
         break;
       default:
@@ -130,6 +140,9 @@ export class MapComponent implements AfterViewInit {
       case 'keypoint':
         this.addKeyPointMarker(latlng, popupText ?? 'keypoint');
         break;
+      case 'encounter':
+        //this.addOneMarker(latlng, popupText ?? 'keypoint');
+        break;
       default:
         break;
     }
@@ -142,6 +155,21 @@ export class MapComponent implements AfterViewInit {
 
     const marker = new L.Marker(latlng, { title: 'facility' }).addTo(this.map).bindPopup(popupText);
     this.markers.push(marker);
+  }
+
+  addOneMarker(latlng: [number, number], popupText: string): void {
+    this.removeAllMarkers();
+
+    const marker = new L.Marker(latlng, { title: 'encounter' }).addTo(this.map).bindPopup(popupText);
+    this.markers.push(marker);
+  }
+
+  removeAllMarkers(): void {
+    this.markers.forEach(marker => {
+      this.map.removeLayer(marker);  
+    });
+  
+    this.markers = [];
   }
 
   addKeyPointMarker(latlng: [number, number], popupText: string): void {
@@ -202,6 +230,8 @@ export class MapComponent implements AfterViewInit {
       this.loadFacilities();
     if (this.keyPoints && this.keyPoints.length !== 0)
       this.loadKeyPoints();
+    if(this.encounters && this.encounters.length !== 0)
+      this.loadEncounters();
 
     this.loadUserLocation();
   }
@@ -228,6 +258,47 @@ export class MapComponent implements AfterViewInit {
       });
 
       const marker = new L.Marker([keypoint.latitude, keypoint.longitude], { icon: keypointIcon }).setZIndexOffset(1000).bindPopup('Ja sam keypoint').addTo(this.map);
+      this.markers.push(marker);
+    });
+  }
+
+  loadEncounters(): void {
+    this.encounters.forEach(encounter => {
+      const encounterIcon = L.icon({
+        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', 
+        iconSize: [40, 40],
+        iconAnchor: [16, 32],
+      });
+
+      const statusMap = {
+        0: 'Draft',
+        1: 'Active',
+        2: 'Archived',
+      };
+      const typeMap = {
+        0: 'Misc',
+        1: 'Social',
+        2: 'Location',
+      };
+
+      console.log(encounter.status);
+      const popupContent = `
+      <div style="padding: 5px;">
+        <h3 style="font-weight: bold">${encounter.name}</h3>
+        <p>${encounter.description}</p>
+        <p>Experience Points: <span class="popup-encounter__xp-value" style="color: var(--text-title);">${encounter.xp}</span></p>
+        <p>Status: <span class="popup-encounter__status-value" style="color: var(--text-title);">${statusMap[encounter.status]}</span></p>
+        <p>Type: <span class="popup-encounter__type-value" style="color: var(--text-title);">${typeMap[encounter.type]}</span></p>
+      </div>
+      `;
+  
+    const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon, alt: `${encounter.id}` })
+      .addTo(this.map); 
+
+      marker.on('click', () => {
+        this.encounterClicked.emit(encounter);
+      })
+
       this.markers.push(marker);
     });
   }
@@ -283,6 +354,10 @@ export class MapComponent implements AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['facilities'] && changes['facilities'].currentValue) {
+      this.loadMarkers();
+    }
+
+    if (changes['encounters'] && changes['encounters'].currentValue) {
       this.loadMarkers();
     }
   }

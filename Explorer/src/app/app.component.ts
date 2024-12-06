@@ -9,6 +9,7 @@ import 'leaflet-routing-machine';
 })
 export class AppComponent implements OnInit {
   title = 'Explorer';
+  itemsCount: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -21,5 +22,9 @@ export class AppComponent implements OnInit {
   
   private checkIfUserExists(): void {
     this.authService.checkIfUserExists();
+  }
+  handleItemsCountUpdate(count: number): void {
+    this.itemsCount = count;
+    console.log('Ažuriran broj stavki u korpi:', this.itemsCount);
   }
 }

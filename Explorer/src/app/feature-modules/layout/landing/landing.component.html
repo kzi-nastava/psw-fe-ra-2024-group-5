@@ -5,31 +5,37 @@
     background-position: center;">
         <div class="banner-content">
             <p>Create Tours,<br>Experience Tours.</p>
-            <button mat-button class="secondary" [routerLink]="['register']">Start Your Journey</button>
+            <button *ngIf="user && user.username === ''" mat-button class="secondary" [routerLink]="['/register']">Start
+                Your Journey</button>
+            <button *ngIf="user && user.username !== ''" mat-button class="secondary"
+                [routerLink]="['tours-page']">Explore Tours</button>
         </div>
     </div>
 
     <div class="card-links">
         <!-- Card links can use [routerLink] -->
-        <xp-card-link icon="language" [routerLink]="['tours-page']">Tours</xp-card-link>
-        <xp-card-link icon="ballot">Blogs</xp-card-link>
+        <xp-card-link icon="language"
+            [routerLink]="user.role === 'author' ? ['/tours-author-page'] : ['/tours-page']">Tours</xp-card-link>
+        <xp-card-link icon="ballot" [routerLink]="['/blog']" >Blogs</xp-card-link>
         <xp-card-link [routerLink]="['/clubs']" icon="group">Clubs</xp-card-link>
     </div>
 
     <div class="rec-tours content-card-section">
         <div>
             <h1>Recommended Tours</h1>
-            <button [routerLink]="['tours-page']" class="secondary" mat-flat-button>View more</button>
+            <button [routerLink]="user.role === 'author' ? ['tours-author-page'] : ['tours-page']" class="secondary"
+                mat-flat-button>View more</button>
         </div>
         <div class="content-cards">
-            <xp-tour-card class="tour-card rounded raised" *ngFor="let tour of recommendedTours" [tourCard]="tour" (click)="detailedTour(tour)"></xp-tour-card>
+            <xp-tour-card class="tour-card rounded raised" *ngFor="let tour of recommendedTours" [tourCard]="tour"
+                (click)="detailedTour(tour)"></xp-tour-card>
         </div>
     </div>
 
     <div class="rec-blogs content-card-section">
         <div>
             <h1>Recommended Blogs</h1>
-            <button [routerLink]="['blogs']" class="secondary" mat-flat-button>View more</button>
+            <button [routerLink]="['/blog']" class="secondary" mat-flat-button>View more</button>
         </div>
         <div class="content-cards">
             <div class="blog-card rounded raised">BLOG CARD</div>
@@ -46,7 +52,10 @@
     background-position: center;">
             <div class="banner-content">
                 <p>Become an author.<br>Tell your story.</p>
-                <button mat-button class="secondary" [routerLink]="['register']">Register</button>
+                <button *ngIf="user && user.username === ''" mat-button class="secondary"
+                    [routerLink]="['/register']">Register</button>
+                <button *ngIf="user && user.username !== ''" mat-button class="secondary" [routerLink]="['blog']">Start
+                    Writing</button>
             </div>
         </div>
 

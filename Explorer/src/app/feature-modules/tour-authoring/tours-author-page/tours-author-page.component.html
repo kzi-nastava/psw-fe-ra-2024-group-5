@@ -1,0 +1,65 @@
+<div class="content">
+    <div class="header">
+        <h1>My Tours</h1>
+        <button mat-button class="secondary" (click)="changeSearch()" matTooltip="Click to open/clear search">Show
+            Search</button>
+    </div>
+
+    <div class="map-container" *ngIf="showSearch">
+        <app-map [markerAddMode]="'facility'" (addFacility)="changeLongLat($event)"></app-map>
+        <div class="search-fields">
+
+            <label>Radius (km): <input [(ngModel)]="radiusInput" type="number" (change)="onRadiusChange()" /></label>
+
+            <button mat-button class="search-button" (click)="searchTours()">Search</button>
+        </div>
+    </div>
+
+    <button
+         mat-button
+         class="primary"
+        [disabled]="selectedTours.length < 2"
+        (click)="openBundleForm()"
+        *ngIf="!showBundleForm">
+        Add to Bundle
+    </button>
+
+
+    <!-- Bundle Creation Form -->
+    <div *ngIf="showBundleForm" class="bundle-form">
+        <h2>Create Bundle</h2>
+        <form>
+            <label>
+                Bundle Name:
+                <input [(ngModel)]="bundleName" name="bundleName" type="text" required />
+            </label>
+            <label>
+                Bundle Price:
+                <input [(ngModel)]="bundlePrice" name="bundlePrice" type="number" required />
+            </label>
+            <label>
+                Currency:
+                <select [(ngModel)]="bundleCurrency" name="bundleCurrency">
+                    <option value="0">AC</option>
+                </select>
+            </label>
+            <button mat-button class="primary" (click)="createBundle()">Create</button>
+            <button mat-button class="secondary" (click)="closeBundleForm()">Cancel</button>
+        </form>
+    </div>
+
+    <div class="card-container">
+        <div *ngFor="let tour of tours" class="tour-card-container">
+            <mat-checkbox class="select-checkbox" [checked]="isSelected(tour)" (change)="toggleSelection(tour)">
+                Select
+            </mat-checkbox>
+            <xp-tour-card class="tour-card rounded raised" [tourCard]="tour"
+                (click)="detailedTour(tour)"></xp-tour-card>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button mat-button class="secondary button-size" (click)="previousPage()">Previous</button>
+        <h1>Page {{ currentPage }}</h1>
+        <button mat-button class="secondary button-size" (click)="nextPage()">Next</button>
+    </div>

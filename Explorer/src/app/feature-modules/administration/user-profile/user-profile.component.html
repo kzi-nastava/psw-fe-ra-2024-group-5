@@ -1,26 +1,32 @@
 <div class="profile-page container">
   <div class="profile-header">
     <div class="profile-image">
-      <img *ngIf="userProfile.profilePictureUrl; else defaultImage" [src]="userProfile.profilePictureUrl"
-        alt="Profile Picture" />
+      <img *ngIf="userProfile?.profileImage; else defaultImage"
+        [src]="'data:image/png;base64,'+userProfile?.profileImage" alt="Profile Picture" />
       <ng-template #defaultImage>
         <img src="assets/images/profile.jpg" alt="Default Profile Picture" />
       </ng-template>
     </div>
     <div class="profile-info">
       <div class="info">
-        <h1>{{ userProfile.name }} {{ userProfile.surname }} </h1>
+        <h1>{{ userProfile?.name }} {{ userProfile?.surname }} </h1>
+        <div class="wallet" *ngIf="wallet">
+          <h2>Balance: {{wallet.balance.amount}} {{currencies[wallet.balance.currency]}}</h2>
+          <button class="add-button">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
         <b><span>Followers: {{ followersCount }}</span></b>
       </div>
       <div class="actions">
         <button class="secondary" mat-button *ngIf="!isOwnProfile" (click)="followOrUnfollow()">
           {{ isFollowing ? "Unfollow" : "Follow" }}
         </button>
-        <button class="secondary" mat-button *ngIf="isOwnProfile" [routerLink]="['profile-form', userProfile.id]">
+        <button class="secondary" mat-button *ngIf="isOwnProfile" [routerLink]="['profile-form', userProfile?.id]">
           <mat-icon>edit</mat-icon>
           Edit Profile
         </button>
-        <button [routerLink]="['/followers', userProfile.id]" class="secondary" mat-button>
+        <button [routerLink]="['/followers', userProfile?.id]" class="secondary" mat-button>
           <mat-icon>people</mat-icon>
           Followers
         </button>
@@ -28,6 +34,41 @@
           <mat-icon>message</mat-icon>
           Send Message
         </button>
+        <!-- Rating Buttons - only show for non-admin users -->
+        <ng-container *ngIf="user.role !== 'administrator'">
+          <button 
+            *ngIf="!userRating"
+            class="secondary"
+            mat-button
+            (click)="openRatingDialog()">
+            <mat-icon>star</mat-icon>
+            Rate App
+          </button>
+          <ng-container *ngIf="userRating">
+            <button 
+              class="secondary"
+              mat-button
+              (click)="editRating()">
+              <mat-icon>edit</mat-icon>
+              Edit Rating
+            </button>
+            <button 
+              class="secondary"
+              mat-button
+              (click)="deleteRating()">
+              <mat-icon>delete</mat-icon>
+              Delete Rating
+            </button>
+          </ng-container>
+          <button 
+              *ngIf="user.role === 'tourist'"
+              class="secondary"
+              mat-button
+              [routerLink]="['/preferences']">
+              <mat-icon>favorite</mat-icon>
+              My Preferences
+            </button>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -37,7 +78,7 @@
         <h2>Biography</h2>
       </mat-card-header>
       <mat-card-content>
-        {{ userProfile.biography }}
+        {{ userProfile?.biography }}
       </mat-card-content>
     </mat-card>
     <mat-card>
@@ -45,7 +86,7 @@
         <h2>Motto</h2>
       </mat-card-header>
       <mat-card-content>
-        {{ userProfile.motto }}
+        {{ userProfile?.motto }}
       </mat-card-content>
     </mat-card>
   </div>
