@@ -1,102 +1,116 @@
 .content {
-    padding-bottom: 60px;
-  }
-
-  .header{
-    margin-top: 20px;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 150px;
-  }
-  
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    padding: 10px;
-    background-color: #f8f8f8;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    border-top: 1px solid #ddd;
-  }
-
-  .button-size{
-    width: 100px;
-  }
-
-  .card-container {
-    display: grid;
-    grid-template-columns: repeat(4, 300px);
-    gap: 20px;
-    justify-content: space-evenly;
-    margin-bottom: 30px;
-    margin-top: 30px;
-  }
-
-  .tour-card{
-    background-color: var(--background-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
-    height: 350px; 
-    margin-top: 50px;
-    margin-bottom: 50px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-  }
-
-  .tour-card:hover {
-    background-color: antiquewhite;
-  }
-
-  .map-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    height: 400px;
-    background-color: #eceff4;
-    gap: 20px;
-    max-width: 1200px; 
-    margin: 0 auto; 
-  }
-  
-  .map-container app-map {
-    width: 100%; 
-    max-width: 1200px; 
-    height: 100%; 
-  }
-  
-  .search-fields {
-    display: flex;
-    flex-direction: row; 
-    gap: 10px; 
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: auto; 
-    justify-content: flex-start; 
-  }
-  
-  .search-fields input {
-    width: 120px; 
-  }
-  
-  .search-button {
-    align-self: center; 
-    margin-top: 0; 
-    padding: 5px 10px; 
-  }
-
-  .button-group {
-    display: flex;
-    gap: 10px; 
+  padding-bottom: 60px;
+  padding-left: 20px;
 }
-  
+
+.header {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 150px;
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.map-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0;
+  height: 400px;
+}
+
+.map-wrapper {
+  width: 800px;
+  height: 100%;
+  background-color: #eceff4;
+}
+
+.map-wrapper app-map {
+  width: 100%;
+  height: 100%;
+}
+
+.search-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.search-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.search-fields input {
+  width: 150px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-button {
+  margin-top: 10px;
+  width: 100px;
+  height: 36px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  gap: 20px;
+  justify-content: space-evenly;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.tour-card {
+  background-color: var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 350px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.tour-card:hover {
+  background-color: antiquewhite;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #ddd;
+}
+
+.button-size {
+  width: 100px;
+}

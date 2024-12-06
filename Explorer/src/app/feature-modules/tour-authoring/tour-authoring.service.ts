@@ -9,6 +9,7 @@ import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Currency } from './model/tour.enums';
 import { TourLeaderboard } from './model/tour-leaderboard.model';
+import { TourSearchParams } from './model/tour-search.model';
 
 
 @Injectable({
@@ -46,17 +47,10 @@ export class TourAuthoringService {
     return this.http.post<TourCard[]>(url, searchParams);
   }
 
-  getPublishedTourCardsFiltered(searchParams: {
-    page: number,
-    pageSize: number,
-    startLat: number,
-    endLat: number,
-    startLong: number,
-    endLong: number
-  }): Observable<TourCard[]> {
+  getPublishedTourCardsFiltered(searchParams: TourSearchParams): Observable<TourCard[]> {
     const url = `${environment.apiHost}tour/published/filtered`;
     return this.http.post<TourCard[]>(url, searchParams);
-  }
+}
 
 
 
