@@ -19,19 +19,56 @@
       (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
   </div>
   <div *ngIf="activatedEncounter" class="encounter-info">
-    <div>
-      <h2>Active encounter details</h2>
-      <button mat-button class="secondary abandon-button" (click)="abandonEncounterExecution()">
-        Abandon
-      </button>
+    <div class="encounter-details">
+      <div>
+        <h2>Active encounter details</h2>
+        <button mat-button class="secondary abandon-button" (click)="abandonEncounterExecution()">
+          Abandon
+        </button>
+      </div>
+      <p><strong>Type: </strong> {{ encounterTypeToString(activatedEncounter.type) }} </p>
+      <p><strong>Name: </strong> {{ activatedEncounter.name }}</p>
+      <p><strong>Description: </strong> {{ activatedEncounter.description }}</p>
+      <p><strong>XP: </strong> {{ activatedEncounter.xp }}</p>
+      <div *ngIf="isSocialEncounter(activatedEncounter)">
+        <p><strong>Radius: </strong> {{ activatedEncounter.radius }}
+        <p><strong>People: </strong> {{ activatedEncounter.currentPeopleCount }} / {{ activatedEncounter.peopleCount }}</p>
+      </div>
     </div>
-    <p><strong>Type: </strong> {{ encounterTypeToString(activatedEncounter.type) }} </p>
-    <p><strong>Name: </strong> {{ activatedEncounter.name }}</p>
-    <p><strong>Description: </strong> {{ activatedEncounter.description }}</p>
-    <p><strong>XP: </strong> {{ activatedEncounter.xp }}</p>
-    <div *ngIf="isSocialEncounter(activatedEncounter)">
-      <p><strong>Radius: </strong> {{ activatedEncounter.radius }}
-      <p><strong>People: </strong> {{ activatedEncounter.currentPeopleCount }} / {{ activatedEncounter.peopleCount }}</p>
+    
+    <div *ngIf="activatedEncounter.type == 2" class="hidden">
+      <img src="../../../../assets/images/tmp.jpeg">
+      <div class="timer-container">
+        <div class="circular-progress" [class.complete]="isComplete">
+          <svg viewBox="0 0 36 36" class="circular-svg">
+            <path 
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#eee"
+              stroke-width="3"
+            />
+            <path 
+              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#bf616a"
+              stroke-width="3"
+              [attr.stroke-dasharray]="progressValue + ', 100'"
+              class="progress-bar"
+            />
+          </svg>
+          <div class="timer-label">
+            <span class="seconds">{{ remainingTime }}</span>
+          </div>
+        </div>
+        <div *ngIf="isTimerActive" class="completion-message">
+          Stay close!
+        </div>
+        <div *ngIf="isComplete"><p>Encounter completed.</p></div>
+    </div>
     </div>
   </div>
   <div *ngIf="!activatedEncounter" class="encounter-info">

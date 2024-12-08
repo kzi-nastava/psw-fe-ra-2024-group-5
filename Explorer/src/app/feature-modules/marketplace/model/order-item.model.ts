@@ -12,3 +12,11 @@ export interface OrderItem {
     discountedPrice?: number;  // Dodajemo novi property za popust
     showOldPrice : boolean;
 }
+
+export interface BundleOrderItem {
+    id?: number;
+    bundleId: number;
+    bundleName: string;
+    price: Money;
+    imageUrl?: string;
+}

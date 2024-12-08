@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/env/environment';
 import { Injectable } from '@angular/core';
-import { OrderItem } from '../model/order-item.model';
+import { BundleOrderItem, OrderItem } from '../model/order-item.model';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ShoppingCart } from '../model/shopping-cart.model';
 import { Coupon } from '../model/coupon.model';
+import { BundleDetailed } from '../model/bundle.models';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,19 @@ export class ShoppingCartService {
       return this.http.post<ShoppingCart>(environment.apiHost + `shopping-cart/addItem/${touristId}`, orderItem);
     }
 
+    addBundleToCart(bundleId : number, touristId: number) : Observable<ShoppingCart>{
+      return this.http.post<ShoppingCart>(environment.apiHost + `shopping-cart/addBundle/${touristId}`, bundleId)
+    }
+
     removeItemFromCart(orderItem: OrderItem, touristId: number): Observable<ShoppingCart> {
       return this.http.request<ShoppingCart>('DELETE', environment.apiHost + `shopping-cart/removeItem/${touristId}`, {
         body: orderItem
+      });
+    }
+
+    removeBundleFromCart(bundleOrderItem: BundleOrderItem, touristId : number): Observable<ShoppingCart>{
+      return this.http.delete<ShoppingCart>(environment.apiHost + `shopping-cart/removeBundle/${touristId}`, {
+        body: bundleOrderItem
       });
     }
 
@@ -64,6 +75,7 @@ export class ShoppingCartService {
       return this.http.get<number>(`${environment.apiHost}shopping-cart/items-count/${touristId}`);
     }
     updateItemsCount(userId: number): void {
+      console.log(userId);
       this.getItemsCount(userId).subscribe(count => {
         this.itemsCountSubject.next(count);
       });
@@ -71,6 +83,8 @@ export class ShoppingCartService {
     updateItemCount(count: number): void {
       this.itemsCountSubject.next(count);
     }
-  
-   
+
+    getBundleById(id : number): Observable<BundleDetailed>{
+      return this.http.get<BundleDetailed>(environment.apiHost + `author/bundle/get/${id}`);
+    }
 }

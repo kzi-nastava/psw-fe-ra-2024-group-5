@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCart } from '../model/shopping-cart.model';
-import { OrderItem } from '../model/order-item.model';
+import { BundleOrderItem, OrderItem } from '../model/order-item.model';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
 import { TourCard } from '../../tour-authoring/model/tour-card.model';
 import { Router } from '@angular/router';
-import { Tour } from '../../tour-authoring/model/tour.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,6 +14,7 @@ import { MarketplaceService } from '../marketplace.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Coupon } from '../model/coupon.model';
+import { BundleDetailed } from '../model/bundle.models';
 
 
 @Component({
@@ -93,8 +93,8 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   loadTourImages(): void {
-    if (this.shoppingCart?.items) {
-      this.shoppingCart.items.forEach(item => {
+    if (this.shoppingCart?.tourItems) {
+      this.shoppingCart.tourItems.forEach(item => {
         this.shoppingCartService.getTourImage(item.tourId).subscribe(
           (response: Blob) => {
             const reader = new FileReader();
@@ -110,13 +110,36 @@ export class ShoppingCartComponent implements OnInit {
         );
       });
     }
+    if(this.shoppingCart?.bundleItems){
+      this.shoppingCart.bundleItems.forEach(item => {
+        this.shoppingCartService.getBundleById(item.bundleId).subscribe({
+          next: (result: BundleDetailed) => {
+            console.log(result);
+            this.shoppingCartService.getTourImage(result.bundleItems[0]).subscribe(
+              (response: Blob) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  item.imageUrl = reader.result as string; 
+                };
+                reader.readAsDataURL(response); 
+              },
+              error => {
+                console.error('Error fetching image for tour:', result.bundleItems[0], error);
+                item.imageUrl = '';
+              }
+            );
+          },
+          error: () => {}
+        });
+      });
+    }
   }
 
   getCartItems(): void {
     this.shoppingCartService.getByTouristId(this.touristId).subscribe(
       (data: ShoppingCart) => {
         this.shoppingCart = data;
-
+        console.log(this.shoppingCart)
         this.loadTourImages();
       },
       error => console.error('Error fetching cart items', error)
@@ -131,9 +154,9 @@ export class ShoppingCartComponent implements OnInit {
       this.navbarComponent.decreaseItemsCount();
     }
     if (this.shoppingCart) {
-      const index = this.shoppingCart.items.indexOf(item);
+      const index = this.shoppingCart.tourItems.indexOf(item);
       if (index > -1) {
-        this.shoppingCart.items.splice(index, 1);
+        this.shoppingCart.tourItems.splice(index, 1);
       }
     }
     this.updateTotalPrice();
@@ -142,15 +165,49 @@ export class ShoppingCartComponent implements OnInit {
       response => {
 
         console.log('Item removed successfully', response);
-        const newCount = this.shoppingCart?.items.length || 0;
+        const newCount = this.shoppingCart?.tourItems.length || 0;
         //this.shoppingCartService.updateItemsCount(newCount);
-        this.shoppingCartService.updateItemCount(this.shoppingCart?.items.length || 0);
+        this.shoppingCartService.updateItemCount(this.shoppingCart?.tourItems.length || 0);
 
       },
       error => {
         console.error('Error removing item', error);
         if (this.shoppingCart) {
-          this.shoppingCart.items.push(item);
+          this.shoppingCart.tourItems.push(item);
+        }
+      }
+    );
+  }
+
+  removeBundle(item: BundleOrderItem): void {
+    const confirmation = window.confirm('Are you sure you want to remove this item?');
+    if (!confirmation) {
+      return;
+    }
+    if (this.navbarComponent) {
+      this.navbarComponent.decreaseItemsCount();
+    }
+    if (this.shoppingCart) {
+      const index = this.shoppingCart.bundleItems.indexOf(item);
+      if (index > -1) {
+        this.shoppingCart.tourItems.splice(index, 1);
+      }
+    }
+    this.updateTotalPrice();
+
+    this.shoppingCartService.removeBundleFromCart(item, this.touristId).subscribe(
+      response => {
+
+        console.log('Item removed successfully', response);
+        const newCount = this.shoppingCart?.bundleItems.length || 0;
+        //this.shoppingCartService.updateItemsCount(newCount);
+        this.shoppingCartService.updateItemCount(this.shoppingCart?.bundleItems.length || 0);
+        this.getCartItems();
+      },
+      error => {
+        console.error('Error removing item', error);
+        if (this.shoppingCart) {
+          this.shoppingCart.bundleItems.push(item);
         }
       }
     );
@@ -160,7 +217,10 @@ export class ShoppingCartComponent implements OnInit {
   updateTotalPrice(): void {
     if (this.shoppingCart) {
       let totalAmount = 0;
-      this.shoppingCart.items.forEach(item => {
+      this.shoppingCart.tourItems.forEach(item => {
+        totalAmount += item.price.amount;
+      });
+      this.shoppingCart.bundleItems.forEach(item => {
         totalAmount += item.price.amount;
       });
       this.shoppingCart.totalPrice.amount = totalAmount;
@@ -235,7 +295,7 @@ export class ShoppingCartComponent implements OnInit {
             if (this.shoppingCart) {
               let totalAmount = 0;
               
-              this.shoppingCart.items.forEach(item => {
+              this.shoppingCart.tourItems.forEach(item => {
                 //totalAmount += item.price.amount;
   
                 //var discountedAmount;

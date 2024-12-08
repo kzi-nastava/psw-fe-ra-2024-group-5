@@ -9,8 +9,8 @@
     <h2>Balance: {{wallet.balance.amount}} {{priceCurrencies[wallet.balance.currency]}}</h2>
   </div>
   
-  <ul *ngIf="shoppingCart?.items?.length; else noItems" class="cart-items">
-    <li *ngFor="let item of shoppingCart.items" (click)="detailedAboutTour(item.tourId)" class="cart-item">
+  <ul *ngIf="shoppingCart?.tourItems?.length || shoppingCart?.bundleItems?.length; else noItems" class="cart-items">
+    <li *ngFor="let item of shoppingCart.tourItems" (click)="detailedAboutTour(item.tourId)" class="cart-item">
    
       <div class="cart-item-image-container">
         <img 
@@ -45,11 +45,40 @@
       
       <button class="primary" (click)="removeItem(item)">  <span class="material-icons">delete</span> Remove</button>
     </li>
+    <li *ngFor="let item of shoppingCart.bundleItems" class="cart-bundle">
+   
+      <div class="cart-item-image-container">
+        <img 
+          *ngIf="item.imageUrl && item.imageUrl.trim() !== ''; else noImage" 
+          [src]="item.imageUrl" 
+          alt="{{ item.bundleName }}" 
+          class="cart-item-image" 
+        />
+        <ng-template #noImage>
+          <img 
+          src="assets/images/no_image.jpg" 
+          alt="No Image Available" 
+            class="cart-item-image-placeholder" 
+          />
+        </ng-template>
+      </div>  
+
+      <p class="cart-item-name">Name:
+           <strong >{{ item.bundleName }}</strong></p>
+      <div class="cart-item-price">
+        <span>
+          Price: <strong>{{ item.price.amount }} {{ priceCurrencies[item.price.currency] }}</strong>
+        </span>
+        
+      </div>
+      
+      <button class="primary" (click)="removeBundle(item)">  <span class="material-icons">delete</span> Remove</button>
+    </li>
   </ul>
 
    
 
-  <button class="primary complete-purchase" (click)="openCheckoutModal()" *ngIf="shoppingCart && shoppingCart.items.length > 0"> 
+  <button class="primary complete-purchase" (click)="openCheckoutModal()" *ngIf="shoppingCart && (shoppingCart.tourItems.length > 0 || shoppingCart.bundleItems.length > 0)"> 
     <span class="material-icons check-icon">check</span> 
     Complete Purchase </button>
   

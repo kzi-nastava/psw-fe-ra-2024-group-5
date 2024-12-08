@@ -15,9 +15,15 @@
         </div>
     </div>
 
-    <button mat-button class="primary" [disabled]="selectedTours.length < 2" (click)="openBundleForm()">
+    <button
+         mat-button
+         class="primary"
+        [disabled]="selectedTours.length < 2"
+        (click)="openBundleForm()"
+        *ngIf="!showBundleForm">
         Add to Bundle
     </button>
+
 
     <!-- Bundle Creation Form -->
     <div *ngIf="showBundleForm" class="bundle-form">

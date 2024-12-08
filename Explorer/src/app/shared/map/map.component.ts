@@ -141,7 +141,7 @@ export class MapComponent implements AfterViewInit {
         this.addKeyPointMarker(latlng, popupText ?? 'keypoint');
         break;
       case 'encounter':
-        this.addOneMarker(latlng, popupText ?? 'keypoint');
+        //this.addOneMarker(latlng, popupText ?? 'keypoint');
         break;
       default:
         break;
