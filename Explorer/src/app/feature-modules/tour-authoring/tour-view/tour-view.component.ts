@@ -69,11 +69,23 @@ export class TourDetailedViewComponent implements OnInit {
       const id = params.get('tourId');
       this.tourId = Number(id);
 
+      this.addViewToTour();
+
       if (this.user?.role === 'author')
         this.loadTourDetails(this.tourId);
       if (this.user?.role === 'tourist')
         this.loadTourTouristDetails(this.tourId, this.user.id);
     });
+  }
+
+  private addViewToTour(): void{
+    this.service.addViewToTour(this.tourId).subscribe({
+      next: () => {
+      },
+      error: (err: any) => {
+          console.log(err);
+      }
+  });
   }
 
   private loadTourDetails(tourId: number): void {

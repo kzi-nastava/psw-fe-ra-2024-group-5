@@ -160,7 +160,6 @@
 
 .details-wrapper{
   padding: 10px;
-  height: 400px;
   border: 1px solid var(--border-color);
   background-color: white;
   border-radius: 20px;
@@ -170,7 +169,7 @@
 
 .details-title{
   border-bottom: 1px solid var(--border-color);
-  height: 70px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
 }
@@ -178,10 +177,27 @@
 .title-info{
   display: flex;
   justify-content: flex-start;
-  gap: 100px;
+  gap: 150px;
   align-items: center;
   margin-bottom: 10px;
   margin-left: 10px;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+}
+
+mat-icon {
+  font-size: 24px;
+  color: #4CAF50;
 }
 
 .avg-grade{

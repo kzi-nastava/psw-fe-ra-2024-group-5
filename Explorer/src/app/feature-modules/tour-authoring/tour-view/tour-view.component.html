@@ -30,8 +30,20 @@
                 <div class="details-title">
                     <div class="title-info">
                         <h1>{{tour?.name}}</h1>
-                        <h1>50 views</h1>
-                        <h1>20 buys</h1>
+                        <div class="stats">
+                            <div class="stat">
+                                <mat-icon>visibility</mat-icon>
+                                <span>{{ tour?.numberOfViews }}</span>
+                            </div>
+                            <div class="stat">
+                                <mat-icon>attach_money</mat-icon>
+                                <span>{{ tour?.numberOfPurchases }} </span>
+                            </div>
+                            <div class="stat">
+                                <mat-icon>check_circle</mat-icon>
+                                <span>{{ tour?.numberOfCompletions }}</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="avg-grade">
