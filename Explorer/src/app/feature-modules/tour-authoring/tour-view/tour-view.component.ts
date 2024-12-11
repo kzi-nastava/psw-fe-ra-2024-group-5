@@ -41,11 +41,8 @@ export class TourDetailedViewComponent implements OnInit {
 
   @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null; 
 
-
   userProfiles: UserProfileBasic[] = [];
    
-
-
   constructor(
     private service: TourAuthoringService,
     private tourExecutionService: TourExecutionService,
@@ -154,6 +151,26 @@ export class TourDetailedViewComponent implements OnInit {
     return profile;
   }
 
+  getFirstKeyPointImage(): string{
+    if(!this.tour || !this.tour.keyPoints[0].image){
+      return '';
+    }
+    return `data:image/jpeg;base64,${this.tour.keyPoints[0].image}`
+  }
+  
+  getAverageRating(): number {
+    if(!this.tour){
+      return 0.0;
+    }
+
+    const reviews = this.tour.reviews;
+    if (reviews.length === 0) {
+      return 0.0;
+    }
+
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / reviews.length;
+  }
 
   displayKeyPoints(): void {
     this.tour?.keyPoints.forEach(element => {
