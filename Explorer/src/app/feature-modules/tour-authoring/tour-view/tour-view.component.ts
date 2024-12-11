@@ -222,13 +222,11 @@ export class TourDetailedViewComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
+        if (this.user?.id) {
+          this.loadTourTouristDetails(this.tourId, this.user.id);
+        }
         this.showSuccessAlert('Review successfully submitted!');
         console.log('Review successfully submitted');
-  
-        const reviewUrl = this.reviewService.getReviewUrl();
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([`${reviewUrl}/${this.tour?.id}`]); 
-        });
       } else if (result === false) {
         this.showErrorAlert('Error submitting review. Please try again.');
         console.log('Error submitting review');

@@ -16,7 +16,4 @@ export class ReviewService {
     return this.http.post<TourReview>(this.apiUrl, review);
   }
 
-  getReviewUrl(): string {
-    return this.apiUrl; 
-  }
 }
