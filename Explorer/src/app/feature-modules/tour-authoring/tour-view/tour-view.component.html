@@ -96,7 +96,7 @@
         </ng-template>
     </div>
     <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
-        <div class="review-card" *ngFor="let review of tour?.reviews">
+        <div class="review-card" *ngFor="let review of reviews">
             <div class="reviewer-info">
                 <div class="reviewer-image">
                     <img [src]="'data:image/jpeg;base64,' + (getUserProfile(review.touristId!)?.profileImage || '')"
