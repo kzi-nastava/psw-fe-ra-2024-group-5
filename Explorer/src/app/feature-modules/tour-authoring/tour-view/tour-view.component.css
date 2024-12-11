@@ -1,28 +1,28 @@
 @import 'src/styles.css';
 
 .tour-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.title-container{
+.tour-view {
   display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  flex-direction: column;
+  gap: 30px;
 }
 
-.row {
+/* First Container (Map & Keypoints) */
+.map-keypoints-container {
+  width: 100%;
   display: flex;
-  justify-content: center;
-  margin-top: 50px;
 }
 
 .map-kp-wrapper{
+  width: 100%;
   display: flex;
   background-color: white;
-  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 10px;
   gap: 30px;
@@ -30,17 +30,16 @@
 }
 
 .map-container {
-  width: 800px;
+  width: 55%;
   height: 400px; 
   border-radius: 20px;
   background-color: var(--background-color-alt); 
 }
 
 .keypoints-container{
-  width: 500px;
-  height: 400px; 
+  width: 45%;
   overflow-y: auto;
-  padding-left: 10px;
+  padding: 25px;
 }
 
 .progress-container {
@@ -158,20 +157,73 @@
   border-left: 5px solid white;
 }
 
+/* Second container (Tour details) */
+.tour-details-container {
+  width: 100%;
+  display: flex;
+}
+
 .details-wrapper{
-  padding: 10px;
-  border: 1px solid var(--border-color);
+  padding: 25px 30px;
+  width: 100%;
   background-color: white;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
 }
 
-.details-title{
-  border-bottom: 1px solid var(--border-color);
-  height: 60px;
+.details {
   display: flex;
+  justify-content: stretch;
+}
+
+.details .details-info-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.chip-container {
+  display: flex;
+  gap: 8px;
+  color: white !important;
+}
+
+.level-label {
+  color: white !important;
+}
+
+.description-container {
+  margin: 15px 0;
+}
+
+.title-actions-container {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 50px;
+}
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.actions-container .price-container {
+  display: flex;
+  align-items: center;
+}
+
+.actions-container .price-container .icon {
+  font-size: 20px;
+}
+
+.actions-container .price-container span {
+  font-size: 25px;
+  font-weight: 500;
+  font-weight: bold;
 }
 
 .title-info{
@@ -179,9 +231,39 @@
   justify-content: flex-start;
   gap: 150px;
   align-items: center;
-  margin-bottom: 10px;
-  margin-left: 10px;
 }
+
+.stats-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+
+
+
+
+.title-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+
+
+
+
+
+
+
 
 .stats {
   display: flex;
@@ -205,15 +287,11 @@ mat-icon {
 
 .avg-grade{
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.details{
-  display: flex;
-  gap: 70px;
-}
+
 
 .details-col{
   padding: 10px;
@@ -272,15 +350,12 @@ mat-icon {
   overflow: hidden;
 }
 
-.img-container {
-  position: relative;
-  display: inline-block;
-}
+
 
 .img {
   display: block;
   width: 100%;
-  height: 100%;
+  max-width: 500px;
   object-fit: cover; 
   border-radius: 20px;
 }
@@ -429,7 +504,7 @@ button.close:hover {
 }
 
 .star {
-  font-size: 45px;
+  font-size: 35px;
   color: gold;
   margin-right: 2px;
 }

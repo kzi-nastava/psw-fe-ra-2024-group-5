@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.component';
 import { TourLeaderboardComponent } from './tour-leaderboard/tour-leaderboard.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatCheckboxModule,
     SharedModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule
   ],
   exports: [
     KeyPointsComponent,

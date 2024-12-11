@@ -34,17 +34,17 @@ export class TourDetailedViewComponent implements OnInit {
   canBeActivated: boolean = false;
   canBeReviewed: boolean = false;
   showPublishForm = false;
-  
-  public Currency = Currency; 
+
+  public Currency = Currency;
   newPrice: number;
-  newCurrency: Currency = Currency.AC; 
+  newCurrency: Currency = Currency.AC;
 
   kpImageIndex: number = 0;
 
-  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null; 
+  @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null;
 
   userProfiles: UserProfileBasic[] = [];
-   
+
   constructor(
     private service: TourAuthoringService,
     private tourExecutionService: TourExecutionService,
@@ -56,7 +56,7 @@ export class TourDetailedViewComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private userProfileService: UserProfileService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -66,7 +66,7 @@ export class TourDetailedViewComponent implements OnInit {
     this.initializeTour();
   }
 
-  private initializeTour(): void{
+  private initializeTour(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('tourId');
       this.tourId = Number(id);
@@ -80,73 +80,73 @@ export class TourDetailedViewComponent implements OnInit {
     });
   }
 
-  private addViewToTour(): void{
+  private addViewToTour(): void {
     this.service.addViewToTour(this.tourId).subscribe({
       next: () => {
       },
       error: (err: any) => {
-          console.log(err);
+        console.log(err);
       }
-  });
+    });
   }
 
   private loadTourDetails(tourId: number): void {
     this.service.getTourbyId(tourId).subscribe({
-        next: (result: Tour) => {
-            this.tour = {
-                ...result,
-                level: result.level as TourLevel, // Ensure it's cast to enum
-                status: result.status as TourStatus, // Ensure it's cast to enum
-                price: {
-                    ...result.price,
-                    currency: result.price.currency as Currency // Ensure it's cast to enum
-                }
-            };
-            console.log('Loaded Tour:', this.tour);
-            this.displayKeyPoints()
-            this.loadUserProfiles();
-        },
-        error: (err: any) => {
-            console.log(err);
-        }
+      next: (result: Tour) => {
+        this.tour = {
+          ...result,
+          level: result.level as TourLevel, // Ensure it's cast to enum
+          status: result.status as TourStatus, // Ensure it's cast to enum
+          price: {
+            ...result.price,
+            currency: result.price.currency as Currency // Ensure it's cast to enum
+          }
+        };
+        console.log('Loaded Tour:', this.tour);
+        this.displayKeyPoints()
+        this.loadUserProfiles();
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
     });
   }
 
-  private loadTourTouristDetails(tourId: number, touristId : number): void {
+  private loadTourTouristDetails(tourId: number, touristId: number): void {
     this.service.getTourForTouristById(tourId, touristId).subscribe({
-        next: (result: TourTourist) => {
-            this.tour = {
-                ...result.tour,
-                level: result.tour.level as TourLevel, // Ensure it's cast to enum
-                status: result.tour.status as TourStatus, // Ensure it's cast to enum
-                price: {
-                    ...result.tour.price,
-                    currency: result.tour.price.currency as Currency // Ensure it's cast to enum
-                }
-            };
-            this.canBeActivated = result.canBeActivated
-            this.canBeBought = result.canBeBought
-            this.canBeReviewed = result.canBeReviewed
-            this.displayKeyPoints()
-            this.loadUserProfiles();
-        },
-        error: (err: any) => {
-            console.log(err);
-        }
+      next: (result: TourTourist) => {
+        this.tour = {
+          ...result.tour,
+          level: result.tour.level as TourLevel, // Ensure it's cast to enum
+          status: result.tour.status as TourStatus, // Ensure it's cast to enum
+          price: {
+            ...result.tour.price,
+            currency: result.tour.price.currency as Currency // Ensure it's cast to enum
+          }
+        };
+        this.canBeActivated = result.canBeActivated
+        this.canBeBought = result.canBeBought
+        this.canBeReviewed = result.canBeReviewed
+        this.displayKeyPoints()
+        this.loadUserProfiles();
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
     });
   }
 
   loadUserProfiles() {
-    
+
     if (this.tour && this.tour.reviews && this.tour.reviews.length > 0) {
       console.log('Reviews found:', this.tour.reviews);
-      
+
       const touristIds = this.tour.reviews
         .map(review => review.touristId)
         .filter((id): id is number => id !== undefined);
-      
+
       console.log('Filtered touristIds:', touristIds);
-        
+
       this.userProfileService.getBasicProfiles(touristIds).subscribe({
         next: (profiles) => {
           this.userProfiles = profiles;
@@ -165,15 +165,15 @@ export class TourDetailedViewComponent implements OnInit {
     return profile;
   }
 
-  getKeyPointImage(): string{
-    if(!this.tour || !this.tour.keyPoints[this.kpImageIndex].image){
+  getKeyPointImage(): string {
+    if (!this.tour || !this.tour.keyPoints[this.kpImageIndex].image) {
       return '';
     }
     return `data:image/jpeg;base64,${this.tour.keyPoints[this.kpImageIndex].image}`
   }
 
   hasMultipleImages(): boolean {
-    if(!this.tour)
+    if (!this.tour)
       return false;
 
     return this.tour?.keyPoints?.length > 1 && this.tour.keyPoints.some(kp => kp.image);
@@ -181,32 +181,32 @@ export class TourDetailedViewComponent implements OnInit {
 
   onPreviousImage(): void {
     const keypointsLength = this.tour?.keyPoints.length;
-    if(!keypointsLength)
+    if (!keypointsLength)
       return;
 
-    if(this.kpImageIndex > 0){
-      this.kpImageIndex--;  
+    if (this.kpImageIndex > 0) {
+      this.kpImageIndex--;
     }
-    else{
+    else {
       this.kpImageIndex = keypointsLength - 1;
     }
   }
-  
+
   onNextImage(): void {
     const keypointsLength = this.tour?.keyPoints.length;
-    if(keypointsLength == undefined)
+    if (keypointsLength == undefined)
       return;
 
-    if(this.kpImageIndex < keypointsLength - 1){
-      this.kpImageIndex++;  
+    if (this.kpImageIndex < keypointsLength - 1) {
+      this.kpImageIndex++;
     }
-    else{
+    else {
       this.kpImageIndex = 0;
     }
   }
-  
+
   getAverageRating(): number {
-    if(!this.tour){
+    if (!this.tour) {
       return 0.0;
     }
 
@@ -216,8 +216,12 @@ export class TourDetailedViewComponent implements OnInit {
     }
 
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / reviews.length;
+    const averageRating = totalRating / reviews.length;
+
+    // Round to one decimal place
+    return Math.round(averageRating * 10) / 10;
   }
+
 
   displayKeyPoints(): void {
     this.tour?.keyPoints.forEach(element => {
@@ -243,19 +247,41 @@ export class TourDetailedViewComponent implements OnInit {
     return TourLevel[level] !== undefined ? TourLevel[level] : 'N/A';
   }
 
+  getTourLevelStyle(level: number | undefined): string {
+
+    switch (level) {
+      case TourLevel.Beginner:
+        return 'background: #5fff5c;'
+        break;
+      case TourLevel.Intermediate:
+        return 'background: #ffba42;'
+        break;
+      case TourLevel.Advanced:
+        return 'background: #ff5c5c;'
+        break;
+      default:
+        return ''
+        break;
+    }
+  }
+
+  splitTags(tags: string | undefined): string[] | undefined {
+    return tags?.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+  }
+
   getTourStatus(status: number | undefined): string {
-      if (status === undefined) return 'N/A';
-      return TourStatus[status] !== undefined ? TourStatus[status] : 'N/A';
+    if (status === undefined) return 'N/A';
+    return TourStatus[status] !== undefined ? TourStatus[status] : 'N/A';
   }
 
   getCurrency(currency: number | undefined): string {
-      if (currency === undefined) return 'N/A';
-      return Currency[currency] !== undefined ? Currency[currency] : 'N/A';
+    if (currency === undefined) return 'N/A';
+    return Currency[currency] !== undefined ? Currency[currency] : 'N/A';
   }
 
   getTransport(transport: number | undefined): string {
-      if (transport === undefined) return 'N/A';
-      return TourTransport[transport] !== undefined ? TourTransport[transport] : 'N/A';
+    if (transport === undefined) return 'N/A';
+    return TourTransport[transport] !== undefined ? TourTransport[transport] : 'N/A';
   }
 
   startTour(): void {
@@ -283,7 +309,7 @@ export class TourDetailedViewComponent implements OnInit {
         touristId: this.user?.id
       }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         if (this.user?.id) {
@@ -297,14 +323,14 @@ export class TourDetailedViewComponent implements OnInit {
       }
     });
   }
-  
+
   private showSuccessAlert(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
       panelClass: ['alert-success', 'custom-snackbar']
     });
   }
-  
+
   private showErrorAlert(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
@@ -349,14 +375,14 @@ export class TourDetailedViewComponent implements OnInit {
   }
 
 
-  
-  addToCart(): void{
-    if(!this.tour || !this.tour.id || !this.user)
+
+  addToCart(): void {
+    if (!this.tour || !this.tour.id || !this.user)
       return;
-    
-    let orderItem :OrderItem = {
-      tourId : this.tour.id,
-      tourName : this.tour.name,
+
+    let orderItem: OrderItem = {
+      tourId: this.tour.id,
+      tourName: this.tour.name,
       price: this.tour.price,
       description: this.tour.description,
       tags: this.tour.tags,
@@ -368,7 +394,7 @@ export class TourDetailedViewComponent implements OnInit {
     this.shoppingCartService.addItemToCart(orderItem, this.user?.id).subscribe({
       next: () => {
         this.initializeTour();
-         if (this.navbarComponent) {
+        if (this.navbarComponent) {
           this.navbarComponent.itemsCount++;
           this.navbarComponent.getItemsCount();
         }
@@ -377,59 +403,59 @@ export class TourDetailedViewComponent implements OnInit {
         }
       },
       error: (err: any) => {
-          console.log(err);
+        console.log(err);
       }
-  });
+    });
   }
 
   togglePublishForm() {
     this.showPublishForm = !this.showPublishForm;
-}
-
-currencyToEnum(currency: number): Currency | null {
-  switch (currency) {
-    case 0:
-      return Currency.AC;  
-    case 1:
-      return Currency.Dol;  
-    case 2:
-      return Currency.Eur; 
-    case 3:
-      return Currency.Rsd; 
-    default:
-      console.error('Invalid currency value:', currency); 
-      return null;
   }
-}
 
-publishTourWithPrice(): void {
-  if (this.newPrice != null && this.newCurrency !== undefined) {
-    if (!Object.values(Currency).includes(this.newCurrency)) {
-      console.error('Invalid currency value:', this.newCurrency);
-      alert('Invalid currency');
-      return;
+  currencyToEnum(currency: number): Currency | null {
+    switch (currency) {
+      case 0:
+        return Currency.AC;
+      case 1:
+        return Currency.Dol;
+      case 2:
+        return Currency.Eur;
+      case 3:
+        return Currency.Rsd;
+      default:
+        console.error('Invalid currency value:', currency);
+        return null;
     }
-    if (this.tour?.id) {
-      console.log('Publishing tour:', this.tour.id, 'with price:', this.newPrice, 'and currency:', this.newCurrency);
-      this.service.publishTour(this.tour.id, this.newPrice, this.newCurrency).subscribe({
-        next: () => {
-          if (this.tour) {
-            this.tour.status = TourStatus.Published;
+  }
+
+  publishTourWithPrice(): void {
+    if (this.newPrice != null && this.newCurrency !== undefined) {
+      if (!Object.values(Currency).includes(this.newCurrency)) {
+        console.error('Invalid currency value:', this.newCurrency);
+        alert('Invalid currency');
+        return;
+      }
+      if (this.tour?.id) {
+        console.log('Publishing tour:', this.tour.id, 'with price:', this.newPrice, 'and currency:', this.newCurrency);
+        this.service.publishTour(this.tour.id, this.newPrice, this.newCurrency).subscribe({
+          next: () => {
+            if (this.tour) {
+              this.tour.status = TourStatus.Published;
+            }
+            console.log('Tour published with new price and currency');
+            this.showPublishForm = false;
+            this.initializeTour();
+          },
+          error: (error) => {
+            console.error('Error publishing tour:', error);
+            alert('Error publishing tour: ' + error.message);
           }
-          console.log('Tour published with new price and currency');
-          this.showPublishForm = false;  
-          this.initializeTour(); 
-        },
-        error: (error) => {
-          console.error('Error publishing tour:', error);
-          alert('Error publishing tour: ' + error.message);
-        }
-      });
+        });
+      } else {
+        alert('Tour ID is missing.');
+      }
     } else {
-      alert('Tour ID is missing.');
+      alert('Please enter both price and currency.');
     }
-  } else {
-    alert('Please enter both price and currency.');
   }
-}
 }
