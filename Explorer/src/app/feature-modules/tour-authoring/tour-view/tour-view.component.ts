@@ -39,6 +39,8 @@ export class TourDetailedViewComponent implements OnInit {
   newPrice: number;
   newCurrency: Currency = Currency.AC; 
 
+  kpImageIndex: number = 0;
+
   @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null; 
 
   userProfiles: UserProfileBasic[] = [];
@@ -163,11 +165,44 @@ export class TourDetailedViewComponent implements OnInit {
     return profile;
   }
 
-  getFirstKeyPointImage(): string{
-    if(!this.tour || !this.tour.keyPoints[0].image){
+  getKeyPointImage(): string{
+    if(!this.tour || !this.tour.keyPoints[this.kpImageIndex].image){
       return '';
     }
-    return `data:image/jpeg;base64,${this.tour.keyPoints[0].image}`
+    return `data:image/jpeg;base64,${this.tour.keyPoints[this.kpImageIndex].image}`
+  }
+
+  hasMultipleImages(): boolean {
+    if(!this.tour)
+      return false;
+
+    return this.tour?.keyPoints?.length > 1 && this.tour.keyPoints.some(kp => kp.image);
+  }
+
+  onPreviousImage(): void {
+    const keypointsLength = this.tour?.keyPoints.length;
+    if(!keypointsLength)
+      return;
+
+    if(this.kpImageIndex > 0){
+      this.kpImageIndex--;  
+    }
+    else{
+      this.kpImageIndex = keypointsLength - 1;
+    }
+  }
+  
+  onNextImage(): void {
+    const keypointsLength = this.tour?.keyPoints.length;
+    if(keypointsLength == undefined)
+      return;
+
+    if(this.kpImageIndex < keypointsLength - 1){
+      this.kpImageIndex++;  
+    }
+    else{
+      this.kpImageIndex = 0;
+    }
   }
   
   getAverageRating(): number {
