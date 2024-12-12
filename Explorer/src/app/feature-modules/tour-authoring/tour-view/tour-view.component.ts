@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Tour, TourTourist } from '../model/tour.model';
+import { Tour, TourReview, TourTourist } from '../model/tour.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { KeyPoint } from '../model/key-point.model';
@@ -28,6 +28,7 @@ export class TourDetailedViewComponent implements OnInit {
   isEditable: boolean = false;
   user: User | undefined;
   tour: Tour | undefined;
+  reviews: TourReview[];
   tourId: number;
   @ViewChild(MapComponent) map: MapComponent;
   canBeBought: boolean = false;
@@ -44,6 +45,8 @@ export class TourDetailedViewComponent implements OnInit {
   @ViewChild(NavbarComponent) navbarComponent: NavbarComponent | null = null;
 
   userProfiles: UserProfileBasic[] = [];
+
+
 
   constructor(
     private service: TourAuthoringService,
@@ -77,7 +80,18 @@ export class TourDetailedViewComponent implements OnInit {
         this.loadTourDetails(this.tourId);
       if (this.user?.role === 'tourist')
         this.loadTourTouristDetails(this.tourId, this.user.id);
+
+      this.loadReviews(this.tourId, this.user!.id);
     });
+  }
+
+  private loadReviews(tourId: number, userId: number | null) {
+    this.service.getTourReviews(tourId, userId).subscribe(
+      {
+        next: (res) => this.reviews = res,
+        error: (e) => console.error(e)
+      }
+    )
   }
 
   private addViewToTour(): void {
