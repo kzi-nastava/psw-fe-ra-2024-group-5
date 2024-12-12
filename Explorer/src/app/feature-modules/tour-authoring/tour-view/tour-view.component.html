@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    <div class="tour-container">
+    <!-- <div class="tour-container">
 
 
 
@@ -217,7 +217,7 @@
 
 
 
-    </div>
+    </div> -->
 
 
 
@@ -227,17 +227,12 @@
 
 
 
+    <div class="review-container">
+        <h2><b>Reviews</b></h2>
 
-    <div class="title-container">
-        <h1 mat-dialog-title *ngIf="tour && tour.reviews && tour.reviews.length > 0; else noReviews">Reviews</h1>
-
-        <ng-template #noReviews>
-            <h1 mat-dialog-title>No Reviews Available</h1>
-        </ng-template>
-    </div>
-
-    <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
-        <div class="review-card" *ngFor="let review of tour?.reviews">
+        <mat-paginator [length]="" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
+            aria-label="Select page"></mat-paginator>
+        <!-- <div class="review-card" *ngFor="let review of tour?.reviews">
             <div class="reviewer-info">
                 <div class="reviewer-image">
                     <img [src]="'data:image/jpeg;base64,' + (getUserProfile(review.touristId!)?.profileImage || '')"
@@ -272,7 +267,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="leaderboard-container">

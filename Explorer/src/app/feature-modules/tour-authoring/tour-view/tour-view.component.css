@@ -1,12 +1,5 @@
 @import 'src/styles.css';
 
-.tour-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .tour-view {
   display: flex;
   flex-direction: column;
@@ -407,16 +400,15 @@ button.close:hover {
   background-color: var(--alert-warning-bg); /* Darker shade on hover */
 }
 
+/* Third section (Reviews) */
 .review-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  width: 100%;
-  max-height: 1000px; /* Adjust the max-height as needed */
+  flex-direction: column;
+  padding: 25px;
+  border-radius: 20px;
+  background-color: white;
+  max-height: 1000px;
   overflow-y: auto;
-  gap: 20px;
-  border: 1px solid #ccc; /* Optional border to visually separate */
-  padding: 10px;
 }
 
 .review-card {

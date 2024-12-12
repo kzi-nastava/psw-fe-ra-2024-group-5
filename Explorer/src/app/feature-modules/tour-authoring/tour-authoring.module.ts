@@ -20,6 +20,7 @@ import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.
 import { TourLeaderboardComponent } from './tour-leaderboard/tour-leaderboard.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { TourReviewComponent } from './tour-review/tour-review.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatChipsModule } from '@angular/material/chips';
     ToursPageComponent,
     TourCardComponent,
     ToursAuthorPageComponent,
-    TourLeaderboardComponent
+    TourLeaderboardComponent,
+    TourReviewComponent
   ],
   imports: [
     CommonModule,
