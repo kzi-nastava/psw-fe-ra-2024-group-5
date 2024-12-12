@@ -411,6 +411,35 @@ button.close:hover {
   overflow-y: auto;
 }
 
+.review-title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.review-title-container h2 {
+  margin: 0;
+}
+
+.no-reviews-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.no-reviews-container p {
+  font-size: 1.25em;
+  color: var(--text-muted);
+}
+
+.reviews-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .review-card {
   width: 800px;
   height: 250px;
@@ -609,9 +638,22 @@ button.close:hover {
   font-size: 1.1em;
 }
 
+/* Fourth section (Leaderboard) */
 .leaderboard-container {
   display: flex;
   flex-direction: column;
+  background-color: white;
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.leaderboard-title-container {
+  display: flex;
   align-items: center;
-  margin-top: 50px;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.leaderboard-title-container h2 {
+  margin: 0;
 }

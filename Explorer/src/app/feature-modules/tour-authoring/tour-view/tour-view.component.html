@@ -228,9 +228,20 @@
 
 
     <div class="review-container">
-        <h2><b>Reviews</b></h2>
+        <div class="review-title-container">
+            <h2><b>Reviews</b></h2>
+            <mat-chip><b>{{ reviews.length }} Total reviews</b></mat-chip>
+        </div>
 
-        <mat-paginator [length]="" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
+        <div class="no-reviews-container" *ngIf="reviews.length < 1">
+            <p>There are no reviews for this tour.</p>
+        </div>
+
+        <div class="reviews-card-container" *ngIf="reviews.length >= 1">
+            <xp-tour-review [review]="r" *ngFor="let r of reviews"></xp-tour-review>
+        </div>
+
+        <mat-paginator [length]="reviews.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
             aria-label="Select page"></mat-paginator>
         <!-- <div class="review-card" *ngFor="let review of tour?.reviews">
             <div class="reviewer-info">
@@ -271,7 +282,10 @@
     </div>
 
     <div class="leaderboard-container">
-        <h1>Leaderboard</h1>
+        <div class="leaderboard-title-container">
+            <h2><b>Leaderboard</b></h2>
+            <mat-chip><b>{{ tour?.numberOfCompletions ?? 0 }} Total completions</b></mat-chip>
+        </div>
         <xp-tour-leaderboard [tourId]="tourId" />
     </div>
 
