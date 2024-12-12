@@ -28,7 +28,7 @@ export class TourDetailedViewComponent implements OnInit {
   isEditable: boolean = false;
   user: User | undefined;
   tour: Tour | undefined;
-  reviews: TourReview[];
+  reviews: TourReview[] = [];
   tourId: number;
   @ViewChild(MapComponent) map: MapComponent;
   canBeBought: boolean = false;

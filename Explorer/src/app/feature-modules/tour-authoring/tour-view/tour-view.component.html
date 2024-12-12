@@ -104,11 +104,8 @@
                                     class="level-label">{{
                                     getTourLevel(tour?.level)
                                     }}</b></mat-chip>
-                        </mat-chip-listbox>
-
-                        <mat-chip-listbox>
-                            <mat-chip class="level-chip">
-                                <b>{{ splitTags(tour?.tags) }}</b>
+                            <mat-chip class="level-chip" *ngFor="let tag of splitTags(tour?.tags)">
+                                <b>{{ tag }}</b>
                             </mat-chip>
                         </mat-chip-listbox>
                     </div>
@@ -138,8 +135,8 @@
                     <img *ngIf="getKeyPointImage(); else defaultImage" [src]="getKeyPointImage()"
                         alt="Keypoints Picture" class="img" />
                     <ng-template #defaultImage>
-                        <img src="..\..\..\assets\images\pexels-florencia-potter-82066-351283.jpg"
-                            alt="Default Tour Keypoint Picture" class="img" />
+                        <img src="assets\images\placeholder-landscape.png" alt="Default Tour Keypoint Picture"
+                            class="img" />
                     </ng-template>
 
                     <button class="nav-button right" (click)="onNextImage()" *ngIf="hasMultipleImages()">
