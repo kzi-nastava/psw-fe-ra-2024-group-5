@@ -1,15 +1,13 @@
-<div class="tour-view">
-    <div class="title-container">
-        <h1 mat-dialog-title>{{tour?.name}}</h1>
-    </div>
-    <div class="tour-container">
-        <div class="row">
+<div class="tour-view container">
+
+    <div class="map-keypoints-container">
+        <div class="map-kp-wrapper">
             <div class="map-container">
                 <app-map [isViewOnly]="true"></app-map>
             </div>
             <div class="keypoints-container">
                 <div>
-                    <h2>Key points:</h2>
+                    <h2><b>Key points</b></h2>
                 </div>
                 <div class="progress-wrapper" *ngIf="tour">
                     <ul>
@@ -25,54 +23,187 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="tour-details">
-                <div class="description outlined-desc">
-                    {{tour?.description}}
-                </div>
-                <div class="info-transport-container">
-                    <div class="info">
-                        <h3>{{ getTourLevel(tour?.level) }} <span *ngIf="user?.role === 'author'">- {{
-                                getTourStatus(tour?.status) }}</span></h3>
-                        <h3 *ngIf="tour?.status === 1">Published: {{ tour?.publishedTime | date }}</h3>
-                        <h3 *ngIf="tour?.status === 2">Archived: {{ tour?.archivedTime | date }}</h3>
-                        <h3>Tags: {{ tour?.tags }}</h3>
+    <div class="tour-details-container">
+        <div class="details-wrapper">
+            <div class="details-header">
+
+                <div class="title-actions-container">
+                    <div class="title-info">
+                        <h1>{{tour?.name}}</h1>
                     </div>
-                    <div class="transport">
-                        <h3>Transport Durations</h3>
-                        <ul>
-                            <li *ngFor="let transport of tour?.transportDurations" class="transport-duration">
-                                <strong>{{ transport.duration }} min</strong> -
-                                <strong>{{ getTransport(transport.transport) }}</strong>
-                            </li>
-                        </ul>
+
+                    <div class="actions-container">
+
+                        <div class="price-container"
+                            *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought">
+                            <mat-icon class="icon"> local_atm</mat-icon>
+                            <span>{{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</span>
+                        </div>
+
+                        <button mat-button class="secondary"
+                            *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought"
+                            (click)="addToCart()"><mat-icon>add_shopping_cart</mat-icon>Add to cart</button>
+
+                        <button mat-button class="secondary" *ngIf="tour?.status===1 && user?.role === 'author'"
+                            (click)="archiveTour()">Archive</button>
+
+                        <button mat-button class="secondary"
+                            *ngIf="(tour?.status===2 || tour?.status===0) && user?.role === 'author'"
+                            (click)="togglePublishForm()">Publish</button>
+
+                        <button mat-button class="secondary"
+                            *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated"
+                            (click)="startTour()"><mat-icon> navigation</mat-icon>Activate</button>
+
+                        <button mat-button class="secondary"
+                            *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed"
+                            (click)="openReviewDialog()"><mat-icon>star</mat-icon>Add review</button>
+
+                        <button mat-button class="secondary" *ngIf="user?.role === 'author'">Edit</button>
+                    </div>
+                </div>
+
+                <div class="stats-container">
+                    <!-- <div class="avg-grade">
+                        <span class="star" *ngIf="getAverageRating() >= 1">&#9733;</span>
+                        <span class="star" *ngIf="getAverageRating() >= 2">&#9733;</span>
+                        <span class="star" *ngIf="getAverageRating() >= 3">&#9733;</span>
+                        <span class="star" *ngIf="getAverageRating() >= 4">&#9733;</span>
+                        <span class="star" *ngIf="getAverageRating() >= 5">&#9733;</span>
+                    </div> -->
+
+                    <div class="stats">
+                        <div class="stat" *ngIf="tour?.reviews?.length! > 0">
+                            <mat-icon class="stat-icon">star_half</mat-icon>
+                            <span>{{ getAverageRating() }}/5</span>
+                        </div>
+                        <div class="stat">
+                            <mat-icon class="stat-icon">visibility</mat-icon>
+                            <span>{{ tour?.numberOfViews }}</span>
+                        </div>
+                        <div class="stat">
+                            <mat-icon class="stat-icon">attach_money</mat-icon>
+                            <span>{{ tour?.numberOfPurchases }} </span>
+                        </div>
+                        <div class="stat">
+                            <mat-icon class="stat-icon">check_circle</mat-icon>
+                            <span>{{ tour?.numberOfCompletions }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="button-container">
-                <div class="price-row">
-                    <h2>{{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</h2>
-                    <button mat-button class="secondary button-mg"
-                        *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeBought" (click)="addToCart()">Buy
-                        now</button>
+
+            <div class="details">
+
+                <div class="details-info-container">
+                    <div class="chip-container">
+                        <mat-chip-listbox>
+                            <mat-chip class="level-chip" [style]="getTourLevelStyle(tour?.level)"><b
+                                    class="level-label">{{
+                                    getTourLevel(tour?.level)
+                                    }}</b></mat-chip>
+                        </mat-chip-listbox>
+
+                        <mat-chip-listbox>
+                            <mat-chip class="level-chip">
+                                <b>{{ splitTags(tour?.tags) }}</b>
+                            </mat-chip>
+                        </mat-chip-listbox>
+                    </div>
+
+                    <div class="description-container">
+                        <h4><b>Description</b></h4>
+                        <p>{{ tour?.description }}</p>
+                    </div>
+
+                    <div class="transport-container">
+                        <h4><b>Transports</b></h4>
+                        <div class="transports-chips">
+                            <mat-chip *ngFor="let transport of tour?.transportDurations">
+                                <b>
+                                    {{ getTransport(transport.transport) }} - {{ transport.duration }} min
+                                </b>
+                            </mat-chip>
+                        </div>
+                    </div>
                 </div>
-                <div class="actions-row">
-                    <button mat-button class="secondary button-mg" *ngIf="tour?.status===1 && user?.role === 'author'"
-                        (click)="archiveTour()">Archive</button>
-                    <button mat-button class="secondary button-mg"
-                        *ngIf="(tour?.status===2 || tour?.status===0) && user?.role === 'author'"
-                        (click)="togglePublishForm()">Publish</button>
-                    <button mat-button class="secondary button-mg"
-                        *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated"
-                        (click)="startTour()">Activate</button>
-                    <button mat-button class="secondary button-mg"
-                        *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed"
-                        (click)="openReviewDialog()">Add review</button>
-                    <button mat-button class="secondary button-mg" *ngIf="user?.role === 'author'">Edit</button>
+
+                <div class="img-container">
+                    <button class="nav-button left" (click)="onPreviousImage()" *ngIf="hasMultipleImages()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+
+                    <img *ngIf="getKeyPointImage(); else defaultImage" [src]="getKeyPointImage()"
+                        alt="Keypoints Picture" class="img" />
+                    <ng-template #defaultImage>
+                        <img src="..\..\..\assets\images\pexels-florencia-potter-82066-351283.jpg"
+                            alt="Default Tour Keypoint Picture" class="img" />
+                    </ng-template>
+
+                    <button class="nav-button right" (click)="onNextImage()" *ngIf="hasMultipleImages()">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
                 </div>
+
+                <!-- <div class="details-col">
+                    <div class="info-wrapper">
+                        <div class="info">
+                            <h2>Price: {{tour?.price?.amount}} {{getCurrency(tour?.price?.currency)}}</h2>
+                            <h2>{{ getTourLevel(tour?.level) }} <span *ngIf="user?.role === 'author'">- {{
+                                    getTourStatus(tour?.status) }}</span></h2>
+                            <h2 *ngIf="tour?.status === 1">Published: {{ tour?.publishedTime | date }}</h2>
+                            <h2 *ngIf="tour?.status === 2">Archived: {{ tour?.archivedTime | date }}</h2>
+                        </div>
+                        <div class="transport">
+                            <h2>Transport Durations</h2>
+                            <ul>
+                                <li *ngFor="let transport of tour?.transportDurations" class="transport-duration">
+                                    <h4>{{ transport.duration }} min - {{ getTransport(transport.transport) }}</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3>Tags: {{ tour?.tags }}</h3>
+                    <div class="description outlined-desc">
+                        {{tour?.description}}
+                    </div>
+                </div>
+                <div class="buttons-col">
+
+                </div>
+                <div class="col">
+                    <img *ngIf="getKeyPointImage(); else defaultImage"
+                    [src]="getKeyPointImage()" alt="Keypoints Picture" class="img" />
+                    <ng-template #defaultImage>
+                        <img src="..\..\..\assets\images\pexels-florencia-potter-82066-351283.jpg" alt="Default Tour Keypoint Picture" class="img"/>
+                    </ng-template>
+                </div>
+                <div class="col img-container">
+                    <button class="nav-button left" (click)="onPreviousImage()" *ngIf="hasMultipleImages()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+
+                    <img *ngIf="getKeyPointImage(); else defaultImage" [src]="getKeyPointImage()"
+                        alt="Keypoints Picture" class="img" />
+                    <ng-template #defaultImage>
+                        <img src="..\..\..\assets\images\pexels-florencia-potter-82066-351283.jpg"
+                            alt="Default Tour Keypoint Picture" class="img" />
+                    </ng-template>
+
+                    <button class="nav-button right" (click)="onNextImage()" *ngIf="hasMultipleImages()">
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div> -->
             </div>
         </div>
+    </div>
+
+    <div class="tour-container">
+
+
+
 
         <div *ngIf="showPublishForm" class="publish-form">
             <label>Price:</label>
@@ -88,6 +219,15 @@
 
     </div>
 
+
+
+
+
+
+
+
+
+
     <div class="title-container">
         <h1 mat-dialog-title *ngIf="tour && tour.reviews && tour.reviews.length > 0; else noReviews">Reviews</h1>
 
@@ -95,6 +235,7 @@
             <h1 mat-dialog-title>No Reviews Available</h1>
         </ng-template>
     </div>
+
     <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
         <div class="review-card" *ngFor="let review of tour?.reviews">
             <div class="reviewer-info">

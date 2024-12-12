@@ -71,6 +71,10 @@ export class TourAuthoringService {
     return this.http.get<TourTourist>(environment.apiHost + 'tour/tourist/' + id + '/' + touristId)
   }
 
+  addViewToTour(tourId: number): Observable<any> {
+    return this.http.get<any>(environment.apiHost + 'tour/addView/' + tourId)
+  }
+
   updateTour(tour: Tour): Observable<Tour> {
     return this.http.put<Tour>(environment.apiHost + 'tour/' + tour.id, tour)
   }
