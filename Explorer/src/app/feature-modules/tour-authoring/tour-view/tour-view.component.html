@@ -104,11 +104,8 @@
                                     class="level-label">{{
                                     getTourLevel(tour?.level)
                                     }}</b></mat-chip>
-                        </mat-chip-listbox>
-
-                        <mat-chip-listbox>
-                            <mat-chip class="level-chip">
-                                <b>{{ splitTags(tour?.tags) }}</b>
+                            <mat-chip class="level-chip" *ngFor="let tag of splitTags(tour?.tags)">
+                                <b>{{ tag }}</b>
                             </mat-chip>
                         </mat-chip-listbox>
                     </div>
@@ -138,8 +135,8 @@
                     <img *ngIf="getKeyPointImage(); else defaultImage" [src]="getKeyPointImage()"
                         alt="Keypoints Picture" class="img" />
                     <ng-template #defaultImage>
-                        <img src="..\..\..\assets\images\pexels-florencia-potter-82066-351283.jpg"
-                            alt="Default Tour Keypoint Picture" class="img" />
+                        <img src="assets\images\placeholder-landscape.png" alt="Default Tour Keypoint Picture"
+                            class="img" />
                     </ng-template>
 
                     <button class="nav-button right" (click)="onNextImage()" *ngIf="hasMultipleImages()">
@@ -200,7 +197,7 @@
         </div>
     </div>
 
-    <div class="tour-container">
+    <!-- <div class="tour-container">
 
 
 
@@ -217,7 +214,7 @@
 
 
 
-    </div>
+    </div> -->
 
 
 
@@ -227,17 +224,23 @@
 
 
 
+    <div class="review-container">
+        <div class="review-title-container">
+            <h2><b>Reviews</b></h2>
+            <mat-chip><b>{{ reviews.length }} Total reviews</b></mat-chip>
+        </div>
 
-    <div class="title-container">
-        <h1 mat-dialog-title *ngIf="tour && tour.reviews && tour.reviews.length > 0; else noReviews">Reviews</h1>
+        <div class="no-reviews-container" *ngIf="reviews.length < 1">
+            <p>There are no reviews for this tour.</p>
+        </div>
 
-        <ng-template #noReviews>
-            <h1 mat-dialog-title>No Reviews Available</h1>
-        </ng-template>
-    </div>
+        <div class="reviews-card-container" *ngIf="reviews.length >= 1">
+            <xp-tour-review [review]="r" *ngFor="let r of reviews"></xp-tour-review>
+        </div>
 
-    <div class="review-container" *ngIf="tour && tour.reviews && tour.reviews.length > 0">
-        <div class="review-card" *ngFor="let review of tour?.reviews">
+        <mat-paginator [length]="reviews.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"
+            aria-label="Select page"></mat-paginator>
+        <!-- <div class="review-card" *ngFor="let review of tour?.reviews">
             <div class="reviewer-info">
                 <div class="reviewer-image">
                     <img [src]="'data:image/jpeg;base64,' + (getUserProfile(review.touristId!)?.profileImage || '')"
@@ -272,11 +275,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="leaderboard-container">
-        <h1>Leaderboard</h1>
+        <div class="leaderboard-title-container">
+            <h2><b>Leaderboard</b></h2>
+            <mat-chip><b>{{ tour?.numberOfCompletions ?? 0 }} Total completions</b></mat-chip>
+        </div>
         <xp-tour-leaderboard [tourId]="tourId" />
     </div>
 

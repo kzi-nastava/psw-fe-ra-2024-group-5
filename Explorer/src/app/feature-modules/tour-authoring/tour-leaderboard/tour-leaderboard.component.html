@@ -1,4 +1,4 @@
-<mat-card class="leaderboard-container">
+<div class="leaderboard-container">
     <div class="leaderboard">
         <table mat-table [dataSource]="leaderboard?.entries!">
             <ng-container matColumnDef="position">
@@ -31,4 +31,4 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
         </table>
     </div>
-</mat-card>
+</div>
