@@ -88,7 +88,6 @@
         (click)="vote(blog.id, 0)"
         class="vote-button"
         [class.active]="userVotes[blog.id] === 0"
-        [disabled]="blog.status === 2 || blog.status === 0"
       >
         <mat-icon>thumb_up</mat-icon> ({{ upvotes[blog.id] || 0 }})
       </button>
@@ -96,10 +95,10 @@
         (click)="vote(blog.id, 1)"
         class="vote-button thumb-down"
         [class.active]="userVotes[blog.id] === 1"
-        [disabled]="blog.status === 2 || blog.status === 0"
       >
         <mat-icon>thumb_down</mat-icon> ({{ downvotes[blog.id] || 0 }})
       </button>
     </div>
+    
   </div>
 </div>

@@ -1,5 +1,5 @@
   import { Component, OnInit,Input, EventEmitter, Output } from '@angular/core';
-  import { BlogPostComment } from '../model/blog-post-comment';
+  import { BlogPostComment } from '../model/blog-post-comment.model';
   import { BlogService } from '../blog.service';
   import { PagedResults } from 'src/app/shared/model/paged-results.model';
   import { AuthService } from 'src/app/infrastructure/auth/auth.service';

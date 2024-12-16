@@ -2,7 +2,7 @@ import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, switchMap } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
-import { BlogPostComment } from './model/blog-post-comment';
+import { BlogPostComment } from './model/blog-post-comment.model';
 import { environment } from 'src/env/environment';
 import { Blog } from './model/blog.model';
 import { createBlog } from './model/createBlog.model';
@@ -32,7 +32,7 @@ export class BlogService {
 
   getCommentsForBlog(blogId: number): Observable<PagedResults<BlogPostComment>> {
     return this.http.get<PagedResults<BlogPostComment>>(`${environment.apiHost}author/blog/${blogId}/comments`);
-}
+  }
 
 
   getCommentsForUser(userId: number): Observable<PagedResults<BlogPostComment>> {

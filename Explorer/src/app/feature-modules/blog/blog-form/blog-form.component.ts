@@ -129,7 +129,7 @@ export class BlogFormComponent {
  
 
   onSubmit(): void {
-    if (this.blogForm.invalid) {
+    if (this.blogForm.invalid || this.isSubmitting) {
       this.errorMessage = 'Please fill in all required fields.';
       return;
     }
