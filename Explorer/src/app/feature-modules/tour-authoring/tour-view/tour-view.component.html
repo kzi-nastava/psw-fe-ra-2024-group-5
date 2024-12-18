@@ -57,9 +57,9 @@
                             *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeActivated"
                             (click)="startTour()"><mat-icon> navigation</mat-icon>Activate</button>
 
-                        <button mat-button class="secondary"
+                        <!-- <button mat-button class="secondary"
                             *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed"
-                            (click)="openReviewDialog()"><mat-icon>star</mat-icon>Add review</button>
+                            (click)="openReviewDialog()"><mat-icon>star</mat-icon>Add review</button> -->
 
                         <button mat-button class="secondary" *ngIf="user?.role === 'author'">Edit</button>
                     </div>
@@ -128,9 +128,7 @@
                 </div>
 
                 <div class="img-container">
-                    <button class="nav-button left" (click)="onPreviousImage()" *ngIf="hasMultipleImages()">
-                        <mat-icon>arrow_back</mat-icon>
-                    </button>
+
 
                     <img *ngIf="getKeyPointImage(); else defaultImage" [src]="getKeyPointImage()"
                         alt="Keypoints Picture" class="img" />
@@ -139,9 +137,16 @@
                             class="img" />
                     </ng-template>
 
-                    <button class="nav-button right" (click)="onNextImage()" *ngIf="hasMultipleImages()">
-                        <mat-icon>arrow_forward</mat-icon>
-                    </button>
+                    <div class="nav-buttons-container">
+                        <button class="nav-button left" (click)="onPreviousImage()" *ngIf="hasMultipleImages()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                        <button class="nav-button right" (click)="onNextImage()" *ngIf="hasMultipleImages()">
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </div>
+
+
                 </div>
 
                 <!-- <div class="details-col">
@@ -226,8 +231,13 @@
 
     <div class="review-container">
         <div class="review-title-container">
-            <h2><b>Reviews</b></h2>
-            <mat-chip><b>{{ reviews.length }} Total reviews</b></mat-chip>
+            <div>
+                <h2><b>Reviews</b></h2>
+                <mat-chip><b>{{ reviews.length }} Total reviews</b></mat-chip>
+            </div>
+
+            <button mat-button class="secondary" *ngIf="tour?.status===1 && user?.role === 'tourist' && canBeReviewed"
+                (click)="openReviewDialog()"><mat-icon>star</mat-icon>Add review</button>
         </div>
 
         <div class="no-reviews-container" *ngIf="reviews.length < 1">

@@ -354,10 +354,18 @@ mat-icon {
   border-radius: 20px;
 }
 
+.img-container {
+  position: relative;
+}
+
+.nav-buttons-container {
+  position: relative;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
 .nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   background-color: var(--button-secondary-bg);
   border: none;
   color: white;
@@ -368,13 +376,13 @@ mat-icon {
   z-index: 10;
 }
 
-.nav-button.left {
+/* .nav-button.left {
   left: 10px;
 }
 
 .nav-button.right {
   right: 10px;
-}
+} */
 
 .nav-button:hover {
   background-color: #d9848d;
@@ -415,8 +423,15 @@ button.close:hover {
 .review-title-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-bottom: 15px;
+}
+
+.review-title-container div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .review-title-container h2 {
