@@ -328,6 +328,7 @@ export class TourDetailedViewComponent implements OnInit {
       if (result === true) {
         if (this.user?.id) {
           this.loadTourTouristDetails(this.tourId, this.user.id);
+          this.loadReviews(this.tourId, this.user.id);
         }
         this.showSuccessAlert('Review successfully submitted!');
         console.log('Review successfully submitted');
