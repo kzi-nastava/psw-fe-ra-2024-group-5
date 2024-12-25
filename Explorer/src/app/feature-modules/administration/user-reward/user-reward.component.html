@@ -1,1 +1,12 @@
-<p>user-reward works!</p>
+<div class="daily-reward-container">
+    <h1 class="header">Claim your daily reward!</h1>
+  
+    <div class="rewards">
+      <div class="reward" *ngFor="let reward of rewards">
+        <img [src]="reward.image" [alt]="reward.name" />
+        <p class="reward-name">{{ reward.name }}</p>
+        <button *ngIf="reward.claimable" class="claim-button" (click)="claimReward()">Claim</button>
+        <i *ngIf="reward.claimed" class="check-icon">✔</i>
+      </div>
+    </div>
+  </div>

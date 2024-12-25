@@ -12,7 +12,10 @@ export class UserRewardService {
   constructor(private http: HttpClient) { }
   
     getUserReward(id: number): Observable<UserReward> {
-      return this.http.get<UserReward>(environment.apiHost + 'tourist/reward/' + id);
+      return this.http.get<UserReward>(environment.apiHost + 'reward/' + id);
     }
-  
+    
+    claimDailyReward(id: number): Observable<any> {
+      return this.http.post<any>(environment.apiHost + 'reward/daily/' + id, {});
+    }
 }

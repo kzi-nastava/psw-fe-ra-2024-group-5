@@ -9,6 +9,7 @@ import { UserReward } from '../../administration/model/user-reward.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserRewardComponent } from '../../administration/user-reward/user-reward.component';
 //import { Blog } from '../../blog/model/blog.model';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'xp-landing',
@@ -26,10 +27,12 @@ export class LandingComponent {
   ){
     this.authService.user$.subscribe(user => {
       this.user = user;
-
-      this.loadReward();
     });
     this.loadTours();
+  }
+
+  ngOnInit(): void {
+    this.loadReward();
   }
 
   loadTours(): void{
@@ -51,7 +54,7 @@ export class LandingComponent {
       this.rewardService.getUserReward(this.user.id).subscribe( userReward => {
         if(userReward.canBeClaimed){
           this.dialog.open(UserRewardComponent, {
-            width: '400px', // Set the width of the dialog
+            width: '1000px', // Set the width of the dialog
             data: { userReward } // Optional: pass data to the dialog
           });
         }
