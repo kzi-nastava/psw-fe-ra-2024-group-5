@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { UserReward } from './model/user-reward.model';
+import { ClaimedReward } from './model/claimed-reward.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,9 @@ export class UserRewardService {
     
     claimDailyReward(id: number): Observable<any> {
       return this.http.post<any>(environment.apiHost + 'reward/daily/' + id, {});
+    }
+
+    claimWheelOfFortune(id: number, rewardId: number): Observable<ClaimedReward> {
+      return this.http.post<ClaimedReward>(environment.apiHost + 'reward/wheel/' + id + '/' + rewardId, {});
     }
 }

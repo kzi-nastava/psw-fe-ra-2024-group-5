@@ -54,7 +54,7 @@ export class LandingComponent {
       this.rewardService.getUserReward(this.user.id).subscribe( userReward => {
         if(userReward.canBeClaimed){
           this.dialog.open(UserRewardComponent, {
-            width: '1000px', // Set the width of the dialog
+            width: '1000px',
             data: { userReward } // Optional: pass data to the dialog
           });
         }

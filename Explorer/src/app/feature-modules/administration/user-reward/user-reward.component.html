@@ -1,7 +1,7 @@
 <div class="daily-reward-container">
     <h1 class="header">Claim your daily reward!</h1>
   
-    <div class="rewards">
+    <div *ngIf="!showWheel" class="rewards">
       <div class="reward" *ngFor="let reward of rewards">
         <img [src]="reward.image" [alt]="reward.name" />
         <p class="reward-name">{{ reward.name }}</p>
@@ -9,4 +9,15 @@
         <i *ngIf="reward.claimed" class="check-icon">✔</i>
       </div>
     </div>
+
   </div>
+
+  <div *ngIf="showWheel" class="wheel">
+    <xp-prize-wheel (prizeSelected)="onPrizeSelected($event)" [maxSpins]="1" [sections]="sections"></xp-prize-wheel>
+    <div class="wheel-reward">
+      <h2 *ngIf="selectedPrize" class="header mt-20">Congrats, ur prize is:</h2>
+      <h2 *ngIf="!selectedPrize" class="header mt-20">Spin and win!</h2>
+
+      <button *ngIf="selectedPrize" class="claim-button mb-20" (click)="closeDialog()">Claim</button>
+    </div>
+</div>

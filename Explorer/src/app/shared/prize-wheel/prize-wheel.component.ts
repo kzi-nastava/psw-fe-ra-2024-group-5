@@ -15,7 +15,7 @@ export class PrizeWheelComponent {
   ];
   @Input() maxSpins: number = Infinity;
 
-  @Output() prizeSelected = new EventEmitter<number>();
+  @Output() prizeSelected = new EventEmitter<PrizeSection>();
 
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
@@ -90,6 +90,6 @@ export class PrizeWheelComponent {
     console.log(sectionIndex)
     console.log(topIndex)
 
-    this.prizeSelected.emit(this.sections[topIndex].id);
+    this.prizeSelected.emit(this.sections[topIndex]);
   }
 }
