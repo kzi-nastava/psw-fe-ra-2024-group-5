@@ -4,12 +4,7 @@ import { UserRewardService } from '../user-reward.service';
 import { UserReward } from '../model/user-reward.model';
 import { PrizeWheelComponent } from 'src/app/shared/prize-wheel/prize-wheel.component';
 import { PrizeSection } from 'src/app/shared/model/prize-section.model';
-import { TourCard } from '../../tour-authoring/model/tour-card.model';
-import { Coupon } from '../../marketplace/model/coupon.model';
-import { MarketplaceService } from '../../marketplace/marketplace.service';
-import { TourAuthoringService } from '../../tour-authoring/tour-authoring.service';
-import { Tour } from '../../tour-authoring/model/tour.model';
-import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
+import { ClaimedReward } from '../model/claimed-reward.model';
 
 @Component({
   selector: 'xp-user-reward',
@@ -28,6 +23,7 @@ export class UserRewardComponent {
     { name: 'Spin the wheel!', image: 'assets/images/wheel.png', claimable: false, claimed: false }
   ];
 
+  
   sections: PrizeSection[] = [
     { id: 2, label: '50AC', color: '#4BC0C0' },
     { id: 2, label: '50AC', color: '#4BC0C0' },
@@ -42,10 +38,8 @@ export class UserRewardComponent {
 
   userReward: UserReward;
   showWheel: boolean = false;
-
-  tour: Tour;
-  coupon: Coupon;
-  tourName: string;
+  claimedReward: ClaimedReward;
+  imageSource: string = '';
 
   selectedPrize: PrizeSection | null = null;
 
@@ -85,9 +79,12 @@ export class UserRewardComponent {
 
   onPrizeSelected(prize: PrizeSection) {
     this.selectedPrize = prize;
+
     this.rewardService.claimWheelOfFortune(this.userReward.id, this.selectedPrize.id).subscribe(
       claimedReward => {
         console.log(claimedReward)
+        this.claimedReward = claimedReward;
+        this.imageSource = `data:image/jpeg;base64,${claimedReward.image}`;
       }
     )
   }

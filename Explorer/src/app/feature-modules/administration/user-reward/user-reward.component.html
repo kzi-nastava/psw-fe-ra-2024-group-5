@@ -15,8 +15,33 @@
   <div *ngIf="showWheel" class="wheel">
     <xp-prize-wheel (prizeSelected)="onPrizeSelected($event)" [maxSpins]="1" [sections]="sections"></xp-prize-wheel>
     <div class="wheel-reward">
-      <h2 *ngIf="selectedPrize" class="header mt-20">Congrats, ur prize is:</h2>
+      <h2 *ngIf="selectedPrize" class="header mt-20">Congrats, your prize is:</h2>
       <h2 *ngIf="!selectedPrize" class="header mt-20">Spin and win!</h2>
+
+      <div *ngIf="!selectedPrize" class="content">
+        <img src="assets/images/question.png" alt="coins"  style="margin-bottom: 50px;"/>
+      </div>
+
+      <div *ngIf="selectedPrize?.id == 1 || selectedPrize?.id == 2 || selectedPrize?.id == 3" class="content">
+        <img *ngIf="selectedPrize?.id == 2 || selectedPrize?.id == 3" src="assets/images/coins.png" alt="coins" />
+        <img *ngIf="selectedPrize?.id == 1" src="assets/images/xp.png" alt="coins" />
+        <h1>{{ selectedPrize?.label}}</h1>
+      </div>
+
+      <div *ngIf="(selectedPrize?.id == 5 || selectedPrize?.id == 4)  && this.claimedReward.tourId" class="content">
+        <img *ngIf="this.claimedReward.image !== ''" [src]="imageSource" alt="tour image" />
+        <img *ngIf="this.claimedReward.image === ''" src="..\..\..\assets\images\pexels-florencia-potter-82066-351283.jpg"
+                            alt="tour image"/>
+        <h1 *ngIf="this.claimedReward.code">{{this.claimedReward.code}}</h1>
+        <h2 *ngIf="this.claimedReward.code" style="margin: 0;">Tour: {{this.claimedReward.tourName}}  {{this.claimedReward.percentage}}% off!</h2>
+        <h2 *ngIf="!this.claimedReward.code" style="margin: 0;">Free tour: {{this.claimedReward.tourName}}</h2>
+      </div>
+
+      <div *ngIf="(selectedPrize?.id == 5 || selectedPrize?.id == 4)  && !this.claimedReward.tourId" class="content">
+        <img src="assets/images/coins.png" alt="coins" />
+        <h3>Oops, no tours available, gift:</h3>
+        <h1>200 AC</h1>
+      </div>
 
       <button *ngIf="selectedPrize" class="claim-button mb-20" (click)="closeDialog()">Claim</button>
     </div>
