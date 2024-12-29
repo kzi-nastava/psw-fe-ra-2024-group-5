@@ -28,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmDialogComponent } from './app-rating/app-rating-confirmation/app-rating-confirm-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
+import { UserRewardComponent } from './user-reward/user-reward.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { MatSortModule } from '@angular/material/sort';
     AccountsComponent,
     FollowersListComponent,
     ConfirmDialogComponent,
-    SendMessageDialogComponent
+    SendMessageDialogComponent,
+    UserRewardComponent
   ],
   imports: [
     CommonModule,
