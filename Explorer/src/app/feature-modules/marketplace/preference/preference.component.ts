@@ -5,6 +5,7 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { ChangeDetectorRef } from '@angular/core';
 import { TourDifficulty } from '../enum/tour-difficulty.enum';
 import { FilterService } from 'src/app/shared/service/filter.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'xp-preference',
@@ -57,48 +58,106 @@ export class PreferenceComponent implements OnInit {
       console.error('Preference ID is undefined');
       return;
     }
+
     if (preference.isActive) {
+      // Deaktivacija
       this.service.deactivatePreference(preference.id).subscribe({
-        next: () => {
+        next: (response) => {
           console.log(`Preference ${preference.id} deactivated`);
-          preference.isActive = false; 
+          // Lokalno ažuriranje umesto ponovnog učitavanja
+          preference.isActive = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
-          console.error('Error deactivating preference:', err);
-        },
+          // Proverava da li je HTTP status 200 uprkos grešci parsiranja
+          if (err.status === 200) {
+            console.log(`Preference ${preference.id} deactivated (text response)`);
+            preference.isActive = false;
+            this.cdr.detectChanges();
+          } else {
+            console.error('Error deactivating preference:', err);
+          }
+        }
       });
     } else {
+      // Aktivacija - optimizovana verzija
       const activePreferences = this.preferences.filter(p => p.isActive && p.id !== preference.id);
-  
-      const deactivateObservables = activePreferences.map(p => {
-        if (p.id) {
-          return this.service.deactivatePreference(p.id).subscribe({
-            next: () => {
-              console.log(`Preference ${p.id} deactivated`);
-              p.isActive = false; 
-            },
-            error: (err) => {
-              console.error(`Error deactivating preference ${p.id}:`, err);
-            },
-          });
-        }
-        return null;
-      });
-  
-      this.service.activatePreference(preference.id).subscribe({
-        next: () => {
-          console.log(`Preference ${preference.id} activated`);
-          preference.isActive = true; 
-        },
-        error: (err) => {
-          console.error('Error activating preference:', err);
-        },
-        complete: () => {
-          this.getPreference(); 
-        },
-      });
+      
+      if (activePreferences.length > 0) {
+        // Koristi forkJoin za paralelno izvršavanje deaktivacija
+        const deactivationObservables = activePreferences.map(p => 
+          this.service.deactivatePreference(p.id!)
+        );
+
+        forkJoin(deactivationObservables).subscribe({
+          next: (responses) => {
+            // Prvo lokalno ažuriraj deaktivirane
+            activePreferences.forEach(p => p.isActive = false);
+            
+            // Zatim aktiviraj trenutnu
+            this.service.activatePreference(preference.id!).subscribe({
+              next: (response) => {
+                console.log(`Preference ${preference.id} activated`);
+                preference.isActive = true;
+                this.cdr.detectChanges();
+              },
+              error: (err) => {
+                // Proverava da li je HTTP status 200 uprkos grešci parsiranja
+                if (err.status === 200) {
+                  console.log(`Preference ${preference.id} activated (text response)`);
+                  preference.isActive = true;
+                  this.cdr.detectChanges();
+                } else {
+                  console.error('Error activating preference:', err);
+                }
+              }
+            });
+          },
+          error: (err) => {
+            // Ako je deaktivacija uspešna (status 200) uprkos parsing grešci
+            if (err.status === 200) {
+              activePreferences.forEach(p => p.isActive = false);
+              // Nastavi sa aktivacijom
+              this.service.activatePreference(preference.id!).subscribe({
+                next: (response) => {
+                  preference.isActive = true;
+                  this.cdr.detectChanges();
+                },
+                error: (activationErr) => {
+                  if (activationErr.status === 200) {
+                    preference.isActive = true;
+                    this.cdr.detectChanges();
+                  }
+                }
+              });
+            } else {
+              console.error('Error during deactivation:', err);
+            }
+          }
+        });
+      } else {
+        // Nema aktivnih preferencija, samo aktiviraj trenutnu
+        this.service.activatePreference(preference.id!).subscribe({
+          next: (response) => {
+            console.log(`Preference ${preference.id} activated`);
+            preference.isActive = true;
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            // Proverava da li je HTTP status 200 uprkos grešci parsiranja
+            if (err.status === 200) {
+              console.log(`Preference ${preference.id} activated (text response)`);
+              preference.isActive = true;
+              this.cdr.detectChanges();
+            } else {
+              console.error('Error activating preference:', err);
+            }
+          }
+        });
+      }
     }
   }
+
   
   difficultyMap: { [key: number]: string } = {
     [TourDifficulty.Beginner]: 'BEGINNER',
@@ -106,6 +165,7 @@ export class PreferenceComponent implements OnInit {
     [TourDifficulty.Advanced]: 'ADVANCED'
   };
 
+  
   
   
  

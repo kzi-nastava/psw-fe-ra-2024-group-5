@@ -1,38 +1,69 @@
-<div>
-    <div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Preferred Difficulty</th>
-            <th>Walk Rating</th>
-            <th>Bike Rating</th>
-            <th>Car Rating</th>
-            <th>Boat Rating</th>
-            <th>Interest Tags</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let preference of preferences">
-            <td>{{ difficultyMap[+preference.preferredDifficulty] || 'UNKNOWN' }}</td>
-            <td>{{ preference.walkRating }}</td>
-            <td>{{ preference.bikeRating }}</td>
-            <td>{{ preference.carRating }}</td>
-            <td>{{ preference.boatRating }}</td>
-            <td>{{ preference.interestTags.join(', ') }}</td>
-            <td>
-                <button class="delete-button"
-                        (click)="toggleActivation(preference)">
-                  {{ preference.isActive ? 'Deactivate' : 'Activate' }}
-                </button>
-              </td>
-            <td>
-                <button class="delete-button" (click)="deletePreference(preference)">
-                    Delete
-                  </button>
-              </td>
-        </tr>
-    </tbody>
-</table>
-<div>
-    <xp-preference-dialog (preferenceUpdated)="getPreference()" ></xp-preference-dialog>
-<div>
+<div class="cards-grid">
+  <div class="preference-card" *ngFor="let preference of preferences">
+    <div class="card-header">
+      <div class="difficulty-badge" 
+           [ngClass]="{
+             'difficulty-beginner': difficultyMap[+preference.preferredDifficulty] === 'BEGINNER',
+             'difficulty-intermediate': difficultyMap[+preference.preferredDifficulty] === 'INTERMEDIATE',
+             'difficulty-advanced': difficultyMap[+preference.preferredDifficulty] === 'ADVANCED'
+           }">
+        {{ difficultyMap[+preference.preferredDifficulty] || 'UNKNOWN' }}
+      </div>
+
+      <div class="status-badge" 
+           [ngClass]="{
+             'status-active': preference.isActive,
+             'status-inactive': !preference.isActive
+           }">
+        {{ preference.isActive ? 'Active' : 'Inactive' }}
+      </div>
+
+      <!-- DELETE dugme u gornjem desnom uglu -->
+      <button class="btn btn-delete btn-delete-top" (click)="deletePreference(preference)">
+        🗑️
+      </button>
+    </div>
+
+    <div class="ratings-grid">
+      <div class="rating-item">
+        <div class="rating-label">Walk Rating</div>
+        <div class="rating-value">{{ preference.walkRating }}</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-label">Bike Rating</div>
+        <div class="rating-value">{{ preference.bikeRating }}</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-label">Car Rating</div>
+        <div class="rating-value">{{ preference.carRating }}</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-label">Boat Rating</div>
+        <div class="rating-value">{{ preference.boatRating }}</div>
+      </div>
+    </div>
+
+    <div class="interest-tags" *ngIf="preference.interestTags && preference.interestTags.length > 0">
+      <h4>Interest Tags</h4>
+      <div class="tags-container">
+        <span class="tag" *ngFor="let tag of preference.interestTags">{{ tag }}</span>
+      </div>
+    </div>
+
+    <div class="card-actions center-button">
+      <button class="btn" 
+              [ngClass]="{
+                'btn-activate': !preference.isActive,
+                'btn-deactivate': preference.isActive
+              }"
+              (click)="toggleActivation(preference)">
+        {{ preference.isActive ? 'Deactivate' : 'Activate' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Add New Preference Card -->
+  <div class="add-preference">
+    <xp-preference-dialog (preferenceUpdated)="getPreference()"></xp-preference-dialog>
+  </div>
+</div>

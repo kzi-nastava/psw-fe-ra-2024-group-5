@@ -1,6 +1,6 @@
 /* Zajednički stil za sve dugmiće */
 .custom-button {
-  background-color: #007bff; /* Plava boja */
+  background-color: #bf616a;
   color: white;
   font-size: 16px;
   padding: 8px 16px;
@@ -11,12 +11,12 @@
 }
 
 .custom-button:hover {
-  background-color: #0056b3; /* Tamnija plava kad se pređe */
-  transform: scale(1.05); /* Lagano povećanje */
+  background-color: #a3be8c;
+  transform: scale(1.05);
 }
 
 .custom-button:active {
-  transform: scale(0.95); /* Klik efekat */
+  transform: scale(0.95); 
 }
 
 .button-container {
