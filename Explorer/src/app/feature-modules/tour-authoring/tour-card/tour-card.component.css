@@ -1,19 +1,33 @@
 .container {
-    width: 300px; /* Prošireno i smanjen maksimalni width da se stane u ekran */
-    max-width: 100%; /* Da se širi maksimalno do širine ekrana */
+    width: 300px; /* Prošireno i smanjen maksimalni width da stane u ekran */
+    max-width: 100%; /* Širina do maksimalnog ekrana */
     display: flex;
     flex-direction: column;
     gap: 15px; /* Razmak između sekcija */
     font-family: 'Arial', sans-serif;
     box-sizing: border-box;
-    padding: 15px; /* Dodati padding za prostor oko sadržaja */
+    padding: 15px; /* Padding oko sadržaja */
+    background-color: #fff;
+    border-radius: 12px;
+    border-color: black;
 }
+
+.container {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
 
 .image-container {
     width: 100%;
     height: 180px;
     overflow: hidden;
-    border-radius: 10px; /* Dodajte zakrivljenost za slike */
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,43 +36,46 @@
 
 .image-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover; /* Slika se lepo uklapa u okvir */
+    transition: transform 0.3s ease;
 }
+
+
 
 .details {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Razmak između stavki */
-    font-size: 1.1em; /* Umeren font za bolju preglednost */
+    gap: 8px; /* Razmak između stavki */
+    font-size: 1.1em;
 }
 
-.details h2 {
-    font-size: 1.4em;
+.container span.h1 {
+    font-size: 20px;
     font-weight: bold;
-    margin: 0; /* Smanjenje margine za bolji raspored */
-    color: #333; /* Tamna boja za bolji kontrast */
+    margin-left: 50px;
+    color: #333;
 }
 
 .text {
     color: #555;
-    font-size: 1.1em;
+    font-size: 1.05em;
 }
 
 .rating-container {
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .star {
-    font-size: 25px; /* Manje zvezdice, prilagođene prostoru */
+    font-size: 22px;
     color: gold;
-    margin-right: 5px;
+    margin-right: 4px;
 }
 
 .bottom-container {
     width: 100%;
-    padding: 15px;
+    padding: 10px 15px;
     background-color: #f8f8f8;
     border-radius: 10px;
     display: flex;
@@ -67,10 +84,88 @@
     box-sizing: border-box;
 }
 
-.price-container {
+.bottom-left {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    align-items: center;
+}
+
+.bottom-right {
+    display: flex;
+    align-items: center;
+}
+
+/* View more dugme */
+button.secondary {
+    padding: 8px 18px;
+    font-size: 1em;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 70px;
+}
+
+button.secondary:hover {
+    background-color: #ff7755;
+    transform: scale(1.05);
+}
+
+/* Favorit dugme */
+.favorite-btn {
+    position: relative;
+}
+
+.favorite-btn mat-icon {
+    font-size: 28px;
+    color: #555;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.favorite-btn mat-icon:hover {
+    color: red;
+    transform: scale(1.2);
+}
+
+.favorite-btn mat-icon.active {
+    color: red;
+    transform: scale(1.2);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .details h2 {
+        font-size: 1.2em;
+    }
+
+    .text, .price-text {
+        font-size: 1em;
+    }
+
+    .star {
+        font-size: 18px;
+    }
+
+    button.secondary {
+        padding: 6px 14px;
+        font-size: 0.95em;
+    }
+
+    .favorite-btn mat-icon {
+        font-size: 24px;
+    }
+
+}
+.bottom-left {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Razmak između cene i View more dugmeta */
 }
 
 .price-text {
@@ -79,37 +174,3 @@
     color: #333;
 }
 
-button.secondary {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #ff5733;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button.secondary:hover {
-    background-color: pink;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 600px) {
-    .container {
-        width: 100%; /* Širina od 100% za manje ekrane */
-        padding: 10px; /* Smanjeni padding na manjim ekranima */
-    }
-
-    .details h2 {
-        font-size: 1.2em; /* Smanjena veličina naziva */
-    }
-
-    .text, .price-text {
-        font-size: 1em; /* Manji font za male ekrane */
-    }
-
-    .star {
-        font-size: 20px; /* Manje zvezdice na manjim ekranima */
-    }
-}

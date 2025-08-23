@@ -1,27 +1,31 @@
 <div class="container">
+    <span class="h1">{{tourCard.name}}</span>
     <div class="image-container rounded">
         <img [src]="imageSource" alt="picture"/>
-        
     </div>
+  
     <div class="details">
-        <h2>{{tourCard.name}}</h2>
         <span class="text">{{location}}</span>
         <span class="text">Length: {{tourCard.length}} km</span>
         <span class="text">{{tourLevels[tourCard.level]}}</span>
         <span class="text">{{tourCard.tags}}</span>
+        <div class="price-text">Price:{{tourCard.price.amount}} {{currencies[tourCard.price.currency]}}</div>
         <div class="rating-container">
             <span class="star" *ngFor="let i of [1,2,3,4,5]">
               <span *ngIf="tourCard.averageRating >= i">&#9733;</span>
             </span>
-          </div>                        
+        </div>                        
     </div>
+  
     <div class="bottom-container rounded">
-        <div class="price-container">
-            <div class="price-text">{{tourCard.price.amount}} {{currencies[tourCard.price.currency]}}</div>
+        <div class="bottom-left">
             <button mat-button class="secondary" (click)="addToCart()" *ngIf="user?.role === 'tourist'">View more</button>
-            <button mat-icon-button class="favorite-btn" (click)="toggleFavorite()">
+        </div>
+        <div class="bottom-right">
+            <button mat-icon-button class="favorite-btn" (click)="toggleFavorite(); $event.stopPropagation()">
                 <mat-icon>{{ isFavorite ? 'bookmark' : 'bookmark_border' }}</mat-icon>
             </button>
         </div>
     </div>
-</div>
+  </div>
+  
