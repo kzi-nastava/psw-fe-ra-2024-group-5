@@ -66,6 +66,14 @@
     margin-bottom: 10px; 
 }
 
+.cart-item-name-tour{
+  text-align: center;
+  margin: 0;
+  color: var(--text-paragraph);
+  font-size: 1.2em;
+  margin-bottom: 10px; 
+}
+
 .empty-cart-message {
     color: var(--text-muted);
     font-style: italic;

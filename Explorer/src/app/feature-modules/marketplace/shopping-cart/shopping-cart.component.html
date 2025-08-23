@@ -13,12 +13,15 @@
     <li *ngFor="let item of shoppingCart.tourItems" (click)="detailedAboutTour(item.tourId)" class="cart-item">
    
       <div class="cart-item-image-container">
+        <p class="cart-item-name-tour">
+          <strong >{{ item.tourName }}</strong></p>
         <img 
           *ngIf="item.imageUrl && item.imageUrl.trim() !== ''; else noImage" 
           [src]="item.imageUrl" 
           alt="{{ item.tourName }}" 
           class="cart-item-image" 
         />
+        
         <ng-template #noImage>
           <img 
           src="assets/images/no_image.jpg" 
@@ -28,8 +31,7 @@
         </ng-template>
       </div>  
 
-      <p class="cart-item-name">Name:
-           <strong >{{ item.tourName }}</strong></p>
+     
                 <p class="cart-item-name">Description: {{ item.description }}</p>
       <p class="cart-item-name">{{ item.tags }}</p>
       <div class="cart-item-price">

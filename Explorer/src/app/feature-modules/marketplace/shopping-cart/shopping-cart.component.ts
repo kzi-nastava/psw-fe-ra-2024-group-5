@@ -235,6 +235,9 @@ export class ShoppingCartComponent implements OnInit {
         console.log('Purchase completed successfully', response);
         
         this.shoppingCart = null;
+        this.shoppingCartService.updateItemCount(0); //  resetuj broj u korpi kad se kupi
+
+
         this.getCartItems(); 
         this.loadWallet();    
         this.closeCheckoutModal(); 
