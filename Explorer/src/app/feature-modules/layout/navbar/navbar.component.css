@@ -94,5 +94,9 @@
       transform: scale(1); /* Krajna veličina (normalna) */
     }
   }
+  .favorite-active {
+    color:  #ff4081;
+  }
+  
   
   

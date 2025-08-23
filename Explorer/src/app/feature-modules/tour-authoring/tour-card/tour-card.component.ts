@@ -4,6 +4,7 @@ import { MapService } from 'src/app/shared/map/map.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { OrderItem } from '../../marketplace/model/order-item.model';
+import { FavoritesServiceService } from '../favorites/favorites-service.service';
 
 @Component({
   selector: 'xp-tour-card',
@@ -20,9 +21,12 @@ export class TourCardComponent {
   location: string = 'Location unknown';
   currencies: string[] = ['AC','e','$','rsd'];
   imageSource: string = '';
+  isFavorite: boolean = false;
+
   
 
-  constructor(private mapService: MapService,private authService: AuthService){}
+  constructor(private mapService: MapService,private authService: AuthService,private favoritesService: FavoritesServiceService
+  ){}
 
   ngOnInit(): void {
     if(!this.tourCard)
@@ -43,9 +47,19 @@ export class TourCardComponent {
       
       this.location = `${city}, ${state}`;
     });
+
+    this.isFavorite = this.favoritesService.isFavorite(this.tourCard.id);
   }
 
   addToCart(): void {
     this.tourSelected.emit(this.tourCard.id);
+  }
+  toggleFavorite(): void {
+    if (this.isFavorite) {
+      this.favoritesService.removeFavorite(this.tourCard.id);
+    } else {
+      this.favoritesService.addFavorite(this.tourCard);
+    }
+    this.isFavorite = !this.isFavorite;
   }
 }

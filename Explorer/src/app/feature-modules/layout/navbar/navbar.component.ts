@@ -7,6 +7,7 @@ import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationComponent } from '../../notification/notification/notification.component';
 import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
+import { FavoritesServiceService } from '../../tour-authoring/favorites/favorites-service.service';
 
 @Component({
   selector: 'xp-navbar',
@@ -19,6 +20,7 @@ export class NavbarComponent implements OnInit {
   routerSubscription: Subscription;
   itemsCount: number = 0;  // Dodajte promenljivu za broj stavki u korpi
   @Output() itemsCountUpdated = new EventEmitter<number>();
+  isFav: boolean = false;
 
 
 
@@ -27,28 +29,42 @@ export class NavbarComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private shoppingCartService: ShoppingCartService,  
+    private favoritesService : FavoritesServiceService
   ) {}
 
   ngOnInit(): void {
+    // inicijalno stanje srca
+    this.updateFavoriteStatus();
+  
+    // pretplata na promene favorita
+    this.favoritesService.favoritesChanged.subscribe(() => {
+      this.updateFavoriteStatus();
+    });
+  
+    // korisnički podaci i korpa
     this.authService.user$.subscribe(user => {
       this.user = user;
       this.shoppingCartService.itemsCount$.subscribe(count => {
         this.itemsCount = count;
         this.updateItemsCount(count); 
-        
       });
-    
+  
       if (this.user) {
         this.shoppingCartService.updateItemsCount(this.user.id);
       }
     });
-
+  
     this.routerSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.closeNotifications();
       }
     });
   }
+  
+  updateFavoriteStatus(): void {
+    this.isFav = this.favoritesService.getFavorites().length > 0;
+  }
+  
 
 getItemCount(userId?: number): void {
   if (!userId) {
@@ -123,6 +139,10 @@ updateItemsCount(count: number): void {
 
   getUnreadCount(): number {
     return this.notificationComponent ? this.notificationComponent.getUnreadNotificationsCount() : 0;
+  }
+
+  toggleFav(): void {
+    this.isFav = !this.isFav;
   }
 
 }

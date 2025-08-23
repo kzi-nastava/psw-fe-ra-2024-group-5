@@ -37,6 +37,7 @@ import { EncountersApprovalComponent } from 'src/app/feature-modules/encounter/e
 import { CouponsComponent } from 'src/app/feature-modules/marketplace/coupons/coupons.component';
 import { CouponFormComponent } from 'src/app/feature-modules/marketplace/coupon-form/coupon-form.component';
 import { BundlesPageComponent } from 'src/app/feature-modules/marketplace/bundle-page/bundles-page.component';
+import { FavoritesPageComponentComponent } from 'src/app/feature-modules/tour-authoring/favorites/favorites-page-component/favorites-page-component.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -75,7 +76,10 @@ const routes: Routes = [
   { path: 'encounters-approval', component: EncountersApprovalComponent},
   { path: 'view-coupons', component: CouponsComponent},
   { path: 'form-coupons', component: CouponFormComponent},
-  { path: 'bundles-page', component: BundlesPageComponent}
+  { path: 'bundles-page', component: BundlesPageComponent},
+  { path: 'favourite-page', component: FavoritesPageComponentComponent},
+
+  
 ];
 
 @NgModule({

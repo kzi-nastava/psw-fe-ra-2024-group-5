@@ -1,6 +1,7 @@
 <div class="container">
     <div class="image-container rounded">
         <img [src]="imageSource" alt="picture"/>
+        
     </div>
     <div class="details">
         <h2>{{tourCard.name}}</h2>
@@ -18,6 +19,9 @@
         <div class="price-container">
             <div class="price-text">{{tourCard.price.amount}} {{currencies[tourCard.price.currency]}}</div>
             <button mat-button class="secondary" (click)="addToCart()" *ngIf="user?.role === 'tourist'">View more</button>
+            <button mat-icon-button class="favorite-btn" (click)="toggleFavorite()">
+                <mat-icon>{{ isFavorite ? 'bookmark' : 'bookmark_border' }}</mat-icon>
+            </button>
         </div>
     </div>
 </div>

@@ -18,6 +18,7 @@ import { TourCardComponent } from './tour-card/tour-card.component';
 import { FormsModule } from '@angular/forms';
 import { ToursAuthorPageComponent } from './tours-author-page/tours-author-page.component';
 import { TourLeaderboardComponent } from './tour-leaderboard/tour-leaderboard.component';
+import { FavoritesPageComponentComponent } from './favorites/favorites-page-component/favorites-page-component.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TourLeaderboardComponent } from './tour-leaderboard/tour-leaderboard.co
     ToursPageComponent,
     TourCardComponent,
     ToursAuthorPageComponent,
-    TourLeaderboardComponent
+    TourLeaderboardComponent,
+    FavoritesPageComponentComponent
   ],
   imports: [
     CommonModule,
