@@ -17,6 +17,7 @@ import { EncounterType, encounterTypeToString } from '../enum/encounter-type.enu
   styleUrls: ['./encounter.component.css']
 })
 export class EncounterComponent implements OnInit {
+  showLevelTitles: boolean = false;
   activeEncounters: Encounter[] = [];
   userId: number | null = null;
   activatedEncounter: Encounter | null = null;

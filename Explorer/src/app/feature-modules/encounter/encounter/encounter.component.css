@@ -1,3 +1,55 @@
+/* Modal overlay for level titles */
+.level-titles-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.level-titles-modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  padding: 32px;
+  min-width: 320px;
+  max-width: 90vw;
+}
+
+.level-titles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.level-titles-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.level-titles-modal-header {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.level-titles-modal-close {
+  text-align: right;
+  margin-top: 18px;
+}
+
+.level-titles-modal-close button {
+  background: #bf616a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
 @import 'src/styles.css';
 
 .container {
@@ -172,6 +224,26 @@ img {
   background-color: var(--alert-success-bg, #28a745);
 }
 
+.level-titles-button {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text, white);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+
+.level-titles-button:hover {
+  background-color: var(--alert-success-bg, #28a745);
+}
+
 .encounter-info {
   display: flex;
   justify-content: space-between;
@@ -185,6 +257,11 @@ img {
 .encounter-details {
   display: flex;
   flex-direction: column;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 24px;
+  background: #f9fbff;
+  box-shadow: 0 2px 8px rgba(79,140,255,0.08);
 }
 
 .encounter-info div:first-child {

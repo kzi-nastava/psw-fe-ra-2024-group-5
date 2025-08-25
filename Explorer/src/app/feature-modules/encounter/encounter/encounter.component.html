@@ -1,6 +1,27 @@
 <div class="container">
   <h1 class="title">Explore encounters 🎮</h1>
 
+  <br/>
+  <!-- Button to open the level-title modal -->
+  <div style="text-align:right; margin-bottom:10px;">
+  <button (click)="showLevelTitles = true" class="level-titles-button"><mat-icon>military_tech</mat-icon>Available Titles</button>
+  </div>
+
+  <!-- Modal for level-title list -->
+  <div *ngIf="showLevelTitles" class="level-titles-modal">
+    <div class="level-titles-modal-content">
+      <h2 class="level-titles-modal-header"><strong>Titles</strong></h2>
+      <ul class="level-titles-list">
+        <li *ngFor="let title of levelNames; let i = index">
+          <strong>Level {{i}}:</strong> {{title}}
+        </li>
+      </ul>
+      <div class="level-titles-modal-close">
+        <button (click)="showLevelTitles = false">Close</button>
+      </div>
+    </div>
+  </div>
+
   <div class="participant-info" *ngIf="participant">
     <div class="level-progress-container" *ngIf="participant">
       <p *ngIf="participant && participant.level < 10">
