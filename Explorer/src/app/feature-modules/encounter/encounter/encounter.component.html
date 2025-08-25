@@ -2,13 +2,23 @@
   <h1 class="title">Explore encounters 🎮</h1>
 
   <div class="participant-info" *ngIf="participant">
-    <div class="xp-level-container">
-      <p><strong>XP:</strong> {{ participant?.xp ?? 0 }}</p>
-      <p><strong>Level:</strong> {{ participant?.level ?? 0 }}</p>
+    <div class="level-progress-container" *ngIf="participant">
+      <p *ngIf="participant && participant.level < 10">
+        Keep going! Reach level 10 to create your own encounter!
+      </p>
+      <div class="progress-bar-background">
+        <div class="progress-bar-fill" [style.width.%]="levelProgress"></div>
+      </div>
+      <span>{{ levelProgress }}%</span>
     </div>
-    <p *ngIf="participant && participant.level < 10" class="warning-message">
-      Keep going! Reach level 10 to create your own encounter!
-    </p>
+    <br/>
+    <div class="xp-level-container">
+      <p *ngIf="participant">
+        <strong>Title:</strong> {{ levelNames[participant.level] }}
+      </p>
+      <p><strong>Level:</strong> {{ participant?.level ?? 0 }}</p>
+      <p><strong>XP:</strong> {{ participant?.xp ?? 0 }}</p>
+    </div>
     <p *ngIf="participant && participant.level >= 10" class="create-button">
       <button [routerLink]="['/encounters-managing']">Create your own Encounter</button>
     </p>
@@ -62,9 +72,9 @@
         <div *ngIf="isTimerActive" class="completion-message">
           Stay close!
         </div>
-        <div *ngIf="isComplete">
-          <p>Encounter completed.</p>
-        </div>
+    <div *ngIf="isComplete">
+      <p>Encounter completed.</p>
+    </div>
       </div>
     </div>
   </div>
