@@ -98,7 +98,7 @@ export class MapComponent implements AfterViewInit {
       this.setUserLocationMarker([lat, lng]);
     else if (!this.isViewOnly)
       this.addMarker([lat, lng], 'New Marker');
-    
+
     switch (this.markerAddMode) {
       case 'facility':
         this.addFacility.emit([lat, lng])
@@ -166,9 +166,9 @@ export class MapComponent implements AfterViewInit {
 
   removeAllMarkers(): void {
     this.markers.forEach(marker => {
-      this.map.removeLayer(marker);  
+      this.map.removeLayer(marker);
     });
-  
+
     this.markers = [];
   }
 
@@ -191,7 +191,7 @@ export class MapComponent implements AfterViewInit {
     this.setRoute(this.markers)
   }
 
-  setRoute(markPoints: L.Marker[]): void{
+  setRoute(markPoints: L.Marker[]): void {
     if (this.routeControl) {
       this.routeControl.remove();
     }
@@ -205,23 +205,23 @@ export class MapComponent implements AfterViewInit {
     }).addTo(this.map);
 
     // Listen for the 'routesfound' event when routes are calculated
-  this.routeControl.on('routesfound', (e: any) => {
-    const routes = e.routes;  // Accessing the routes array directly
-    if (routes.length > 0) {
-      const summary = routes[0].summary;  // Get the summary from the first route
-      if (summary) {
-        // Ensure summary has the expected properties
-        const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
-        const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
-        console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
-        this.setaRouteLength.emit(distanceInKm) //valjda ovo ne pravi problem ako je u slucaju dodavanja objekata
-      } else {
-        console.error('No summary available for the route.');
+    this.routeControl.on('routesfound', (e: any) => {
+      const routes = e.routes;  // Accessing the routes array directly
+      if (routes.length > 0) {
+        const summary = routes[0].summary;  // Get the summary from the first route
+        if (summary) {
+          // Ensure summary has the expected properties
+          const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
+          const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+          console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+          this.setaRouteLength.emit(distanceInKm) //valjda ovo ne pravi problem ako je u slucaju dodavanja objekata
+        } else {
+          console.error('No summary available for the route.');
+        }
       }
-    }
-  });
-  
-}
+    });
+
+  }
 
   loadMarkers(): void {
     if (!this.map)
@@ -230,7 +230,7 @@ export class MapComponent implements AfterViewInit {
       this.loadFacilities();
     if (this.keyPoints && this.keyPoints.length !== 0)
       this.loadKeyPoints();
-    if(this.encounters && this.encounters.length !== 0)
+    if (this.encounters && this.encounters.length !== 0)
       this.loadEncounters();
 
     this.loadUserLocation();
@@ -239,8 +239,8 @@ export class MapComponent implements AfterViewInit {
   loadFacilities(): void {
     this.facilities.forEach(facility => {
       const facilityIcon = L.icon({
-        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png', 
-        iconSize: [40, 40], 
+        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png',
+        iconSize: [40, 40],
         iconAnchor: [16, 32],
       });
 
@@ -264,11 +264,20 @@ export class MapComponent implements AfterViewInit {
 
   loadEncounters(): void {
     this.encounters.forEach(encounter => {
+
+      const typeIconMap = {
+        0: 'https://maps.google.com/mapfiles/kml/paddle/M.png',    // Misc
+        1: 'https://maps.google.com/mapfiles/kml/paddle/S.png',    // Social
+        2: 'https://maps.google.com/mapfiles/kml/paddle/L.png',   // Location
+      };
+
       const encounterIcon = L.icon({
-        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', 
+        iconUrl: typeIconMap[encounter.type] || typeIconMap[0],
         iconSize: [40, 40],
         iconAnchor: [16, 32],
       });
+
+
 
       const statusMap = {
         0: 'Draft',
@@ -291,9 +300,9 @@ export class MapComponent implements AfterViewInit {
         <p>Type: <span class="popup-encounter__type-value" style="color: var(--text-title);">${typeMap[encounter.type]}</span></p>
       </div>
       `;
-  
-    const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon, alt: `${encounter.id}` })
-      .addTo(this.map); 
+
+      const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon, alt: `${encounter.id}` })
+        .addTo(this.map);
 
       marker.on('click', () => {
         this.encounterClicked.emit(encounter);
@@ -327,15 +336,15 @@ export class MapComponent implements AfterViewInit {
 
   removeLastMarker(): void { //ovo se poziva kada hocete da promenite lokaciju markera, ili izbrisete poslednji
     const lastMarker = this.markers.pop()
-    if (lastMarker){
+    if (lastMarker) {
       this.map.removeLayer(lastMarker)
       this.setRoute(this.markers)
     }
   }
 
-  removeExactMarker(latlng: number[]){
+  removeExactMarker(latlng: number[]) {
     const index = this.markers.findIndex(m => m.getLatLng().lat == latlng[0] && m.getLatLng().lng == latlng[1]);
-  
+
     // If the keyPoint exists in the array (index >= 0), remove it
     if (index !== -1) {
       const kp = this.markers[index]
