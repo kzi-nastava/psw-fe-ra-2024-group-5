@@ -1,4 +1,5 @@
 <div class="profile-page container">
+ <div class="profile-card">
   <div class="profile-header">
     <div class="profile-image">
       <img *ngIf="userProfile?.profileImage; else defaultImage"
@@ -11,7 +12,17 @@
       <div class="info">
         <h1>{{ userProfile?.name }} {{ userProfile?.surname }} </h1>
         <div class="wallet" *ngIf="wallet">
-          <h2>Balance: {{wallet.balance.amount}} {{currencies[wallet.balance.currency]}}</h2>
+          <h2 class="balance">
+            Balance: 
+            <span 
+             [ngClass]="{
+            'positive': wallet.balance.amount > 0,
+            'negative': wallet.balance.amount <= 0
+             }" >
+            {{wallet.balance.amount}} {{currencies[wallet.balance.currency]}}
+            </span>
+            </h2>
+
           <button class="add-button">
             <mat-icon>add_circle</mat-icon>
           </button>
@@ -89,5 +100,6 @@
         {{ userProfile?.motto }}
       </mat-card-content>
     </mat-card>
+  </div>
   </div>
 </div>

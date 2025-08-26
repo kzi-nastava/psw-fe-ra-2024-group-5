@@ -9,13 +9,17 @@ import { Wallet } from './model/wallet';
 import { Money } from 'src/app/shared/model/money';
 import { createBundle } from './model/create-bundle.model';
 import { BundleDetailed } from './model/bundle.models';
+import { BundleCard } from './model/bundle.models';
+import { map, switchMap, forkJoin, of } from 'rxjs';
+import { TourCard } from '../tour-authoring/model/tour-card.model';
+import { TourAuthoringService } from '../tour-authoring/tour-authoring.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketplaceService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tourService: TourAuthoringService) { }
 
   getPreference() : Observable<PagedResults<Preference>> {
     return this.http.get<PagedResults<Preference>>('https://localhost:44333/api/tourist/preference');
@@ -72,4 +76,64 @@ export class MarketplaceService {
   getBundles(page: number, pageSize: number) : Observable<BundleDetailed[]>{
     return this.http.get<BundleDetailed[]>(environment.apiHost +`tourist/bundle/all/${page}/${pageSize}`);
   }
+
+getBundlesByAuthor(authorId: number, page: number, pageSize: number): Observable<BundleDetailed[]> {
+    return this.http.get<BundleDetailed[]>(
+      `${environment.apiHost}author/bundle/authors/${authorId}/bundles`,
+      { params: { page: page.toString(), pageSize: pageSize.toString() } }
+    ).pipe(
+      map(response => {
+        console.log('API response for author bundles:', response);
+      
+        return (response || []).map((dto: any) => ({
+          id: dto.id,
+          name: dto.name,
+          price: dto.price,
+          authorId: authorId,
+          bundleItems: dto.bundleItems || [], 
+          status: dto.status
+        } as BundleDetailed));
+      })
+    );
+  }
+
+archiveBundle(bundleId: number, authorId: number) {
+  return this.http.put(
+    `${environment.apiHost}author/bundle/${bundleId}/archive`,
+    {},
+    { params: { authorId: authorId.toString() } }
+  );
 }
+
+deleteBundle(bundleId: number, authorId: number) {
+  return this.http.delete(
+    `${environment.apiHost}author/bundle/${bundleId}/delete`,
+    { params: { authorId: authorId.toString() } }
+  );
+}
+
+canPublishBundle(bundleId: number): Observable<boolean> {
+  return this.http.get<boolean>(`${environment.apiHost}author/bundle/${bundleId}/can-publish`);
+}
+
+publishBundle(bundleId: number, authorId: number) {
+  const newStatus = 1; 
+  return this.http.patch(
+    `${environment.apiHost}author/bundle/${bundleId}/status`,
+    newStatus, 
+    { params: { authorId: authorId.toString() } }
+  );
+}
+updateBundle(dto: any): Observable<any> {
+  return this.http.put(`${environment.apiHost}author/bundle/update`, dto);
+}
+
+removeTourFromBundle(bundleId: number, tourId: number, authorId: number) {
+  return this.http.delete<BundleCard>(
+    `${environment.apiHost}author/bundle/${bundleId}/tour/${tourId}`,
+    { params: { authorId: authorId.toString() } }
+  );
+}
+
+}
+

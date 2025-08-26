@@ -26,7 +26,7 @@
             <mat-icon>place</mat-icon>
             View Tours
           </button>
-          <button mat-menu-item *ngIf="user && user.role === 'tourist'" [routerLink]="['bundles-page']">
+          <button mat-menu-item *ngIf="user && user.role === 'tourist' || user && user.role === 'author'" [routerLink]="['bundles-page']">
             <mat-icon>discount</mat-icon>
             View Bundles
           </button>

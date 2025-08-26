@@ -5,7 +5,7 @@
     
     <div class="card-container">
         <xp-bundle-card class="bundle-card rounded raised" 
-            *ngFor="let bundle of bundles" [bundleCard]="bundle" (click)="detailedBundle(bundle)">
+            *ngFor="let bundle of bundles" [bundleCard]="bundle" [isAuthorView]="isAuthorView" (bundleDeleted)="onBundleDeleted($event)">
         </xp-bundle-card>
     </div>
 </div>
