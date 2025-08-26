@@ -226,7 +226,8 @@ export class EncounterComponent implements OnInit {
       data: {
         encounter: encounter,
         availability: availability,
-        position: position
+        position: position,
+        potentialAnswers: encounter.potentialAnswers // Pass potentialAnswers for riddles
       }
     });
 

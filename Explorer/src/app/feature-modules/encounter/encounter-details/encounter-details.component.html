@@ -3,6 +3,16 @@
   <h3><mat-icon>info</mat-icon><strong>Info</strong><br> {{ data.encounter.info }}</h3>
   <h3>Type: {{ encounterTypeToString(data.encounter.type) }}</h3>
   <h3>XP: {{ data.encounter.xp }}</h3>
+  <h3 *ngIf="data.encounter.type === 3">
+    <mat-icon>help</mat-icon>
+    <strong>Riddle Answers</strong><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Select your answer</mat-label>
+      <mat-select [(ngModel)]="answer">
+        <mat-option *ngFor="let ans of data.potentialAnswers" [value]="ans">{{ ans }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </h3>
   <h3><mat-icon>assignment_turned_in</mat-icon><strong>Task</strong><br> {{ data.encounter.description }}</h3>
   <h3 *ngIf="data.availability != 'Activate'"><mat-icon>warning</mat-icon><strong>Notice</strong><br>{{ data.availability }}</h3>
 </mat-dialog-content>
@@ -14,4 +24,8 @@
    data.availability === 'Finish or abandon your current encounter to start a new one!'"
    (click)="completeMiscEncounter(data.encounter)"
     cdkFocusInitial>Finish</button>
+  <button mat-button class="primary" [mat-dialog-close]="true"
+    *ngIf="data.encounter.type === 3 && answer"
+    (click)="completeRiddleEncounter(data.encounter)"
+    cdkFocusInitial>Submit Answer</button>
 </mat-dialog-actions>

@@ -282,9 +282,10 @@ export class MapComponent implements AfterViewInit {
     this.encounters.forEach(encounter => {
 
       const typeIconMap = {
-        0: 'https://maps.google.com/mapfiles/kml/paddle/M.png',    // Misc
-        1: 'https://maps.google.com/mapfiles/kml/paddle/S.png',    // Social
+        0: 'https://maps.google.com/mapfiles/kml/paddle/M.png',   // Misc
+        1: 'https://maps.google.com/mapfiles/kml/paddle/S.png',   // Social
         2: 'https://maps.google.com/mapfiles/kml/paddle/L.png',   // Location
+        3: 'https://maps.google.com/mapfiles/kml/paddle/R.png',   // Riddle
       };
 
       const encounterIcon = L.icon({
@@ -304,6 +305,7 @@ export class MapComponent implements AfterViewInit {
         0: 'Misc',
         1: 'Social',
         2: 'Location',
+        3: 'Riddle',
       };
 
       console.log(encounter.status);

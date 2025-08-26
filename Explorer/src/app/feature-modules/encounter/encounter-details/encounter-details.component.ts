@@ -16,6 +16,7 @@ export class EncounterDetailsComponent {
               private encounterService: EncounterService,
               private tokenStorage: TokenStorage){}
   userId: number | null = this.tokenStorage.getUserId();
+  answer: string = '';
   encounterTypeToString = encounterTypeToString;
 
   @Output() startEncounter = new EventEmitter<any>();
@@ -36,6 +37,19 @@ export class EncounterDetailsComponent {
   completeMiscEncounter(encounter: any): void {
     if (this.userId) {
       this.encounterService.completeMiscEncounter(encounter.id, this.userId).subscribe({
+        next: (response) => {
+          console.log('Encounter completed successfully', response);
+        },
+        error: (err) => {
+          console.error('Error completing encounter', err);
+        }
+      });
+    }
+  }
+
+  completeRiddleEncounter(encounter: any): void {
+    if (this.userId) {
+      this.encounterService.completeRiddleEncounter(encounter.id, this.userId, this.answer).subscribe({
         next: (response) => {
           console.log('Encounter completed successfully', response);
         },
