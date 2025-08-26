@@ -1,0 +1,41 @@
+<div class="chat-container" *ngIf="visible" [ngClass]="summary?.iconKey">
+  <div class="chat-card">
+    <div class="chat-header">
+      <div class="hero">
+        <span class="wi" [ngClass]="'wi-' + (summary?.iconKey || 'cloudy')"></span>
+      </div>
+      <div class="titles">
+        <div class="name">Explorer Weather</div>
+        <div class="subtitle">{{ summary?.conditionLabel || 'Today' }}</div>
+      </div>
+      <button mat-icon-button aria-label="Minimize" (click)="close()">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+    </div>
+
+    <div class="chat-body">
+      <div class="message from-bot" *ngIf="loading">
+        <div class="bubble loading">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+
+      <div class="message from-bot" *ngIf="!loading && summary">
+        <div class="bubble rich">
+          <div class="headline">{{ summary.message }}</div>
+          <div class="meta" *ngIf="summary.temperatureMinC != null && summary.temperatureMaxC != null || summary.precipitationProbPct != null || summary.windSpeedMaxKph != null">
+            <span *ngIf="summary.temperatureMinC != null && summary.temperatureMaxC != null">🌡️ {{ summary.temperatureMinC | number:'1.0-0' }}°/{{ summary.temperatureMaxC | number:'1.0-0' }}°C</span>
+            <span *ngIf="summary.precipitationProbPct != null"> · 💧 {{ summary.precipitationProbPct | number:'1.0-0' }}%</span>
+            <span *ngIf="summary.windSpeedMaxKph != null"> · 🌀 {{ summary.windSpeedMaxKph | number:'1.0-0' }} km/h</span>
+          </div>
+          <div class="forecast-link" *ngIf="summary.latitude && summary.longitude">
+            <a href="https://www.yr.no/en/forecast/daily-table/{{ summary.latitude }},{{ summary.longitude }}" target="_blank" rel="noopener noreferrer">
+              <mat-icon style="font-size: 14px; width: 14px; height: 14px;">calendar_today</mat-icon>
+              View weekly forecast
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
