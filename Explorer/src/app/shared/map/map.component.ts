@@ -7,6 +7,7 @@ import { UserLocationService } from '../user-location/user-location.service';
 import { UserPosition } from '../model/userPosition.model';
 import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point.model';
 import { Encounter } from 'src/app/feature-modules/encounter/model/encounter.model';
+import { WeatherService, DailyWeatherSummary } from '../service/weather.service';
 
 @Component({
   selector: 'app-map',
@@ -21,12 +22,16 @@ export class MapComponent implements AfterViewInit {
   private userLocationMarker: L.Marker;
 
   simulator: boolean = false;
+  weatherChatVisible = false;
+  weatherLoading = false;
+  weatherSummary: DailyWeatherSummary | null = null;
 
   @Input() facilities: Facility[];
   @Input() isViewOnly: boolean = false;
   @Input() keyPoints: KeyPoint[];
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
+  @Input() enableWeatherNotifier: boolean = false;
   @Input() encounters: Encounter[];
 
   @Output() addFacility = new EventEmitter<number[]>();
@@ -35,7 +40,7 @@ export class MapComponent implements AfterViewInit {
   @Output() userLocationChange = new EventEmitter<[number, number]>();
   @Output() encounterClicked = new EventEmitter<any>();
 
-  constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
+  constructor(private mapService: MapService, private userLocationService: UserLocationService, private weatherService: WeatherService) { }
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -91,6 +96,10 @@ export class MapComponent implements AfterViewInit {
     const lat = coord.lat;
     const lng = coord.lng;
 
+    if (this.simulatorEnabled && !this.simulator && this.isViewOnly) {
+      this.simulator = true;
+    }
+
     this.mapService.reverseSearch(lat, lng).subscribe((res) => {
       //console.log(res.display_name);
       // RES se koristi da prikaze ulicu grad.. od mesta koje je selektovano
@@ -132,7 +141,12 @@ export class MapComponent implements AfterViewInit {
 
     this.userLocationService.setCurrentUserPosition(latlng);
     this.userLocationChange.emit(latlng);
+
+    if (this.enableWeatherNotifier) {
+      // Deprecated: weather notifier now lives globally; keep flag for backward compatibility.
+    }
   }
+
 
   addMarker(latlng: [number, number], popupText?: string): void {
     switch (this.markerAddMode) {

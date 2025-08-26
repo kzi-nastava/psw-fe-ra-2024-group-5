@@ -55,7 +55,7 @@
 
   <div class="map-container">
     <app-map [isViewOnly]="true" (encounterClicked)="showEncounterDetails($event)" [simulatorEnabled]="true"
-      (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
+      [enableWeatherNotifier]="true" (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
   </div>
   <div *ngIf="activatedEncounter" class="encounter-info">
     <div class="encounter-details">
