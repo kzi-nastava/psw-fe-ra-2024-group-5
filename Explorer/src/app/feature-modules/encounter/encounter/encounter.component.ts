@@ -29,6 +29,8 @@ export class EncounterComponent implements OnInit {
   isComplete: boolean = false;
   isTimerActive: boolean = false;
   private timerInterval: any;
+  levelUpOverlay: boolean = false;
+  newLevelTitle: string = '';
 
   levelNames: string[] = [
     'Beginner', // Level 0 (if needed)
@@ -143,7 +145,7 @@ export class EncounterComponent implements OnInit {
     this.clearTimer();
     this.progressValue = 100;
     this.isComplete = true;
-  // ...existing code...
+    // ...existing code...
     var position = this.getPosition();
     if (this.activatedEncounter && this.userId && position) {
       console.log(this.activatedEncounter.id)
@@ -231,13 +233,27 @@ export class EncounterComponent implements OnInit {
     dialogRef.componentInstance.startEncounter.subscribe((response) => {
       this.encounterStarted(response);  // Handle the emitted data here
     });
-  // ...existing code...
+    // ...existing code...
   }
 
   getParticipantByUserId(userId: number): void {
     this.encounterService.getParticipantByUserId(userId).subscribe({
       next: (data) => {
         this.participant = data;
+        if (this.participant) {
+          const title = this.levelNames[this.participant.level];
+          const currentTitle = localStorage.getItem('userLevelTitle');
+          localStorage.setItem('userLevelTitle', title);
+
+          if(this.participant.level == 0)
+            return;
+
+          if (title !== currentTitle) {
+            this.newLevelTitle = title;
+            this.levelUpOverlay = true;
+            setTimeout(() => this.levelUpOverlay = false, 2500);
+          }
+        }
       },
       error: (err) => {
         console.error(err);

@@ -1,10 +1,11 @@
 <div class="container">
   <h1 class="title">Explore encounters 🎮</h1>
 
-  <br/>
+  <br />
   <!-- Button to open the level-title modal -->
   <div style="text-align:right; margin-bottom:10px;">
-  <button (click)="showLevelTitles = true" class="level-titles-button"><mat-icon>military_tech</mat-icon>Available Titles</button>
+    <button (click)="showLevelTitles = true" class="level-titles-button"><mat-icon>military_tech</mat-icon>Available
+      Titles</button>
   </div>
 
   <!-- Modal for level-title list -->
@@ -32,7 +33,7 @@
       </div>
       <span>{{ levelProgress }}%</span>
     </div>
-    <br/>
+    <br />
     <div class="xp-level-container">
       <p *ngIf="participant">
         <strong>Title:</strong> {{ levelNames[participant.level] }}
@@ -93,13 +94,19 @@
         <div *ngIf="isTimerActive" class="completion-message">
           Stay close!
         </div>
-    <div *ngIf="isComplete">
-      <p>Encounter completed.</p>
-    </div>
+        <div *ngIf="isComplete">
+          <p>Encounter completed.</p>
+        </div>
       </div>
     </div>
   </div>
   <div *ngIf="!activatedEncounter" class="encounter-info">
     <h2>No active encounters...</h2>
+  </div>
+  <div *ngIf="levelUpOverlay" class="level-up-overlay">
+    <div class="level-up-popup">
+      <h2>Level Up!</h2>
+      <p class="level-title">{{ newLevelTitle }}</p>
+    </div>
   </div>
 </div>
