@@ -63,7 +63,9 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({
-      iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+        iconUrl: 'https://maps.google.com/mapfiles/kml/paddle/K.png',
+        iconSize: [40, 40],
+        iconAnchor: [16, 32],
     });
 
     L.Marker.prototype.options.icon = DefaultIcon;
