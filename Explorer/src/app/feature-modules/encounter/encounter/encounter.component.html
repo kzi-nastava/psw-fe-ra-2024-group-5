@@ -1,14 +1,19 @@
 <div class="container">
-  <h1 class="title">Explore encounters 🎮</h1>
+  <h1 class="title">Explore encounters</h1>
 
   <br />
-  <!-- Button to open the level-title modal -->
-  <div style="text-align:right; margin-bottom:10px;">
-    <button (click)="showLevelTitles = true" class="level-titles-button"><mat-icon>military_tech</mat-icon>Available
-      Titles</button>
+
+  <div *ngIf="participant && participant.level >= 5" class="flashy-btn-container">
+    <button class="flashy-btn" [routerLink]="['/tours-page']">
+      You like games, you will like this! 🚀
+    </button>
   </div>
 
-  <!-- Modal for level-title list -->
+  <div *ngIf="participant && participant.level >= 10">
+    <button [routerLink]="['/encounters-managing']" class="level-titles-button"><mat-icon>add</mat-icon> Create your own
+      Encounter</button>
+  </div>
+
   <div *ngIf="showLevelTitles" class="level-titles-modal">
     <div class="level-titles-modal-content">
       <h2 class="level-titles-modal-header"><strong>Titles</strong></h2>
@@ -41,9 +46,11 @@
       <p><strong>Level:</strong> {{ participant?.level ?? 0 }}</p>
       <p><strong>XP:</strong> {{ participant?.xp ?? 0 }}</p>
     </div>
-    <p *ngIf="participant && participant.level >= 10" class="create-button">
-      <button [routerLink]="['/encounters-managing']">Create your own Encounter</button>
-    </p>
+  </div>
+
+  <div *ngIf="participant && participant.level < 10" class="titles-button-container">
+    <button (click)="showLevelTitles = true" class="level-titles-button"><mat-icon>military_tech</mat-icon>Available
+      titles</button>
   </div>
 
   <div class="map-container">
