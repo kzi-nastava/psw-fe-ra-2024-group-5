@@ -165,6 +165,7 @@
   background: #dc3545;
   color: white;
   border-color: #dc3545;
+  
 }
 
 .btn-delete:hover {
@@ -359,7 +360,7 @@
   top: 12px;
   right: 12px;
   padding: 6px 10px;
-  font-size: 0.85rem;
+  font-size: 0.5rem;
   z-index: 10; /* da bude iznad badge-a */
 }
 
