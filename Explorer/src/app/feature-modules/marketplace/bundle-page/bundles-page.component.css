@@ -31,27 +31,27 @@
   }
 
   .card-container {
-    display: grid;
-    grid-template-columns: repeat(2, 500px);
-    gap: 20px;
-    justify-content: space-evenly;
-    margin-bottom: 30px;
-    margin-top: 30px;
-  }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 100px;
+  justify-content: center;
+  margin: 30px auto;
+  max-width: 850px; 
+  padding: 0 40px;
+}
 
-  .bundle-card{
-    background-color: var(--background-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-    height: 550px; 
-    margin-top: 50px;
-    margin-bottom: 50px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-  }
+.bundle-card {
+  background-color: var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 380px;
+  height: 620px; 
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
 
-  .bundle-card:hover {
-    background-color: antiquewhite;
-  }
+.bundle-card:hover {
+  background-color: antiquewhite;
+}
+

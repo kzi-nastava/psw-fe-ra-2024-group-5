@@ -1,92 +1,123 @@
 <div class="container">
-    <div class="details">
-        <mat-grid-list *ngIf="bundleCard.tours.length == 2" cols="2" rowHeight="1:1">
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[0].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[0].name}}</h2>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[1].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[1].name}}</h2>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-grid-list *ngIf="bundleCard.tours.length == 3" cols="2" rowHeight="2:1">
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[0].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[0].name}}</h2>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[1].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[1].name}}</h2>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="2">
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[2].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[2].name}}</h2>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-grid-list *ngIf="bundleCard.tours.length >= 4" cols="2" rowHeight="2:1">
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[0].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[0].name}}</h2>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[1].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[1].name}}</h2>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[2].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[2].name}}</h2>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="tile-content">
-                    <div class="image-container rounded">
-                        <img [src]="'data:image/jpeg;base64,' + bundleCard.tours[3].firstKeypoint.image" alt="picture"/>
-                    </div>
-                    <h2>{{bundleCard.tours[3].name}}</h2>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-    </div>
-    <div class="bottom-container rounded">
-        <div class="summary-container">
-            <div class="name-text">{{bundleCard.name}}</div>
-            <div class="text">{{bundleCard.status}}</div>
+    <div class="header-container">
+        <h1 class="bundle-title">{{bundleCard.name}}</h1>
+        <div class="price-section">
+            <div class="status-text" *ngIf="isAuthorView">{{bundleCard.status}}</div>
             <div class="price-text">{{bundleCard.price.amount}} {{currencies[bundleCard.price.currency]}}</div>
-            <button mat-button class="secondary" (click)="addToCart()" *ngIf="user?.role === 'tourist'">Add to cart</button>
+        </div>
+    </div>
+
+<div class="tours-section">
+    <div class="tours-grid" [ngClass]="getTourGridClass()">
+        <div class="tour-tile" *ngFor="let tour of getVisibleTours(); let i = index">
+            <div class="image-container" (click)="viewTour(tour.id)">
+                <img [src]="'data:image/jpeg;base64,' + tour.firstKeypoint.image" [alt]="tour.name">
+            </div>
+            <h3 class="tour-name" (click)="viewTour(tour.id)">{{tour.name}}</h3>
+            
+            <button class="remove-tour-btn" 
+        *ngIf="isAuthorView && bundleCard.status !== BundleStatus.PUBLISHED"
+        title="Remove tour from bundle"
+        (click)="removeTour(tour.id, $event)">
+    ×
+</button>
+        </div>
+    </div>
+
+    <div class="tour-controls" *ngIf="bundleCard.tours.length > getVisibleToursCount()">
+  <div class="tour-navigation">
+    <button class="nav-arrow left" 
+            (click)="previousTours()" 
+            [disabled]="currentTourIndex === 0">
+      Previous
+    </button>
+
+    <button class="nav-arrow right" 
+            (click)="nextTours()" 
+            [disabled]="currentTourIndex + getVisibleToursCount() >= bundleCard.tours.length">
+      Next
+    </button>
+  </div>
+</div>
+
+</div>
+    <div class="actions-container">
+        <!-- Add to Cart dugme -->
+        <button mat-button class="action-btn primary" 
+                (click)="addToCart()" 
+                *ngIf="!isAuthorView">
+            Add to Cart
+        </button>
+
+        <!-- Edit dugme -->
+        <button mat-button class="action-btn secondary" 
+                (click)="editBundle()" 
+                *ngIf="isAuthorView">
+            ✏️ Edit
+        </button>
+
+        <!-- Archive dugme -->
+        <button mat-button class="action-btn secondary"
+                (click)="archiveBundle()"
+                *ngIf="isAuthorView && bundleCard.status === BundleStatus.PUBLISHED">
+            Archive
+        </button>
+
+        <!-- Publish dugme -->
+        <button mat-button class="action-btn secondary"
+                (click)="publishBundle()"
+                *ngIf="isAuthorView && bundleCard.status !== BundleStatus.PUBLISHED && canPublishFlag">
+            Publish
+        </button>
+
+        <!-- Delete dugme -->
+        <button mat-button class="action-btn danger"
+                (click)="deleteBundle()"
+                *ngIf="isAuthorView && bundleCard.status == BundleStatus.DRAFT">
+            🗑️ Delete
+        </button>
+    </div>
+</div>
+
+<!-- Edit Dialog -->
+<div class="dialog-overlay" 
+     [class.show]="showEditDialog"
+     (click)="closeEditDialog($event)">
+    <div class="dialog-content" (click)="$event.stopPropagation()">
+        <div class="dialog-header">
+            <h3>✏️ Edit Bundle</h3>
+            <button class="close-btn" (click)="cancelEdit()">×</button>
+        </div>
+        
+        <div class="dialog-body">
+            <div class="form-field">
+                <label for="bundleName">Name:</label>
+                <input id="bundleName" 
+                       type="text" 
+                       [(ngModel)]="editForm.name" 
+                       placeholder="Enter bundle name"
+                       class="form-input">
+            </div>
+            
+            <div class="form-field">
+                <label for="bundlePrice">Price:</label>
+                <input id="bundlePrice" 
+                       type="number" 
+                       [(ngModel)]="editForm.price" 
+                       placeholder="Enter price"
+                       min="0"
+                       step="0.01"
+                       class="form-input">
+            </div>
+        </div>
+        
+        <div class="dialog-actions">
+            <button mat-button class="action-btn secondary" (click)="cancelEdit()">
+                Cancel
+            </button>
+            <button mat-button class="action-btn primary" (click)="saveEdit()">
+                Save
+            </button>
         </div>
     </div>
 </div>

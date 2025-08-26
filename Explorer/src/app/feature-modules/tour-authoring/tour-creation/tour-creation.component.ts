@@ -25,6 +25,7 @@ export class TourCreationComponent {
   tourDurationTransports: TransportDuration[]  = [];
   author: User | undefined;
   coordinates: number[] | null = null;
+  readonly ALL_TRANSPORTS = ['On Foot', 'Bicycle', 'Car'];
   @ViewChild(KeyPointsComponent) keyPointsListComponent!: KeyPointsComponent;
   @ViewChild(MapComponent) map: MapComponent;
   @ViewChild(MatTable) table: MatTable<TransportDuration>;
@@ -181,6 +182,7 @@ export class TourCreationComponent {
         this.resetForm();
         this.resetForTransport();
         this.tourDurationTransports.length = 0
+        this.resetTransports();          
         this.table.renderRows()
         console.log(this.tourDurationTransports)
       },
@@ -219,4 +221,9 @@ export class TourCreationComponent {
   back(): void {
     this.router.navigate(['/tour']);
   }
+
+  private resetTransports(): void {
+  this.tourTransports = [...this.ALL_TRANSPORTS];
+}
+
 }

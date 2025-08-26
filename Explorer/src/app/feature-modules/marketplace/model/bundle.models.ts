@@ -6,7 +6,7 @@ export interface BundleDetailed{
     price: Money,
     authorId: number,
     bundleItems: number[],
-    status: number
+    status: BundleStatus
 }
 
 export interface BundleCard{
@@ -15,5 +15,11 @@ export interface BundleCard{
     price: Money,
     authorId: number,
     tours: TourCard[],
-    status: number
+    status: BundleStatus
+}
+
+export enum BundleStatus {
+  PUBLISHED = 'Published',
+  DRAFT = 'Draft',
+  ARCHIVED = 'Archive'
 }
