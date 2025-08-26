@@ -1,5 +1,5 @@
 import { imageData } from "./imageData.model";
-import { BlogPostComment } from './blog-post-comment'
+import { BlogPostComment } from './blog-post-comment.model'
 import { Vote } from "./vote.model";
 
 export interface Blog {

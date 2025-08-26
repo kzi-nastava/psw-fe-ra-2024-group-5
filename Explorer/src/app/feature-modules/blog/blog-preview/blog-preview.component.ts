@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Blog } from '../model/blog.model';
-import { BlogPostComment } from '../model/blog-post-comment';
+import { BlogPostComment } from '../model/blog-post-comment.model';
 import { ActivatedRoute } from '@angular/router';
 import { BlogService } from '../blog.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
