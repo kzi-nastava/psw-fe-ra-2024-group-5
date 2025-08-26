@@ -363,3 +363,23 @@ img {
   transform: scale(1.06);
   box-shadow: 0 4px 18px rgba(26, 188, 156, 0.28);
 }
+
+.create-button {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text, white);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+
+.create-button:hover {
+  background-color: var(--alert-success-bg, #28a745);
+}
