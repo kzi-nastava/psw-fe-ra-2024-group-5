@@ -1,0 +1,87 @@
+.tour-review {
+    background-color: rgb(245, 245, 245);
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    gap: 25px;
+}
+
+.content {
+    width: 100%;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.left, .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.star-rating {
+    font-size: 20px;
+    color: gold;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: var(--text-muted);
+}
+
+.info .mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 18px !important;
+}
+
+.info .published {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+}
+
+.review-image {
+    height: 100%;
+    border-radius: 15px;
+    object-fit: contain;
+    max-height: 100px;
+    cursor: pointer;
+}
+
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.review-action {
+    cursor: pointer;
+    color: var(--text-muted);
+}

@@ -35,6 +35,9 @@ export interface Tour {
     transportDurations: TransportDuration[]; // Required
     publishedTime: Date; // Required
     archivedTime: Date; // Required
+    numberOfViews: number;
+    numberOfPurchases: number;
+    numberOfCompletions: number;
 }
 
 export interface TourTourist {

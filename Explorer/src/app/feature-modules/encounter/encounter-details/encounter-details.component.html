@@ -1,12 +1,15 @@
 <h1 mat-dialog-title>{{ data.encounter.name }}</h1>
 <mat-dialog-content class="mat-typography">
-  <h3>{{ data.encounter.description }}</h3>
-  <h3>Type: <b>{{ encounterTypeToString(data.encounter.type) }}</b></h3>
+  <h3><mat-icon>info</mat-icon><strong>Info</strong><br> {{ data.encounter.info }}</h3>
+  <h3>Type: {{ encounterTypeToString(data.encounter.type) }}</h3>
+  <h3>XP: {{ data.encounter.xp }}</h3>
+  <h3><mat-icon>assignment_turned_in</mat-icon><strong>Task</strong><br> {{ data.encounter.description }}</h3>
+  <h3 *ngIf="data.availability != 'Activate'"><mat-icon>warning</mat-icon><strong>Notice</strong><br>{{ data.availability }}</h3>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" [disabled]="data.availability != 'Activate'" (click)="start(data.encounter)" cdkFocusInitial>{{ data.availability }}</button>
-  <button mat-button [mat-dialog-close]="true"
+  <button mat-button class="primary" [mat-dialog-close]="true" [hidden]="data.availability != 'Activate'" (click)="start(data.encounter)" cdkFocusInitial>Activate</button>
+  <button mat-button class="primary" [mat-dialog-close]="true"
    *ngIf="data.encounter.type === 0 &&
    data.availability === 'Finish or abandon your current encounter to start a new one!'"
    (click)="completeMiscEncounter(data.encounter)"

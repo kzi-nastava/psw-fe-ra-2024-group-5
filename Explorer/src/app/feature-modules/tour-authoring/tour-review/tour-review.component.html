@@ -1,0 +1,49 @@
+<div class="tour-review">
+    <div class="content">
+        <div class="review-header">
+            <div class="left">
+                <div class="user-info">
+                    <img class="profile-image" [src]="profilePicture" alt="Profile Picture">
+                    <span><b>{{ displayName }}</b></span>
+                </div>
+
+                <div class="rating-container">
+                    <div class="star-rating">
+                        <span class="star" *ngIf="review.rating >= 1">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 2">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 3">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 4">&#9733;</span>
+                        <span class="star" *ngIf="review.rating >= 5">&#9733;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <div class="actions-container" *ngIf="review.touristId === user?.id">
+                    <mat-icon class="review-action" (click)="editReview()">edit</mat-icon>
+                    <mat-icon class="review-action" (click)="deleteReview()">delete</mat-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-content">
+            <div class="text">
+                <p>{{ review.comment }}</p>
+            </div>
+            <div class="info">
+                <div class="published">
+                    <mat-icon>calendar_today</mat-icon>
+                    {{review.reviewDate | date:'MMM d, y'}}
+                </div>
+                <div class="published">
+                    <mat-icon> person_pin_circle</mat-icon>
+                    {{review.visitDate | date:'MMM d, y'}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="image-container">
+        <img class="review-image" [src]="reviewImage" alt="">
+    </div>
+</div>

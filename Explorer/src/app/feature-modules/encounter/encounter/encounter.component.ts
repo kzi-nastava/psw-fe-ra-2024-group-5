@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Encounter, isSocialEncounter, SocialEncounter } from '../model/encounter.model';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { TokenStorage } from 'src/app/infrastructure/auth/jwt/token.service';
@@ -16,7 +16,7 @@ import { EncounterType, encounterTypeToString } from '../enum/encounter-type.enu
   templateUrl: './encounter.component.html',
   styleUrls: ['./encounter.component.css']
 })
-export class EncounterComponent implements OnInit{
+export class EncounterComponent implements OnInit {
   activeEncounters: Encounter[] = [];
   userId: number | null = null;
   activatedEncounter: Encounter | null = null;
@@ -29,12 +29,28 @@ export class EncounterComponent implements OnInit{
   isTimerActive: boolean = false;
   private timerInterval: any;
 
-  @ViewChild(MapComponent) map: MapComponent;
+  levelNames: string[] = [
+    'Beginner', // Level 0 (if needed)
+    'Novice Explorer',
+    'Adventurer',
+    'Pathfinder',
+    'Trailblazer',
+    'Seeker',
+    'Scout',
+    'Ranger',
+    'Pioneer',
+    'Champion',
+    'Legend'
+  ];
+
+  @ViewChild(MapComponent) map!: MapComponent;
+  // ...existing code...
+  // ...existing code...
 
   constructor(private tokenStorage: TokenStorage, private encounterService: EncounterService,
     public dialog: MatDialog,
     private userLocationService: UserLocationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.tokenStorage.getUserId();
@@ -44,16 +60,16 @@ export class EncounterComponent implements OnInit{
 
       this.encounterService.getActiveEncounter(this.userId).subscribe({
         next: (response) => {
-          if(response)
+          if (response)
             this.activatedEncounter = response;
-          }
+        }
       })
 
       this.getParticipantByUserId(this.userId);
     }
   }
 
-  encounterStarted(encounter: any): void{
+  encounterStarted(encounter: any): void {
     this.activatedEncounter = encounter;
     console.log(this.activatedEncounter);
   }
@@ -70,10 +86,10 @@ export class EncounterComponent implements OnInit{
     });
   }
 
-  getPosition(): Position | null{
+  getPosition(): Position | null {
     const userPosition: UserPosition | null = this.userLocationService.getUserPosition();
 
-    if(!userPosition)
+    if (!userPosition)
       return null;
 
     return {
@@ -82,26 +98,26 @@ export class EncounterComponent implements OnInit{
     }
   }
 
-  
 
-  progress(){
+
+  progress() {
     var currentPosition = this.getPosition();
 
-    if(!this.activatedEncounter)
+    if (!this.activatedEncounter)
       return;
 
-    if(!this.userId)
+    if (!this.userId)
       return;
 
-    if(!currentPosition)
+    if (!currentPosition)
       return;
 
     this.encounterService.progressEncounter(this.activatedEncounter.id, this.userId, currentPosition).subscribe({
       next: (response) => {
-        if (this.activatedEncounter?.type == 2 && response.inRange){
+        if (this.activatedEncounter?.type == 2 && response.inRange) {
           this.startTimer();
         }
-          
+
       },
       error: (err) => {
         console.log(err);
@@ -126,8 +142,9 @@ export class EncounterComponent implements OnInit{
     this.clearTimer();
     this.progressValue = 100;
     this.isComplete = true;
+  // ...existing code...
     var position = this.getPosition();
-    if (this.activatedEncounter && this.userId && position){
+    if (this.activatedEncounter && this.userId && position) {
       console.log(this.activatedEncounter.id)
       console.log(this.userId)
       console.log(position)
@@ -141,8 +158,9 @@ export class EncounterComponent implements OnInit{
         }
       });
     }
-      
   }
+
+  // ...existing code...
 
   private clearTimer() {
     if (this.timerInterval) {
@@ -151,7 +169,7 @@ export class EncounterComponent implements OnInit{
     }
   }
 
-  private resetTimer(){
+  private resetTimer() {
     this.clearTimer();
     this.startTimer();
   }
@@ -160,14 +178,14 @@ export class EncounterComponent implements OnInit{
     var position = this.getPosition();
     var availability: string = 'Activate';
 
-    if  (this.userId == null)
+    if (this.userId == null)
       return;
 
-    if  (position == null){
+    if (position == null) {
       availability = 'We are unable to locate you!'
       this.openEncounterDialog(encounter, availability, position);
     }
-    else  {
+    else {
       this.encounterService.checkEncounterAvailability(encounter.id, this.userId, position).subscribe({
         next: () => {
           this.openEncounterDialog(encounter, availability, position);
@@ -180,7 +198,7 @@ export class EncounterComponent implements OnInit{
               subCode = parseInt(metadataMatch[1], 10);
             }
           }
-          switch (err.status){
+          switch (err.status) {
             case 400:
               if (subCode === 2)
                 availability = "You have already completed this encounter!";
@@ -212,6 +230,7 @@ export class EncounterComponent implements OnInit{
     dialogRef.componentInstance.startEncounter.subscribe((response) => {
       this.encounterStarted(response);  // Handle the emitted data here
     });
+  // ...existing code...
   }
 
   getParticipantByUserId(userId: number): void {
@@ -235,5 +254,13 @@ export class EncounterComponent implements OnInit{
         this.activatedEncounter = null;
       },
     });
+  }
+
+  get levelProgress(): number {
+    if (!this.participant) return 0;
+    // Assuming XP needed for each level is constant, or you have a way to calculate XP needed for next level
+    // Example: max XP for level 10 is 10000
+    const maxLevel = 10; // Replace with your actual max level logic
+    return Math.min(100, Math.round((this.participant.level / maxLevel) * 100));
   }
 }

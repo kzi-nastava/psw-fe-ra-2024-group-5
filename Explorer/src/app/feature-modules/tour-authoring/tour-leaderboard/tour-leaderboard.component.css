@@ -1,11 +1,5 @@
 .leaderboard {
-    width: 800px;
-    max-width: 1024px;
-}
-
-.leaderboard-container {
-    padding: 20px;
-    margin-top: 30px;
+    width: auto;
 }
 
 .user-cell {

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyPoint } from './model/key-point.model';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
-import { Tour, TourCreation, TourTourist } from './model/tour.model';
+import { Tour, TourCreation, TourReview, TourTourist } from './model/tour.model';
 import { TourCard } from './model/tour-card.model';
 import { environment } from 'src/env/environment';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Currency } from './model/tour.enums';
 import { TourLeaderboard } from './model/tour-leaderboard.model';
+import { TourSearchParams } from './model/tour-search.model';
 import { BundleDetailed } from '../marketplace/model/bundle.models';
 
 
@@ -25,6 +26,19 @@ export class TourAuthoringService {
   saveKeyPoints(keyPoints: KeyPoint[], tourId: number): Observable<KeyPoint[]> {
     return this.http.post<KeyPoint[]>(`https://localhost:44333/api/tours/${tourId}/keypoints`, keyPoints);
   }
+
+  getTourReviews(tourId: number, userId: number | null) {
+    let params = new HttpParams();
+
+    if (userId !== null)
+      params = params.set('userId', userId.toString());
+
+    return this.http.get<TourReview[]>(
+      `${environment.apiHost}tourist/tour-reviews/by-tour/${tourId}`,
+      { params }
+    );
+  }
+
 
   getAuthorTours(user: User, page: number, pageSize: number): Observable<TourCard[]> {
     if (user.role === 'author')
@@ -47,14 +61,7 @@ export class TourAuthoringService {
     return this.http.post<TourCard[]>(url, searchParams);
   }
 
-  getPublishedTourCardsFiltered(searchParams: {
-    page: number,
-    pageSize: number,
-    startLat: number,
-    endLat: number,
-    startLong: number,
-    endLong: number
-  }): Observable<TourCard[]> {
+  getPublishedTourCardsFiltered(searchParams: TourSearchParams): Observable<TourCard[]> {
     const url = `${environment.apiHost}tour/published/filtered`;
     return this.http.post<TourCard[]>(url, searchParams);
   }
@@ -75,6 +82,10 @@ export class TourAuthoringService {
 
   getTourForTouristById(id: number, touristId: number): Observable<TourTourist> {
     return this.http.get<TourTourist>(environment.apiHost + 'tour/tourist/' + id + '/' + touristId)
+  }
+
+  addViewToTour(tourId: number): Observable<any> {
+    return this.http.get<any>(environment.apiHost + 'tour/addView/' + tourId)
   }
 
   updateTour(tour: Tour): Observable<Tour> {
@@ -106,7 +117,7 @@ export class TourAuthoringService {
     return this.http.get<TourCard[]>(`${environment.apiHost}tour/tourist/${touristId}/preferences/${page}/${pageSize}`);
   }
 
-  getBundleTours(tourIds: number[]): Observable<TourCard[]>{
+  getBundleTours(tourIds: number[]): Observable<TourCard[]> {
     console.log(tourIds)
     return this.http.post<TourCard[]>(environment.apiHost + 'tour/bundle', tourIds); //post je jer ne mogu parametar tourIds da prosledim ako je get i mrzi me da nadjem drugi nacin :-)
   }
