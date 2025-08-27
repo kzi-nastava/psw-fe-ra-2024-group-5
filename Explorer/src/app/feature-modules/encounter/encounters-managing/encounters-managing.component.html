@@ -6,7 +6,6 @@
     </div>
 
   <div class="content">
-
     <div class="map-container">
       <app-map *ngIf="!miscModalVisible" [encounters]="encountersByCreator"
       (encounterClicked)="showEncounterDetails($event)"
@@ -17,52 +16,53 @@
   <form [formGroup]="encounterForm" class="modal-overlay" *ngIf="miscModalVisible" (ngSubmit)="createEncounter()">
     <div class="modal">
         <h2>Create Encounter</h2>
-        <p>
+        <p class="location-display">
           <span *ngIf="encounterForm.get('location')?.value">
-            Location: {{ encounterForm.get('location')?.value }}
+            Location: ** {{ encounterForm.get('location')?.value }} **
           </span>
           <span *ngIf="!encounterForm.get('location')?.value">
             Location: Loading...
           </span>
         </p>
 
-        <div class="filter-container" style="text-align: center; margin: 10px 0;">
-        <mat-form-field appearance="fill">
-          <mat-label>Type</mat-label>
-          <mat-select [(value)]="selectedEncounterType" (selectionChange)="onEncounterTypeChange()">
-            <mat-option [value]="'MISC'">MISC</mat-option>
-            <mat-option [value]="'SOCIAL'">SOCIAL</mat-option>
-            <mat-option [value]="'HIDDEN LOCATION'">HIDDEN LOCATION</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+         <div class="form-grid">
+          <div class="form-section left-section">
+            <input type="text" formControlName="name" placeholder="Name" class="form-input" />
+            <div *ngIf="encounterForm.get('name')?.invalid && encounterForm.get('name')?.touched" class="error-message">
+              Name is required.
+            </div>
 
-        <input type="text" formControlName="name" placeholder="Name"/>
-        <div *ngIf="encounterForm.get('name')?.invalid; else validName" class="error-message">
-          Name is required.
+            <textarea rows="4" formControlName="description" class="form-input" placeholder="Description"></textarea>
+            <div *ngIf="encounterForm.get('description')?.invalid && encounterForm.get('description')?.touched" class="error-message">
+              Description is required.
+            </div>
+
+            <input type="number" formControlName="xp" placeholder="Experience Points" class="form-input" />
+            <div *ngIf="encounterForm.get('xp')?.invalid && encounterForm.get('xp')?.touched" class="error-message">
+              Experience Points are required.
+            </div>
+          </div>
+
+          <div class="form-section right-section">
+            <div class="input-group">
+              <label for="encounter-type">Encounter Type</label>
+              <mat-select [(value)]="selectedEncounterType" (selectionChange)="onEncounterTypeChange()" class="form-select">
+                <mat-option [value]="'MISC'">MISC</mat-option>
+                <mat-option [value]="'SOCIAL'">SOCIAL</mat-option>
+                <mat-option [value]="'HIDDEN LOCATION'">HIDDEN LOCATION</mat-option>
+              </mat-select>
+            </div>
+
+            <input *ngIf="showSocialEncounterParams" type="number" formControlName="radius" placeholder="Radius" class="form-input" />
+            <div *ngIf="showSocialEncounterParams && encounterForm.get('radius')?.invalid && encounterForm.get('radius')?.touched" class="error-message">
+              Radius is required.
+            </div>
+            <input *ngIf="showSocialEncounterParams" type="number" formControlName="peopleCount" placeholder="Number of People" class="form-input" />
+            <div *ngIf="showSocialEncounterParams && encounterForm.get('peopleCount')?.invalid && encounterForm.get('peopleCount')?.touched" class="error-message">
+              Number of people is required.
+            </div>
+          </div>
         </div>
-        <ng-template #validName>
-          <div class="empty-row"></div>  
-        </ng-template>
-
-        <textarea rows="4" formControlName="description" class="message-input" placeholder="Description"></textarea>
-        <div *ngIf="encounterForm.get('description')?.invalid; else validName" class="error-message">
-          Description is required.
-        </div>
-        <ng-template #validName>
-          <div class="empty-row"></div>  
-        </ng-template>
-
-        <input type="number" formControlName="xp" placeholder="Experience Points" />
-        <div *ngIf="encounterForm.get('xp')?.invalid; else validName" class="error-message">
-          Experience Points are required.
-        </div>
-        <ng-template #validName>
-          <div class="empty-row"></div>  
-        </ng-template>
-
-        <input *ngIf="showSocialEncounterParams" type="number" formControlName="radius" placeholder="Radius" />
-        <input *ngIf="showSocialEncounterParams" type="number" formControlName="peopleCount" placeholder="Number of People" />
 
         <div class="modal-buttons">
             <button class="create-btn" [disabled]="encounterForm.invalid">Create</button>

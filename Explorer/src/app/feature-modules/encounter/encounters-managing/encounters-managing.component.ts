@@ -149,9 +149,16 @@ export class EncountersManagingComponent implements OnInit {
       longitude: ['',Validators.required],
       latitude: ['', Validators.required],
       location: ['', Validators.required],
-      radius: [0],
-      peopleCount: [0],
+      radius: [null],
+      peopleCount: [null],
     });
+
+  this.encounterForm.get('radius')?.setValidators(
+    this.selectedEncounterType === 'SOCIAL' ? [Validators.required, this.xpValidator] : []
+  );
+  this.encounterForm.get('peopleCount')?.setValidators(
+    this.selectedEncounterType === 'SOCIAL' ? [Validators.required, this.xpValidator] : []
+  );
   }
 
   xpValidator(control: FormControl): { [key: string]: any } | null {
@@ -239,8 +246,6 @@ export class EncountersManagingComponent implements OnInit {
     // reset validatora
     this.encounterForm.get('radius')?.clearValidators();
     this.encounterForm.get('peopleCount')?.clearValidators();
-    this.encounterForm.get('radius')?.updateValueAndValidity();
-    this.encounterForm.get('peopleCount')?.updateValueAndValidity();
 
     if(this.selectedEncounterType == 'SOCIAL')
     {

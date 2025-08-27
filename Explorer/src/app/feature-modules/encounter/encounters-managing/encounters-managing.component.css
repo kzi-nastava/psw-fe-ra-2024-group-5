@@ -41,19 +41,16 @@
 
 .modal {
     background-color: white;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 20px 40px;
     border-radius: 8px;
-    max-width: 600px;
+    max-width: 800px;
     width: 80%;
+    min-height: 550px; 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    align-items: left;
     display: flex;
     flex-direction: column; 
+    justify-content: space-between; 
 }
-
 
 .modal-overlay {
     display: flex;
@@ -90,8 +87,10 @@
 
 .modal-buttons {
     display: flex;
-    justify-content: center;
-    margin-top: 250px;
+    justify-content: center; 
+    gap: 20px;
+    margin-top: 20px; 
+    width: 100%;
 }
 
 .modal-buttons button {
@@ -130,6 +129,7 @@
     margin-top: 5px;
     margin-bottom: -15px;
     margin-left: 5px;
+    min-height: 15px; 
 }
 
 .empty-row {
@@ -158,5 +158,93 @@
 .message-panel .normal-text {
     color: var(--text-title); 
     font-weight: 500;
+}
+
+
+
+.form-grid {
+    display: flex;
+    gap: 40px; 
+    width: 100%;
+    margin-top: 20px;
+    align-items: flex-start;
+    flex-grow: 1; 
+}
+
+.right-section, .left-section {
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
+    padding: 20px; 
+    box-shadow: var(--raised-style); 
+    background-color: var(--background-color-alt); 
+    width: 50%;
+    min-height: 300px;
+}
+
+.modal {
+    padding: 20px 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+}
+
+.location-display {
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--text-subtitle);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(129, 161, 193, 0.5); 
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 70%;
+}
+
+.input-group label {
+    color: var(--text-paragraph);
+    font-weight: bold;
+}
+
+mat-select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+mat-select:focus {
+    border-color: var(--accent-color);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-top: 30px; 
+    width: 100%;
 }
 
