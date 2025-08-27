@@ -56,13 +56,9 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   openCreateEncounterModal(): void {
-    if (this.selectedEncounterType) {
-      this.miscModalVisible = true;
-      this.isViewOnly = false;
-      this.typeErrorMessage = false;
-    }
-    else 
-      this.typeErrorMessage = true;
+    this.miscModalVisible = true;
+    this.isViewOnly = false;
+    this.typeErrorMessage = false;
   }
 
   createEncounter(): void {
