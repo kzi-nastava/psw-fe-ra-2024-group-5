@@ -254,8 +254,15 @@ export class MapComponent implements AfterViewInit {
 
   loadFacilities(): void {
     this.facilities.forEach(facility => {
+      const typeIconMap: { [key: number]: string } = {
+        0: 'https://maps.google.com/mapfiles/kml/paddle/W.png',   // WC
+        1: 'https://maps.google.com/mapfiles/kml/paddle/R.png',   // Restaurant
+        2: 'https://maps.google.com/mapfiles/kml/paddle/P.png',   // Parking
+        3: 'https://maps.google.com/mapfiles/kml/paddle/O.png',   // Other
+      };
+
       const facilityIcon = L.icon({
-        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png',
+        iconUrl: typeIconMap[facility.type] || typeIconMap[3],
         iconSize: [40, 40],
         iconAnchor: [16, 32],
       });

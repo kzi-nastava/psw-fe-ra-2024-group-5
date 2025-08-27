@@ -1,32 +1,255 @@
+/* Main Container */
 .container {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--background-color);
+  min-height: 100vh;
 }
 
-.buttons-container{
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-section h1 {
+  color: var(--text-title);
+  margin-bottom: 0.5rem;
+}
+
+.header-section p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Controls Section */
+.controls-section {
+  margin-bottom: 2rem;
+}
+
+.buttons-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 50px;
-  margin-top: 50px;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.table-container {
-  width: 80%;
+/* Map Section */
+.map-section {
+  margin-bottom: 2rem;
   display: flex;
-  overflow-y: auto;
-  max-height: 400px;
+  justify-content: center;
 }
 
-table {
+.map-container {
   width: 100%;
+  max-width: 1200px;
+  height: 600px;
 }
 
-.map{
-  width: 900px;
-  height: 300px;
+/* Facilities Grid */
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Facility Card */
+.facility-card {
+  background: var(--background-color-alt);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: var(--raised-style);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.facility-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.facility-type-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--background-color-alt);
+}
+
+.type-0 {
+  background-color: var(--alert-danger-bg);
+}
+
+.type-1 {
+  background-color: var(--alert-success-bg);
+}
+
+.type-2 {
+  background-color: var(--accent-color);
+}
+
+.type-3 {
+  background-color: var(--button-ternary-bg);
+}
+
+.type-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.edit-button {
+  color: var(--text-muted) !important;
+  transition: color 0.2s ease !important;
+}
+
+.edit-button:hover {
+  color: var(--accent-color) !important;
+}
+
+/* Card Content */
+.card-content {
+  margin-bottom: 1rem;
+}
+
+.facility-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-title);
+}
+
+.facility-description {
+  color: var(--text-paragraph);
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+}
+
+.facility-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--background-color);
+  border-radius: 6px;
+  border-left: 3px solid var(--button-secondary-bg);
+}
+
+.detail-icon {
+  color: var(--button-secondary-bg);
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.detail-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--text-paragraph);
+  font-weight: 500;
+}
+
+/* Card Actions */
+.card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.view-location-btn {
+  color: var(--button-secondary-bg) !important;
+  border-color: var(--button-secondary-bg) !important;
+  transition: all 0.2s ease !important;
+}
+
+.view-location-btn:hover {
+  background-color: var(--button-secondary-bg) !important;
+  color: var(--background-color-alt) !important;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--background-color-alt);
+  border-radius: 10px;
+  box-shadow: var(--raised-style);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  color: var(--text-title);
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .facilities-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .facility-card {
+    padding: 1rem;
+  }
+  
+  .buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .buttons-container button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .facility-card {
+    padding: 0.75rem;
+  }
+  
+  .facility-name {
+    font-size: 1.1rem;
+  }
 }

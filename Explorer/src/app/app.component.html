@@ -1,31 +1,3 @@
 <xp-navbar (itemsCountUpdated)="handleItemsCountUpdate($event)"></xp-navbar>
 <router-outlet></router-outlet>
 <!-- <xp-footer></xp-footer> -->
-
-<ng-container *ngIf="(weatherNotifier.visible$ | async)">
-  <xp-weather-chat
-    [visible]="!(weatherNotifier.minimized$ | async)"
-    [loading]="(weatherNotifier.loading$ | async) || false"
-    [summary]="(weatherNotifier.summary$ | async) || null"
-    (closed)="weatherNotifier.minimize()">
-  </xp-weather-chat>
-
-  <button
-    class="weather-fab"
-    mat-fab
-    *ngIf="(weatherNotifier.minimized$ | async)"
-    (click)="weatherNotifier.restore()"
-    aria-label="Open weather"
-    matTooltip="Open weather tips">
-    <ng-container *ngIf="(weatherNotifier.summary$ | async) as s; else defaultIcon">
-      <span *ngIf="s.iconKey === 'sunny'">☀️</span>
-      <span *ngIf="s.iconKey === 'cloudy'">⛅</span>
-      <span *ngIf="s.iconKey === 'fog'">🌫️</span>
-      <span *ngIf="s.iconKey === 'rain'">🌧️</span>
-      <span *ngIf="s.iconKey === 'snow'">❄️</span>
-      <span *ngIf="s.iconKey === 'storm'">⛈️</span>
-      <span *ngIf="!s.iconKey">⛅</span>
-    </ng-container>
-    <ng-template #defaultIcon>⛅</ng-template>
-  </button>
-</ng-container>

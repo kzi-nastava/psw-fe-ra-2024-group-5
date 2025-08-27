@@ -1,59 +1,75 @@
 <div class="container">
-    <h1>All facilities</h1>
+    <div class="header-section">
+        <h1>Facilities</h1>
+        <p>Manage and view all available facilities</p>
+    </div>
 
-    <div class="buttons-container">
+    <div class="controls-section">
+        <div class="buttons-container">
+            <button mat-raised-button class="primary" (click)="openDialog()">
+                <mat-icon>add</mat-icon>
+                Add Facility
+            </button>
+            <button mat-raised-button class="secondary" (click)="showOnMap = !showOnMap">
+                <mat-icon>location_on</mat-icon>
+                {{ showOnMap ? 'Hide Map' : 'Show Map' }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map-section" *ngIf="showOnMap">
+        <div class="map-container">
+            <app-map [facilities]="facilities" [isViewOnly]="true"></app-map>
+        </div>
+    </div>
+
+    <!-- Facilities Grid -->
+    <div class="facilities-grid" *ngIf="!showOnMap">
+        <div class="facility-card" *ngFor="let facility of facilities">
+            <div class="card-header">
+                <div class="facility-type-badge" [ngClass]="'type-' + facility.type">
+                    <mat-icon class="type-icon">
+                        {{ getTypeIcon(facility.type) }}
+                    </mat-icon>
+                    <span class="type-text">{{ facilityTypes[facility.type] }}</span>
+                </div>
+                <button mat-icon-button class="edit-button" (click)="onUpdate(facility)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            
+            <div class="card-content">
+                <h3 class="facility-name">{{ facility.name }}</h3>
+                <p class="facility-description">{{ facility.description }}</p>
+                
+                <div class="facility-details">
+                    <div class="detail-item">
+                        <mat-icon class="detail-icon">location_on</mat-icon>
+                        <span class="detail-text">
+                            {{ facilityAddresses[facility.id!] || 'Loading address...' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-actions">
+                <button mat-stroked-button class="view-location-btn" (click)="viewOnMap(facility)">
+                    <mat-icon>map</mat-icon>
+                    View Location
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!showOnMap && (!facilities || facilities.length === 0)">
+        <mat-icon class="empty-icon">location_city</mat-icon>
+        <h3>No Facilities Found</h3>
+        <p>Start by adding your first facility to get started.</p>
         <button mat-raised-button class="primary" (click)="openDialog()">
             <mat-icon>add</mat-icon>
-            Add
+            Add Your First Facility
         </button>
-        <button mat-raised-button class="primary" (click)="showOnMap = !showOnMap">
-            <mat-icon style="margin-right: 8px;">location_on</mat-icon>
-            Map
-        </button>
-    </div>
-
-    <div class="table-container">
-        <table mat-table [dataSource]="facilities" class="mat-elevation-z8">
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let facility"> {{facility.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef> Description </th>
-                <td mat-cell *matCellDef="let facility"> {{facility.description}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef> Type </th>
-                <td mat-cell *matCellDef="let facility"> {{facilityTypes[facility.type]}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="latitude">
-                <th mat-header-cell *matHeaderCellDef> Latitude </th>
-                <td mat-cell *matCellDef="let facility"> {{facility.latitude}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="longitude">
-                <th mat-header-cell *matHeaderCellDef> Longitude </th>
-                <td mat-cell *matCellDef="let facility"> {{facility.longitude}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="update">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let facility">
-                  <button mat-raised-button class="secondary" (click)="onUpdate(facility)">
-                    <mat-icon>edit</mat-icon>
-                    Edit
-                  </button>
-                </td>
-              </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
-    <div class="map" *ngIf="showOnMap">
-        <app-map [facilities]="facilities" [isViewOnly]="true"></app-map>
     </div>
 </div>

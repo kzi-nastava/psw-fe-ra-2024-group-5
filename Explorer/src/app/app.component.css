@@ -1,17 +1,1 @@
-.weather-fab {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 9999;
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, #5b86e5, #36d1dc);
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.24), 0 6px 8px rgba(0,0,0,0.12);
-  border: none;
-}
-
-.weather-fab:hover { filter: brightness(1.06); }
-.weather-fab:active { transform: translateY(1px); }
-.weather-fab span { font-size: 22px; line-height: 1; }
 
