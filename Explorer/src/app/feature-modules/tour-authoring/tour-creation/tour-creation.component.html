@@ -1,7 +1,13 @@
 <div class="container">
     <div class="component component-1">
+        <div class="input-group">
+            <input #locationInput type="text" name="location" placeholder="Location (City, Address)" />
+            <button mat-raised-button class="secondary" (click)="searchLocation(locationInput.value)">Search</button>
+            
+        </div>
         <div class="map-container">
-            <app-map (addKeyPoint)="sendCordinates($event)"  (setaRouteLength)='setTourLength($event)'></app-map>
+            
+            <app-map (addKeyPoint)="sendCordinates($event)" (setaRouteLength)='setTourLength($event)'></app-map>
         </div>
         <xp-key-points [coordinates]="coordinates" (cancel)="cancelKeyPoint($event)"></xp-key-points>
     </div>
@@ -9,6 +15,7 @@
       <div class="scrollable-form-container">
         
           <form [formGroup]="form">
+            
               <div mat-dialog-content class="content-container">
                   <mat-form-field appearance="outline" class="custom-form-field">
                       <mat-label>Name</mat-label>
