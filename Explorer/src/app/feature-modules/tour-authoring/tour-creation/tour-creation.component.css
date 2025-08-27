@@ -11,7 +11,37 @@
     margin-bottom: 15px;
   }
 
-  
+  .error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-bottom: -15px;
+    margin-left: 5px;
+}
+
+.empty-row {
+  height: 10px;
+}
+
+.input-location {
+    position: relative;
+    width: 100%;  
+}
+
+.search-button {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-primary-text, white);
+  position: absolute;
+  right: 100px;  
+  border: none;
+  cursor: pointer;
+  height: 30px;
+}
+
+.search-button:hover {
+  background-color: var(--alert-success-bg, #28a745);
+}
+
   .component {
     padding: 20px;
     box-sizing: border-box;
