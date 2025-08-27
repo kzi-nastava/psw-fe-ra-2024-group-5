@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject  } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Notification } from './model/notification.model';
 
@@ -9,6 +9,9 @@ import { Notification } from './model/notification.model';
 })
 export class NotificationService {
   private apiUrl = 'https://localhost:44333/api/notifications';
+
+  private unreadCountSubject = new BehaviorSubject<number>(0);
+  public unreadCount$ = this.unreadCountSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -22,5 +25,9 @@ export class NotificationService {
 
   markAllNotificationsAsRead(userId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${userId}/mark-all-read`, {});
+  }
+
+  updateUnreadCount(count: number): void {
+    this.unreadCountSubject.next(count);
   }
 }

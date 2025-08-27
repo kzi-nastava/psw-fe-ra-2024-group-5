@@ -19,6 +19,16 @@ export interface SocialEncounter extends Encounter {
     currentPeopleCount: number,
 }
 
+export interface RiddleEncounter extends Encounter {
+    riddle: string,
+    Answer: string,
+    potentialAnswers: string[],
+}
+
 export function isSocialEncounter(encounter: Encounter): encounter is SocialEncounter {
     return encounter.type === EncounterType.SOCIAL;
+}
+
+export function isRiddleEncounter(encounter: Encounter): encounter is RiddleEncounter {
+    return encounter.type === EncounterType.RIDDLE;
 }
