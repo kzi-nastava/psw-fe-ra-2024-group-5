@@ -17,16 +17,26 @@
   <form [formGroup]="encounterForm" class="modal-overlay" *ngIf="miscModalVisible" (ngSubmit)="createEncounter()">
     <div class="modal">
         <h2>Create Encounter</h2>
+        <p>
+          <span *ngIf="encounterForm.get('location')?.value">
+            Location: {{ encounterForm.get('location')?.value }}
+          </span>
+          <span *ngIf="!encounterForm.get('location')?.value">
+            Location: Loading...
+          </span>
+        </p>
+
         <div class="filter-container" style="text-align: center; margin: 10px 0;">
         <mat-form-field appearance="fill">
           <mat-label>Type</mat-label>
-          <mat-select [(value)]="selectedEncounterType">
+          <mat-select [(value)]="selectedEncounterType" (selectionChange)="onEncounterTypeChange()">
             <mat-option [value]="'MISC'">MISC</mat-option>
             <mat-option [value]="'SOCIAL'">SOCIAL</mat-option>
             <mat-option [value]="'HIDDEN LOCATION'">HIDDEN LOCATION</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+
         <input type="text" formControlName="name" placeholder="Name"/>
         <div *ngIf="encounterForm.get('name')?.invalid; else validName" class="error-message">
           Name is required.
@@ -51,15 +61,8 @@
           <div class="empty-row"></div>  
         </ng-template>
 
-        <div class="input-location">
-          <input type="text" formControlName="location" placeholder="Location (City, Address)" />
-          <div *ngIf="encounterForm.get('location')?.invalid; else validName" class="error-message">
-            Location is required.
-          </div>
-          <ng-template #validName>
-            <div class="empty-row"></div>  
-          </ng-template>
-        </div>
+        <input *ngIf="showSocialEncounterParams" type="number" formControlName="radius" placeholder="Radius" />
+        <input *ngIf="showSocialEncounterParams" type="number" formControlName="peopleCount" placeholder="Number of People" />
 
         <div class="modal-buttons">
             <button class="create-btn" [disabled]="encounterForm.invalid">Create</button>

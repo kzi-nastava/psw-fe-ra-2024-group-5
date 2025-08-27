@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { EncounterType } from '../enum/encounter-type.enum';
 import { MapComponent } from 'src/app/shared/map/map.component';
-import { Encounter } from '../model/encounter.model';
+import { Encounter, SocialEncounter } from '../model/encounter.model';
 import { EncounterService } from '../encounter.service';
 import { EncounterStatus } from '../enum/encounter-status.enum';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
@@ -43,6 +43,8 @@ export class EncountersManagingComponent implements OnInit {
   isViewOnly: boolean = true;
   user: User | null;
   typeErrorMessage: boolean = false;
+  showHiddenLocationEncounterParams: boolean = false;
+  showSocialEncounterParams: boolean = false;
 
   ngOnInit(): void {
     this.setEncounterFormFields();
@@ -67,18 +69,41 @@ export class EncountersManagingComponent implements OnInit {
       return;
     }
 
-    const encounter: Encounter = {
-      type: EncounterType.MISC,
-      id:0,
-      name: this.encounterForm.value.name,
-      description: this.encounterForm.value.description,
-      location: {
-        longitude: this.encounterForm.value.longitude,
-        latitude: this.encounterForm.value.latitude
-      },
-      xp: this.encounterForm.value.xp,
-      status: this.user?.role === 'administrator' ? EncounterStatus.ACTIVE : EncounterStatus.DRAFT,
-      creatorId: this.userId ?? 0
+    let encounter: Encounter | SocialEncounter;
+
+    if(this.selectedEncounterType == 'MISC')
+    {
+      encounter = {
+        type: EncounterType.MISC,
+        id:0,
+        name: this.encounterForm.value.name,
+        description: this.encounterForm.value.description,
+        location: {
+          longitude: this.encounterForm.value.longitude,
+          latitude: this.encounterForm.value.latitude
+        },
+        xp: this.encounterForm.value.xp,
+        status: this.user?.role === 'administrator' ? EncounterStatus.ACTIVE : EncounterStatus.DRAFT,
+        creatorId: this.userId ?? 0
+      }
+    } else 
+    {
+      encounter = {
+        type: EncounterType.SOCIAL,
+        id:0,
+        name: this.encounterForm.value.name,
+        description: this.encounterForm.value.description,
+        location: {
+          longitude: this.encounterForm.value.longitude,
+          latitude: this.encounterForm.value.latitude
+        },
+        xp: this.encounterForm.value.xp,
+        status: this.user?.role === 'administrator' ? EncounterStatus.ACTIVE : EncounterStatus.DRAFT,
+        creatorId: this.userId ?? 0,
+        radius: this.encounterForm.value.radius,
+        peopleCount: this.encounterForm.value.peopleCount,
+        currentPeopleCount: 0
+      }
     }
 
     if(this.user && this.user.role == 'administrator')
@@ -124,6 +149,8 @@ export class EncountersManagingComponent implements OnInit {
       longitude: ['',Validators.required],
       latitude: ['', Validators.required],
       location: ['', Validators.required],
+      radius: [0],
+      peopleCount: [0],
     });
   }
 
@@ -202,5 +229,30 @@ export class EncountersManagingComponent implements OnInit {
       }
     });
 
+  }
+
+  onEncounterTypeChange(): void {
+    // reset flegova
+    this.showHiddenLocationEncounterParams = false;
+    this.showSocialEncounterParams = false;
+
+    // reset validatora
+    this.encounterForm.get('radius')?.clearValidators();
+    this.encounterForm.get('peopleCount')?.clearValidators();
+    this.encounterForm.get('radius')?.updateValueAndValidity();
+    this.encounterForm.get('peopleCount')?.updateValueAndValidity();
+
+    if(this.selectedEncounterType == 'SOCIAL')
+    {
+      this.showSocialEncounterParams = true;
+
+      this.encounterForm.get('radius')?.setValidators([Validators.required, this.xpValidator]);
+      this.encounterForm.get('peopleCount')?.setValidators([Validators.required, this.xpValidator]);
+    } else if(this.selectedEncounterType == "LOCATION")
+    {
+      this.showHiddenLocationEncounterParams = true;
+    }
+
+    this.encounterForm.updateValueAndValidity();
   }
 }
