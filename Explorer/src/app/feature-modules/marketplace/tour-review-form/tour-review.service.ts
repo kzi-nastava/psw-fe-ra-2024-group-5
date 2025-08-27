@@ -8,12 +8,15 @@ import { environment } from 'src/env/environment';
   providedIn: 'root'
 })
 export class ReviewService {
-  private apiUrl = environment.apiHost + 'tour/review';
 
+  private createApiUrl = environment.apiHost + 'tour/review';
+  private updateDeleteApiUrl = environment.apiHost + 'tourist/tour-reviews';
   constructor(private http: HttpClient) { }
 
   createReview(review: TourReview): Observable<TourReview> {
-    return this.http.post<TourReview>(this.apiUrl, review);
+    return this.http.post<TourReview>(this.createApiUrl, review);
   }
-
+  updateReview(review: TourReview): Observable<TourReview> {
+    return this.http.put<TourReview>(`${this.updateDeleteApiUrl}/${review.id}`, review);
+  }
 }

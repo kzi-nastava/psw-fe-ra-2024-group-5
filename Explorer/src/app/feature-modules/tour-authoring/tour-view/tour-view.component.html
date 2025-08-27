@@ -245,7 +245,9 @@
         </div>
 
         <div class="reviews-card-container" *ngIf="reviews.length >= 1">
-            <xp-tour-review [review]="r" *ngFor="let r of reviews"></xp-tour-review>
+            <xp-tour-review [review]="r" *ngFor="let r of reviews" (reviewDeleted)="onReviewDeleted($event)"
+                (reviewUpdated)="onReviewUpdated($event)">
+            </xp-tour-review>
         </div>
 
         <mat-paginator [length]="reviews.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25]"

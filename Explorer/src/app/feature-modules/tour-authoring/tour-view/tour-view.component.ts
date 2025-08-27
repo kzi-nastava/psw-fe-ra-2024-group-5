@@ -69,6 +69,16 @@ export class TourDetailedViewComponent implements OnInit {
     this.initializeTour();
   }
 
+  onReviewDeleted(reviewId: number): void {
+    this.reviews = this.reviews.filter(r => r.id !== reviewId);
+  }
+
+  onReviewUpdated(updatedReview: TourReview): void {
+    const index = this.reviews.findIndex(r => r.id === updatedReview.id);
+    if (index !== -1) {
+      this.reviews[index] = updatedReview;
+    }
+  }
   private initializeTour(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('tourId');

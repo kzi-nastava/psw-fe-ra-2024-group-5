@@ -39,6 +39,13 @@ export class TourAuthoringService {
     );
   }
 
+  deleteTourReview(reviewId: number): Observable<any> {
+    return this.http.delete(`${environment.apiHost}tourist/tour-reviews/${reviewId}`);
+  }
+
+  updateTourReview(review: TourReview): Observable<TourReview> {
+    return this.http.put<TourReview>(`${environment.apiHost}tourist/tour-reviews/${review.id}`, review);
+  }
 
   getAuthorTours(user: User, page: number, pageSize: number): Observable<TourCard[]> {
     if (user.role === 'author')

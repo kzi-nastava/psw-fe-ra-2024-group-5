@@ -9,21 +9,33 @@ import { TourReview } from '../../tour-authoring/model/tour.model';
   templateUrl: './tour-review-form.component.html',
   styleUrls: ['./tour-review-form.component.css']
 })
-export class TourReviewFormComponent {
+export class TourReviewFormComponent implements OnInit {
   reviewForm: FormGroup;
   selectedImage: string | ArrayBuffer | null = null;
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private reviewService: ReviewService,
     public dialogRef: MatDialogRef<TourReviewFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { tourId: number, touristId: number }
-  ) {
+    @Inject(MAT_DIALOG_DATA) public data: TourReview
+  ) { }
+
+  ngOnInit(): void {
+    this.isEditMode = !!this.data.id;
+
     this.reviewForm = this.fb.group({
-      rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
-      comment: ['', Validators.required],
-      image: [null]
+      id: [this.data.id || null],
+      rating: [this.data.rating || 0, [Validators.required, Validators.min(1), Validators.max(5)]],
+      comment: [this.data.comment || '', Validators.required],
+      image: [this.data.image || null],
+      tourId: [this.data.tourId, Validators.required],
+      touristId: [this.data.touristId, Validators.required]
     });
+
+    if (this.isEditMode && this.data.image) {
+      this.selectedImage = 'data:image/png;base64,' + this.data.image;
+    }
   }
 
   setRating(rating: number): void {
@@ -31,21 +43,21 @@ export class TourReviewFormComponent {
   }
 
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement; 
+    const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
       const reader = new FileReader();
-    
+
       reader.onload = (e) => {
         if (e.target?.result) {
-          this.selectedImage = e.target.result as string; 
+          this.selectedImage = e.target.result as string;
           this.reviewForm.patchValue({
-            image: this.selectedImage.split(',')[1] 
+            image: this.selectedImage.split(',')[1]
           });
         }
       };
-    
-      reader.readAsDataURL(file); 
+
+      reader.readAsDataURL(file);
     }
   }
 
@@ -61,25 +73,37 @@ export class TourReviewFormComponent {
 
   onSubmit(): void {
     if (this.reviewForm.valid) {
-      const review: TourReview = {
-        ...this.reviewForm.value,
-        tourId: this.data.tourId,
-        touristId: this.data.touristId,
-        visitDate: new Date(),
-        reviewDate: new Date()
-      };
+      if (this.isEditMode) {
+        const reviewFromForm = this.reviewForm.value;
+        const reviewToUpdate: TourReview = {
+          ...reviewFromForm,
+          visitDate: this.data.visitDate,
+          reviewDate: new Date()
+        };
 
-      this.reviewService.createReview(review).subscribe({
-        next: () => {
-          this.dialogRef.close(true);
-        },
-        error: (error: any) => {
-          console.error('Error creating review:', error);
-          this.dialogRef.close(false);
-        }
-      });
+        this.reviewService.updateReview(reviewToUpdate).subscribe({
+          next: (updatedReview) => {
+            this.dialogRef.close(updatedReview);
+          },
+          error: (error: any) => { console.error('Error updating review:', error); this.dialogRef.close(false); }
+        });
+      } else {
+        const reviewData = { ...this.reviewForm.value };
+        delete reviewData.id;
+        const review: TourReview = {
+          ...reviewData,
+          visitDate: new Date(),
+          reviewDate: new Date()
+        };
+        this.reviewService.createReview(review).subscribe({
+          next: () => { this.dialogRef.close(true); },
+          error: (error: any) => { console.error('Error creating review:', error); this.dialogRef.close(false); }
+        });
+      }
     }
   }
+
+
 
   onCancel(): void {
     this.dialogRef.close();
