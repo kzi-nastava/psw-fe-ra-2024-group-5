@@ -34,6 +34,8 @@ export class NotificationComponent implements OnInit {
           this.notifications = data.results.sort((a, b) => {
             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
           });   
+
+          this.notificationService.updateUnreadCount(this.getUnreadNotificationsCount());
         },
         error: (err) => {
           console.error('Error loading notifications', err);
@@ -49,6 +51,7 @@ export class NotificationComponent implements OnInit {
         this.notificationService.markNotificationAsRead(notification.id, this.userId).subscribe({
           next: () => {
             console.log('Notification marked as read');
+            this.notificationService.updateUnreadCount(this.getUnreadNotificationsCount());
           },
           error: (error) => {
             console.error('Error marking notification as read', error);
@@ -87,6 +90,7 @@ export class NotificationComponent implements OnInit {
               }
             });
           });
+          this.notificationService.updateUnreadCount(0);
         },
         error: (err) => {
           console.error('Error marking all notifications as read', err);

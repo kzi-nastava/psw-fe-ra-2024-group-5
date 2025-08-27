@@ -7,6 +7,7 @@ import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationComponent } from '../../notification/notification/notification.component';
 import { ShoppingCartService } from '../../marketplace/shopping-cart/shopping-cart.service';
+import { NotificationService } from '../../notification/notification.service';
 
 @Component({
   selector: 'xp-navbar',
@@ -18,6 +19,9 @@ export class NavbarComponent implements OnInit {
   user: User | undefined;
   routerSubscription: Subscription;
   itemsCount: number = 0;  // Dodajte promenljivu za broj stavki u korpi
+  unreadCount: number = 0;
+  showNotifications = false;
+
   @Output() itemsCountUpdated = new EventEmitter<number>();
 
 
@@ -27,6 +31,7 @@ export class NavbarComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private shoppingCartService: ShoppingCartService,  
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +45,12 @@ export class NavbarComponent implements OnInit {
     
       if (this.user) {
         this.shoppingCartService.updateItemsCount(this.user.id);
+        this.loadUnreadNotifications();
       }
+    });
+
+    this.notificationService.unreadCount$.subscribe(count => {
+      this.unreadCount = count;
     });
 
     this.routerSubscription = this.router.events.subscribe(event => {
@@ -92,6 +102,20 @@ updateItemsCount(count: number): void {
         this.itemsCount--;
       }
     }
+
+  loadUnreadNotifications(): void {
+      if(this.user?.id) {
+          this.notificationService.getPagedNotifications(this.user.id).subscribe({
+              next: (data) => {
+                  const unread = data.results.filter(n => {
+                      const status = n.userReadStatuses.find(s => s.userId === this.user?.id);
+                      return status ? !status.isRead : false;
+                  }).length;
+                  this.notificationService.updateUnreadCount(unread);
+              }
+          });
+      }
+  }
     
 
   openTourEquipmentDialog(): void {
@@ -104,7 +128,6 @@ updateItemsCount(count: number): void {
     this.authService.logout();
   }
 
-  showNotifications = false;
   toggleNotifications() {
     this.showNotifications = !this.showNotifications;
   }
