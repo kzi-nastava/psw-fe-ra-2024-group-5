@@ -1,7 +1,7 @@
 import { Component, OnInit, Type, ViewChild } from '@angular/core';
 import { EncounterType } from '../enum/encounter-type.enum';
 import { MapComponent } from 'src/app/shared/map/map.component';
-import { Encounter, SocialEncounter } from '../model/encounter.model';
+import { Encounter, SocialEncounter, RiddleEncounter } from '../model/encounter.model';
 import { EncounterService } from '../encounter.service';
 import { EncounterStatus } from '../enum/encounter-status.enum';
 import { TokenStorage } from '../../../infrastructure/auth/jwt/token.service';
@@ -32,7 +32,7 @@ export class EncountersManagingComponent implements OnInit {
 
   @ViewChild(MapComponent) map: MapComponent;
 
-  encounterTypes: string[] = ['MISC', 'SOCIAL', 'HIDDEN LOCATION'];
+  encounterTypes: string[] = ['MISC', 'SOCIAL', 'HIDDEN LOCATION', 'RIDDLE'];
   selectedEncounterType: string | null = null;
   miscModalVisible = false;
   userId: number | null = null;
@@ -45,6 +45,9 @@ export class EncountersManagingComponent implements OnInit {
   typeErrorMessage: boolean = false;
   showHiddenLocationEncounterParams: boolean = false;
   showSocialEncounterParams: boolean = false;
+  showRiddleEncounterParams: boolean = false;
+  newPotentialAnswer: string = '';
+  potentialAnswers: string[] = [];
 
   ngOnInit(): void {
     this.setEncounterFormFields();
@@ -61,6 +64,7 @@ export class EncountersManagingComponent implements OnInit {
     this.miscModalVisible = true;
     this.isViewOnly = false;
     this.typeErrorMessage = false;
+    this.selectedEncounterType = this.encounterForm.value.selectedEncounterType;
   }
 
   createEncounter(): void {
@@ -69,9 +73,10 @@ export class EncountersManagingComponent implements OnInit {
       return;
     }
 
-    let encounter: Encounter | SocialEncounter;
+    let encounter: Encounter | SocialEncounter | RiddleEncounter;
+    const selectedType = this.encounterForm.value.selectedEncounterType;
 
-    if(this.selectedEncounterType == 'MISC')
+    if(selectedType == 'MISC')
     {
       encounter = {
         type: EncounterType.MISC,
@@ -86,7 +91,7 @@ export class EncountersManagingComponent implements OnInit {
         status: this.user?.role === 'administrator' ? EncounterStatus.ACTIVE : EncounterStatus.DRAFT,
         creatorId: this.userId ?? 0
       }
-    } else 
+    } else if(selectedType == 'SOCIAL')
     {
       encounter = {
         type: EncounterType.SOCIAL,
@@ -103,6 +108,24 @@ export class EncountersManagingComponent implements OnInit {
         radius: this.encounterForm.value.radius,
         peopleCount: this.encounterForm.value.peopleCount,
         currentPeopleCount: 0
+      }
+    } else 
+    {
+      encounter = {
+        type: EncounterType.RIDDLE,
+        id:0,
+        name: this.encounterForm.value.name,
+        description: this.encounterForm.value.description,
+        location: {
+          longitude: this.encounterForm.value.longitude,
+          latitude: this.encounterForm.value.latitude
+        },
+        xp: this.encounterForm.value.xp,
+        status: this.user?.role === 'administrator' ? EncounterStatus.ACTIVE : EncounterStatus.DRAFT,
+        creatorId: this.userId ?? 0,
+        riddle: this.encounterForm.value.riddle,
+        Answer: this.encounterForm.value.correctAnswer,
+        potentialAnswers: this.potentialAnswers
       }
     }
 
@@ -151,6 +174,10 @@ export class EncountersManagingComponent implements OnInit {
       location: ['', Validators.required],
       radius: [null],
       peopleCount: [null],
+      riddle: [null],
+      correctAnswer: [null],
+      potentialAnswersControl: [null],
+      selectedEncounterType: [null, Validators.required]
     });
 
   this.encounterForm.get('radius')?.setValidators(
@@ -239,25 +266,60 @@ export class EncountersManagingComponent implements OnInit {
   }
 
   onEncounterTypeChange(): void {
+    const selectedType = this.encounterForm.value.selectedEncounterType;
+    this.selectedEncounterType = selectedType;
+
     // reset flegova
     this.showHiddenLocationEncounterParams = false;
     this.showSocialEncounterParams = false;
+    this.showRiddleEncounterParams = false;
 
     // reset validatora
     this.encounterForm.get('radius')?.clearValidators();
     this.encounterForm.get('peopleCount')?.clearValidators();
+    this.encounterForm.get('riddle')?.clearValidators();
+    this.encounterForm.get('correctAnswer')?.clearValidators();
+    this.encounterForm.get('potentialAnswersControl')?.clearValidators();
 
-    if(this.selectedEncounterType == 'SOCIAL')
+    if(selectedType  == 'SOCIAL')
     {
       this.showSocialEncounterParams = true;
 
       this.encounterForm.get('radius')?.setValidators([Validators.required, this.xpValidator]);
       this.encounterForm.get('peopleCount')?.setValidators([Validators.required, this.xpValidator]);
-    } else if(this.selectedEncounterType == "LOCATION")
+    } else if(selectedType  == "RIDDLE")
+    {
+      this.showRiddleEncounterParams = true;
+      this.encounterForm.get('riddle')?.setValidators([Validators.required]);
+      this.encounterForm.get('correctAnswer')?.setValidators([Validators.required]);
+      this.encounterForm.get('potentialAnswersControl')?.setValidators([Validators.required]); 
+    } else if(selectedType  == "LOCATION")
     {
       this.showHiddenLocationEncounterParams = true;
     }
 
+    this.encounterForm.get('radius')?.updateValueAndValidity();
+    this.encounterForm.get('peopleCount')?.updateValueAndValidity();
+    this.encounterForm.get('riddle')?.updateValueAndValidity();
+    this.encounterForm.get('correctAnswer')?.updateValueAndValidity();
+    this.encounterForm.get('potentialAnswersControl')?.updateValueAndValidity();
+
     this.encounterForm.updateValueAndValidity();
+  }
+
+  addPotentialAnswer(): void {
+    if (this.newPotentialAnswer.trim() !== '') {
+      this.potentialAnswers.push(this.newPotentialAnswer.trim());
+      this.newPotentialAnswer = '';  
+
+      this.encounterForm.get('potentialAnswersControl')?.setValue(this.potentialAnswers.length > 0 ? true : null);
+      this.encounterForm.get('potentialAnswersControl')?.markAsTouched();
+    }
+  }
+
+  removePotentialAnswer(index: number): void {
+    this.potentialAnswers.splice(index, 1);
+    this.encounterForm.get('potentialAnswersControl')?.setValue(this.potentialAnswers.length > 0 ? true : null);
+    this.encounterForm.get('potentialAnswersControl')?.markAsTouched();
   }
 }

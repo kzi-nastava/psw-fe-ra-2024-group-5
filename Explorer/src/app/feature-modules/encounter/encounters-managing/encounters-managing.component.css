@@ -248,3 +248,72 @@ mat-select:focus {
     width: 100%;
 }
 
+.potential-answers-container {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.potential-answers-container .form-input {
+    width: 100%;
+    padding-right: 80px;
+    box-sizing: border-box;
+    margin-top: 0 !important;
+}
+
+.potential-answers-container .add-button {
+    position: absolute; 
+    right: 5px; 
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 6px 10px; 
+    border-radius: 6px;
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 30px;
+    line-height: 1;
+}
+
+.potential-answers-container .add-button:hover {
+    background-color: var(--button-ternary-bg);
+}
+
+.potential-answers-container .add-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.answer-tag {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #2e3440;
+    border-radius: 5px;
+    height: 14px;
+    padding: 2px 0 2px 5px;
+    margin-top: 5px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.answer-tag .remove-button {
+    background: none;
+    border: none;
+    color: #2e3440;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    width: 15px; 
+    height: 15px; 
+    font-size: 1.2rem;
+    padding: 0;
+    margin-left: 15px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}

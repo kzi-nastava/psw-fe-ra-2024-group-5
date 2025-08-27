@@ -46,10 +46,11 @@
           <div class="form-section right-section">
             <div class="input-group">
               <label for="encounter-type">Encounter Type</label>
-              <mat-select [(value)]="selectedEncounterType" (selectionChange)="onEncounterTypeChange()" class="form-select">
+              <mat-select formControlName="selectedEncounterType" (selectionChange)="onEncounterTypeChange()" class="form-select">
                 <mat-option [value]="'MISC'">MISC</mat-option>
                 <mat-option [value]="'SOCIAL'">SOCIAL</mat-option>
                 <mat-option [value]="'HIDDEN LOCATION'">HIDDEN LOCATION</mat-option>
+                <mat-option [value]="'RIDDLE'">RIDDLE</mat-option>
               </mat-select>
             </div>
 
@@ -61,6 +62,35 @@
             <div *ngIf="showSocialEncounterParams && encounterForm.get('peopleCount')?.invalid && encounterForm.get('peopleCount')?.touched" class="error-message">
               Number of people is required.
             </div>
+
+            <ng-container *ngIf="showRiddleEncounterParams">
+              <input id="riddle" type="text" formControlName="riddle" placeholder="Riddle" class="form-input" />
+              <div *ngIf="encounterForm.get('riddle')?.invalid && encounterForm.get('riddle')?.touched" class="error-message">
+                  Riddle is required.
+              </div>
+
+            <input id="correctAnswer" type="text" formControlName="correctAnswer" placeholder="Correct Answer" class="form-input" />
+            <div *ngIf="encounterForm.get('correctAnswer')?.invalid && encounterForm.get('correctAnswer')?.touched" class="error-message">
+                Correct answer is required.
+            </div>
+
+            <div class="potential-answers-container">
+              <input type="text" [(ngModel)]="newPotentialAnswer" [ngModelOptions]="{standalone: true}" placeholder="Add a potential answer" class="form-input"
+               (blur)="encounterForm.get('potentialAnswersControl')?.markAsTouched(); encounterForm.get('potentialAnswersControl')?.updateValueAndValidity()"/>
+              <button type="button" [disabled]="!newPotentialAnswer" (click)="addPotentialAnswer()" class="add-button">Add</button>
+            </div>
+        
+        <div class="answers-list">
+            <span *ngFor="let answer of potentialAnswers; let i = index" class="answer-tag">
+                {{ answer }}
+                <span (click)="removePotentialAnswer(i)" class="remove-button">&times;</span>  
+            </span>
+        </div>
+
+        <div *ngIf="potentialAnswers.length === 0 && encounterForm.get('potentialAnswersControl')?.invalid && encounterForm.get('potentialAnswersControl')?.touched" class="error-message">
+          You must add at least one potential answer.
+      </div>
+    </ng-container>
           </div>
         </div>
 
