@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Account } from '../model/account.model';
-import { MatTableModule } from '@angular/material/table';
 import { AdministrationService } from '../administration.service';
 import { MatButton } from '@angular/material/button';
 import { Money } from 'src/app/shared/model/money';
@@ -18,11 +17,10 @@ export class AccountsComponent implements OnInit {
   
   constructor(private administrationService: AdministrationService, private marketService: MarketplaceService, public dialog: MatDialog) {}
 
-  displayedColumns: string[] = [ 'username', 'email', 'role', 'status', 'wallet' ,'action'];
   accounts: Account[] = []
   currencies: string[] = ['AC', 'EUR', 'DOL', 'RSD']
 
-  formatWallet(walletBalance: Money): string{
+  formatWallet(walletBalance: Money | undefined): string{
     if(!walletBalance){
       return 'No Wallet';
     }
