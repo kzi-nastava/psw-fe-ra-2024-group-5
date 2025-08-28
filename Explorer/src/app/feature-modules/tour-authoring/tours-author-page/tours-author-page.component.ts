@@ -27,7 +27,8 @@ export class ToursAuthorPageComponent {
   centerLatitude = new BehaviorSubject<number | null>(null);
   centerLongitude = new BehaviorSubject<number | null>(null);
   radius = new BehaviorSubject<number>(0);
-
+  bundleCreationToggle: boolean = false;
+  bundleButtonText: string = "CREATE BUNDLE"
   selectedTours: TourCard[] = [];
   showBundleForm = false;
   bundleName = '';
@@ -123,15 +124,25 @@ toggleSelection(tour: TourCard): void {
 
 finalizeTourSelection(): void {
   if (this.selectedTours.length === 0) {
-    alert('Please select at least one tour.');
+    alert('Please select at least two tours.');
     return;
   }
   this.showBundleForm = true;
 }
-
+creationButtleClick(): void{
+  if(this.bundleCreationToggle){
+    this.bundleCreationToggle = false;
+    this.bundleButtonText = "CREATE BUNDLE";
+    this.selectedTours.length = 0;
+  }
+  else{
+    this.bundleCreationToggle = true;
+    this.bundleButtonText = "Cancel";
+  }
+}
 openBundleForm(): void {
   if (this.selectedTours.length < 2) {
-    alert('Please select at least one tour.');
+    alert('Please select at least two tours.');
     return;
   }
   this.showBundleForm = true;
