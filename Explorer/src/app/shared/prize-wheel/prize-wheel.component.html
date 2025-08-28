@@ -1,0 +1,10 @@
+<div class="wheel-container">
+    <div class="indicator"></div>
+    <canvas #wheelCanvas
+      [style.transform]="'rotate(' + currentRotation + 'deg)'"
+      [style.transition]="spinning ? 'transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : ''"
+      (transitionend)="onSpinComplete()"
+      width="400" height="400">
+    </canvas>
+    <button (click)="spin()" [disabled]="spinning || numberOfSpins === maxSpins">Spin</button>
+</div>
