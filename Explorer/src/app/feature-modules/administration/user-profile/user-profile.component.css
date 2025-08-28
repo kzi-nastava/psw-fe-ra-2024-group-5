@@ -1,9 +1,24 @@
+
 .profile-page {
-    display: flex;
-    flex-direction: column;
-    max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  padding: 30px;
 }
 
+.profile-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 .profile-image {
     margin-right: 20px;
 }
@@ -38,13 +53,6 @@
 .actions {
     display: flex;
     gap: 15px;
-}
-
-.bio-motto {
-    display: flex;
-    width: 100%;
-    gap: 15px;
-    padding: 25px 5px;
 }
 
 .profile-motto {
@@ -137,5 +145,50 @@ button.primary {
     justify-content: center;
     align-items: center;
 }
+.bio-motto {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
 
-  
+.bio-motto mat-card {
+  flex: 1; /* da zauzmu jednak prostor */
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.bio-motto mat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.bio-motto mat-card-header h2 {
+  font-size: 1.4em;
+  color: #2c3e50;
+}
+
+.bio-motto mat-card-content {
+  font-size: 1em;
+  color: #555;
+  line-height: 1.5;
+  padding-top: 10px;
+}
+
+.balance {
+  font-weight: bold;
+  font-size: 20px;
+  margin: 5px 0;
+  color: #333; 
+}
+
+.balance .positive {
+  color: #28a745; 
+}
+
+.balance .negative {
+  color: #dc3545;
+}
+

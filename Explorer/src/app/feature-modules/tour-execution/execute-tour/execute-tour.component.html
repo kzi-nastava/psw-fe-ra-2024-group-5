@@ -4,6 +4,7 @@
             <app-map
                 [simulatorEnabled]="true"
                 [isViewOnly]="true"
+                [enableWeatherNotifier]="true"
                 (userLocationChange)="onUserLocationChange($event)"
                 [keyPoints]="tour.keyPoints"/>
         </div>

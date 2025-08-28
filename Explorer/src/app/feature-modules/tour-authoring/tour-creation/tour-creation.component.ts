@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,6 +9,9 @@ import { KeyPointsComponent } from '../key-points/key-points.component';
 import { MapComponent } from 'src/app/shared/map/map.component';
 import { TourLevel, Currency, TourTransport } from '../model/tour.enums'; // Import the enums
 import { MatTable } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MapService } from 'src/app/shared/map/map.service';
+import { latLng } from 'leaflet';
 
 @Component({
   selector: 'xp-tour-creation',
@@ -25,6 +28,8 @@ export class TourCreationComponent {
   tourDurationTransports: TransportDuration[]  = [];
   author: User | undefined;
   coordinates: number[] | null = null;
+  durationInSeconds = 2.5;
+  readonly ALL_TRANSPORTS = ['On Foot', 'Bicycle', 'Car'];
   @ViewChild(KeyPointsComponent) keyPointsListComponent!: KeyPointsComponent;
   @ViewChild(MapComponent) map: MapComponent;
   @ViewChild(MatTable) table: MatTable<TransportDuration>;
@@ -35,7 +40,9 @@ export class TourCreationComponent {
     private formBuilder: FormBuilder,
     private tourAuthoringService: TourAuthoringService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private mapService: MapService
   ) {
     this.resetForm();
     this.resetForTransport();
@@ -177,16 +184,46 @@ export class TourCreationComponent {
           this.keyPointsListComponent.resetkeyPoints();
           this.map.removeMarkers();
           this.map.removeRoute();
+          this.snackBar.open('Tour added successfully', 'Close', {
+            duration: 3000
+          });
         }
         this.resetForm();
         this.resetForTransport();
         this.tourDurationTransports.length = 0
+        this.resetTransports();          
         this.table.renderRows()
         console.log(this.tourDurationTransports)
       },
       error: (error) => {
         console.error('Error adding tour:', error);
       },
+    });
+  }
+
+  searchLocation(locationInput : string): void{
+    if(!locationInput)
+      return;
+
+    this.mapService.search(locationInput).subscribe({
+      next: (response) => {
+        if(response.length > 0){
+          console.log('Location successfully searched: ', response);
+          this.map.addKeyPoint.emit([response[0].lat, response[0].lon])
+          this.map.search(locationInput)
+        }
+        else{
+          console.log('Pogresna adresa!')
+          this.snackBar.open('Adress doesnt exist, please try again', 'Close', {
+            duration: 7000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        }
+      },
+      error: (error) => {
+        console.error("Error searching map: ", error);
+      }
     });
   }
 
@@ -219,4 +256,9 @@ export class TourCreationComponent {
   back(): void {
     this.router.navigate(['/tour']);
   }
+
+  private resetTransports(): void {
+  this.tourTransports = [...this.ALL_TRANSPORTS];
+}
+
 }

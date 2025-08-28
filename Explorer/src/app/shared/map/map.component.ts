@@ -7,6 +7,7 @@ import { UserLocationService } from '../user-location/user-location.service';
 import { UserPosition } from '../model/userPosition.model';
 import { KeyPoint } from 'src/app/feature-modules/tour-authoring/model/key-point.model';
 import { Encounter } from 'src/app/feature-modules/encounter/model/encounter.model';
+import { WeatherService, DailyWeatherSummary } from '../service/weather.service';
 
 @Component({
   selector: 'app-map',
@@ -21,12 +22,16 @@ export class MapComponent implements AfterViewInit {
   private userLocationMarker: L.Marker;
 
   simulator: boolean = false;
+  weatherChatVisible = false;
+  weatherLoading = false;
+  weatherSummary: DailyWeatherSummary | null = null;
 
   @Input() facilities: Facility[];
   @Input() isViewOnly: boolean = false;
   @Input() keyPoints: KeyPoint[];
   @Input() markerAddMode: string = 'keypoint';
   @Input() simulatorEnabled: boolean = false;
+  @Input() enableWeatherNotifier: boolean = false;
   @Input() encounters: Encounter[];
 
   @Output() addFacility = new EventEmitter<number[]>();
@@ -35,7 +40,7 @@ export class MapComponent implements AfterViewInit {
   @Output() userLocationChange = new EventEmitter<[number, number]>();
   @Output() encounterClicked = new EventEmitter<any>();
 
-  constructor(private mapService: MapService, private userLocationService: UserLocationService) { }
+  constructor(private mapService: MapService, private userLocationService: UserLocationService, private weatherService: WeatherService) { }
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -63,7 +68,9 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({
-      iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+        iconUrl: 'https://maps.google.com/mapfiles/kml/paddle/K.png',
+        iconSize: [40, 40],
+        iconAnchor: [16, 32],
     });
 
     L.Marker.prototype.options.icon = DefaultIcon;
@@ -89,6 +96,10 @@ export class MapComponent implements AfterViewInit {
     const lat = coord.lat;
     const lng = coord.lng;
 
+    if (this.simulatorEnabled && !this.simulator && this.isViewOnly) {
+      this.simulator = true;
+    }
+
     this.mapService.reverseSearch(lat, lng).subscribe((res) => {
       //console.log(res.display_name);
       // RES se koristi da prikaze ulicu grad.. od mesta koje je selektovano
@@ -98,7 +109,7 @@ export class MapComponent implements AfterViewInit {
       this.setUserLocationMarker([lat, lng]);
     else if (!this.isViewOnly)
       this.addMarker([lat, lng], 'New Marker');
-    
+
     switch (this.markerAddMode) {
       case 'facility':
         this.addFacility.emit([lat, lng])
@@ -130,7 +141,12 @@ export class MapComponent implements AfterViewInit {
 
     this.userLocationService.setCurrentUserPosition(latlng);
     this.userLocationChange.emit(latlng);
+
+    if (this.enableWeatherNotifier) {
+      // Deprecated: weather notifier now lives globally; keep flag for backward compatibility.
+    }
   }
+
 
   addMarker(latlng: [number, number], popupText?: string): void {
     switch (this.markerAddMode) {
@@ -166,9 +182,9 @@ export class MapComponent implements AfterViewInit {
 
   removeAllMarkers(): void {
     this.markers.forEach(marker => {
-      this.map.removeLayer(marker);  
+      this.map.removeLayer(marker);
     });
-  
+
     this.markers = [];
   }
 
@@ -191,7 +207,7 @@ export class MapComponent implements AfterViewInit {
     this.setRoute(this.markers)
   }
 
-  setRoute(markPoints: L.Marker[]): void{
+  setRoute(markPoints: L.Marker[]): void {
     if (this.routeControl) {
       this.routeControl.remove();
     }
@@ -205,23 +221,23 @@ export class MapComponent implements AfterViewInit {
     }).addTo(this.map);
 
     // Listen for the 'routesfound' event when routes are calculated
-  this.routeControl.on('routesfound', (e: any) => {
-    const routes = e.routes;  // Accessing the routes array directly
-    if (routes.length > 0) {
-      const summary = routes[0].summary;  // Get the summary from the first route
-      if (summary) {
-        // Ensure summary has the expected properties
-        const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
-        const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
-        console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
-        this.setaRouteLength.emit(distanceInKm) //valjda ovo ne pravi problem ako je u slucaju dodavanja objekata
-      } else {
-        console.error('No summary available for the route.');
+    this.routeControl.on('routesfound', (e: any) => {
+      const routes = e.routes;  // Accessing the routes array directly
+      if (routes.length > 0) {
+        const summary = routes[0].summary;  // Get the summary from the first route
+        if (summary) {
+          // Ensure summary has the expected properties
+          const distanceInKm = summary.totalDistance / 1000;  // Convert meters to kilometers
+          const timeInMinutes = Math.round(summary.totalTime / 60); // Convert seconds to minutes
+          console.log(`Distance: ${distanceInKm} km, Time: ${timeInMinutes} minutes`);
+          this.setaRouteLength.emit(distanceInKm) //valjda ovo ne pravi problem ako je u slucaju dodavanja objekata
+        } else {
+          console.error('No summary available for the route.');
+        }
       }
-    }
-  });
-  
-}
+    });
+
+  }
 
   loadMarkers(): void {
     if (!this.map)
@@ -230,7 +246,7 @@ export class MapComponent implements AfterViewInit {
       this.loadFacilities();
     if (this.keyPoints && this.keyPoints.length !== 0)
       this.loadKeyPoints();
-    if(this.encounters && this.encounters.length !== 0)
+    if (this.encounters && this.encounters.length !== 0)
       this.loadEncounters();
 
     this.loadUserLocation();
@@ -239,8 +255,8 @@ export class MapComponent implements AfterViewInit {
   loadFacilities(): void {
     this.facilities.forEach(facility => {
       const facilityIcon = L.icon({
-        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png', 
-        iconSize: [40, 40], 
+        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-pushpin.png',
+        iconSize: [40, 40],
         iconAnchor: [16, 32],
       });
 
@@ -264,11 +280,21 @@ export class MapComponent implements AfterViewInit {
 
   loadEncounters(): void {
     this.encounters.forEach(encounter => {
+
+      const typeIconMap = {
+        0: 'https://maps.google.com/mapfiles/kml/paddle/M.png',   // Misc
+        1: 'https://maps.google.com/mapfiles/kml/paddle/S.png',   // Social
+        2: 'https://maps.google.com/mapfiles/kml/paddle/L.png',   // Location
+        3: 'https://maps.google.com/mapfiles/kml/paddle/R.png',   // Riddle
+      };
+
       const encounterIcon = L.icon({
-        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', 
+        iconUrl: typeIconMap[encounter.type] || typeIconMap[0],
         iconSize: [40, 40],
         iconAnchor: [16, 32],
       });
+
+
 
       const statusMap = {
         0: 'Draft',
@@ -279,6 +305,7 @@ export class MapComponent implements AfterViewInit {
         0: 'Misc',
         1: 'Social',
         2: 'Location',
+        3: 'Riddle',
       };
 
       console.log(encounter.status);
@@ -291,9 +318,9 @@ export class MapComponent implements AfterViewInit {
         <p>Type: <span class="popup-encounter__type-value" style="color: var(--text-title);">${typeMap[encounter.type]}</span></p>
       </div>
       `;
-  
-    const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon, alt: `${encounter.id}` })
-      .addTo(this.map); 
+
+      const marker = new L.Marker([encounter.location.latitude, encounter.location.longitude], { title: 'encounter', icon: encounterIcon, alt: `${encounter.id}` })
+        .addTo(this.map);
 
       marker.on('click', () => {
         this.encounterClicked.emit(encounter);
@@ -327,15 +354,15 @@ export class MapComponent implements AfterViewInit {
 
   removeLastMarker(): void { //ovo se poziva kada hocete da promenite lokaciju markera, ili izbrisete poslednji
     const lastMarker = this.markers.pop()
-    if (lastMarker){
+    if (lastMarker) {
       this.map.removeLayer(lastMarker)
       this.setRoute(this.markers)
     }
   }
 
-  removeExactMarker(latlng: number[]){
+  removeExactMarker(latlng: number[]) {
     const index = this.markers.findIndex(m => m.getLatLng().lat == latlng[0] && m.getLatLng().lng == latlng[1]);
-  
+
     // If the keyPoint exists in the array (index >= 0), remove it
     if (index !== -1) {
       const kp = this.markers[index]

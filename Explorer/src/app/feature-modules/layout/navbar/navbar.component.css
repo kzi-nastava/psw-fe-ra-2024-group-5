@@ -43,20 +43,6 @@
     border-radius: 0 !important;
 }
 
-.unread-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   /* Stil za ikonu korpe (ako je potrebno) */
 .icon-button {
     position: relative;

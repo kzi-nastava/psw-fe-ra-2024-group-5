@@ -26,7 +26,7 @@
             <mat-icon>place</mat-icon>
             View Tours
           </button>
-          <button mat-menu-item *ngIf="user && user.role === 'tourist'" [routerLink]="['bundles-page']">
+          <button mat-menu-item *ngIf="user && user.role === 'tourist' || user && user.role === 'author'" [routerLink]="['bundles-page']">
             <mat-icon>discount</mat-icon>
             View Bundles
           </button>
@@ -126,7 +126,7 @@
         <button mat-icon-button *ngIf="user && user.username !== ''" class="icon-button"
           (click)="toggleNotifications()">
           <mat-icon>notifications</mat-icon>
-          <span *ngIf="getUnreadCount() > 0" class="unread-count">{{ getUnreadCount() }}</span>
+          <span *ngIf="unreadCount  > 0" class="item-count">{{ unreadCount  }}</span>
         </button>
         <xp-notification *ngIf="showNotifications"></xp-notification>
 

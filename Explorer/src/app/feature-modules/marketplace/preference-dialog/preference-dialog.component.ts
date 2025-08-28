@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 })
 export class PreferenceDialogComponent {
 
-  @Output() preferenceUpdated = new EventEmitter<null>();
+@Output() preferenceUpdated = new EventEmitter<Preference>();
 
 
   touristId: number; 
@@ -57,18 +57,23 @@ export class PreferenceDialogComponent {
     };
 
     this.service.addPreference(preference).subscribe({
-        next: (_) => {
-           this.preferenceUpdated.emit()
-        },
-        error: (err) => {
-            console.error("Greška pri slanju: ", err);
-            if (err.error && err.error.errors) {
-                console.error("Detalji greške: ", err.error.errors);
-            } else {
-                console.error("Nepoznata greška: ", err);
-            }
-        }
+  next: (createdPreference) => {
+    this.preferenceUpdated.emit(createdPreference); 
+    this.isFormVisible = false;
+    this.preferenceDialog.reset({ 
+      preferredDifficulty: TourDifficulty.Beginner,
+      walkRating: 0,
+      bikeRating: 0,
+      carRating: 0,
+      boatRating: 0,
+      interestTags: '',
+      isActive: false
     });
+  },
+  error: (err) => {
+    console.error("Greška pri slanju: ", err);
+  }
+});
 }
 
 toggleFormVisibility(): void {

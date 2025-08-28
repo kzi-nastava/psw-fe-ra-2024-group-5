@@ -1,64 +1,98 @@
 <div class="container">
-  <h1 class="title">Explore encounters 🎮</h1>
+  <h1 class="title">Explore encounters</h1>
+
+  <br />
+
+  <div *ngIf="participant && participant.level >= 5" class="flashy-btn-container">
+    <button class="flashy-btn" [routerLink]="['/tours-page']">
+      You like games, you will like this! 🚀
+    </button>
+  </div>
+
+  <div *ngIf="participant && participant.level >= 10">
+    <button [routerLink]="['/encounters-managing']" class="create-button"><mat-icon>add</mat-icon> Create your own
+      Encounter</button>
+  </div>
+
+  <div *ngIf="showLevelTitles" class="level-titles-modal">
+    <div class="level-titles-modal-content">
+      <h2 class="level-titles-modal-header"><strong>Titles</strong></h2>
+      <ul class="level-titles-list">
+        <li *ngFor="let title of levelNames; let i = index">
+          <strong>Level {{i}}:</strong> {{title}}
+        </li>
+      </ul>
+      <div class="level-titles-modal-close">
+        <button (click)="showLevelTitles = false">Close</button>
+      </div>
+    </div>
+  </div>
 
   <div class="participant-info" *ngIf="participant">
-    <div class="xp-level-container">
-      <p><strong>XP:</strong> {{ participant?.xp ?? 0 }}</p>
-      <p><strong>Level:</strong> {{ participant?.level ?? 0 }}</p>
+    <div class="level-progress-container" *ngIf="participant">
+      <p *ngIf="participant && participant.level < 10">
+        Keep going! Reach level 10 to create your own encounter!
+      </p>
+      <div class="progress-bar-background">
+        <div class="progress-bar-fill" [style.width.%]="levelProgress"></div>
+      </div>
+      <span>{{ levelProgress }}%</span>
     </div>
-    <p *ngIf="participant && participant.level < 10" class="warning-message">
-      Keep going! Reach level 10 to create your own encounter!
-    </p>
-    <p *ngIf="participant && participant.level >= 10" class="create-button">
-      <button [routerLink]="['/encounters-managing']">Create your own Encounter</button>
-    </p>
+    <br />
+    <div class="xp-level-container">
+      <p *ngIf="participant">
+        <strong>Title:</strong> {{ levelNames[participant.level] }}
+      </p>
+      <p><strong>Level:</strong> {{ participant?.level ?? 0 }}</p>
+      <p><strong>XP:</strong> {{ participant?.xp ?? 0 }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="participant && participant.level < 10" class="titles-button-container">
+    <button (click)="showLevelTitles = true" class="level-titles-button"><mat-icon>military_tech</mat-icon>Available
+      titles</button>
   </div>
 
   <div class="map-container">
     <app-map [isViewOnly]="true" (encounterClicked)="showEncounterDetails($event)" [simulatorEnabled]="true"
-      (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
+      [enableWeatherNotifier]="true" (userLocationChange)="progress()" [encounters]="activeEncounters"></app-map>
   </div>
   <div *ngIf="activatedEncounter" class="encounter-info">
     <div class="encounter-details">
       <div>
-        <h2>Active encounter details</h2>
+        <h2>
+          Active encounter details
+        </h2>
         <button mat-button class="secondary abandon-button" (click)="abandonEncounterExecution()">
           Abandon
         </button>
       </div>
-      <p><strong>Type: </strong> {{ encounterTypeToString(activatedEncounter.type) }} </p>
-      <p><strong>Name: </strong> {{ activatedEncounter.name }}</p>
-      <p><strong>Description: </strong> {{ activatedEncounter.description }}</p>
-      <p><strong>XP: </strong> {{ activatedEncounter.xp }}</p>
-      <div *ngIf="isSocialEncounter(activatedEncounter)">
-        <p><strong>Radius: </strong> {{ activatedEncounter.radius }}
-        <p><strong>People: </strong> {{ activatedEncounter.currentPeopleCount }} / {{ activatedEncounter.peopleCount }}</p>
+      <div>
+        <p><strong>Type: </strong> {{ encounterTypeToString(activatedEncounter.type) }} </p>
+        <p><strong>Name: </strong> {{ activatedEncounter.name }}</p>
+        <p><strong>Description: </strong> {{ activatedEncounter.description }}</p>
+        <p><strong>XP: </strong> {{ activatedEncounter.xp }}</p>
+        <div *ngIf="isSocialEncounter(activatedEncounter)">
+          <p><strong>Radius: </strong> {{ activatedEncounter.radius }}
+          <p><strong>People: </strong> {{ activatedEncounter.currentPeopleCount }} / {{ activatedEncounter.peopleCount
+            }}
+          </p>
+        </div>
       </div>
     </div>
-    
+
     <div *ngIf="activatedEncounter.type == 2" class="hidden">
       <img src="../../../../assets/images/tmp.jpeg">
       <div class="timer-container">
         <div class="circular-progress" [class.complete]="isComplete">
           <svg viewBox="0 0 36 36" class="circular-svg">
-            <path 
-              d="M18 2.0845
+            <path d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="#eee"
-              stroke-width="3"
-            />
-            <path 
-              d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="3" />
+            <path d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none"
-              stroke="#bf616a"
-              stroke-width="3"
-              [attr.stroke-dasharray]="progressValue + ', 100'"
-              class="progress-bar"
-            />
+                a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#bf616a" stroke-width="3"
+              [attr.stroke-dasharray]="progressValue + ', 100'" class="progress-bar" />
           </svg>
           <div class="timer-label">
             <span class="seconds">{{ remainingTime }}</span>
@@ -67,11 +101,19 @@
         <div *ngIf="isTimerActive" class="completion-message">
           Stay close!
         </div>
-        <div *ngIf="isComplete"><p>Encounter completed.</p></div>
-    </div>
+        <div *ngIf="isComplete">
+          <p>Encounter completed.</p>
+        </div>
+      </div>
     </div>
   </div>
   <div *ngIf="!activatedEncounter" class="encounter-info">
-    <h2>No active encouters...</h2>
+    <h2>No active encounters...</h2>
+  </div>
+  <div *ngIf="levelUpOverlay" class="level-up-overlay">
+    <div class="level-up-popup">
+      <h2>Level Up!</h2>
+      <p class="level-title">{{ newLevelTitle }}</p>
+    </div>
   </div>
 </div>

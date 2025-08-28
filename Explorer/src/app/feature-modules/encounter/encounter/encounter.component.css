@@ -1,3 +1,55 @@
+/* Modal overlay for level titles */
+.level-titles-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.level-titles-modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  padding: 32px;
+  min-width: 320px;
+  max-width: 90vw;
+}
+
+.level-titles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.level-titles-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.level-titles-modal-header {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.level-titles-modal-close {
+  text-align: right;
+  margin-top: 18px;
+}
+
+.level-titles-modal-close button {
+  background: #bf616a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
 @import 'src/styles.css';
 
 .container {
@@ -172,6 +224,27 @@ img {
   background-color: var(--alert-success-bg, #28a745);
 }
 
+.level-titles-button {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text, white);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+  margin-left: 800px;
+}
+
+.level-titles-button:hover {
+  background-color: var(--alert-success-bg, #28a745);
+}
+
 .encounter-info {
   display: flex;
   justify-content: space-between;
@@ -185,6 +258,11 @@ img {
 .encounter-details {
   display: flex;
   flex-direction: column;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 24px;
+  background: #f9fbff;
+  box-shadow: 0 2px 8px rgba(79,140,255,0.08);
 }
 
 .encounter-info div:first-child {
@@ -197,4 +275,111 @@ img {
   margin-bottom: 15px;
   margin-left: 10px;
   text-align: center;
+}
+
+.level-progress-container {
+  margin-top: 10px;
+}
+
+.progress-bar-background {
+  width: 100%;
+  height: 16px;
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 4px 0;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f8cff, #00c6a2);
+  transition: width 0.3s;
+}
+
+.level-up-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInBg 0.5s;
+}
+
+@keyframes fadeInBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.level-up-popup {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 60px;
+  box-shadow: 0 0 40px 10px #3da3dd;
+  text-align: center;
+  animation: popIn 0.7s cubic-bezier(.17,.67,.83,.67);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.level-title {
+  font-size: 2rem;
+  color: #ffd700;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.level-titles-button mat-icon {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.flashy-btn-container {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0;
+}
+
+.flashy-btn {
+  font-size: 1.15rem;
+  font-weight: 600;
+  background: #3da3dd;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 28px;
+  box-shadow: 0 2px 12px rgba(26, 188, 156, 0.18);
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.flashy-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 18px rgba(26, 188, 156, 0.28);
+}
+
+.create-button {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text, white);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+
+.create-button:hover {
+  background-color: var(--alert-success-bg, #28a745);
 }

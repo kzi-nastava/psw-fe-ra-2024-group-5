@@ -102,4 +102,8 @@ export class EncounterService {
   completeMiscEncounter(encounterId: number, userId: number): Observable<any> {
     return this.http.patch(`${this.touristBaseUrl}/execution/complete-misc?encounterId=${encounterId}&userId=${userId}`, {});
   }
+
+  completeRiddleEncounter(encounterId: number, userId: number, answer: string): Observable<any> {
+    return this.http.patch(`${this.touristBaseUrl}/execution/complete-riddle?encounterId=${encounterId}&userId=${userId}&answer=${answer}`, {});
+  }
 }

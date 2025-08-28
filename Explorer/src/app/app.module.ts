@@ -18,6 +18,7 @@ import { AuthService } from './infrastructure/auth/auth.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { EncounterModule } from './feature-modules/encounter/encounter.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { EncounterModule } from './feature-modules/encounter/encounter.module';
     MatSnackBarModule,
     FormsModule,
     EncounterModule
+    ,SharedModule
   ],
   providers: [
     {

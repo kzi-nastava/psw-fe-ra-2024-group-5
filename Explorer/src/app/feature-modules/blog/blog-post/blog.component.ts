@@ -4,7 +4,7 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Blog } from '../model/blog.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Vote } from '../model/vote.model';
-import { BlogPostComment } from '../model/blog-post-comment'; 
+import { BlogPostComment } from '../model/blog-post-comment.model'; 
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -58,10 +58,12 @@ export class BlogComponent implements OnInit {
           this.service.getUpvotes(blog.id).subscribe(upvoteCount => this.upvotes[blog.id] = upvoteCount);
           this.service.getDownvotes(blog.id).subscribe(downvoteCount => this.downvotes[blog.id] = downvoteCount);
 
-          this.userVotes[blog.id] = null;
+          const userVote = blog.votes?.find(vote => vote.userId === this.user.id);
+          this.userVotes[blog.id] = userVote ? userVote.type : null;
         });
 
         this.loadedBlogs = this.blogs;
+        this.filterDraft();
 
         this.initializeImageIndex();
 
@@ -137,21 +139,10 @@ export class BlogComponent implements OnInit {
       }
     });
   }
-
-
-
-
     vote(blogId: number, voteType: number): void {
       this.authService.user$.subscribe(user => {
         if (user) {
-          // Check if user has already voted the same way
-          if (this.userVotes[blogId] === voteType) {
-            // User clicked the same vote type, remove vote
-            this.removeVote(blogId, user.id);
-          } else {
-            // New vote or different vote type, add or update vote
-            this.addVote(blogId, voteType, user.id);
-          }
+          this.addVote(blogId, voteType, user.id);
         } else {
           console.error('User is not logged in.');
         }
@@ -164,13 +155,13 @@ export class BlogComponent implements OnInit {
         type: voteType,
         voteTime: new Date().toISOString(),
       };
+      
       this.service.vote(blogId, voteData).subscribe({
         next: () => {
-          // Update vote counts
           this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
           this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-          // Update user's current vote type for this blog
-          this.userVotes[blogId] = voteType;
+          
+          this.getBlog();
           console.log('Vote successfully submitted');
         },
         error: (err: any) => {
@@ -178,23 +169,6 @@ export class BlogComponent implements OnInit {
         }
       });
     }
-
-    removeVote(blogId: number, userId: number): void {
-      this.service.removeVote(blogId, userId).subscribe({
-        next: () => {
-          // Update vote counts
-          this.service.getUpvotes(blogId).subscribe(count => this.upvotes[blogId] = count);
-          this.service.getDownvotes(blogId).subscribe(count => this.downvotes[blogId] = count);
-          // Reset user's current vote type for this blog (no vote)
-          this.userVotes[blogId] = null;
-          console.log('Vote successfully removed');
-        },
-        error: (err: any) => {
-          console.error('Failed to remove vote:', err);
-        }
-      });
-    }
-
 
     isUserAuthor(userId: number): Observable<boolean> {
       return this.authService.user$.pipe(
@@ -215,29 +189,37 @@ export class BlogComponent implements OnInit {
     this.router.navigate(['/blog', blogId]);
   }
 
-    applyFilter(): void {
-      if (this.selectedFilter === -1) {
-        this.blogs = this.loadedBlogs;
-        return;
+  applyFilter(): void {
+    if (this.selectedFilter === -1) {
+      this.blogs = this.loadedBlogs;
+      return;
+    }
+
+    this.blogs = this.loadedBlogs.filter(blog => blog.status === this.selectedFilter);
+  }
+
+  filterDraft(): void{
+    if (this.user.role === 'tourist' || this.user.role === 'admin') {
+      this.blogs = this.loadedBlogs.filter(blog => blog.status !== 0);
+    } else {
+      this.blogs = this.loadedBlogs;
+    }
+  }
+
+
+  openAddBlogDialog(): void {
+    const dialogRef = this.dialog.open(BlogFormComponent, {
+      width: '600px',
+      //disableClose: true // Prevent closing on outside click
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'created') {
+        console.log('New blog created. Refreshing blogs...');
+        this.getBlog(); // Osveži listu blogova
+      } else {
+        console.log('Dialog closed without creating a blog.');
       }
-
-      this.blogs = this.loadedBlogs.filter(blog => blog.status === this.selectedFilter);
-    }
-
-
-    openAddBlogDialog(): void {
-      const dialogRef = this.dialog.open(BlogFormComponent, {
-        width: '600px',
-        //disableClose: true // Prevent closing on outside click
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === 'created') {
-          console.log('New blog created. Refreshing blogs...');
-          this.getBlog(); // Osveži listu blogova
-        } else {
-          console.log('Dialog closed without creating a blog.');
-        }
-      });
-    }
+    });
+  }
 }
