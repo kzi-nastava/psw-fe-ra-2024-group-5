@@ -1,32 +1,346 @@
-.title-container{
-    margin-top: 50px;
+.accounts-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.title-container {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.title-container h1 {
+    margin-bottom: 0.5rem;
+    color: var(--text-title);
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.user-card {
+    background: var(--background-color-alt);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.user-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), var(--button-primary-bg));
+    border-radius: 20px 20px 0 0;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--accent-color), var(--button-primary-bg));
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 16px rgba(129, 161, 193, 0.3);
 }
 
+.user-avatar mat-icon {
+    color: white;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+}
 
-.table-container {
+.user-info {
+    flex: 1;
+}
+
+.username {
+    margin: 0 0 0.25rem 0;
+    color: var(--text-title);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.email {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.status-badge {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 50px 0;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-table {
-    min-width: 250px;
-    width: 900px;
+.status-badge.status-active {
+    background: rgba(163, 190, 140, 0.15);
+    color: var(--alert-success-bg);
 }
 
-.status-tag {
-    height: 30px;
-    padding: 5px 10px;
-    border-radius: 100px;
-    background-color: rgb(100, 240, 85);
-    /* Active status */
+.status-badge.status-blocked {
+    background: rgba(191, 97, 106, 0.15);
+    color: var(--alert-danger-bg);
 }
 
-.status-tag.status-blocked {
-    background-color: rgb(250, 100, 100) !important;
-    /* Blocked status */
+.status-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.card-content {
+    margin-bottom: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--background-color);
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.info-item:hover {
+    background: rgba(129, 161, 193, 0.1);
+}
+
+.info-icon {
+    color: var(--accent-color);
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    font-size: 0.95rem;
+    color: var(--text-paragraph);
+    font-weight: 500;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wallet-amount {
+    font-weight: 600;
+    color: var(--text-title);
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    flex: 1;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.action-button mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.block-button {
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+}
+
+.block-button:hover:not(.disabled) {
+    background: #a8555a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(191, 97, 106, 0.3);
+}
+
+.add-funds-button {
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
+}
+
+.add-funds-button:hover:not(.disabled) {
+    background: var(--alert-success-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(163, 190, 140, 0.3);
+}
+
+.action-button.disabled {
+    background: var(--text-muted);
+    color: var(--background-color-alt);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.action-button.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+}
+
+.empty-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-subtitle);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .accounts-container {
+        padding: 1rem;
+    }
+    
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .user-card {
+        padding: 1.25rem;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .status-badge {
+        align-self: center;
+    }
+    
+    .card-actions {
+        flex-direction: column;
+    }
+    
+    .action-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .title-container h1 {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .user-card {
+        padding: 1rem;
+    }
+    
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .user-avatar mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+    }
 }
