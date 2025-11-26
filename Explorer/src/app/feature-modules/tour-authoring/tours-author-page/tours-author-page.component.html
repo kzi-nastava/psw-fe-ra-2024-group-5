@@ -14,16 +14,8 @@
             <button mat-button class="search-button" (click)="searchTours()">Search</button>
         </div>
     </div>
-
-    <button
-         mat-button
-         class="primary"
-        [disabled]="selectedTours.length < 2"
-        (click)="openBundleForm()"
-        *ngIf="!showBundleForm">
-        Add to Bundle
-    </button>
-
+    <button mat-button class="secondary" (click)="creationButtleClick()">{{bundleButtonText}}</button>
+    <button mat-raised-button  class="ternary" [disabled]="selectedTours.length < 2" (click)="openBundleForm()" *ngIf="bundleCreationToggle" [mat-dialog-close]="true">Add BUNDLE</button>
 
     <!-- Bundle Creation Form -->
     <div *ngIf="showBundleForm" class="bundle-form">
@@ -50,7 +42,7 @@
 
     <div class="card-container">
         <div *ngFor="let tour of tours" class="tour-card-container">
-            <mat-checkbox class="select-checkbox" [checked]="isSelected(tour)" (change)="toggleSelection(tour)">
+            <mat-checkbox class="select-checkbox" *ngIf="bundleCreationToggle" [checked]="isSelected(tour)" (change)="toggleSelection(tour)">
                 Select
             </mat-checkbox>
             <xp-tour-card class="tour-card rounded raised" [tourCard]="tour"
